@@ -1,0 +1,4 @@
+- userarn: arn:aws:iam::${aws_account_id}:user/arsenii
+  username: arsenii
+  groups:
+  - system:masters

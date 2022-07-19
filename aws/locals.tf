@@ -1,0 +1,27 @@
+locals {
+  make_global_configuration = {
+    project         = var.project
+    region          = var.region
+    environment     = var.environment
+    sub_environment = var.sub_environment
+  }
+
+  make_eks_nodegroups_global_configuration = {
+    cluster_name = aws_eks_cluster.main.name
+    vpc_id       = aws_vpc.main.id
+    cidr_blocks  = aws_vpc.main.cidr_block
+    subnet_ids   = aws_subnet.public.*.id
+  }
+
+  enable_env_budget = {
+    "filecoin-glif-dev-apn1" = 1
+    "filecoin-glif-prod-apn1"     = 0
+  }
+  enable_env_budgets = local.enable_env_budget[terraform.workspace]
+
+  key_usage       = "ENCRYPT_DECRYPT"
+  key_spec        = "SYMMETRIC_DEFAULT"
+  deletion_window = 7
+  kms_enabled     = true
+  key_rotation    = true
+}

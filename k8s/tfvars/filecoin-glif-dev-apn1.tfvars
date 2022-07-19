@@ -1,0 +1,6 @@
+project                     = "filecoin"
+environment                 = "dev"
+region                      = "ap-northeast-1"
+sub_environment             = "glif"
+route53_domain              = "dev.node.glif.io"
+env_specific_subdomain_name = "unicorn-kong"
