@@ -14,8 +14,8 @@ locals {
   }
 
   enable_env_budget = {
-    "filecoin-glif-dev-apn1" = 1
-    "filecoin-glif-prod-apn1"     = 0
+    "filecoin-glif-dev-apn1"  = 1
+    "filecoin-glif-prod-apn1" = 0
   }
   enable_env_budgets = local.enable_env_budget[terraform.workspace]
 
@@ -24,4 +24,14 @@ locals {
   deletion_window = 7
   kms_enabled     = true
   key_rotation    = true
+
+  make_codebuild_global_configuration = {
+    project           = var.project
+    region            = var.region
+    environment       = var.environment
+    sub_environment   = var.sub_environment
+    aws_account_id    = data.aws_caller_identity.current.account_id
+    branch            = var.branch
+    git_configuration = var.git_configuration
+  }
 }

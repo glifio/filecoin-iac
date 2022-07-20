@@ -1,9 +1,9 @@
 variable "profile" {
   type = map(string)
   default = {
-    "filecoin-glif-prod-apn1"      = "filecoin"
-    "filecoin-glif-dev-apn1" = "filecoin"
-    "default"                = "_dont_use_default_namespace"
+    "filecoin-glif-prod-apn1" = "filecoin"
+    "filecoin-glif-dev-apn1"  = "filecoin"
+    "default"                 = "_dont_use_default_namespace"
   }
 }
 
@@ -39,5 +39,10 @@ variable "eks_cluster_version" {
 }
 
 variable "route53_domain" {
+  type = string
+}
+
+variable "git_configuration" {}
+variable "branch" {
   type = string
 }
