@@ -8,7 +8,7 @@ locals {
 
   oidc_URL = replace(data.aws_eks_cluster.k8s_cluster.identity[0].oidc[0].issuer, "https://", "")
 
-  #  https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
+# https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
   get_registry_based_on_region = {
     "us-east-1"      = "602401143452.dkr.ecr.us-east-1.amazonaws.com"
     "us-east-2"      = "602401143452.dkr.ecr.us-east-2.amazonaws.com"
