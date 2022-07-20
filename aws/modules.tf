@@ -38,3 +38,9 @@ module "eks_nodegroup_ondemand_group4" {
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
+
+module "codebuild_cd-filecoin-fluent-bit" {
+  source                   = "../modules/codebuild"
+  git_repository_name      = "filecoin-external-snapshotter"
+  get_global_configuration = local.make_codebuild_global_configuration
+}

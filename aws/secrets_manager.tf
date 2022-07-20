@@ -53,3 +53,11 @@ resource "aws_secretsmanager_secret" "monitoring" {
   tags = merge({ "Name" = "${module.generator.prefix}-monitoring" },
   module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "github_cd_token_secret" {
+  name                    = "${module.generator.prefix}/github_cd_token_secret"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-github-cd-token-secret" },
+  module.generator.common_tags)
+}
