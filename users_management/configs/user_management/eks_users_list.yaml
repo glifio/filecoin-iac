@@ -1,0 +1,6 @@
+%{ for user in get_users ~}
+- userarn: arn:aws:iam::${aws_account_id}:user/${user}
+  username: ${user}
+  groups:
+    - system:masters
+%{ endfor ~}
