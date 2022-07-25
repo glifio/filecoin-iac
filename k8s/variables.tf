@@ -37,10 +37,6 @@ variable "route53_domain" {
   #  type = string
 }
 
-variable "env_specific_subdomain_name" {
-  type = string
-}
-
 #variable "route53_zone_id" {
 #  type = string
 #}

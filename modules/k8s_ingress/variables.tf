@@ -20,10 +20,6 @@ variable "get_ingress_namespace" {
   type = string
 }
 
-variable "get_env_specific_subdomain_name" {
-  type = string
-}
-
 variable "get_jwt_header_wr_token_name" {
   type    = string
   default = "jwt_token_kong_rw"

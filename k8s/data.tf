@@ -46,12 +46,13 @@ data "aws_lb" "kong_internal" {
   ]
 }
 
-data "aws_api_gateway_rest_api" "main" {
-  name = "${module.generator.prefix}-api-gw"
-}
-
 data "aws_route53_zone" "selected" {
   name         = var.route53_domain
+  private_zone = false
+}
+
+data "aws_route53_zone" "node_glif_io" {
+  name         = "node.glif.io"
   private_zone = false
 }
 

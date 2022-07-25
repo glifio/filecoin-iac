@@ -1,6 +1,6 @@
 resource "aws_api_gateway_domain_name" "main" {
-  regional_certificate_arn = aws_acm_certificate_validation.api_gw.certificate_arn
-  domain_name              = "api.${var.env_specific_subdomain_name}.${var.route53_domain}"
+  regional_certificate_arn = aws_acm_certificate_validation.acm.certificate_arn
+  domain_name              = var.api_gateway_domain_name
 
   endpoint_configuration {
     types = ["REGIONAL"]
@@ -10,30 +10,28 @@ resource "aws_api_gateway_domain_name" "main" {
 }
 
 resource "aws_api_gateway_base_path_mapping" "main" {
-  api_id      = data.aws_api_gateway_rest_api.main.id
+  api_id      = aws_api_gateway_rest_api.main.id
   stage_name  = aws_api_gateway_stage.main.stage_name
   domain_name = aws_api_gateway_domain_name.main.domain_name
 }
 
 resource "aws_api_gateway_client_certificate" "main" {
-  description = "${module.generator.prefix} certificate for stage ${var.environment}"
+  description = "${module.generator.prefix} certificate for stage ${var.get_stage_name}"
   tags        = module.generator.common_tags
 }
 
 resource "aws_api_gateway_vpc_link" "main" {
-  name        = "${module.generator.prefix}-vpc-link"
+  name        = "${module.generator.prefix}-${var.get_stage_name}-vpc-link"
   description = "From ${module.generator.prefix} env to internal lb"
-  target_arns = [data.aws_lb.kong_internal.arn]
+  target_arns = var.get_vpc_link_arns
 
-  tags = merge({ "Name" = "${module.generator.prefix}-vpc-link" }, module.generator.common_tags)
+  tags = merge({ "Name" = "${module.generator.prefix}-${var.get_stage_name}-vpc-link" }, module.generator.common_tags)
 
-  depends_on = [
-    helm_release.konghq-internal
-  ]
+
 }
 
 resource "aws_api_gateway_deployment" "main" {
-  rest_api_id = data.aws_api_gateway_rest_api.main.id
+  rest_api_id = aws_api_gateway_rest_api.main.id
 
   triggers = {
     redeployment = sha1(jsonencode([
@@ -70,9 +68,9 @@ resource "aws_api_gateway_deployment" "main" {
 }
 
 resource "aws_api_gateway_model" "ReadAllandWriteMpoolPush" {
-  rest_api_id  = data.aws_api_gateway_rest_api.main.id
+  rest_api_id  = aws_api_gateway_rest_api.main.id
   name         = "ReadAllandWriteMpoolPush"
-  description  = "${module.generator.prefix}-model"
+  description  = "${module.generator.prefix}-${var.get_stage_name}-model"
   content_type = "application/json"
 
   schema = file("${path.module}/configs/api_gateway_models/read_all_and_write_mpool_push.pol.tpl")
@@ -80,8 +78,8 @@ resource "aws_api_gateway_model" "ReadAllandWriteMpoolPush" {
 
 # Note: https://github.com/hashicorp/terraform-provider-aws/issues/2550#issuecomment-402369701
 resource "aws_api_gateway_request_validator" "main" {
-  name                        = "${module.generator.prefix}-validate-all-parameters"
-  rest_api_id                 = data.aws_api_gateway_rest_api.main.id
+  name                        = "${module.generator.prefix}-${var.get_stage_name}-validate-all-parameters"
+  rest_api_id                 = aws_api_gateway_rest_api.main.id
   validate_request_body       = true
   validate_request_parameters = true
 }
@@ -89,8 +87,8 @@ resource "aws_api_gateway_request_validator" "main" {
 
 resource "aws_api_gateway_stage" "main" {
   deployment_id         = aws_api_gateway_deployment.main.id
-  rest_api_id           = data.aws_api_gateway_rest_api.main.id
-  stage_name            = var.environment
+  rest_api_id           = aws_api_gateway_rest_api.main.id
+  stage_name            = var.get_stage_name
   client_certificate_id = aws_api_gateway_client_certificate.main.id
 
   access_log_settings {
@@ -108,7 +106,7 @@ resource "aws_api_gateway_stage" "main" {
 }
 
 resource "aws_cloudwatch_log_group" "main" {
-  name              = "${module.generator.prefix}-${data.aws_api_gateway_rest_api.main.id}/${var.environment}"
+  name              = "${module.generator.prefix}-${aws_api_gateway_rest_api.main.id}/${var.get_stage_name}"
   retention_in_days = 30
 
   tags = module.generator.common_tags
@@ -120,7 +118,7 @@ resource "aws_api_gateway_account" "account_logging" {
 }
 
 resource "aws_iam_role" "account_logging" {
-  name               = "${module.generator.prefix}-apigw-logging"
+  name               = "${module.generator.prefix}-${var.get_stage_name}-apigw-logging"
   assume_role_policy = file("${path.module}/templates/roles/cloudwatch_apigw_logging.pol.tpl")
 
   tags = module.generator.common_tags
@@ -129,7 +127,7 @@ resource "aws_iam_role" "account_logging" {
 
 
 resource "aws_iam_policy" "account_logging" {
-  name        = "${module.generator.prefix}-apigw-logging"
+  name        = "${module.generator.prefix}-${var.get_stage_name}-apigw-logging"
   description = ""
   policy      = file("${path.module}/templates/policies/cloudwatch_apigw_logging.pol.tpl")
 
