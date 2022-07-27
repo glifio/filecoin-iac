@@ -54,3 +54,8 @@ variable "as_is_ingress_backend_service_name" {
   description = "It the pararmeter true, then -service will be added in the end of the service. The logic is useful when we deploy app"
   default     = false
 }
+
+variable "get_ingress_pathType" {
+  type = string
+  default = "Exact"
+}

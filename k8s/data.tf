@@ -1,9 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 data "aws_vpc" "current" {
-  tags = {
-    Name = "${module.generator.prefix}-vpc"
-  }
+  tags = { Name = "${module.generator.prefix}-vpc" }
 }
 
 data "aws_eks_cluster" "k8s_cluster" {
@@ -57,43 +55,53 @@ data "aws_route53_zone" "node_glif_io" {
 }
 
 data "aws_secretsmanager_secret" "calibrationapi_archive_lotus" {
-  name = "${module.generator.prefix}-calibrationapi-archive-lotus"
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-calibrationapi-archive-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "calibrationapi_archive_lotus" {
-  secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_lotus.id
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "calibrationapi_lotus" {
-  name = "${module.generator.prefix}-calibrationapi-lotus"
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-calibrationapi-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "calibrationapi_lotus" {
-  secret_id = data.aws_secretsmanager_secret.calibrationapi_lotus.id
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.calibrationapi_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "api_read_dev_lotus" {
-  name = "${module.generator.prefix}-api-read-dev-lotus"
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-api-read-dev-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "api_read_dev_lotus" {
-  secret_id = data.aws_secretsmanager_secret.api_read_dev_lotus.id
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.api_read_dev_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "api_read_cache_dev" {
-  name = "${module.generator.prefix}-api-read-cache-dev"
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-api-read-cache-dev"
 }
 
 data "aws_secretsmanager_secret_version" "api_read_cache_dev" {
-  secret_id = data.aws_secretsmanager_secret.api_read_cache_dev.id
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.api_read_cache_dev[0].id
 }
 
 data "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
-  name = "${module.generator.prefix}-calibrationapi-jwt-lotus"
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-calibrationapi-jwt-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "calibrationapi_jwt_lotus" {
-  secret_id = data.aws_secretsmanager_secret.calibrationapi_jwt_lotus.id
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.calibrationapi_jwt_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "monitoring" {

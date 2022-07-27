@@ -34,4 +34,6 @@ locals {
     filecoin-prod-apn1-glif-eks = 0
   }
   is_dev_envs = local.is_dev_env[terraform.workspace]
+
+  make_internal_lb_domain_name_dev_stage = "https://${var.environment}-internal.${var.route53_domain}"
 }

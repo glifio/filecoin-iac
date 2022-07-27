@@ -93,18 +93,6 @@ resource "aws_api_gateway_method" "root_post" {
   request_validator_id = aws_api_gateway_request_validator.main.id
 }
 
-resource "aws_api_gateway_method_settings" "path_specific" {
-  rest_api_id = aws_api_gateway_rest_api.main.id
-  stage_name  = aws_api_gateway_stage.main.stage_name
-  method_path = "dev/POST"
-
-  settings {
-    metrics_enabled        = true
-    logging_level          = "INFO"
-    throttling_rate_limit  = "1000"
-    throttling_burst_limit = "5000"
-  }
-}
 
 
 resource "aws_api_gateway_integration" "root_post" {
@@ -115,7 +103,7 @@ resource "aws_api_gateway_integration" "root_post" {
   type                    = "HTTP"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
-  uri                     = "${local.make_internal_lb_domain_name}/${var.uri_service_endpoint_rpc_v0}"
+  uri                     = "${local.make_internal_lb_domain_name_dev_stage}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
   request_templates = {
     "application/json"               = ""
     "application/json;charset=UTF-8" = ""
