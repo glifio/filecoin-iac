@@ -4,11 +4,12 @@ locals {
     region          = var.region
     environment     = var.environment
     sub_environment = var.sub_environment
+    route53_domain  = var.route53_domain
   }
 
   oidc_URL = replace(data.aws_eks_cluster.k8s_cluster.identity[0].oidc[0].issuer, "https://", "")
 
-# https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
+  # https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
   get_registry_based_on_region = {
     "us-east-1"      = "602401143452.dkr.ecr.us-east-1.amazonaws.com"
     "us-east-2"      = "602401143452.dkr.ecr.us-east-2.amazonaws.com"
@@ -33,4 +34,6 @@ locals {
     filecoin-prod-apn1-glif-eks = 0
   }
   is_dev_envs = local.is_dev_env[terraform.workspace]
+
+  make_internal_lb_domain_name_dev_stage = "https://${var.environment}-internal.${var.route53_domain}"
 }

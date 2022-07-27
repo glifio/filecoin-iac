@@ -50,7 +50,7 @@ resource "helm_release" "konghq-external" {
 
   set {
     name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
-    value = aws_acm_certificate_validation.external_lb.certificate_arn
+    value = aws_acm_certificate.external_lb.arn
   }
 
   set {
@@ -126,7 +126,7 @@ resource "helm_release" "konghq-internal" {
 
   set {
     name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
-    value = aws_acm_certificate_validation.internal_lb.certificate_arn
+    value = aws_acm_certificate.internal_lb.arn
   }
 
   set {

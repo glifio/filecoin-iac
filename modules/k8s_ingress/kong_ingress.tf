@@ -19,7 +19,7 @@ resource "kubernetes_ingress_v1" "ingress_kong" {
       http {
         path {
           path      = var.get_ingress_http_path
-          path_type = "Prefix"
+          path_type = var.get_ingress_pathType
           backend {
             service {
               name = var.as_is_ingress_backend_service_name ? var.get_ingress_backend_service_name : "${var.get_ingress_backend_service_name}-service"
@@ -36,15 +36,3 @@ resource "kubernetes_ingress_v1" "ingress_kong" {
 
 
 
-
-
-## this rule allows to connect from alb to ingress like a backend of alb
-#resource "aws_security_group_rule" "cluster_security_group_1234" {
-#  type                     = "ingress"
-#  description              = "${module.generator.prefix} allow from alb ingress service to cluster security group"
-#  from_port                = 1234
-#  to_port                  = 1234
-#  protocol                 = "tcp"
-#  source_security_group_id = aws_security_group.alb_managed_ingress_sg.id
-#  security_group_id        = data.aws_eks_cluster.k8s_cluster.vpc_config[0].cluster_security_group_id
-#}

@@ -37,10 +37,17 @@ variable "route53_domain" {
   #  type = string
 }
 
-variable "env_specific_subdomain_name" {
+variable "http_endpoint_uri" {
   type = string
 }
 
-#variable "route53_zone_id" {
-#  type = string
-#}
+variable "uri_service_endpoint_rpc_v0" {
+  type    = string
+  default = "api-read-dev/cache/rpc/v0"
+}
+
+
+variable "uri_service_endpoint_rpc_v1" {
+  type    = string
+  default = "api-read-dev/cache/rpc/v1"
+}

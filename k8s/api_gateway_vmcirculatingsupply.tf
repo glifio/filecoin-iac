@@ -1,28 +1,27 @@
 ####### START BLOCK vmcirculatingsupply ########
 
 resource "aws_api_gateway_resource" "vmcirculatingsupply" {
-  rest_api_id = data.aws_api_gateway_rest_api.main.id
-  parent_id   = data.aws_api_gateway_rest_api.main.root_resource_id
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  parent_id   = aws_api_gateway_rest_api.main.root_resource_id
   path_part   = "vmcirculatingsupply"
 }
 
-
 resource "aws_api_gateway_method" "vmcirculatingsupply_get" {
-  rest_api_id   = data.aws_api_gateway_rest_api.main.id
+  rest_api_id   = aws_api_gateway_rest_api.main.id
   resource_id   = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method   = "GET"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "vmcirculatingsupply_get" {
-  rest_api_id             = data.aws_api_gateway_rest_api.main.id
+  rest_api_id             = aws_api_gateway_rest_api.main.id
   resource_id             = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method             = aws_api_gateway_method.vmcirculatingsupply_get.http_method
   integration_http_method = "POST"
   type                    = "HTTP"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
-  uri                     = "https://${var.env_specific_subdomain_name}-internal.${var.route53_domain}/api-read-dev/cache/rpc/v0"
+  uri                     = "${local.make_internal_lb_domain_name_dev_stage}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
   request_templates = {
     "application/json" = file("${path.module}/configs/api_gateway_templates/vmcirculatingsupply_get_request.pol.tpl")
   }
@@ -30,7 +29,7 @@ resource "aws_api_gateway_integration" "vmcirculatingsupply_get" {
 }
 
 resource "aws_api_gateway_method_response" "vmcirculatingsupply_get_200" {
-  rest_api_id         = data.aws_api_gateway_rest_api.main.id
+  rest_api_id         = aws_api_gateway_rest_api.main.id
   resource_id         = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method         = aws_api_gateway_method.vmcirculatingsupply_get.http_method
   status_code         = "200"
@@ -38,7 +37,7 @@ resource "aws_api_gateway_method_response" "vmcirculatingsupply_get_200" {
 }
 
 resource "aws_api_gateway_integration_response" "vmcirculatingsupply_get_200" {
-  rest_api_id         = data.aws_api_gateway_rest_api.main.id
+  rest_api_id         = aws_api_gateway_rest_api.main.id
   resource_id         = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method         = aws_api_gateway_method.vmcirculatingsupply_get.http_method
   status_code         = aws_api_gateway_method_response.vmcirculatingsupply_get_200.status_code
@@ -49,14 +48,14 @@ resource "aws_api_gateway_integration_response" "vmcirculatingsupply_get_200" {
 }
 
 resource "aws_api_gateway_method_response" "vmcirculatingsupply_get_404" {
-  rest_api_id = data.aws_api_gateway_rest_api.main.id
+  rest_api_id = aws_api_gateway_rest_api.main.id
   resource_id = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method = aws_api_gateway_method.vmcirculatingsupply_get.http_method
   status_code = "404"
 }
 
 resource "aws_api_gateway_integration_response" "vmcirculatingsupply_get_404" {
-  rest_api_id         = data.aws_api_gateway_rest_api.main.id
+  rest_api_id         = aws_api_gateway_rest_api.main.id
   resource_id         = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method         = aws_api_gateway_method.vmcirculatingsupply_get.http_method
   status_code         = aws_api_gateway_method_response.vmcirculatingsupply_get_404.status_code
@@ -65,14 +64,14 @@ resource "aws_api_gateway_integration_response" "vmcirculatingsupply_get_404" {
 }
 
 resource "aws_api_gateway_method_response" "vmcirculatingsupply_get_503" {
-  rest_api_id = data.aws_api_gateway_rest_api.main.id
+  rest_api_id = aws_api_gateway_rest_api.main.id
   resource_id = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method = aws_api_gateway_method.vmcirculatingsupply_get.http_method
   status_code = "503"
 }
 
 resource "aws_api_gateway_integration_response" "vmcirculatingsupply_get_503" {
-  rest_api_id         = data.aws_api_gateway_rest_api.main.id
+  rest_api_id         = aws_api_gateway_rest_api.main.id
   resource_id         = aws_api_gateway_resource.vmcirculatingsupply.id
   http_method         = aws_api_gateway_method.vmcirculatingsupply_get.http_method
   status_code         = aws_api_gateway_method_response.vmcirculatingsupply_get_503.status_code
