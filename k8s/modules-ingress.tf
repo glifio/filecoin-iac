@@ -26,19 +26,6 @@ module "ingress-kong_calibrationapi-ipfs-service-4001" {
   type_lb_scheme                   = "external"
 }
 
-module "ingress-kong_calibrationapi-ipfs-service-5001" {
-  count                            = local.is_dev_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/calibrationapi/ipfs/(.*)"
-  get_ingress_backend_service_name = "calibrationapi-ipfs" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 5001
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "calibration.node.glif.io"
-  is_kong_auth_header_enabled      = false
-  type_lb_scheme                   = "external"
-}
-
 module "ingress-kong_calibrationapi-ipfs-service-8080" {
   count                            = local.is_dev_envs
   source                           = "../modules/k8s_ingress"
