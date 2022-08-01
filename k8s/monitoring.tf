@@ -14,8 +14,8 @@ resource "helm_release" "monitoring" {
       get_slack_channel            = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "slack_configs_0_channel", null)
       get_grafana_notifiers_url    = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "slack_api_url", null)
       get_prometheus_storage_class = kubernetes_storage_class_v1.ebs_csi_driver_gp2.metadata[0].name
-      get_kong_ingress_external    = helm_release.konghq-external[0].name
-      get_kong_ingress_internal    = helm_release.konghq-external[0].name //helm_release.konghq-internal[0].name
+      get_kong_ingress_external    = helm_release.konghq-external.name
+      get_kong_ingress_internal    = helm_release.konghq-internal.name
     })
   ]
 

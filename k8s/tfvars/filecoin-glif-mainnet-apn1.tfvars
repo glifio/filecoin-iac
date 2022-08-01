@@ -1,0 +1,6 @@
+project                     = "filecoin"
+environment                 = "mainnet"
+region                      = "ap-northeast-1"
+sub_environment             = "glif"
+route53_domain              = "node.glif.io"
+http_endpoint_uri = "https://node.glif.link/"

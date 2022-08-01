@@ -1,9 +1,9 @@
 variable "profile" {
   type = map(string)
   default = {
-    "filecoin-glif-prod-apn1" = "filecoin"
-    "filecoin-glif-dev-apn1"  = "filecoin"
-    "default"                 = "_dont_use_default_namespace"
+    "filecoin-glif-mainnet-apn1" = "filecoin"
+    "filecoin-glif-dev-apn1"     = "filecoin"
+    "default"                    = "_dont_use_default_namespace"
   }
 }
 

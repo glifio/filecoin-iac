@@ -1,7 +1,6 @@
 # https://docs.konghq.com/kubernetes-ingress-controller/latest/deployment/eks/
 
 resource "helm_release" "konghq-external" {
-  count      = local.is_dev_envs
   name       = "${module.generator.prefix}-kong-external"
   repository = "https://charts.konghq.com"
   chart      = "kong"
@@ -77,7 +76,6 @@ resource "helm_release" "konghq-external" {
 
 
 resource "helm_release" "konghq-internal" {
-  count      = local.is_dev_envs
   name       = "${module.generator.prefix}-kong-internal"
   repository = "https://charts.konghq.com"
   chart      = "kong"

@@ -1,5 +1,5 @@
 resource "aws_opensearch_domain" "main" {
-  domain_name    = "${module.generator.prefix_region}-logging"
+  domain_name    = "${module.generator.prefix_region}-os"
   engine_version = "OpenSearch_1.2"
 
   access_policies = templatefile("${path.module}/templates/policies/opensearch_policy.pol.tpl", {
@@ -60,6 +60,7 @@ resource "aws_opensearch_domain" "main" {
   ebs_options {
     ebs_enabled = true
     volume_size = 300
+    iops        = 3000
   }
   tags = module.generator.common_tags
 }

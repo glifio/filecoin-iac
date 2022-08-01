@@ -19,19 +19,19 @@ locals {
 
   env_dev_route53_record = {
     filecoin-dev-apn1-glif-eks  = 1
-    filecoin-prod-apn1-glif-eks = 0
+    filecoin-mainnet-apn1-glif-eks = 0
   }
   env_dev_route53_records = local.env_dev_route53_record[terraform.workspace]
 
   env_dev_ingress_record = {
     filecoin-dev-apn1-glif-eks  = 1
-    filecoin-prod-apn1-glif-eks = 0
+    filecoin-mainnet-apn1-glif-eks = 0
   }
   env_dev_ingress_records = local.env_dev_ingress_record[terraform.workspace]
 
   is_dev_env = {
     filecoin-dev-apn1-glif-eks  = 1
-    filecoin-prod-apn1-glif-eks = 0
+    filecoin-mainnet-apn1-glif-eks = 0
   }
   is_dev_envs = local.is_dev_env[terraform.workspace]
 

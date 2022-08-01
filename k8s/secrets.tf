@@ -11,6 +11,7 @@ resource "kubernetes_secret_v1" "lotus_archive_node_secret" {
 }
 
 resource "kubernetes_secret_v1" "calibrationapi_lotus_secret" {
+  count = local.is_dev_envs
   metadata {
     name      = "calibrationapi-lotus-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
@@ -22,6 +23,7 @@ resource "kubernetes_secret_v1" "calibrationapi_lotus_secret" {
 }
 
 resource "kubernetes_secret_v1" "api_read_dev_lotus_secret" {
+  count = local.is_dev_envs
   metadata {
     name      = "api-read-dev-lotus-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
@@ -33,6 +35,7 @@ resource "kubernetes_secret_v1" "api_read_dev_lotus_secret" {
 }
 
 resource "kubernetes_secret_v1" "api_read_cache_dev_lotus_secret" {
+  count = local.is_dev_envs
   metadata {
     name      = "api-read-cache-dev-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
@@ -43,6 +46,7 @@ resource "kubernetes_secret_v1" "api_read_cache_dev_lotus_secret" {
 }
 
 resource "kubernetes_secret_v1" "calibrationapi_jwt_lotus_secret" {
+  count = local.is_dev_envs
   metadata {
     name      = "calibrationapi-jwt-lotus-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
