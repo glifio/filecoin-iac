@@ -18,7 +18,7 @@ resource "aws_api_gateway_stage" "dev" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.account_logging
+    aws_iam_role_policy_attachment.account_logging_dev
   ]
 }
 

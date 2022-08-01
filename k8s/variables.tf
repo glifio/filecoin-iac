@@ -1,7 +1,7 @@
 variable "profile" {
   type = map(string)
   default = {
-    "filecoin-dev-apn1-glif-eks"  = "filecoin"
+    "filecoin-dev-apn1-glif-eks"     = "filecoin"
     "filecoin-mainnet-apn1-glif-eks" = "filecoin"
   }
 }

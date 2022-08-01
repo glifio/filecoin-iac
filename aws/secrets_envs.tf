@@ -50,6 +50,22 @@ resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
 
 ################# START BLOCK MAINNET ENV SECRETS LIST #################
 
-##
+resource "aws_secretsmanager_secret" "api_read_cache" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-api-read-cache"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-api-read-cache" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "api_read_lotus" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-api-read-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-api-read-lotus" },
+    module.generator.common_tags)
+}
 
 ################# END BLOCK MAINNET ENV SECRETS LIST #################

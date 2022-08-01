@@ -18,22 +18,29 @@ locals {
   get_registry_based_on_regions = local.get_registry_based_on_region[var.region]
 
   env_dev_route53_record = {
-    filecoin-dev-apn1-glif-eks  = 1
+    filecoin-dev-apn1-glif-eks     = 1
     filecoin-mainnet-apn1-glif-eks = 0
   }
   env_dev_route53_records = local.env_dev_route53_record[terraform.workspace]
 
   env_dev_ingress_record = {
-    filecoin-dev-apn1-glif-eks  = 1
+    filecoin-dev-apn1-glif-eks     = 1
     filecoin-mainnet-apn1-glif-eks = 0
   }
   env_dev_ingress_records = local.env_dev_ingress_record[terraform.workspace]
 
   is_dev_env = {
-    filecoin-dev-apn1-glif-eks  = 1
+    filecoin-dev-apn1-glif-eks     = 1
     filecoin-mainnet-apn1-glif-eks = 0
   }
   is_dev_envs = local.is_dev_env[terraform.workspace]
+
+
+  is_mainnet_env = {
+    filecoin-dev-apn1-glif-eks     = 0
+    filecoin-mainnet-apn1-glif-eks = 1
+  }
+  is_mainnet_envs = local.is_mainnet_env[terraform.workspace]
 
   make_internal_lb_domain_name_dev_stage = "https://${var.environment}-internal.${var.route53_domain}"
 }

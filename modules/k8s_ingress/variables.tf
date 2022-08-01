@@ -42,7 +42,7 @@ variable "is_kong_transformer_header_enabled" {
 
 variable "is_kong_cors_enabled" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "type_lb_scheme" {

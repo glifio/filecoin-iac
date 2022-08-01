@@ -82,11 +82,13 @@ resource "aws_api_gateway_request_validator" "main" {
 }
 
 
-resource "aws_api_gateway_account" "account_logging" {
-  cloudwatch_role_arn = aws_iam_role.account_logging.arn
+resource "aws_api_gateway_account" "account_logging_dev" {
+  count               = local.is_dev_envs
+  cloudwatch_role_arn = aws_iam_role.account_logging_dev[0].arn
 }
 
-resource "aws_iam_role" "account_logging" {
+resource "aws_iam_role" "account_logging_dev" {
+  count              = local.is_dev_envs
   name               = "${module.generator.prefix}-apigw-logging"
   assume_role_policy = file("${path.module}/templates/roles/cloudwatch_apigw_logging.pol.tpl")
 
@@ -103,7 +105,28 @@ resource "aws_iam_policy" "account_logging" {
   tags = module.generator.common_tags
 }
 
-resource "aws_iam_role_policy_attachment" "account_logging" {
-  role       = aws_iam_role.account_logging.name
+resource "aws_iam_role_policy_attachment" "account_logging_dev" {
+  count      = local.is_dev_envs
+  role       = aws_iam_role.account_logging_dev[0].name
+  policy_arn = aws_iam_policy.account_logging.arn
+}
+
+
+resource "aws_api_gateway_account" "account_logging_mainnet" {
+  count               = local.is_mainnet_envs
+  cloudwatch_role_arn = aws_iam_role.account_logging_mainnet[0].arn
+}
+
+resource "aws_iam_role" "account_logging_mainnet" {
+  count              = local.is_mainnet_envs
+  name               = "${module.generator.prefix}-apigw-logging"
+  assume_role_policy = file("${path.module}/templates/roles/cloudwatch_apigw_logging.pol.tpl")
+
+  tags = module.generator.common_tags
+}
+
+resource "aws_iam_role_policy_attachment" "account_logging_mainnet" {
+  count      = local.is_mainnet_envs
+  role       = aws_iam_role.account_logging_mainnet[0].name
   policy_arn = aws_iam_policy.account_logging.arn
 }
