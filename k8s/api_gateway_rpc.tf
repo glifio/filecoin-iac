@@ -34,7 +34,7 @@ resource "aws_api_gateway_method_response" "rpc_v0_get" {
   resource_id         = aws_api_gateway_resource.rpc_v0.id
   http_method         = aws_api_gateway_method.rpc_v0_get.http_method
   status_code         = "200"
-  response_parameters = {}
+  response_parameters = { "method.response.header.Content-Type" = true }
 }
 
 resource "aws_api_gateway_integration_response" "rpc_v0_get" {
@@ -42,10 +42,7 @@ resource "aws_api_gateway_integration_response" "rpc_v0_get" {
   resource_id         = aws_api_gateway_resource.rpc_v0.id
   http_method         = aws_api_gateway_method.rpc_v0_get.http_method
   status_code         = aws_api_gateway_method_response.rpc_v0_get.status_code
-  response_parameters = {}
-  response_templates = {
-    "application/json" = ""
-  }
+  response_parameters = { "method.response.header.Content-Type" = "'text/html'" }
 }
 
 resource "aws_api_gateway_method" "rpc_v0_options" {
@@ -114,6 +111,7 @@ resource "aws_api_gateway_integration" "rpc_v0_post" {
   resource_id             = aws_api_gateway_resource.rpc_v0.id
   http_method             = aws_api_gateway_method.rpc_v0_post.http_method
   integration_http_method = aws_api_gateway_method.rpc_v0_post.http_method
+  passthrough_behavior    = "NEVER"
   type                    = "HTTP"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
@@ -216,7 +214,7 @@ resource "aws_api_gateway_method_response" "rpc_v1_get" {
   resource_id         = aws_api_gateway_resource.rpc_v1.id
   http_method         = aws_api_gateway_method.rpc_v1_get.http_method
   status_code         = "200"
-  response_parameters = {}
+  response_parameters = { "method.response.header.Content-Type" = true }
 }
 
 resource "aws_api_gateway_integration_response" "rpc_v1_get" {
@@ -224,10 +222,7 @@ resource "aws_api_gateway_integration_response" "rpc_v1_get" {
   resource_id         = aws_api_gateway_resource.rpc_v1.id
   http_method         = aws_api_gateway_method.rpc_v1_get.http_method
   status_code         = aws_api_gateway_method_response.rpc_v1_get.status_code
-  response_parameters = {}
-  response_templates = {
-    "application/json" = ""
-  }
+  response_parameters = { "method.response.header.Content-Type" = "'text/html'" }
 }
 
 
@@ -305,6 +300,7 @@ resource "aws_api_gateway_integration" "rpc_v1_post" {
   resource_id             = aws_api_gateway_resource.rpc_v1.id
   http_method             = aws_api_gateway_method.rpc_v1_post.http_method
   integration_http_method = aws_api_gateway_method.rpc_v1_post.http_method
+  passthrough_behavior    = "NEVER"
   type                    = "HTTP"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
