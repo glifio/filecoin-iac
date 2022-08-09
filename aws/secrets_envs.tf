@@ -68,4 +68,57 @@ resource "aws_secretsmanager_secret" "api_read_lotus" {
     module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "space00_lotus" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-space00-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-space00-lotus" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "space06_lotus" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-space06-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-space06-lotus" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "space06_cache" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-space06-cache"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-space06-cache" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "space06-1_lotus" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-space06-1-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-space06-1-lotus" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "space07_lotus" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-space07-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-space07-lotus" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "space07_cache" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-space07-cache"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-space07-cache" },
+    module.generator.common_tags)
+}
 ################# END BLOCK MAINNET ENV SECRETS LIST #################

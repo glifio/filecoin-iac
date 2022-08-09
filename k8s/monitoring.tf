@@ -8,7 +8,7 @@ resource "helm_release" "monitoring" {
   values = [
     templatefile("${path.module}/configs/prometheus/values.yaml", {
       get_short_environment        = var.environment
-      get_nodegroup_selector       = "group1"
+      get_nodegroup_selector       = local.monitoring_nodegroups
       get_app_namespace            = kubernetes_namespace_v1.network.metadata[0].name
       get_slack_api_url            = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "slack_api_url", null)
       get_slack_channel            = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "slack_configs_0_channel", null)

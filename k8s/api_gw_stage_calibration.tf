@@ -4,6 +4,7 @@ resource "aws_api_gateway_stage" "calibration" {
   rest_api_id           = aws_api_gateway_rest_api.main.id
   stage_name            = "calibration"
   client_certificate_id = aws_api_gateway_client_certificate.calibration[0].id
+  cache_cluster_size    = "0.5"
 
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.calibration[0].arn

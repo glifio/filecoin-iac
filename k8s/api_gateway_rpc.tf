@@ -225,10 +225,6 @@ resource "aws_api_gateway_integration_response" "rpc_v1_get" {
   response_parameters = { "method.response.header.Content-Type" = "'text/html'" }
 }
 
-
-
-
-
 resource "aws_api_gateway_method" "rpc_v1_options" {
   rest_api_id   = aws_api_gateway_rest_api.main.id
   resource_id   = aws_api_gateway_resource.rpc_v1.id
