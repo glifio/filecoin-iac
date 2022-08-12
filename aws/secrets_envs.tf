@@ -59,6 +59,25 @@ resource "aws_secretsmanager_secret" "api_read_cache" {
     module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "api_read_v0_cache" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-api-read-v0-cache"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-api-read-v0-cache" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "api_read_v1_cache" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-api-read-v1-cache"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-api-read-v1-cache" },
+    module.generator.common_tags)
+}
+
+
 resource "aws_secretsmanager_secret" "api_read_lotus" {
   count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-api-read-lotus"

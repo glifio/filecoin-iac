@@ -57,14 +57,26 @@ resource "kubernetes_secret_v1" "calibrationapi_jwt_lotus_secret" {
   }
 }
 
-resource "kubernetes_secret_v1" "api_read_cache_mainnet_lotus_secret" {
+
+resource "kubernetes_secret_v1" "api_read_v0_cache_mainnet_secret" {
   count = local.is_mainnet_envs
   metadata {
-    name      = "api-read-cache-secret"
+    name      = "api-read-v0-cache-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
   }
   data = {
-    config = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_cache_mainnet[0].secret_string), "cache_service_config", null))
+    config = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_v0_cache_mainnet[0].secret_string), "cache_service_config", null))
+  }
+}
+
+resource "kubernetes_secret_v1" "api_read_v1_cache_mainnet_secret" {
+  count = local.is_mainnet_envs
+  metadata {
+    name      = "api-read-v1-cache-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    config = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_v1_cache_mainnet[0].secret_string), "cache_service_config", null))
   }
 }
 

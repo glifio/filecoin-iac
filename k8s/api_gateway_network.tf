@@ -95,8 +95,6 @@ resource "aws_iam_role" "account_logging_dev" {
   tags = module.generator.common_tags
 }
 
-
-
 resource "aws_iam_policy" "account_logging" {
   name        = "${module.generator.prefix}-apigw-logging"
   description = ""

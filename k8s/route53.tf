@@ -58,3 +58,30 @@ resource "aws_route53_record" "monitoring" {
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
+
+
+############### mainnet env ###################
+
+resource "aws_route53_record" "mainnet_nlb_ingress_internal" {
+  count           = local.is_mainnet_envs
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "${var.environment}-internal.${var.route53_domain}"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_internal.dns_name]
+}
+
+
+
+
+resource "aws_route53_record" "monitoring_mainnet" {
+#  count           = local.is_mainnet_envs
+  count   = 0
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "monitoring.${var.route53_domain}"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}

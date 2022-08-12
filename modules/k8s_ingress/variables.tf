@@ -42,7 +42,7 @@ variable "is_kong_transformer_header_enabled" {
 
 variable "is_kong_cors_enabled" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "type_lb_scheme" {
@@ -51,7 +51,7 @@ variable "type_lb_scheme" {
 
 variable "as_is_ingress_backend_service_name" {
   type        = bool
-  description = "It the pararmeter true, then -service will be added in the end of the service. The logic is useful when we deploy app"
+  description = "If the parameter is true, then '-service' string will be added in the end of the line. The logic is useful when we deploy an app"
   default     = false
 }
 
