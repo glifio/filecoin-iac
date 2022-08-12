@@ -76,10 +76,9 @@ resource "aws_route53_record" "mainnet_nlb_ingress_internal" {
 
 
 resource "aws_route53_record" "monitoring_mainnet" {
-#  count           = local.is_mainnet_envs
-  count   = 0
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "monitoring.${var.route53_domain}"
+  name            = "monitoring-new.${var.route53_domain}"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
