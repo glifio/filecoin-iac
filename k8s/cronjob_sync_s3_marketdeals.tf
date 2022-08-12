@@ -17,8 +17,10 @@ resource "aws_iam_role" "sync_marketdeals" {
   description = "${terraform.workspace} allow cronjob-sync-marketdeals access to s3 bucket"
 
   assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl", {
-    aws_account_id = data.aws_caller_identity.current.account_id
-    oidc           = local.oidc_URL
+    aws_account_id  = data.aws_caller_identity.current.account_id
+    oidc            = local.oidc_URL
+    namespace       = kubernetes_namespace_v1.network.metadata[0].name
+    sa_market_deals = var.sync_marketdeals_name
   })
 
   tags = merge(
@@ -50,7 +52,7 @@ resource "aws_iam_role_policy_attachment" "sync_marketdeals" {
 resource "kubernetes_service_account_v1" "sync_marketdeals" {
   count = local.is_mainnet_envs
   metadata {
-    name      = "sync-marketdeals"
+    name      = var.sync_marketdeals_name
     namespace = kubernetes_namespace_v1.network.metadata[0].name
 
     annotations = {
@@ -73,7 +75,7 @@ resource "kubernetes_cron_job_v1" "sync_marketdeals" {
   spec {
     concurrency_policy            = "Replace"
     failed_jobs_history_limit     = 1
-    schedule                      = "*/10 * * * *"
+    schedule                      = "*/20 * * * *"
     successful_jobs_history_limit = 1
     job_template {
       metadata {}

@@ -52,7 +52,8 @@ variable "uri_service_endpoint_rpc_v1" {
   default = "api-read-dev/cache/rpc/v1"
 }
 
-variable "sync_marketdeals_s3_bucket" {
+variable "sync_marketdeals_name" {
   type    = string
-  default = "marketdeals_test"
+  default = "sync-marketdeals"
 }
+

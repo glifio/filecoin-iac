@@ -10,7 +10,8 @@
             "Effect": "Allow",
             "Action": [
                 "s3:PutObject",
-                "s3:ListObject"
+                "s3:ListObject",
+                "s3:PutObjectAcl"
             ],
             "Resource": "arn:aws:s3:::${sync_marketdeals_s3_bucket}/*"
         }

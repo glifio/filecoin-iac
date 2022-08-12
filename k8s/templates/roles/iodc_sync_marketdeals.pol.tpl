@@ -10,7 +10,7 @@
 	  "Condition": {
 		"StringEquals": {
 		  "${oidc}:aud": "sts.amazonaws.com",
-		  "${oidc}:sub": "system:serviceaccount:kube-system:cronjob-sync-marketdeals"
+		  "${oidc}:sub": "system:serviceaccount:${namespace}:${sa_market_deals}"
 		}
 	  }
 	}
