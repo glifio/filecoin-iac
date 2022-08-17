@@ -33,17 +33,17 @@ resource "helm_release" "konghq-external" {
   }
 
   set {
-    name  = "proxy.stream.containerPort"
+    name  = "proxy.stream[0].containerPort"
     value = "1235"
   }
 
   set {
-    name  = "proxy.stream.servicePort"
+    name  = "proxy.stream[0].servicePort"
     value = "1235"
   }
 
   set {
-    name  = "proxy.stream.protocol"
+    name  = "proxy.stream[0].protocol"
     value = "TCP"
   }
 
