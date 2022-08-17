@@ -5,7 +5,7 @@ resource "helm_release" "konghq-external" {
   repository = "https://charts.konghq.com"
   chart      = "kong"
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
-  version    = "2.10.2"
+  version    = "2.12.0"
 
   set {
     name  = "ingressController.ingressClass"
@@ -30,6 +30,21 @@ resource "helm_release" "konghq-external" {
   set {
     name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
     value = "nlb"
+  }
+
+  set {
+    name  = "proxy.stream.containerPort"
+    value = "1235"
+  }
+
+  set {
+    name  = "proxy.stream.servicePort"
+    value = "1235"
+  }
+
+  set {
+    name  = "proxy.stream.protocol"
+    value = "TCP"
   }
 
   set {
