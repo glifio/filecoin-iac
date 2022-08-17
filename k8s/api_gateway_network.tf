@@ -10,12 +10,6 @@ resource "aws_api_gateway_rest_api" "main" {
   tags = module.generator.common_tags
 }
 
-
-
-
-
-
-
 # VPC Link is accosiated with EKS Internal ELB dev (testnet) cluaster
 resource "aws_api_gateway_vpc_link" "main" {
   name        = "${module.generator.prefix}-vpc-link"
@@ -23,8 +17,6 @@ resource "aws_api_gateway_vpc_link" "main" {
   target_arns = [data.aws_lb.kong_internal.arn]
 
   tags = merge({ "Name" = "${module.generator.prefix}-vpc-link" }, module.generator.common_tags)
-
-
 }
 
 resource "aws_api_gateway_deployment" "main" {

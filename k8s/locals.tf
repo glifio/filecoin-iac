@@ -47,5 +47,33 @@ locals {
   }
   is_mainnet_envs = local.is_mainnet_env[terraform.workspace]
 
-  make_internal_lb_domain_name_dev_stage = "https://${var.environment}-internal.${var.route53_domain}"
+
+  external_lb_certificate = {
+    filecoin-dev-apn1-glif-eks = [
+      "*.${var.route53_domain}",
+      "calibration.node.glif.io",
+      "*.calibration.node.glif.io"
+    ]
+    filecoin-mainnet-apn1-glif-eks = [
+      "*.${var.route53_domain}",
+    ]
+  }
+  external_lb_certificates = local.external_lb_certificate[terraform.workspace]
+
+
+  internal_lb_certificate = {
+    filecoin-dev-apn1-glif-eks = [
+      "*.dev-internal.dev.node.glif.io",
+      "*.api.dev.node.glif.io",
+      "api.dev.node.glif.io"
+    ]
+    filecoin-mainnet-apn1-glif-eks = [
+      "*.mainnet-internal.node.glif.io",
+      "*.api.node.glif.io",
+      "api.node.glif.io"
+    ]
+  }
+  internal_lb_certificates = local.internal_lb_certificate[terraform.workspace]
+
+  make_internal_lb_domain_name = "https://${var.environment}-internal.${var.route53_domain}"
 }

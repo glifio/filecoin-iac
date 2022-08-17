@@ -12,8 +12,8 @@ resource "aws_api_gateway_stage" "mainnet" {
 
   variables = {
     "health" = "/api-read-master/lotus/debug/metrics"
-    "rpc_v0" = "api-read-master/cache/rpc/v0"
-    "rpc_v1" = "api-read-master/cache/rpc/v1"
+    "rpc_v0" = "api-read/cache/rpc/v0"
+    "rpc_v1" = "api-read/cache/rpc/v1"
   }
 
   depends_on = [
@@ -39,7 +39,7 @@ resource "aws_api_gateway_base_path_mapping" "mainnet" {
 resource "aws_api_gateway_domain_name" "node_glif_io" {
   count                    = local.is_mainnet_envs
   regional_certificate_arn = aws_acm_certificate.api_gw_acm_mainnet[0].arn
-  domain_name              = "node.glif.io"
+  domain_name              = "api-internal.node.glif.io"
 
   endpoint_configuration {
     types = ["REGIONAL"]
@@ -49,10 +49,13 @@ resource "aws_api_gateway_domain_name" "node_glif_io" {
 }
 
 resource "aws_acm_certificate" "api_gw_acm_mainnet" {
-  count                     = local.is_mainnet_envs
-  domain_name               = "node.glif.io"
-  subject_alternative_names = ["*.node.glif.io"]
-  validation_method         = "DNS"
+  count       = local.is_mainnet_envs
+  domain_name = "api-internal.node.glif.io"
+  subject_alternative_names = [
+    "api.node.glif.io",
+    "*.node.glif.io"
+  ]
+  validation_method = "DNS"
 
   tags = module.generator.common_tags
 }

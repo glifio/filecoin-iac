@@ -9,5 +9,8 @@ locals {
   get_request_transformer = var.is_kong_auth_header_enabled && var.is_kong_transformer_header_enabled ? local.auth_header_replace_url : ""
 
   get_cors              = var.is_kong_cors_enabled ? kubernetes_manifest.cors[0].manifest.metadata.name : ""
-  get_kong_list_plugins = local.get_cors == null && local.get_request_transformer == null ? "" : join(", ", compact([local.get_cors, local.get_request_transformer]))
+  get_whitelist_ips     = var.enable_whitelist_ip ? kubernetes_manifest.ip_restriction[0].manifest.metadata.name : ""
+  get_kong_list_plugins = local.get_cors == null && local.get_request_transformer == null ? "" : join(", ", compact([local.get_cors, local.get_whitelist_ips, local.get_request_transformer]))
+
+  validate_whitelist_ips = var.enable_whitelist_ip ? 1 : 0
 }

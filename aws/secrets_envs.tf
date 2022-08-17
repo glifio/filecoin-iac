@@ -50,15 +50,6 @@ resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
 
 ################# START BLOCK MAINNET ENV SECRETS LIST #################
 
-resource "aws_secretsmanager_secret" "api_read_cache" {
-  count                   = local.is_mainnet_envs
-  name                    = "${module.generator.prefix}-api-read-cache"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-api-read-cache" },
-    module.generator.common_tags)
-}
-
 resource "aws_secretsmanager_secret" "api_read_v0_cache" {
   count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-api-read-v0-cache"
@@ -68,22 +59,12 @@ resource "aws_secretsmanager_secret" "api_read_v0_cache" {
     module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "api_read_v1_cache" {
+resource "aws_secretsmanager_secret" "api_read_master_lotus" {
   count                   = local.is_mainnet_envs
-  name                    = "${module.generator.prefix}-api-read-v1-cache"
+  name                    = "${module.generator.prefix}-api-read-master-lotus"
   recovery_window_in_days = 30
 
-  tags = merge({ "Name" = "${module.generator.prefix}-api-read-v1-cache" },
-    module.generator.common_tags)
-}
-
-
-resource "aws_secretsmanager_secret" "api_read_lotus" {
-  count                   = local.is_mainnet_envs
-  name                    = "${module.generator.prefix}-api-read-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-api-read-lotus" },
+  tags = merge({ "Name" = "${module.generator.prefix}-api-read-master-lotus" },
     module.generator.common_tags)
 }
 

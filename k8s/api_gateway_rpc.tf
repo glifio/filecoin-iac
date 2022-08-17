@@ -115,7 +115,7 @@ resource "aws_api_gateway_integration" "rpc_v0_post" {
   type                    = "HTTP"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
-  uri                     = "${local.make_internal_lb_domain_name_dev_stage}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
+  uri                     = "${local.make_internal_lb_domain_name}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
   request_templates = {
     "application/json"               = ""
     "application/json;charset=UTF-8" = ""
@@ -301,7 +301,7 @@ resource "aws_api_gateway_integration" "rpc_v1_post" {
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
   #  uri                     = "${local.make_internal_lb_domain_name_dev_stage}/${var.uri_service_endpoint_rpc_v1}"
-  uri = "${local.make_internal_lb_domain_name_dev_stage}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjF9")}"
+  uri = "${local.make_internal_lb_domain_name}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjF9")}"
   request_templates = {
     "application/json"               = ""
     "application/json;charset=UTF-8" = ""

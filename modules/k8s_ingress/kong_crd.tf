@@ -85,3 +85,24 @@ resource "kubernetes_manifest" "cors" {
     "plugin" = "cors"
   }
 }
+
+
+######## START BLOCK ip-restriction PLUGIN ############
+
+resource "kubernetes_manifest" "ip_restriction" {
+  count = local.validate_whitelist_ips
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "ip-whitelist-${random_string.rand.result}"
+      "namespace" = var.get_ingress_namespace
+    }
+    "config" = {
+      "allow" = var.get_whitelist_ips
+    }
+    "plugin" = "ip-restriction"
+  }
+}
+
+######## END BLOCK ip-restriction PLUGIN ############

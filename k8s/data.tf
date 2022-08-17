@@ -112,16 +112,6 @@ data "aws_secretsmanager_secret_version" "monitoring" {
   secret_id = data.aws_secretsmanager_secret.monitoring.id
 }
 
-#data "aws_secretsmanager_secret" "api_read_cache_mainnet" {
-#  count = local.is_mainnet_envs
-#  name  = "${module.generator.prefix}-api-read-cache"
-#}
-#
-#data "aws_secretsmanager_secret_version" "api_read_cache_mainnet" {
-#  count     = local.is_mainnet_envs
-#  secret_id = data.aws_secretsmanager_secret.api_read_cache_mainnet[0].id
-#}
-
 data "aws_secretsmanager_secret" "api_read_v0_cache_mainnet" {
   count = local.is_mainnet_envs
   name  = "${module.generator.prefix}-api-read-v0-cache"
@@ -132,24 +122,14 @@ data "aws_secretsmanager_secret_version" "api_read_v0_cache_mainnet" {
   secret_id = data.aws_secretsmanager_secret.api_read_v0_cache_mainnet[0].id
 }
 
-data "aws_secretsmanager_secret" "api_read_v1_cache_mainnet" {
+data "aws_secretsmanager_secret" "api_read_master_mainnet_lotus" {
   count = local.is_mainnet_envs
-  name  = "${module.generator.prefix}-api-read-v1-cache"
+  name  = "${module.generator.prefix}-api-read-master-lotus"
 }
 
-data "aws_secretsmanager_secret_version" "api_read_v1_cache_mainnet" {
+data "aws_secretsmanager_secret_version" "api_read_master_mainnet_lotus" {
   count     = local.is_mainnet_envs
-  secret_id = data.aws_secretsmanager_secret.api_read_v1_cache_mainnet[0].id
-}
-
-data "aws_secretsmanager_secret" "api_read_mainnet_lotus" {
-  count = local.is_mainnet_envs
-  name  = "${module.generator.prefix}-api-read-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "api_read_mainnet_lotus" {
-  count     = local.is_mainnet_envs
-  secret_id = data.aws_secretsmanager_secret.api_read_mainnet_lotus[0].id
+  secret_id = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "space00_mainnet_lotus" {

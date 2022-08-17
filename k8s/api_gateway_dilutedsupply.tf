@@ -18,7 +18,7 @@ resource "aws_api_gateway_integration" "dilutedsupply_get" {
   http_method             = aws_api_gateway_method.dilutedsupply_get.http_method
   type                    = "HTTP"
   integration_http_method = "GET"
-  uri                     = var.http_endpoint_uri
+  uri                     = "https://circulatingsupply.s3.amazonaws.com/diluted_supply.html"
   timeout_milliseconds    = "29000"
 }
 

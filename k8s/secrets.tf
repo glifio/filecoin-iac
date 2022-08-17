@@ -69,17 +69,6 @@ resource "kubernetes_secret_v1" "api_read_v0_cache_mainnet_secret" {
   }
 }
 
-resource "kubernetes_secret_v1" "api_read_v1_cache_mainnet_secret" {
-  count = local.is_mainnet_envs
-  metadata {
-    name      = "api-read-v1-cache-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    config = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_v1_cache_mainnet[0].secret_string), "cache_service_config", null))
-  }
-}
-
 resource "kubernetes_secret_v1" "api_read_master_mainnet_lotus_secret" {
   count = local.is_mainnet_envs
   metadata {
@@ -87,8 +76,8 @@ resource "kubernetes_secret_v1" "api_read_master_mainnet_lotus_secret" {
     namespace = kubernetes_namespace_v1.network.metadata[0].name
   }
   data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "jwt_token", null)
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
   }
 }
 
@@ -99,8 +88,8 @@ resource "kubernetes_secret_v1" "api_read_slave_0_mainnet_lotus_secret" {
     namespace = kubernetes_namespace_v1.network.metadata[0].name
   }
   data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "jwt_token", null)
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
   }
 }
 
@@ -111,8 +100,8 @@ resource "kubernetes_secret_v1" "api_read_slave_1_mainnet_lotus_secret" {
     namespace = kubernetes_namespace_v1.network.metadata[0].name
   }
   data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "jwt_token", null)
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
   }
 }
 
@@ -123,8 +112,8 @@ resource "kubernetes_secret_v1" "api_read_slave_2_mainnet_lotus_secret" {
     namespace = kubernetes_namespace_v1.network.metadata[0].name
   }
   data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_mainnet_lotus[0].secret_string), "jwt_token", null)
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
   }
 }
 
@@ -137,6 +126,7 @@ resource "kubernetes_secret_v1" "space00_mainnet_lotus_secret" {
   data = {
     privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.space00_mainnet_lotus[0].secret_string), "private_key", null)
     token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.space00_mainnet_lotus[0].secret_string), "jwt_token", null)
+    nodeid     = lookup(jsondecode(data.aws_secretsmanager_secret_version.space00_mainnet_lotus[0].secret_string), "bootstrap_node_id", null)
 
   }
 }
@@ -196,6 +186,6 @@ resource "kubernetes_secret_v1" "space07_cache_lotus_secret" {
     namespace = kubernetes_namespace_v1.network.metadata[0].name
   }
   data = {
-    config = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.space06_cache_mainnet_lotus[0].secret_string), "cache_service_config", null))
+    config = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.space07_cache_mainnet_lotus[0].secret_string), "cache_service_config", null))
   }
 }

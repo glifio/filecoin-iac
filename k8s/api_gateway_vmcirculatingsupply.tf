@@ -21,7 +21,7 @@ resource "aws_api_gateway_integration" "vmcirculatingsupply_get" {
   type                    = "HTTP"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
-  uri                     = "${local.make_internal_lb_domain_name_dev_stage}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
+  uri                     = "${local.make_internal_lb_domain_name}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
   request_templates = {
     "application/json" = file("${path.module}/configs/api_gateway_templates/vmcirculatingsupply_get_request.pol.tpl")
   }

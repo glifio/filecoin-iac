@@ -8,7 +8,22 @@ module "ingress-kong_space00-1234" {
   get_ingress_backend_service_name = "space00-lotus" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 1234
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
+  get_rule_host                    = "mainnet-external.node.glif.io"
+  type_lb_scheme                   = "external"
+  enable_whitelist_ip              = false
+  get_whitelist_ips                = var.whitelist_ips
+}
+
+# Ingress for p2p port
+module "ingress-kong_space00-1235-p2p" {
+  count                            = local.is_mainnet_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/space00/lotus/(.*)"
+  get_ingress_backend_service_name = "space00-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 1235
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "mainnet-external.node.glif.io"
   type_lb_scheme                   = "external"
 }
 
@@ -20,7 +35,7 @@ module "ingress-kong_space06-1234" {
   get_ingress_backend_service_name = "space06-lotus" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 1234
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
+  get_rule_host                    = "mainnet-external.node.glif.io"
   type_lb_scheme                   = "external"
 }
 
@@ -32,7 +47,7 @@ module "ingress-kong_space07-1234" {
   get_ingress_backend_service_name = "space07-lotus" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 1234
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
+  get_rule_host                    = "mainnet-external.node.glif.io"
   type_lb_scheme                   = "external"
 }
 
@@ -44,7 +59,7 @@ module "ingress-kong_space06-cache-8080" {
   get_ingress_backend_service_name = "space06-cache" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 8080
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
+  get_rule_host                    = "mainnet-external.node.glif.io"
   type_lb_scheme                   = "external"
 }
 
@@ -56,7 +71,7 @@ module "ingress-kong_space07-cache-8080" {
   get_ingress_backend_service_name = "space07-cache" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 8080
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
+  get_rule_host                    = "mainnet-external.node.glif.io"
   type_lb_scheme                   = "external"
 }
 
@@ -68,7 +83,7 @@ module "ingress-kong_space00-ipfs-service-4001" {
   get_ingress_backend_service_name = "space00-ipfs" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 4001
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
+  get_rule_host                    = "mainnet-external.node.glif.io"
   is_kong_auth_header_enabled      = false
   type_lb_scheme                   = "external"
 }
@@ -81,7 +96,7 @@ module "ingress-kong_space00-ipfs-service-8080" {
   get_ingress_backend_service_name = "space00-ipfs" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 8080
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
+  get_rule_host                    = "mainnet-external.node.glif.io"
   is_kong_auth_header_enabled      = false
   type_lb_scheme                   = "external"
 }
@@ -96,20 +111,8 @@ module "ingress-kong_api-read-v0-cache-8080" {
   count                            = local.is_mainnet_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/api-read-mainnet/cache-v0/(.*)"
+  get_ingress_http_path            = "/api-read/cache/(.*)"
   get_ingress_backend_service_name = "api-read-v0-cache" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 8080
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "mainnet-internal.node.glif.io"
-  type_lb_scheme                   = "internal"
-}
-
-module "ingress-kong_api-read-v1-cache-8080" {
-  count                            = local.is_mainnet_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/api-read-mainnet/cache-v1/(.*)"
-  get_ingress_backend_service_name = "api-read-v1-cache" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 8080
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                    = "mainnet-internal.node.glif.io"

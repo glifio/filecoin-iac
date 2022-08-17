@@ -41,19 +41,10 @@ variable "http_endpoint_uri" {
   type = string
 }
 
-variable "uri_service_endpoint_rpc_v0" {
-  type    = string
-  default = "api-read-dev/cache/rpc/v0"
-}
-
-
-variable "uri_service_endpoint_rpc_v1" {
-  type    = string
-  default = "api-read-dev/cache/rpc/v1"
-}
-
 variable "sync_marketdeals_name" {
   type    = string
   default = "sync-marketdeals"
 }
+
+variable "whitelist_ips" {}
 
