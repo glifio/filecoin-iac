@@ -23,6 +23,7 @@ resource "aws_api_gateway_integration" "rpc_v0_get" {
   rest_api_id             = aws_api_gateway_rest_api.main.id
   resource_id             = aws_api_gateway_resource.rpc_v0.id
   http_method             = aws_api_gateway_method.rpc_v0_get.http_method
+  passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
   integration_http_method = aws_api_gateway_method.rpc_v0_get.http_method
   uri                     = var.http_endpoint_uri
@@ -53,10 +54,11 @@ resource "aws_api_gateway_method" "rpc_v0_options" {
 }
 
 resource "aws_api_gateway_integration" "rpc_v0_options" {
-  rest_api_id = aws_api_gateway_rest_api.main.id
-  resource_id = aws_api_gateway_resource.rpc_v0.id
-  http_method = aws_api_gateway_method.rpc_v0_options.http_method
-  type        = "MOCK"
+  rest_api_id          = aws_api_gateway_rest_api.main.id
+  resource_id          = aws_api_gateway_resource.rpc_v0.id
+  http_method          = aws_api_gateway_method.rpc_v0_options.http_method
+  passthrough_behavior = "WHEN_NO_MATCH"
+  type                 = "MOCK"
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }
@@ -203,6 +205,7 @@ resource "aws_api_gateway_integration" "rpc_v1_get" {
   rest_api_id             = aws_api_gateway_rest_api.main.id
   resource_id             = aws_api_gateway_resource.rpc_v1.id
   http_method             = aws_api_gateway_method.rpc_v1_get.http_method
+  passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
   integration_http_method = aws_api_gateway_method.rpc_v1_get.http_method
   uri                     = var.http_endpoint_uri
@@ -234,10 +237,11 @@ resource "aws_api_gateway_method" "rpc_v1_options" {
 
 
 resource "aws_api_gateway_integration" "rpc_v1_options" {
-  rest_api_id = aws_api_gateway_rest_api.main.id
-  resource_id = aws_api_gateway_resource.rpc_v1.id
-  http_method = aws_api_gateway_method.rpc_v1_options.http_method
-  type        = "MOCK"
+  rest_api_id          = aws_api_gateway_rest_api.main.id
+  resource_id          = aws_api_gateway_resource.rpc_v1.id
+  http_method          = aws_api_gateway_method.rpc_v1_options.http_method
+  passthrough_behavior = "WHEN_NO_MATCH"
+  type                 = "MOCK"
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }

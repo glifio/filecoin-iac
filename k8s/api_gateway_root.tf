@@ -11,6 +11,7 @@ resource "aws_api_gateway_integration" "root_get" {
   rest_api_id             = aws_api_gateway_rest_api.main.id
   resource_id             = aws_api_gateway_rest_api.main.root_resource_id
   http_method             = aws_api_gateway_method.root_get.http_method
+  passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
   integration_http_method = "GET"
   uri                     = var.http_endpoint_uri
@@ -41,10 +42,11 @@ resource "aws_api_gateway_method" "root_options" {
 }
 
 resource "aws_api_gateway_integration" "root_options" {
-  rest_api_id = aws_api_gateway_rest_api.main.id
-  resource_id = aws_api_gateway_rest_api.main.root_resource_id
-  http_method = aws_api_gateway_method.root_options.http_method
-  type        = "MOCK"
+  rest_api_id          = aws_api_gateway_rest_api.main.id
+  resource_id          = aws_api_gateway_rest_api.main.root_resource_id
+  http_method          = aws_api_gateway_method.root_options.http_method
+  passthrough_behavior = "WHEN_NO_MATCH"
+  type                 = "MOCK"
   request_templates = {
     "application/json" = "{\"statusCode\": 200}"
   }

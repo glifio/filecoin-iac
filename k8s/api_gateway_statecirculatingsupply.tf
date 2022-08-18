@@ -22,7 +22,7 @@ resource "aws_api_gateway_integration" "statecirculatingsupply_get" {
   http_method             = aws_api_gateway_method.statecirculatingsupply_get.http_method
   integration_http_method = "POST"
   type                    = "HTTP"
-  passthrough_behavior    = "NEVER"
+  passthrough_behavior    = "WHEN_NO_MATCH"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
   uri                     = "${local.make_internal_lb_domain_name}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
@@ -101,6 +101,7 @@ resource "aws_api_gateway_integration" "statecirculatingsupply_fil_get" {
   resource_id             = aws_api_gateway_resource.statecirculatingsupply_fil.id
   http_method             = aws_api_gateway_method.statecirculatingsupply_fil_get.http_method
   integration_http_method = aws_api_gateway_method.statecirculatingsupply_fil_get.http_method
+  passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
   uri                     = "https://circulatingsupply.s3.amazonaws.com/index.html"
   request_templates = {
@@ -181,6 +182,7 @@ resource "aws_api_gateway_integration" "statecirculatingsupply_fil_v2_get" {
   resource_id             = aws_api_gateway_resource.statecirculatingsupply_fil_v2.id
   http_method             = aws_api_gateway_method.statecirculatingsupply_fil_v2_get.http_method
   integration_http_method = aws_api_gateway_method.statecirculatingsupply_fil_v2_get.http_method
+  passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
   uri                     = "https://circulatingsupply-staging.s3.amazonaws.com/index.html"
   request_templates = {
