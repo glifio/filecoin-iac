@@ -7,7 +7,7 @@ resource "kubernetes_manifest" "kong_tcp_ingress" {
     kind       = "TCPIngress"
 
     metadata = {
-      name      = "space00-1235"
+      name      = "${terraform.workspace}-space00-1235"
       namespace = kubernetes_namespace_v1.kong.metadata[0].name
       annotations = {
         "kubernetes.io/ingress.class" : "kong-external"
