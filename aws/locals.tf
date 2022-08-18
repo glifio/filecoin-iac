@@ -46,4 +46,6 @@ locals {
     branch            = var.branch
     git_configuration = var.git_configuration
   }
+
+  make_aws_opensearch_domain = "${module.generator.prefix_region}-os"
 }

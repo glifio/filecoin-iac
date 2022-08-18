@@ -24,10 +24,13 @@ resource "aws_api_gateway_domain_name" "mainnet_glif_host" {
 }
 
 resource "aws_acm_certificate" "api_gw_acm_mainnet_glif_host" {
-  count                     = local.is_mainnet_envs
-  domain_name               = "mainnet.glif.host"
-  subject_alternative_names = ["*.mainnet.glif.host"]
-  validation_method         = "DNS"
+  count       = local.is_mainnet_envs
+  domain_name = "mainnet.glif.host"
+  subject_alternative_names = [
+    "*.mainnet.glif.host",
+    "*.node.glif.io"
+  ]
+  validation_method = "DNS"
 
   tags = module.generator.common_tags
 }

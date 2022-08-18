@@ -5,7 +5,7 @@ resource "aws_opensearch_domain" "main" {
   access_policies = templatefile("${path.module}/templates/policies/opensearch_policy.pol.tpl", {
     aws_account_id = data.aws_caller_identity.current.account_id
     aws_region     = var.region
-    os_domain_name = "${module.generator.prefix_region}-logging"
+    os_domain_name = "${module.generator.prefix_region}-os"
   })
 
   auto_tune_options {

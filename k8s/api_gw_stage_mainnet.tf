@@ -39,7 +39,7 @@ resource "aws_api_gateway_base_path_mapping" "mainnet" {
 resource "aws_api_gateway_domain_name" "node_glif_io" {
   count                    = local.is_mainnet_envs
   regional_certificate_arn = aws_acm_certificate.api_gw_acm_mainnet[0].arn
-  domain_name              = "api-internal.node.glif.io"
+  domain_name              = "api.node.glif.io"
 
   endpoint_configuration {
     types = ["REGIONAL"]
@@ -50,9 +50,9 @@ resource "aws_api_gateway_domain_name" "node_glif_io" {
 
 resource "aws_acm_certificate" "api_gw_acm_mainnet" {
   count       = local.is_mainnet_envs
-  domain_name = "api-internal.node.glif.io"
+  domain_name = "api.node.glif.io"
   subject_alternative_names = [
-    "api.node.glif.io",
+    "*.api.node.glif.io",
     "*.node.glif.io"
   ]
   validation_method = "DNS"
