@@ -1,12 +1,11 @@
 # https://docs.konghq.com/kubernetes-ingress-controller/latest/deployment/eks/
 
 resource "helm_release" "konghq-external" {
-  count      = local.is_dev_envs
   name       = "${module.generator.prefix}-kong-external"
   repository = "https://charts.konghq.com"
   chart      = "kong"
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
-  version    = "2.10.2"
+  version    = "2.12.0"
 
   set {
     name  = "ingressController.ingressClass"
@@ -31,6 +30,21 @@ resource "helm_release" "konghq-external" {
   set {
     name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
     value = "nlb"
+  }
+
+  set {
+    name  = "proxy.stream[0].containerPort"
+    value = "1235"
+  }
+
+  set {
+    name  = "proxy.stream[0].servicePort"
+    value = "1235"
+  }
+
+  set {
+    name  = "proxy.stream[0].protocol"
+    value = "TCP"
   }
 
   set {
@@ -77,7 +91,6 @@ resource "helm_release" "konghq-external" {
 
 
 resource "helm_release" "konghq-internal" {
-  count      = local.is_dev_envs
   name       = "${module.generator.prefix}-kong-internal"
   repository = "https://charts.konghq.com"
   chart      = "kong"

@@ -22,15 +22,15 @@ resource "aws_api_gateway_integration" "statecirculatingsupply_get" {
   http_method             = aws_api_gateway_method.statecirculatingsupply_get.http_method
   integration_http_method = "POST"
   type                    = "HTTP"
+  passthrough_behavior    = "WHEN_NO_MATCH"
   connection_type         = "VPC_LINK"
   connection_id           = aws_api_gateway_vpc_link.main.id
-  uri                     = "${local.make_internal_lb_domain_name_dev_stage}/${var.uri_service_endpoint_rpc_v0}"
+  uri                     = "${local.make_internal_lb_domain_name}/${base64decode("JHtzdGFnZVZhcmlhYmxlcy5ycGNfdjB9")}"
   request_templates = {
     "application/json" = file("${path.module}/configs/api_gateway_templates/statecirculatingsupply_request.pol.tpl")
   }
   timeout_milliseconds = "29000"
 }
-
 
 resource "aws_api_gateway_method_response" "statecirculatingsupply_get_200" {
   rest_api_id         = aws_api_gateway_rest_api.main.id
@@ -83,11 +83,6 @@ resource "aws_api_gateway_integration_response" "statecirculatingsupply_get_503"
   response_parameters = {}
 }
 
-
-
-
-
-
 resource "aws_api_gateway_resource" "statecirculatingsupply_fil" {
   rest_api_id = aws_api_gateway_rest_api.main.id
   parent_id   = aws_api_gateway_resource.statecirculatingsupply.id
@@ -106,8 +101,9 @@ resource "aws_api_gateway_integration" "statecirculatingsupply_fil_get" {
   resource_id             = aws_api_gateway_resource.statecirculatingsupply_fil.id
   http_method             = aws_api_gateway_method.statecirculatingsupply_fil_get.http_method
   integration_http_method = aws_api_gateway_method.statecirculatingsupply_fil_get.http_method
+  passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
-  uri                     = var.http_endpoint_uri
+  uri                     = "https://circulatingsupply.s3.amazonaws.com/index.html"
   request_templates = {
     "application/json" = ""
   }
@@ -186,8 +182,9 @@ resource "aws_api_gateway_integration" "statecirculatingsupply_fil_v2_get" {
   resource_id             = aws_api_gateway_resource.statecirculatingsupply_fil_v2.id
   http_method             = aws_api_gateway_method.statecirculatingsupply_fil_v2_get.http_method
   integration_http_method = aws_api_gateway_method.statecirculatingsupply_fil_v2_get.http_method
+  passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
-  uri                     = var.http_endpoint_uri
+  uri                     = "https://circulatingsupply-staging.s3.amazonaws.com/index.html"
   request_templates = {
     "application/json" = ""
   }

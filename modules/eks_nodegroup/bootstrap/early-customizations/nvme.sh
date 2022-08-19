@@ -21,6 +21,37 @@ Content-Disposition: attachment; filename="userdata.txt"
 
 #set -ux
 
+# making_nvme_file_system makes filesystem from nvme volume.
+making_nvme_file_system() {
+  mkfs -t xfs $1
+}
+
+# making_nvme_raid_file_system makes a raid filesystem from i3 intance 1+n nvme volumes.
+making_nvme_raid_file_system() {
+  get_array_count=${#ARRAY[@]}
+  yum -y install mdadm.x86_64
+  mdadm --create --verbose $2 --level=0 --name=$1 --raid-devices="$get_array_count" $(echo "$nvme_volumes_count")
+  mkfs.xfs -L $1 $2
+  dracut -H -f /boot/initramfs-$(uname -r).img $(uname -r)
+}
+
+# making_nvme_volume allows to make a soft validation of detecting existing
+# filesystem on nvme. It is helpful if an i3 instance has rebooted or for spot instances.
+making_nvme_volume() {
+  check_filesystem=$(blkid ${ARRAY[0]})
+  [ -z "$check_filesystem" ] && making_nvme_file_system "${ARRAY[0]}" || echo "fs exists"
+  mount "${ARRAY[0]}" "$mount_path"
+}
+
+# making_nvme_raid_volume created raid from 1+n nvme volumes, where n is digital and n>=1
+making_nvme_raid_volume() {
+  making_label=LOCAL_RAID
+  check_filesystem=$(blkid $(echo "${ARRAY[@]}"))
+  [ -z "$check_filesystem" ] && making_nvme_raid_file_system "$making_label" /dev/md0 || echo "fs exists"
+  mount LABEL=$making_label "$mount_path"
+}
+
+
 # Validation logic allows for detection filesystem is mounted in the system
 mount_path="/nvme/disk"
 if mount | grep -q $mount_path; then
@@ -34,16 +65,22 @@ instance_type=$(curl -H "X-aws-ec2-metadata-token: $token" -v http://169.254.169
 
 # Filter instance type. The goal is to detect i3 instance.
 # The i3 instance has nvme, which we need to format and mount.
-[[ "$instance_type" =~  "i3" ]] && EXCEPTION="nvme0" || exit 0
-disks="$(find /dev -maxdepth 1 ! -type l -name 'xvd[b-z]' -o -name 'nvme?n?' | grep -v $EXCEPTION)"
-if [ -z "$disks" ]; then
-  mkdir -p $mount_path
-  nvme_volume="$(find /dev -maxdepth 1 ! -type l -name 'xvd[b-z]' -o -name 'nvme?n?' | grep $EXCEPTION)"
-  check_filesystem="$(blkid "$nvme_volume")"
+[[ "$instance_type" =~  "i3" ]] && EXCEPTION="nvme" || exit 0
+mkdir -p $mount_path
+nvme_volumes_count="$(find /dev -maxdepth 1 ! -type l -name 'xvd[b-z]' -o -name 'nvme?n?' | grep $EXCEPTION)"
+ARRAY=()
+for i in $(echo "$nvme_volumes_count"); do
+  ARRAY+=("$i")
+done
 
-# A soft validation of detecting existing filesystem on nvme. It is helpful if the instance has rebooted.
-  [ -z "$check_filesystem" ] && mkfs -t xfs "$nvme_volume" || echo "fs exists"
-  mount "$nvme_volume" "$mount_path"
-else exit 0;
+# we ahve to validate how many nvme volumes we have. Based on that logic we will create fs for nvme disk or
+# for fs on a raid of nvme disks
+if [ ${#ARRAY[@]} -eq 0 ]; then
+  echo "The nvme volume count is equil 0"
+  exit 0
+elif [ ${#ARRAY[@]} -eq 1 ]; then
+  making_nvme_volume
+else
+  making_nvme_raid_volume
 fi
 --//--

@@ -1,11 +1,11 @@
 resource "aws_opensearch_domain" "main" {
-  domain_name    = "${module.generator.prefix_region}-logging"
+  domain_name    = "${module.generator.prefix_region}-os"
   engine_version = "OpenSearch_1.2"
 
   access_policies = templatefile("${path.module}/templates/policies/opensearch_policy.pol.tpl", {
     aws_account_id = data.aws_caller_identity.current.account_id
     aws_region     = var.region
-    os_domain_name = "${module.generator.prefix_region}-logging"
+    os_domain_name = "${module.generator.prefix_region}-os"
   })
 
   auto_tune_options {
@@ -60,6 +60,7 @@ resource "aws_opensearch_domain" "main" {
   ebs_options {
     ebs_enabled = true
     volume_size = 300
+    iops        = 3000
   }
   tags = module.generator.common_tags
 }

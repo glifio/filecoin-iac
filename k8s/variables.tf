@@ -1,8 +1,8 @@
 variable "profile" {
   type = map(string)
   default = {
-    "filecoin-dev-apn1-glif-eks"  = "filecoin"
-    "filecoin-prod-apn1-glif-eks" = "filecoin"
+    "filecoin-dev-apn1-glif-eks"     = "filecoin"
+    "filecoin-mainnet-apn1-glif-eks" = "filecoin"
   }
 }
 
@@ -41,13 +41,10 @@ variable "http_endpoint_uri" {
   type = string
 }
 
-variable "uri_service_endpoint_rpc_v0" {
+variable "sync_marketdeals_name" {
   type    = string
-  default = "api-read-dev/cache/rpc/v0"
+  default = "sync-marketdeals"
 }
 
+variable "whitelist_ips" {}
 
-variable "uri_service_endpoint_rpc_v1" {
-  type    = string
-  default = "api-read-dev/cache/rpc/v1"
-}

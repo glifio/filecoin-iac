@@ -14,8 +14,8 @@ locals {
   }
 
   enable_env_budget = {
-    "filecoin-glif-dev-apn1"  = 1
-    "filecoin-glif-prod-apn1" = 0
+    "filecoin-glif-dev-apn1"     = 1
+    "filecoin-glif-mainnet-apn1" = 0
   }
   enable_env_budgets = local.enable_env_budget[terraform.workspace]
 
@@ -24,6 +24,18 @@ locals {
   deletion_window = 7
   kms_enabled     = true
   key_rotation    = true
+
+  is_dev_env = {
+    filecoin-glif-dev-apn1     = 1
+    filecoin-glif-mainnet-apn1 = 0
+  }
+  is_dev_envs = local.is_dev_env[terraform.workspace]
+
+  is_mainnet_env = {
+    filecoin-glif-dev-apn1     = 0
+    filecoin-glif-mainnet-apn1 = 1
+  }
+  is_mainnet_envs = local.is_mainnet_env[terraform.workspace]
 
   make_codebuild_global_configuration = {
     project           = var.project
@@ -34,4 +46,6 @@ locals {
     branch            = var.branch
     git_configuration = var.git_configuration
   }
+
+  make_aws_opensearch_domain = "${module.generator.prefix_region}-os"
 }
