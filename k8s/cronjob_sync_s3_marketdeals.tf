@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "marketdeals_bucket" {
-  count = local.is_mainnet_envs
-  # marketdeals
-  bucket = "${terraform.workspace}-cronjob-sync-marketdeals"
+  count         = local.is_mainnet_envs
+  bucket        = "marketdeals"
+  force_destroy = true
 
   tags = merge(
     module.generator.common_tags,
