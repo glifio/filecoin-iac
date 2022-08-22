@@ -4,6 +4,7 @@ curl -o /aws/StateMarketDeals.json -X POST -H "Content-Type:application/json" \
     ${set_endpoint_s3};
 jq -c '.result | to_entries | sort_by( .key|tonumber ) | reverse | from_entries' \
     /aws/StateMarketDeals.json > /aws/StateMarketDeals-stage.json &&
+mv /aws/StateMarketDeals.json /aws/StateMarketDeals_original.json &&
 mv /aws/StateMarketDeals-stage.json /aws/StateMarketDeals.json;
 jq -c '[ to_entries | .[] | select ( .value.Proposal.VerifiedDeal == true ) ] | sort_by( .key|tonumber ) | from_entries' \
     /aws/StateMarketDeals.json > /aws/StateMarketDealsFilPlusOnly.json;
