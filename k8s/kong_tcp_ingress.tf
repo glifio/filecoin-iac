@@ -2,6 +2,7 @@
 # Setup for the p2p port on the space00 pod
 
 resource "kubernetes_manifest" "kong_tcp_ingress" {
+  count = local.is_mainnet_envs
   manifest = {
     apiVersion = "configuration.konghq.com/v1beta1"
     kind       = "TCPIngress"
