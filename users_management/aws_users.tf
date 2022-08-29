@@ -7,5 +7,5 @@ resource "aws_iam_user" "users" {
   name          = each.value
   force_destroy = true
 
-  tags = module.generator.common_tags
+  tags = module.generator_global.common_tags
 }

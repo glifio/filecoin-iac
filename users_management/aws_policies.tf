@@ -26,10 +26,10 @@ resource "aws_iam_group_policy_attachment" "devops_group" {
 
 # https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_users-self-manage-mfa-and-creds.html
 resource "aws_iam_policy" "manage_own_credentials" {
-  name        = "${module.generator.prefix}-manage-own-credentials"
+  name        = "${module.generator_global.prefix}-manage-own-credentials"
   description = "Policy to allow users to manage their own credentials"
   path        = "/"
   policy      = file("${path.module}/policies/manage_own_credentials.pol.tpl")
 
-  tags = module.generator.common_tags
+  tags = module.generator_global.common_tags
 }
