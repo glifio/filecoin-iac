@@ -8,7 +8,6 @@ data "aws_eks_cluster_auth" "k8s_cluster_auth_testnet" {
   name = local.eks_cluster_testnet
 }
 
-
 data "aws_eks_cluster" "k8s_cluster_mainnet" {
   name = local.eks_cluster_mainnet
 }
