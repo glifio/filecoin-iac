@@ -64,6 +64,16 @@ data "aws_secretsmanager_secret_version" "calibrationapi_archive_lotus" {
   secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_lotus[0].id
 }
 
+data "aws_secretsmanager_secret" "wallaby_archive_lotus" {
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-wallaby-archive-lotus"
+}
+
+data "aws_secretsmanager_secret_version" "wallaby_archive_lotus" {
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.wallaby_archive_lotus[0].id
+}
+
 data "aws_secretsmanager_secret" "calibrationapi_lotus" {
   count = local.is_dev_envs
   name  = "${module.generator.prefix}-calibrationapi-lotus"
