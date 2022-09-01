@@ -72,6 +72,17 @@ resource "aws_route53_record" "wallaby_node_glif_io" {
   }
 }
 
+# Route53 record from wallaby.dev.node.glif.io to external nlb
+resource "aws_route53_record" "nlb_ingress_external_wallaby" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "wallaby.dev.node.glif.io"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
 ############### mainnet env ###################
 resource "aws_route53_record" "api-internal_node_glif_io" {
   count           = local.is_mainnet_envs
