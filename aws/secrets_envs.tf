@@ -45,6 +45,14 @@ resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
   module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
+  count                   = local.is_dev_envs
+  name                    = "${module.generator.prefix}-wallaby-archive-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-wallaby-archive-lotus" },
+  module.generator.common_tags)
+}
 ################# END BLOCK DEV ENV SECRETS LIST #################
 
 
