@@ -57,15 +57,19 @@ resource "aws_route53_record" "monitoring" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-# Route53 record from wallaby.node.glif.io to external nlb
-resource "aws_route53_record" "nlb_ingress_external_wallaby" {
+# Route53 record from wallaby.node.glif.io t
+resource "aws_route53_record" "wallaby_node_glif_io" {
   count           = local.is_dev_envs
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "wallaby.dev.node.glif.io"
+  name            = "wallaby.node.glif.io"
+  type            = "A"
   allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
+  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
+
+  alias {
+    evaluate_target_health = true
+    name                   = aws_api_gateway_domain_name.wallaby_node_glif_io[0].regional_domain_name
+    zone_id                = aws_api_gateway_domain_name.wallaby_node_glif_io[0].regional_zone_id
+  }
 }
 
 ############### mainnet env ###################
