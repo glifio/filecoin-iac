@@ -19,3 +19,15 @@ resource "aws_ecr_repository" "external_snapshotter_chart" {
 
   tags = module.generator.common_tags
 }
+
+resource "aws_ecr_repository" "cid_checker" {
+  count                = local.is_mainnet_envs
+  name                 = "${module.generator.prefix}-cid_checker"
+  image_tag_mutability = "IMMUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = false
+  }
+
+  tags = module.generator.common_tags
+}

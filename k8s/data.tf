@@ -201,3 +201,13 @@ data "aws_secretsmanager_secret_version" "space07_cache_mainnet_lotus" {
   count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.space07_cache_mainnet_lotus[0].id
 }
+
+data "aws_secretsmanager_secret" "cid_checker" {
+  count = local.is_mainnet_envs
+  name  = "${module.generator.prefix}-cid-checker"
+}
+
+data "aws_secretsmanager_secret_version" "cid_checker" {
+  count     = local.is_mainnet_envs
+  secret_id = data.aws_secretsmanager_secret.cid_checker[0].id
+}

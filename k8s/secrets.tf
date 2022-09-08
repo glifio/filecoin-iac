@@ -201,3 +201,14 @@ resource "kubernetes_secret_v1" "space07_cache_lotus_secret" {
     config = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.space07_cache_mainnet_lotus[0].secret_string), "cache_service_config", null))
   }
 }
+
+resource "kubernetes_secret_v1" "cid_checker_secret" {
+  count = local.is_mainnet_envs
+  metadata {
+    name      = "cid-checker-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    mongoURL = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker[0].secret_string), "mongoURL", null)
+  }
+}
