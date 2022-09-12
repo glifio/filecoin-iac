@@ -44,3 +44,8 @@ variable "notifications_enabled" {
 variable "badge_enabled" {
   default = true
 }
+
+variable "privileged_mode" {
+  type    = bool
+  default = false
+}

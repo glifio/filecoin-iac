@@ -7,14 +7,16 @@ resource "aws_codebuild_project" "codebuild" {
   concurrent_build_limit = local.get_build_concurrent_count
   badge_enabled          = var.badge_enabled
 
+
   artifacts {
     type = "NO_ARTIFACTS"
   }
 
   environment {
-    compute_type = var.environment_compute_type
-    image        = var.codebuild_image
-    type         = "LINUX_CONTAINER"
+    compute_type    = var.environment_compute_type
+    image           = var.codebuild_image
+    type            = "LINUX_CONTAINER"
+    privileged_mode = var.privileged_mode
 
     dynamic "environment_variable" {
       for_each = local.make_environment_variables

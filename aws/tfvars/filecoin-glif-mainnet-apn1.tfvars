@@ -16,4 +16,13 @@ git_configuration = [
       repo_name         = "filecoin-fluent-bit",
     }
   },
+  {
+    config = {
+      project_name      = "cid-checker",
+      name              = "cid-checker"
+      organization_name = "glifio",
+      description       = "CI/CD pipeline for filecoin",
+      repo_name         = "cid-checker",
+    }
+  },
 ]
