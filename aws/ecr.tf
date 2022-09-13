@@ -22,8 +22,9 @@ resource "aws_ecr_repository" "external_snapshotter_chart" {
 
 resource "aws_ecr_repository" "cid_checker" {
   count                = local.is_mainnet_envs
-  name                 = "${module.generator.prefix}-cid_checker"
-  image_tag_mutability = "IMMUTABLE"
+  name                 = "${module.generator.prefix}-cid-checker"
+  image_tag_mutability = "MUTABLE"
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = false

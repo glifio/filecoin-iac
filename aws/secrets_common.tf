@@ -32,3 +32,12 @@ resource "aws_secretsmanager_secret" "cid_checker" {
   tags = merge({ "Name" = "${module.generator.prefix}-cid-checker" },
   module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "dockerhub_glifio" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-dockerhub-glifio"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-dockerhub-glifio" },
+    module.generator.common_tags)
+}
