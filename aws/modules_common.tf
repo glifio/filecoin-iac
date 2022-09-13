@@ -35,6 +35,7 @@ module "codebuild_cd_cid-checker" {
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
+  codebuild_image          = "docker:dind"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
