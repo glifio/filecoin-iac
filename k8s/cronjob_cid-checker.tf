@@ -19,7 +19,7 @@ resource "kubernetes_cron_job_v1" "cid_checker" {
           spec {
             container {
               name  = "cid-checker"
-              image = "witnsby/cid-checker:0.5" // TODO: we have to change from a personal repo to glif dockerhub repo
+              image = "protofire/cid-checker:0.1.3"
               env {
                 name = "mongoURL"
                 value_from {
