@@ -1,6 +1,6 @@
 resource "aws_codebuild_webhook" "webhook_codebuild_build" {
-  build_type   = "BUILD"
   count        = local.is_build_only
+  build_type   = "BUILD"
   project_name = aws_codebuild_project.codebuild.name
 
   filter_group {
@@ -11,14 +11,14 @@ resource "aws_codebuild_webhook" "webhook_codebuild_build" {
 
     filter {
       type    = "BASE_REF"
-      pattern = "refs/heads/${local.selected_branch}"
+      pattern = local.webhhok_custom_type
     }
   }
 }
 
 resource "aws_codebuild_webhook" "webhook_codebuild_deploy" {
-  build_type   = "BUILD"
   count        = local.is_deploy_only
+  build_type   = "BUILD"
   project_name = aws_codebuild_project.codebuild.name
 
   filter_group {
@@ -29,7 +29,7 @@ resource "aws_codebuild_webhook" "webhook_codebuild_deploy" {
 
     filter {
       type    = "HEAD_REF"
-      pattern = "refs/heads/${local.selected_branch}"
+      pattern = local.webhhok_custom_type
     }
   }
 }

@@ -54,3 +54,18 @@ variable "specific_branch" {
   type    = string
   default = null
 }
+
+variable "github_cd_token_secret" {
+  type    = string
+  default = "github_cd_token_secret"
+}
+
+variable "webhhok_custom_type" {
+  type    = bool
+  default = false
+}
+
+variable "get_webhhok_custom_type" {
+  type    = string
+  default = null
+}

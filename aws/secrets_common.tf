@@ -39,5 +39,5 @@ resource "aws_secretsmanager_secret" "dockerhub_glifio" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-dockerhub-glifio" },
-    module.generator.common_tags)
+  module.generator.common_tags)
 }

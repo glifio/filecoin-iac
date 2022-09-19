@@ -27,12 +27,24 @@ resource "aws_codebuild_project" "codebuild" {
     }
   }
   source {
-    type = "GITHUB"
-
+    type            = "GITHUB"
     location        = "https://github.com/${local.git_config[0].organization_name}/${local.git_config[0].repo_name}.git"
     buildspec       = local.get_codebuildspec_file
     git_clone_depth = 1
   }
+
+  secondary_sources {
+    type              = "GITHUB"
+    source_identifier = "SECOND"
+    location          = "https://github.com/glifio/filecoin-docker.git"
+    git_clone_depth   = 1
+  }
+
+  secondary_source_version {
+    source_identifier = "SECOND"
+    source_version    = "build_file_for_wallaby"
+  }
+
 
   tags = module.generator.common_tags
 }

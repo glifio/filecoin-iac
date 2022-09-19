@@ -16,4 +16,13 @@ git_configuration = [
       repo_name         = "filecoin-fluent-bit",
     }
   },
+  {
+    config = {
+      project_name      = "fil-wallaby-lotus",
+      name              = "fil-wallaby-lotus"
+      organization_name = "witnsby",
+      description       = "CI/CD pipeline for filecoin",
+      repo_name         = "fil-wallaby-lotus",
+    }
+  },
 ]
