@@ -36,6 +36,7 @@ resource "aws_api_gateway_deployment" "main" {
       aws_api_gateway_integration.rpc_v1_post,
       aws_api_gateway_integration.statecirculatingsupply_get,
       aws_api_gateway_integration.statecirculatingsupply_fil_get,
+      aws_api_gateway_integration.next_any,
       aws_api_gateway_method.root_get,
       aws_api_gateway_method.root_options,
       aws_api_gateway_method.root_post,
@@ -47,7 +48,8 @@ resource "aws_api_gateway_deployment" "main" {
       aws_api_gateway_method.rpc_v1_options,
       aws_api_gateway_method.rpc_v1_post,
       aws_api_gateway_method.statecirculatingsupply_get,
-      aws_api_gateway_method.statecirculatingsupply_fil_get
+      aws_api_gateway_method.statecirculatingsupply_fil_get,
+      aws_api_gateway_method.next_any
     ]))
   }
 
