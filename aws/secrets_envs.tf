@@ -9,6 +9,15 @@ resource "aws_secretsmanager_secret" "calibrationapi-archive-lotus" {
   module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "calibrationapi-archive-node-lotus" {
+  count                   = local.is_dev_envs
+  name                    = "${module.generator.prefix}-calibrationapi-archive-node-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-calibrationapi-archive-node-lotus" },
+    module.generator.common_tags)
+}
+
 resource "aws_secretsmanager_secret" "api_read_dev_lotus" {
   count                   = local.is_dev_envs
   name                    = "${module.generator.prefix}-api-read-dev-lotus"
