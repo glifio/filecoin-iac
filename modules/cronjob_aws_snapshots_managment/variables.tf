@@ -16,3 +16,16 @@ variable "namespace" {
   type = string
 }
 
+variable "snaps_to_keep" {
+  type = number
+}
+
+variable "creator_cron" {
+  type = string
+  default = "0 0 * * *"
+}
+
+variable "deleter_cron" {
+  default = "0 1 * * * "
+}
+

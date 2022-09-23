@@ -14,7 +14,7 @@ resource "kubernetes_role_v1" "this" {
   rule {
     api_groups = ["snapshot.storage.k8s.io"]
     resources  = ["volumesnapshots"]
-    verbs      = ["list", "get", "delete", "create"]
+    verbs      = ["list", "watch", "get", "delete", "create"]
   }
 }
 
@@ -57,7 +57,7 @@ resource "kubernetes_cron_job_v1" "snap_creator" {
   spec {
     concurrency_policy            = "Forbid"
     failed_jobs_history_limit     = 1
-    schedule                      = "*/10 * * * *"
+    schedule                      = var.creator_cron
     successful_jobs_history_limit = 1
     job_template {
       metadata {}
@@ -76,7 +76,6 @@ resource "kubernetes_cron_job_v1" "snap_creator" {
                 mount_path = "/tmp/creator"
                 read_only  = true
               }
-
             }
             volume {
               name = "${var.sts_name}-snap-cm"
@@ -90,3 +89,39 @@ resource "kubernetes_cron_job_v1" "snap_creator" {
     }
   }
 }
+
+resource "kubernetes_cron_job_v1" "snap_deleter" {
+  metadata {
+    name      = "${var.sts_name}-snap-deleter"
+    namespace = var.namespace
+  }
+  spec {
+    concurrency_policy            = "Forbid"
+    failed_jobs_history_limit     = 1
+    schedule                      = var.deleter_cron
+    successful_jobs_history_limit = 1
+    job_template {
+      metadata {}
+      spec {
+        template {
+          metadata {}
+          spec {
+            service_account_name = kubernetes_service_account_v1.this.metadata[0].name
+            restart_policy       = "Never"
+            container {
+              name  = "${var.sts_name}-snap-deleter"
+              image = "bitnami/kubectl"
+              command = ["bash", "-c", templatefile("${path.module}/configs/deleter/deleter.sh", {
+                namespace     = var.namespace,
+                sts_name      = var.sts_name,
+                snaps_to_keep = var.snaps_to_keep
+                })
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
