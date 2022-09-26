@@ -70,7 +70,7 @@ variable "get_webhhok_custom_type" {
   default = null
 }
 
-variable "is_build_from_file" {
-  type = string
+variable "buildspec_logic" {
+  type    = string
   default = null
 }

@@ -72,9 +72,9 @@ module "codebuild_cd_cid-checker" {
 
 module "codebuild_multirepository_cd_wallaby" {
   count                    = local.is_dev_envs
-  is_build_from_file       = file("${path.module}/templates/codebuild/deploy_wallaby.yaml")
   source                   = "../modules/codebuild_multirepositories"
-  git_repository_name      = "fil-wallaby-lotus"
+  git_repository_name      = "wallaby"
+  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_wallaby.yaml")
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
   is_build_concurrent      = false

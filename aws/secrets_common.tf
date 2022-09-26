@@ -48,5 +48,5 @@ resource "aws_secretsmanager_secret" "codebuild_user" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-codebuild-user" },
-    module.generator.common_tags)
+  module.generator.common_tags)
 }
