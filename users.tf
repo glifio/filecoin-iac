@@ -39,5 +39,14 @@ locals {
         local.eks_cluster_testnet,
       ],
     },
+    {
+      username = "codebuild_user",
+      aws_account = [
+        "devops"
+      ],
+      eks_access = [
+        local.eks_cluster_testnet,
+      ],
+    },
   ]
 }

@@ -81,6 +81,7 @@ module "codebuild_multirepository_cd_wallaby" {
   specific_branch          = "*"
   webhhok_custom_type      = true
   get_webhhok_custom_type  = "^refs/tags/f8-wallaby-latest"
+  environment_compute_type = "BUILD_GENERAL1_LARGE"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret

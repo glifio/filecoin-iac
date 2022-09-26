@@ -41,3 +41,12 @@ resource "aws_secretsmanager_secret" "dockerhub_glifio" {
   tags = merge({ "Name" = "${module.generator.prefix}-dockerhub-glifio" },
   module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "codebuild_user" {
+  count                   = local.is_dev_envs
+  name                    = "${module.generator.prefix}-codebuild-user"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-codebuild-user" },
+    module.generator.common_tags)
+}
