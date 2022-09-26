@@ -69,3 +69,8 @@ variable "get_webhhok_custom_type" {
   type    = string
   default = null
 }
+
+variable "is_build_from_file" {
+  type = string
+  default = null
+}

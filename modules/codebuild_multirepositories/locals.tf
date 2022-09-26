@@ -26,6 +26,7 @@ locals {
   ]
 
   get_codebuildspec_file = var.is_build_only ? "buildspec.ci.yaml" : "buildspec.yaml"
+  get_codebuildspec-logic = var.is_build_from_file != null ? var.is_build_from_file : get_codebuildspec_file
   is_build_only          = var.is_build_only ? 1 : 0
   is_deploy_only         = !var.is_build_only ? 1 : 0
 

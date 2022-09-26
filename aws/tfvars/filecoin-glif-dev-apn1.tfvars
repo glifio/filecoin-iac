@@ -18,11 +18,11 @@ git_configuration = [
   },
   {
     config = {
-      project_name      = "fil-wallaby-lotus",
-      name              = "fil-wallaby-lotus"
-      organization_name = "witnsby",
-      description       = "CI/CD pipeline for filecoin",
-      repo_name         = "fil-wallaby-lotus",
+      project_name      = "wallaby",
+      name              = "wallaby"
+      organization_name = "protofire",
+      description       = "CI/CD pipeline for a filecoin wallaby application",
+      repo_name         = "wallaby",
     }
   },
 ]
