@@ -49,7 +49,8 @@ resource "aws_api_gateway_deployment" "main" {
       aws_api_gateway_method.rpc_v1_post,
       aws_api_gateway_method.statecirculatingsupply_get,
       aws_api_gateway_method.statecirculatingsupply_fil_get,
-      aws_api_gateway_method.next_any
+      aws_api_gateway_method.next_any,
+      aws_api_gateway_model.ReadAllandWriteMpoolPush
     ]))
   }
 
@@ -58,13 +59,18 @@ resource "aws_api_gateway_deployment" "main" {
   }
 }
 
+# Q: why do we have here ternary in the schema section?
+# A: we need to handle new eth methods needed by wallaby network, but we don't want them in mainnet, thus we have 2
+#   models one is read-only + MpoolPush, another one is eth-methods + read-only + MpoolPush
+# Links to the required methods:
+# * https://github.com/filecoin-project/ref-fvm/issues/854 - done
+# * https://github.com/filecoin-project/ref-fvm/issues/909 - in progress by 30 Sep 2022
 resource "aws_api_gateway_model" "ReadAllandWriteMpoolPush" {
   rest_api_id  = aws_api_gateway_rest_api.main.id
   name         = "ReadAllandWriteMpoolPush"
   description  = "${module.generator.prefix}-model"
   content_type = "application/json"
-
-  schema = file("${path.module}/configs/api_gateway_models/read_all_and_write_mpool_push.pol.tpl")
+  schema       = local.is_dev_envs == 1 ? file("${path.module}/configs/api_gateway_models/wallaby_read_all_and_write_mpool_push.pol.tpl") : file("${path.module}/configs/api_gateway_models/read_all_and_write_mpool_push.pol.tpl")
 }
 
 # Note: https://github.com/hashicorp/terraform-provider-aws/issues/2550#issuecomment-402369701
