@@ -16,6 +16,7 @@ resource "helm_release" "monitoring" {
       get_prometheus_storage_class = kubernetes_storage_class_v1.ebs_csi_driver_gp2.metadata[0].name
       get_kong_ingress_external    = helm_release.konghq-external.name
       get_kong_ingress_internal    = helm_release.konghq-internal.name
+      get_grafana_notif_url        = local.is_dev_envs == 1 ? "monitoring.dev.node.glif.io" : "monitoring.node.glif.io"
     })
   ]
 

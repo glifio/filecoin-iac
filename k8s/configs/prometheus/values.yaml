@@ -59,11 +59,16 @@ alertmanager:
                 {{ end }}
       {{ end }}
 
-## Using default values from https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
+## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
 ##
 grafana:
   nodeSelector:
     nodeGroupName: ${get_nodegroup_selector}
+  grafana.ini:
+    unified_alerting:
+      enabled: false
+    server:
+      root_url: "https://${get_grafana_notif_url}/"
   notifiers:
     notifiers.yaml:
       notifiers:
@@ -109,6 +114,10 @@ grafana:
         datasource: Prometheus
         gnetId: 13901
         revision: 2
+      LotusVolumes:
+        datasource: Prometheus
+        gnetId: 17092
+        revision: 7
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 kubelet:
