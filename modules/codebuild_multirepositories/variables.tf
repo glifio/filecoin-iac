@@ -60,12 +60,12 @@ variable "github_cd_token_secret" {
   default = "github_cd_token_secret"
 }
 
-variable "webhhok_custom_type" {
+variable "webhook_custom_type" {
   type    = bool
   default = false
 }
 
-variable "get_webhhok_custom_type" {
+variable "get_webhook_custom_type" {
   type    = string
   default = null
 }

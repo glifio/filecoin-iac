@@ -52,8 +52,8 @@ module "codebuild_multirepository_cd_wallaby" {
   is_build_concurrent      = false
   github_cd_token_secret   = "github_cd_rersonal_token_secret"
   specific_branch          = "f8-wallaby-latest"
-  webhhok_custom_type      = true
-  get_webhhok_custom_type  = "^refs/tags/f8-wallaby-latest"
+  webhook_custom_type      = true
+  get_webhook_custom_type  = "^refs/tags/f8-wallaby-latest"
   environment_compute_type = "BUILD_GENERAL1_LARGE"
 
   depends_on = [

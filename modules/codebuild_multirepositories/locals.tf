@@ -8,7 +8,7 @@ locals {
   get_git_configuration = lookup(var.get_global_configuration, "git_configuration", "")
 
   selected_branch     = var.specific_branch == null ? local.get_branch : var.specific_branch
-  webhhok_custom_type = var.webhhok_custom_type ? var.get_webhhok_custom_type : "refs/heads/${local.selected_branch}"
+  webhhok_custom_type = var.webhook_custom_type ? var.get_webhook_custom_type : "refs/heads/${local.selected_branch}"
 
 
   make_environment_variables = {
