@@ -48,5 +48,13 @@ locals {
         local.eks_cluster_testnet,
       ],
     },
+    {
+      username = "aliaksandr.nosau@protofire.io",
+      aws_account = [
+        "devops"
+      ],
+      eks_access = [
+      ],
+    },
   ]
 }
