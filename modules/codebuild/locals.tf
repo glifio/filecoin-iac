@@ -23,9 +23,10 @@ locals {
     if contains(values(lookup(project, "config", [])), var.git_repository_name)
   ]
 
-  get_codebuildspec_file = var.is_build_only ? "buildspec.ci.yaml" : "buildspec.yaml"
-  is_build_only          = var.is_build_only ? 1 : 0
-  is_deploy_only         = !var.is_build_only ? 1 : 0
+  get_codebuildspec_file  = var.is_build_only ? "buildspec.ci.yaml" : "buildspec.yaml"
+  get_codebuildspec_logic = var.buildspec_logic != null ? var.buildspec_logic : local.get_codebuildspec_file
+  is_build_only           = var.is_build_only ? 1 : 0
+  is_deploy_only          = !var.is_build_only ? 1 : 0
 
   codebuild_name              = "${module.generator.prefix}-${local.git_config[0].project_name}-codebuild"
   make_codebuild_current_name = var.is_build_only ? "${local.codebuild_name}-build" : "${local.codebuild_name}-deploy"
