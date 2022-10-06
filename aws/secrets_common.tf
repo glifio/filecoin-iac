@@ -24,15 +24,6 @@ resource "aws_secretsmanager_secret" "github_cd_token_secret" {
   module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "cid_checker" {
-  count                   = local.is_mainnet_envs
-  name                    = "${module.generator.prefix}-cid-checker"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker" },
-  module.generator.common_tags)
-}
-
 resource "aws_secretsmanager_secret" "dockerhub_glifio" {
   count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-dockerhub-glifio"
