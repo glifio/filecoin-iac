@@ -222,12 +222,22 @@ data "aws_secretsmanager_secret_version" "cid_checker" {
   secret_id = data.aws_secretsmanager_secret.cid_checker[0].id
 }
 
-data "aws_secretsmanager_secret" "cid_checker_secret" {
+data "aws_secretsmanager_secret" "cid_checker_dev" {
   count = local.is_dev_envs
-  name  = "${module.generator.prefix}-cid-checker-secret"
+  name  = "${module.generator.prefix}-cid-checker"
 }
 
-data "aws_secretsmanager_secret_version" "cid_checker_secret" {
+data "aws_secretsmanager_secret_version" "cid_checker_dev" {
   count     = local.is_dev_envs
-  secret_id = data.aws_secretsmanager_secret.cid_checker_secret[0].id
+  secret_id = data.aws_secretsmanager_secret.cid_checker_dev[0].id
+}
+
+data "aws_secretsmanager_secret" "cid_checker_db" {
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-cid-checker-db"
+}
+
+data "aws_secretsmanager_secret_version" "cid_checker_db_secret" {
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.cid_checker_db[0].id
 }

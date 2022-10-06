@@ -1,14 +1,5 @@
 ################# START BLOCK DEV ENV SECRETS LIST #################
 
-resource "aws_secretsmanager_secret" "cid-checker-secret" {
-  count                   = local.is_dev_envs
-  name                    = "${module.generator.prefix}-cid-checker-secret"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker-secret" },
-  module.generator.common_tags)
-}
-
 resource "aws_secretsmanager_secret" "calibrationapi-archive-lotus" {
   count                   = local.is_dev_envs
   name                    = "${module.generator.prefix}-calibrationapi-archive-lotus"
@@ -71,6 +62,25 @@ resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
   tags = merge({ "Name" = "${module.generator.prefix}-wallaby-archive-lotus" },
   module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "cid_checker_dev" {
+  count                   = local.is_dev_envs
+  name                    = "${module.generator.prefix}-cid-checker"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker" },
+    module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "cid-checker-db" {
+  count                   = local.is_dev_envs
+  name                    = "${module.generator.prefix}-cid-checker-db"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker-db" },
+    module.generator.common_tags)
+}
+
 ################# END BLOCK DEV ENV SECRETS LIST #################
 
 
@@ -147,4 +157,14 @@ resource "aws_secretsmanager_secret" "space07_cache" {
   tags = merge({ "Name" = "${module.generator.prefix}-space07-cache" },
   module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "cid_checker" {
+  count                   = local.is_mainnet_envs
+  name                    = "${module.generator.prefix}-cid-checker"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker" },
+    module.generator.common_tags)
+}
+
 ################# END BLOCK MAINNET ENV SECRETS LIST #################
