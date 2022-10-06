@@ -57,7 +57,7 @@ resource "aws_route53_record" "monitoring" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-# Route53 record from wallaby.node.glif.io t
+# Route53 record from wallaby.node.glif.io
 resource "aws_route53_record" "wallaby_node_glif_io" {
   count           = local.is_dev_envs
   name            = "wallaby.node.glif.io"
@@ -77,6 +77,17 @@ resource "aws_route53_record" "nlb_ingress_external_wallaby" {
   count           = local.is_dev_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "wallaby.dev.node.glif.io"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+# Route53 record from wss.dev.node.glif.io to external nlb (lotus wateway)
+resource "aws_route53_record" "nlb_ingress_external_wss" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "wss.dev.node.glif.io"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
@@ -128,6 +139,16 @@ resource "aws_route53_record" "monitoring_mainnet" {
   count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "monitoring.${var.route53_domain}"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+resource "aws_route53_record" "wss_mainnet" {
+  count           = local.is_mainnet_envs
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "wss.${var.route53_domain}"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
