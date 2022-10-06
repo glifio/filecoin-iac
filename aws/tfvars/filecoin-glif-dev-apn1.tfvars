@@ -25,4 +25,14 @@ git_configuration = [
       repo_name         = "wallaby",
     }
   },
+  {
+    config = {
+      project_name        = "wallaby",
+      name                = "wallaby"
+      organization_name   = "glifio",
+      description         = "CI/CD pipeline for a filecoin wallaby application",
+      repo_name           = "",
+      secondary_repo_name = "cid-checker
+    }
+  },
 ]

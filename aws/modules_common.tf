@@ -15,12 +15,11 @@ module "codebuild_cd-filecoin-fluent-bit" {
   ]
 }
 
-module "codebuild_ci_cid-checker" {
+module "codebuild_cd_cid-checker_watcher_mainnet" {
   count                    = local.is_mainnet_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
-  is_build_only            = true
   privileged_mode          = true
   is_build_concurrent      = false
 
@@ -29,10 +28,24 @@ module "codebuild_ci_cid-checker" {
   ]
 }
 
-module "codebuild_cd_cid-checker" {
-  count                    = local.is_mainnet_envs
+module "codebuild_cd_cid-checker_watcher_calibrationnet" {
+  count                    = local.is_dev_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
+  get_global_configuration = local.make_codebuild_global_configuration
+  privileged_mode          = true
+  is_build_concurrent      = false
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
+
+module "codebuild_cd_cid-checker_calibrationnet" {
+  count                    = local.is_dev_envs
+  source                   = "../modules/codebuild"
+  git_repository_name      = "cid-checker"
+  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_cid_checker.yaml")
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
   is_build_concurrent      = false
@@ -54,7 +67,7 @@ module "codebuild_multirepository_cd_wallaby" {
   specific_branch          = "f8-wallaby-latest"
   webhook_custom_type      = true
   get_webhook_custom_type  = "^refs/tags/f8-wallaby-latest"
-  environment_compute_type = "BUILD_GENERAL1_LARGE"
+  environment_compute_type = "build_general1_large"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
