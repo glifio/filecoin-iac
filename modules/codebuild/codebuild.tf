@@ -30,7 +30,7 @@ resource "aws_codebuild_project" "codebuild" {
     type = "GITHUB"
 
     location        = "https://github.com/${local.git_config[0].organization_name}/${local.git_config[0].repo_name}.git"
-    buildspec       = local.get_codebuildspec_logic
+    buildspec       = local.get_codebuildspec_file
     git_clone_depth = 1
   }
 

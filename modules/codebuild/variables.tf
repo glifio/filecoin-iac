@@ -54,8 +54,3 @@ variable "specific_branch" {
   type    = string
   default = null
 }
-
-variable "buildspec_logic" {
-  type    = string
-  default = null
-}
