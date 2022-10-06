@@ -19,7 +19,6 @@ module "codebuild_cd_cid-checker_mainnet" {
   count                    = local.is_mainnet_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
-  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_cid_checker.yaml")
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
   is_build_concurrent      = false
@@ -33,7 +32,6 @@ module "codebuild_cd_cid-checker_calibrationnet" {
   count                    = local.is_dev_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
-  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_cid_checker.yaml")
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
   is_build_concurrent      = false
