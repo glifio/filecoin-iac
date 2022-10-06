@@ -221,3 +221,13 @@ data "aws_secretsmanager_secret_version" "cid_checker" {
   count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.cid_checker[0].id
 }
+
+data "aws_secretsmanager_secret" "cid_checker_secret" {
+  count = local.is_dev_envs
+  name  = "${module.generator.prefix}-cid-checker-secret"
+}
+
+data "aws_secretsmanager_secret_version" "cid_checker_secret" {
+  count     = local.is_dev_envs
+  secret_id = data.aws_secretsmanager_secret.cid_checker_secret[0].id
+}
