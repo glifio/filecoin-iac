@@ -23,6 +23,7 @@ module "codebuild_ci_cid-checker_mainnet" {
   is_build_only            = true
   privileged_mode          = true
   is_build_concurrent      = false
+  specific_branch          = "main"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -37,6 +38,7 @@ module "codebuild_ci_cid-checker_calibrationnet" {
   is_build_only            = true
   privileged_mode          = true
   is_build_concurrent      = false
+  specific_branch          = "calibrationnet"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -50,6 +52,7 @@ module "codebuild_cd_cid-checker_mainnet" {
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
   is_build_concurrent      = false
+  specific_branch          = "main"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -63,6 +66,7 @@ module "codebuild_cd_cid-checker_calibrationnet" {
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
   is_build_concurrent      = false
+  specific_branch          = "calibrationnet"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret

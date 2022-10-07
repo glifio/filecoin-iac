@@ -33,7 +33,6 @@ git_configuration = [
       environment       = "dev",
       description       = "CI/CD pipeline for filecoin",
       repo_name         = "cid-checker",
-      branch            = "calibrationnet",
     }
   },
 ]
