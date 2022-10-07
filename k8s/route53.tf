@@ -83,6 +83,16 @@ resource "aws_route53_record" "nlb_ingress_external_wallaby" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
+resource "aws_route53_record" "nlb_ingress_external_wallaby_ws" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "wss.wallaby.node.glif.io"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
 # Route53 record from wss.dev.node.glif.io to external nlb (lotus wateway)
 resource "aws_route53_record" "nlb_ingress_external_wss" {
   count           = local.is_dev_envs
