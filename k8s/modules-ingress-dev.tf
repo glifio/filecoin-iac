@@ -1,5 +1,5 @@
 ############CID Checker#######################################
-module "ingress-kong_cid-checker" {
+module "ingress-kong_cid-checker-calibrationnet" {
   count                            = local.is_dev_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
@@ -7,11 +7,11 @@ module "ingress-kong_cid-checker" {
   get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 1234
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "filecoin.tools"
+  get_rule_host                    = "cid-another.calibration.node.glif.io"
   type_lb_scheme                   = "external"
 }
 
-module "ingress-kong_cid-checker" {
+module "ingress-kong_cid-checker-calibrationnet" {
   count                            = local.is_dev_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
@@ -19,7 +19,7 @@ module "ingress-kong_cid-checker" {
   get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 1234
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "cid.filecoin.tools"
+  get_rule_host                    = "cid.calibration.node.glif.io"
   type_lb_scheme                   = "external"
 }
 

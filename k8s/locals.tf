@@ -52,7 +52,7 @@ locals {
     filecoin-dev-apn1-glif-eks = [
       "*.${var.route53_domain}",
       "calibration.node.glif.io",
-      "*.calibration.node.glif.io"
+      "*.calibration.node.glif.io",
     ]
     filecoin-mainnet-apn1-glif-eks = [
       "*.${var.route53_domain}",

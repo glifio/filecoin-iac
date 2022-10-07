@@ -21,7 +21,7 @@ git_configuration = [
       project_name      = "cid-checker",
       name              = "cid-checker"
       organization_name = "glifio",
-      environment       = "production",
+      environment       = "mainnet",
       description       = "CI/CD pipeline for filecoin",
       repo_name         = "cid-checker",
     }

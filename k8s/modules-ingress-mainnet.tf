@@ -1,3 +1,28 @@
+############CID Checker#######################################
+module "ingress-kong_cid-checker-calibrationnet" {
+  count                            = local.id_mainnet_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/"
+  get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 1234
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "cid-another.node.glif.io"
+  type_lb_scheme                   = "external"
+}
+
+module "ingress-kong_cid-checker-calibrationnet" {
+  count                            = local.is_mainnet_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/"
+  get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 1234
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "cid.node.glif.io"
+  type_lb_scheme                   = "external"
+}
+
 #############node.glif.io##########################
 
 module "ingress-kong_space00-1234" {
