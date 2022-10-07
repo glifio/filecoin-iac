@@ -134,6 +134,18 @@ module "ingress-kong_wallaby-archive" {
   type_lb_scheme                   = "internal"
 }
 
+module "ingress-kong_wallaby-dev-lotus-2346" {
+  count                            = local.is_dev_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/apigw/wallaby/(.*)"
+  get_ingress_backend_service_name = "wallaby-archive-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 2346
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "wss.wallaby.node.glif.io"
+  type_lb_scheme                   = "external"
+}
+
 #########################################################
 
 #TODO: think about sharing snapshots for apiread-nodes in the test env
