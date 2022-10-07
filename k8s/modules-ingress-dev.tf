@@ -2,6 +2,7 @@
 module "ingress-kong_cid-checker-calibrationnet" {
   count                            = local.is_dev_envs
   source                           = "../modules/k8s_ingress"
+  is_kong_auth_header_enabled      = false
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/"
   get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically
@@ -11,9 +12,10 @@ module "ingress-kong_cid-checker-calibrationnet" {
   type_lb_scheme                   = "external"
 }
 
-module "ingress-kong_cid-checker-calibrationnet" {
+module "ingress-kong_cid-checker-another-calibrationnet" {
   count                            = local.is_dev_envs
   source                           = "../modules/k8s_ingress"
+  is_kong_auth_header_enabled      = false
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/"
   get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically

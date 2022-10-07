@@ -1,6 +1,6 @@
 ############CID Checker#######################################
-module "ingress-kong_cid-checker-calibrationnet" {
-  count                            = local.id_mainnet_envs
+module "ingress-kong_cid-checker-mainnet" {
+  count                            = local.is_mainnet_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/"
@@ -11,7 +11,7 @@ module "ingress-kong_cid-checker-calibrationnet" {
   type_lb_scheme                   = "external"
 }
 
-module "ingress-kong_cid-checker-calibrationnet" {
+module "ingress-kong_cid-checker-another-mainnet" {
   count                            = local.is_mainnet_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
