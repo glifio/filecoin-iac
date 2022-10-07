@@ -2,6 +2,7 @@
 module "ingress-kong_cid-checker-mainnet" {
   count                            = local.is_mainnet_envs
   source                           = "../modules/k8s_ingress"
+  is_kong_auth_header_enabled      = false
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/"
   get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically
@@ -14,6 +15,7 @@ module "ingress-kong_cid-checker-mainnet" {
 module "ingress-kong_cid-checker-another-mainnet" {
   count                            = local.is_mainnet_envs
   source                           = "../modules/k8s_ingress"
+  is_kong_auth_header_enabled      = false
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/"
   get_ingress_backend_service_name = "cid-checker-frontend" // the "-service" string will be added automatically
