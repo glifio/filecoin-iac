@@ -1,3 +1,58 @@
+############CID Checker#######################################
+module "ingress-kong_cid-checker-mainnet" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/"
+  get_ingress_pathType              = "Prefix"
+  get_ingress_backend_service_name   = "cid-checker-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 80
+  get_ingress_namespace              = "default" 
+  get_rule_host                      = "cid.node.glif.io"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+}
+
+module "ingress-kong_cid-checker-mainnet-api" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/api/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.node.glif.io"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+}
+
+module "ingress-kong_cid-checker-another-mainnet" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/"
+  get_ingress_pathType              = "Prefix"
+  get_ingress_backend_service_name   = "cid-checker-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 80
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid-another.node.glif.io"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+}
+
+module "ingress-kong_cid-checker-another-mainnet-api" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/api/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid-another.node.glif.io"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+}
+
 #############node.glif.io##########################
 
 module "ingress-kong_space00-1234" {
