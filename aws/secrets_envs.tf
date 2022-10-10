@@ -63,21 +63,21 @@ resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
   module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "cid_checker_dev" {
+resource "aws_secretsmanager_secret" "cid_checker_calibration" {
   count                   = local.is_dev_envs
-  name                    = "${module.generator.prefix}-cid-checker"
+  name                    = "${module.generator.prefix}-cid-checker-calibration"
   recovery_window_in_days = 30
 
-  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker" },
+  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker-calibration" },
     module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "cid-checker-db" {
+resource "aws_secretsmanager_secret" "cid_checker_wallaby" {
   count                   = local.is_dev_envs
-  name                    = "${module.generator.prefix}-cid-checker-db"
+  name                    = "${module.generator.prefix}-cid-checker-wallaby"
   recovery_window_in_days = 30
 
-  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker-db" },
+  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker-wallaby" },
     module.generator.common_tags)
 }
 
