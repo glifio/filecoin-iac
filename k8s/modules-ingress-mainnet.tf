@@ -28,6 +28,34 @@ module "ingress-kong_cid-checker-mainnet-api" {
   is_kong_transformer_header_enabled = false
 }
 
+module "ingress-kong_cid-checker-mainnet-docs" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs"
+  get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-mainnet-docs-subresources" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
 module "ingress-kong_cid-checker-alternative-domain-mainnet" {
   count                              = local.is_mainnet_envs
   source                             = "../modules/k8s_ingress"
@@ -48,6 +76,34 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-api" {
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-mainnet-docs" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs"
+  get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-mainnet-docs-subresources" {
+  count                              = local.is_mainnet_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs/(.*)"
   get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
