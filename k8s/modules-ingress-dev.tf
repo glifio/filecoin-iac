@@ -34,7 +34,7 @@ module "ingress-kong_cid-checker-another-calibrationnet" {
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
   get_ingress_pathType              = "Prefix"
-  get_ingress_backend_service_name   = "cid-пchecker-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_name   = "cid-checker-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
   get_rule_host                      = "cid-another.calibration.node.glif.io"
@@ -129,7 +129,7 @@ module "ingress-kong_api-read-dev-lotus-2346" {
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/apigw/lotus/(.*)"
-  get_ingress_backend_service_name = "api-read-dev-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_name = "calibrationapi-lotus" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 2346
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                    = "wss.dev.node.glif.io"
