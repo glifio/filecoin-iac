@@ -66,6 +66,7 @@ module "ingress-kong_cid-checker-calibrationnet" {
   get_rule_host                      = "calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-calibrationnet-api" {
@@ -79,6 +80,7 @@ module "ingress-kong_cid-checker-calibrationnet-api" {
   get_rule_host                      = "calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibrationnet" {
@@ -93,6 +95,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibrationnet" {
   get_rule_host                      = "cid.calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibrationnet-api" {
@@ -106,6 +109,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibrationnet-api" {
   get_rule_host                      = "cid.calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 ############calibration.node.glif.io##########################
@@ -139,7 +143,7 @@ module "ingress-kong_calibrationapi-ipfs-service-4001" {
   count                            = local.is_dev_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/calibrationapi/ipfs/(.*)"
+  get_ingress_http_path            = "/calibrationapi/ipfs/4001/(.*)"
   get_ingress_backend_service_name = "calibrationapi-ipfs" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 4001
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
@@ -152,7 +156,7 @@ module "ingress-kong_calibrationapi-ipfs-service-8080" {
   count                            = local.is_dev_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/calibrationapi/ipfs/(.*)"
+  get_ingress_http_path            = "/calibrationapi/ipfs/8080/(.*)"
   get_ingress_backend_service_name = "calibrationapi-ipfs" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 8080
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
@@ -180,7 +184,7 @@ module "ingress-kong_api-read-dev-lotus-2346" {
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/apigw/lotus/(.*)"
-  get_ingress_backend_service_name = "api-read-dev-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_name = "calibrationapi-lotus" // the "-service" string will be added automatically
   get_ingress_backend_service_port = 2346
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                    = "wss.dev.node.glif.io"
