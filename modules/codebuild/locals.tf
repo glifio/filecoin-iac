@@ -27,7 +27,7 @@ locals {
   is_build_only          = var.is_build_only ? 1 : 0
   is_deploy_only         = !var.is_build_only ? 1 : 0
 
-  codebuild_name              = "${module.generator.prefix}-${local.git_config[0].project_name}-codebuild"
+  codebuild_name              = "${module.generator.prefix}-${local.git_config[0].project_name}-codebuild-${random_string.uid.result}"
   make_codebuild_current_name = var.is_build_only ? "${local.codebuild_name}-build" : "${local.codebuild_name}-deploy"
   make_codebuild_description  = var.is_build_only ? "${local.git_config[0].description}-build" : "${local.git_config[0].description}-deploy"
   github_token                = lookup(jsondecode(data.aws_secretsmanager_secret_version.git_credentials.secret_string), "github_token", null)

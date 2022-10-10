@@ -13,7 +13,7 @@ module "ingress-kong_cid-checker-wallaby" {
   is_kong_auth_header_enabled        = false
 }
 
-module "ingress-kong_cid-checker-calibrationnet-api" {
+module "ingress-kong_cid-checker-wallaby-api" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
@@ -26,7 +26,7 @@ module "ingress-kong_cid-checker-calibrationnet-api" {
   is_kong_auth_header_enabled        = false
 }
 
-module "ingress-kong_cid-checker-alternative-domain-calibrationnet" {
+module "ingress-kong_cid-checker-alternative-domain-wallaby" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
@@ -40,7 +40,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibrationnet" {
   is_kong_auth_header_enabled        = false
 }
 
-module "ingress-kong_cid-checker-alternative-domain-calibrationnet-api" {
+module "ingress-kong_cid-checker-alternative-domain-wallaby-api" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
@@ -54,7 +54,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibrationnet-api" {
 }
 
 ############CID Checker Calibration#######################################
-module "ingress-kong_cid-checker-calibrationnet" {
+module "ingress-kong_cid-checker-calibration" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
@@ -69,7 +69,7 @@ module "ingress-kong_cid-checker-calibrationnet" {
   is_kong_transformer_header_enabled = false
 }
 
-module "ingress-kong_cid-checker-calibrationnet-api" {
+module "ingress-kong_cid-checker-calibration-api" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
@@ -83,7 +83,7 @@ module "ingress-kong_cid-checker-calibrationnet-api" {
   is_kong_transformer_header_enabled = false
 }
 
-module "ingress-kong_cid-checker-alternative-domain-calibrationnet" {
+module "ingress-kong_cid-checker-alternative-domain-calibration" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
@@ -98,7 +98,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibrationnet" {
   is_kong_transformer_header_enabled = false
 }
 
-module "ingress-kong_cid-checker-alternative-domain-calibrationnet-api" {
+module "ingress-kong_cid-checker-alternative-domain-calibration-api" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration

@@ -24,6 +24,7 @@ module "codebuild_ci_cid-checker_mainnet" {
   privileged_mode          = true
   is_build_concurrent      = false
   specific_branch          = "main"
+  specific_envs            = { "NETWORK": "mainnet" }
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -39,6 +40,7 @@ module "codebuild_ci_cid-checker_calibration" {
   privileged_mode          = true
   is_build_concurrent      = false
   specific_branch          = "calibration"
+  specific_envs            = { "NETWORK": "calibration" }
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -54,6 +56,7 @@ module "codebuild_ci_cid-checker_wallaby" {
   privileged_mode          = true
   is_build_concurrent      = false
   specific_branch          = "wallaby"
+  specific_envs            = { "NETWORK": "wallaby" }
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -68,6 +71,7 @@ module "codebuild_cd_cid-checker_mainnet" {
   privileged_mode          = true
   is_build_concurrent      = false
   specific_branch          = "main"
+  specific_envs            = { "NETWORK": "mainnet" }
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -82,6 +86,7 @@ module "codebuild_cd_cid-checker_calibration" {
   privileged_mode          = true
   is_build_concurrent      = false
   specific_branch          = "calibration"
+  specific_envs            = { "NETWORK": "calibration" }
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -96,6 +101,7 @@ module "codebuild_cd_cid-checker_wallaby" {
   privileged_mode          = true
   is_build_concurrent      = false
   specific_branch          = "wallaby"
+  specific_envs            = { "NETWORK": "wallaby" }
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret

@@ -25,6 +25,14 @@ resource "aws_codebuild_project" "codebuild" {
         value = environment_variable.value
       }
     }
+
+    dynamic "environment_variable" {
+      for_each = var.specific_envs
+      content {
+        name  = environment_variable.key
+        value = environment_variable.value
+      }
+    }
   }
   source {
     type = "GITHUB"
