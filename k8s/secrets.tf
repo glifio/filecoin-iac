@@ -237,6 +237,18 @@ resource "kubernetes_secret_v1" "cid_checker_secret" {
   }
 }
 
+resource "kubernetes_secret_v1" "cid_checker_mainnet_secret" {
+  count = local.is_mainnet_envs
+  metadata {
+    name      = "cid-checker-mainnet-secret"
+    namespace = "default"
+  }
+  data = {
+    dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker[0].secret_string), "dbUsername", null)
+    dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker[0].secret_string), "dbPassword", null)
+  }
+}
+
 resource "kubernetes_secret_v1" "cid_checker_calibration_secret" {
   count = local.is_dev_envs
   metadata {

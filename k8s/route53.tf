@@ -70,9 +70,13 @@ resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_mainnet" {
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
   name            = "filecoin.tools"
   allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
+  type            = "A"
+
+  alias {
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+    evaluate_target_health = true
+  }
 }
 
 resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_mainnet" {
