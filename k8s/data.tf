@@ -54,6 +54,11 @@ data "aws_route53_zone" "node_glif_io" {
   private_zone = false
 }
 
+data "aws_route53_zone" "filecoin_tools" {
+  name         = "filecoin.tools"
+  private_zone = false
+}
+
 data "aws_secretsmanager_secret" "calibrationapi_archive_lotus" {
   count = local.is_dev_envs
   name  = "${module.generator.prefix}-calibrationapi-archive-lotus"

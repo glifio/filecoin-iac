@@ -30,7 +30,7 @@ module "codebuild_ci_cid-checker_mainnet" {
   ]
 }
 
-module "codebuild_ci_cid-checker_calibrationnet" {
+module "codebuild_ci_cid-checker_calibration" {
   count                    = local.is_dev_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
@@ -38,7 +38,22 @@ module "codebuild_ci_cid-checker_calibrationnet" {
   is_build_only            = true
   privileged_mode          = true
   is_build_concurrent      = false
-  specific_branch          = "calibrationnet"
+  specific_branch          = "calibration"
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
+
+module "codebuild_ci_cid-checker_wallaby" {
+  count                    = local.is_dev_envs
+  source                   = "../modules/codebuild"
+  git_repository_name      = "cid-checker"
+  get_global_configuration = local.make_codebuild_global_configuration
+  is_build_only            = true
+  privileged_mode          = true
+  is_build_concurrent      = false
+  specific_branch          = "wallaby"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
@@ -59,14 +74,28 @@ module "codebuild_cd_cid-checker_mainnet" {
   ]
 }
 
-module "codebuild_cd_cid-checker_calibrationnet" {
+module "codebuild_cd_cid-checker_calibration" {
   count                    = local.is_dev_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
   privileged_mode          = true
   is_build_concurrent      = false
-  specific_branch          = "calibrationnet"
+  specific_branch          = "calibration"
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
+
+module "codebuild_cd_cid-checker_wallaby" {
+  count                    = local.is_dev_envs
+  source                   = "../modules/codebuild"
+  git_repository_name      = "cid-checker"
+  get_global_configuration = local.make_codebuild_global_configuration
+  privileged_mode          = true
+  is_build_concurrent      = false
+  specific_branch          = "wallaby"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
