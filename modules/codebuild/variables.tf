@@ -54,3 +54,8 @@ variable "specific_branch" {
   type    = string
   default = null
 }
+
+variable "specific_envs" {
+  type    = map
+  default = {}
+}

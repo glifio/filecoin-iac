@@ -237,26 +237,38 @@ resource "kubernetes_secret_v1" "cid_checker_secret" {
   }
 }
 
-resource "kubernetes_secret_v1" "cid_checker_secret_dev" {
-  count = local.is_dev_envs
+resource "kubernetes_secret_v1" "cid_checker_mainnet_secret" {
+  count = local.is_mainnet_envs
   metadata {
-    name      = "cid-checker-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    mongoURL = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_dev[0].secret_string), "mongoURL", null)
-  }
-}
-
-
-resource "kubernetes_secret_v1" "cid_checker_db_secret" {
-  count = local.is_dev_envs
-  metadata {
-    name      = "cid-checker-db-secret"
+    name      = "cid-checker-mainnet-secret"
     namespace = "default"
   }
   data = {
-    dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_db_secret[0].secret_string), "dbUsername", null)
-    dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_db_secret[0].secret_string), "dbPassword", null)
+    dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker[0].secret_string), "dbUsername", null)
+    dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker[0].secret_string), "dbPassword", null)
+  }
+}
+
+resource "kubernetes_secret_v1" "cid_checker_calibration_secret" {
+  count = local.is_dev_envs
+  metadata {
+    name      = "cid-checker-calibration-secret"
+    namespace = "default"
+  }
+  data = {
+    dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_calibration[0].secret_string), "dbUsername", null)
+    dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_calibration[0].secret_string), "dbPassword", null)
+  }
+}
+
+resource "kubernetes_secret_v1" "cid_checker_wallaby_secret" {
+  count = local.is_dev_envs
+  metadata {
+    name      = "cid-checker-wallaby-secret"
+    namespace = "default"
+  }
+  data = {
+    dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_wallaby[0].secret_string), "dbUsername", null)
+    dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_wallaby[0].secret_string), "dbPassword", null)
   }
 }

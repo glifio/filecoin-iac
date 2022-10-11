@@ -54,6 +54,11 @@ data "aws_route53_zone" "node_glif_io" {
   private_zone = false
 }
 
+data "aws_route53_zone" "filecoin_tools" {
+  name         = "filecoin.tools"
+  private_zone = false
+}
+
 data "aws_secretsmanager_secret" "calibrationapi_archive_lotus" {
   count = local.is_dev_envs
   name  = "${module.generator.prefix}-calibrationapi-archive-lotus"
@@ -222,22 +227,22 @@ data "aws_secretsmanager_secret_version" "cid_checker" {
   secret_id = data.aws_secretsmanager_secret.cid_checker[0].id
 }
 
-data "aws_secretsmanager_secret" "cid_checker_dev" {
+data "aws_secretsmanager_secret" "cid_checker_calibration" {
   count = local.is_dev_envs
-  name  = "${module.generator.prefix}-cid-checker"
+  name  = "${module.generator.prefix}-cid-checker-calibration"
 }
 
-data "aws_secretsmanager_secret_version" "cid_checker_dev" {
+data "aws_secretsmanager_secret_version" "cid_checker_calibration" {
   count     = local.is_dev_envs
-  secret_id = data.aws_secretsmanager_secret.cid_checker_dev[0].id
+  secret_id = data.aws_secretsmanager_secret.cid_checker_calibration[0].id
 }
 
-data "aws_secretsmanager_secret" "cid_checker_db" {
+data "aws_secretsmanager_secret" "cid_checker_wallaby" {
   count = local.is_dev_envs
-  name  = "${module.generator.prefix}-cid-checker-db"
+  name  = "${module.generator.prefix}-cid-checker-calibration"
 }
 
-data "aws_secretsmanager_secret_version" "cid_checker_db_secret" {
+data "aws_secretsmanager_secret_version" "cid_checker_wallaby" {
   count     = local.is_dev_envs
-  secret_id = data.aws_secretsmanager_secret.cid_checker_db[0].id
+  secret_id = data.aws_secretsmanager_secret.cid_checker_calibration[0].id
 }

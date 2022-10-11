@@ -1,57 +1,228 @@
-############CID Checker#######################################
-module "ingress-kong_cid-checker-calibrationnet" {
+############CID Checker Wallaby#######################################
+module "ingress-kong_cid-checker-wallaby" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
   get_ingress_pathType              = "Prefix"
-  get_ingress_backend_service_name   = "cid-checker-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_name   = "cid-checker-wallaby-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default" 
-  get_rule_host                      = "cid.calibration.node.glif.io"
+  get_rule_host                      = "wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
 }
 
-module "ingress-kong_cid-checker-calibrationnet-api" {
+module "ingress-kong_cid-checker-wallaby-api" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
-  get_ingress_backend_service_name   = "cid-checker-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_name   = "cid-checker-wallaby-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.calibration.node.glif.io"
+  get_rule_host                      = "wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
 }
 
-module "ingress-kong_cid-checker-another-calibrationnet" {
+module "ingress-kong_cid-checker-wallaby-docs" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs"
+  get_ingress_backend_service_name   = "cid-checker-wallaby-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "wallaby.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-wallaby-docs-subresources" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-wallaby-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "wallaby.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-wallaby" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
   get_ingress_pathType              = "Prefix"
-  get_ingress_backend_service_name   = "cid-checker-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_name   = "cid-checker-wallaby-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid-another.calibration.node.glif.io"
+  get_rule_host                      = "cid.wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
 }
 
-module "ingress-kong_cid-checker-another-calibrationnet-api" {
+module "ingress-kong_cid-checker-alternative-domain-wallaby-api" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
-  get_ingress_backend_service_name   = "cid-checker-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_name   = "cid-checker-wallaby-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid-another.calibration.node.glif.io"
+  get_rule_host                      = "cid.wallaby.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-wallaby-docs" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs"
+  get_ingress_backend_service_name   = "cid-checker-wallaby-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.wallaby.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-wallaby-docs-subresources" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-wallaby-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.wallaby.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+############CID Checker Calibration#######################################
+module "ingress-kong_cid-checker-calibration" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/"
+  get_ingress_pathType              = "Prefix"
+  get_ingress_backend_service_name   = "cid-checker-calibration-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 80
+  get_ingress_namespace              = "default" 
+  get_rule_host                      = "calibration.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-calibration-api" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/api/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "calibration.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-calibration-docs" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs"
+  get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "calibration.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-calibration-docs-subresources" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "calibration.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-calibration" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/"
+  get_ingress_pathType              = "Prefix"
+  get_ingress_backend_service_name   = "cid-checker-calibration-frontend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 80
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.calibration.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-calibration-api" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/api/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.calibration.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-calibration-docs" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs"
+  get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.calibration.filecoin.tools"
+  type_lb_scheme                     = "external"
+  is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
+}
+
+module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresources" {
+  count                              = local.is_dev_envs
+  source                             = "../modules/k8s_ingress"
+  get_global_configuration           = local.make_global_configuration
+  get_ingress_http_path              = "/docs/(.*)"
+  get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
+  get_ingress_backend_service_port   = 3000
+  get_ingress_namespace              = "default"
+  get_rule_host                      = "cid.calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false

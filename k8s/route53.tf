@@ -22,21 +22,42 @@ resource "aws_route53_record" "dev_nlb_ingress_internal" {
   records         = [data.aws_lb.kong_internal.dns_name]
 }
 
-# CID CHECKER Calibrationnet
-resource "aws_route53_record" "cid_nlb_ingress_external_calibration" {
+# CID CHECKER Wallaby
+resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_wallaby" {
   count           = local.is_dev_envs
-  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-  name            = "cid.calibration.node.glif.io"
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "wallaby.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-resource "aws_route53_record" "cid_another_nlb_ingress_external_calibration" {
+resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_wallaby" {
   count           = local.is_dev_envs
-  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-  name            = "cid-another.calibration.node.glif.io"
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "cid.wallaby.filecoin.tools"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+# CID CHECKER Calibration
+resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "calibration.filecoin.tools"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_calibration" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "cid.calibration.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
@@ -44,20 +65,24 @@ resource "aws_route53_record" "cid_another_nlb_ingress_external_calibration" {
 }
 
 # CID CHECKER Mainnet
-resource "aws_route53_record" "cid_nlb_ingress_external_mainnet" {
+resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_mainnet" {
   count           = local.is_mainnet_envs
-  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-  name            = "cid.node.glif.io"
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "filecoin.tools"
   allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
+  type            = "A"
+
+  alias {
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+    evaluate_target_health = true
+  }
 }
 
-resource "aws_route53_record" "cid_another_nlb_ingress_external_mainnet" {
+resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_mainnet" {
   count           = local.is_mainnet_envs
-  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-  name            = "cid-another.node.glif.io"
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "cid.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
