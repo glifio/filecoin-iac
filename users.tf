@@ -46,6 +46,7 @@ locals {
       ],
       eks_access = [
         local.eks_cluster_testnet,
+        local.eks_cluster_mainnet,
       ],
     },
     {
