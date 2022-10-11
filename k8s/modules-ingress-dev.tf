@@ -11,6 +11,7 @@ module "ingress-kong_cid-checker-wallaby" {
   get_rule_host                      = "wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-wallaby-api" {
@@ -24,6 +25,7 @@ module "ingress-kong_cid-checker-wallaby-api" {
   get_rule_host                      = "wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-wallaby-docs" {
@@ -37,6 +39,7 @@ module "ingress-kong_cid-checker-wallaby-docs" {
   get_rule_host                      = "wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-wallaby-docs-subresources" {
@@ -50,6 +53,7 @@ module "ingress-kong_cid-checker-wallaby-docs-subresources" {
   get_rule_host                      = "wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby" {
@@ -64,6 +68,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby" {
   get_rule_host                      = "cid.wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby-api" {
@@ -77,6 +82,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby-api" {
   get_rule_host                      = "cid.wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby-docs" {
@@ -90,6 +96,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby-docs" {
   get_rule_host                      = "cid.wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby-docs-subresources" {
@@ -103,6 +110,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby-docs-subresources" {
   get_rule_host                      = "cid.wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 ############CID Checker Calibration#######################################
@@ -146,6 +154,7 @@ module "ingress-kong_cid-checker-calibration-docs" {
   get_rule_host                      = "calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-calibration-docs-subresources" {
@@ -159,6 +168,7 @@ module "ingress-kong_cid-checker-calibration-docs-subresources" {
   get_rule_host                      = "calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibration" {
@@ -201,6 +211,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs" {
   get_rule_host                      = "cid.calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresources" {
@@ -214,6 +225,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresource
   get_rule_host                      = "cid.calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
+  is_kong_transformer_header_enabled = false
 }
 
 ############calibration.node.glif.io##########################
