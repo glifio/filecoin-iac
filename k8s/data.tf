@@ -246,3 +246,11 @@ data "aws_secretsmanager_secret_version" "cid_checker_wallaby" {
   count     = local.is_dev_envs
   secret_id = data.aws_secretsmanager_secret.cid_checker_calibration[0].id
 }
+
+data "aws_secretsmanager_secret" "github_ssh_gist_updater" {
+  name  = "${module.generator.prefix}/github_ssh_gist_updater"
+}
+
+data "aws_secretsmanager_secret_version" "github_ssh_gist_updater" {
+  secret_id = data.aws_secretsmanager_secret.github_ssh_gist_updater.id
+}
