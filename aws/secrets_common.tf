@@ -41,3 +41,11 @@ resource "aws_secretsmanager_secret" "codebuild_user" {
   tags = merge({ "Name" = "${module.generator.prefix}-codebuild-user" },
   module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "github_ssh_gist_updater" {
+  name                    = "${module.generator.prefix}/github_ssh_gist_updater"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-github-ssh-gist-updater" },
+  module.generator.common_tags)
+}
