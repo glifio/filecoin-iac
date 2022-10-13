@@ -29,9 +29,9 @@ git_configuration = [
     config = {
       project_name      = "cid-checker",
       name              = "cid-checker"
-      organization_name = "glifio",
+      organization_name = "protofire",
       description       = "CI/CD pipeline for filecoin",
-      repo_name         = "cid-checker",
+      repo_name         = "filecoin-CID-checker",
     }
   },
 ]

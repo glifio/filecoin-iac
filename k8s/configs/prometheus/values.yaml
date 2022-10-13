@@ -160,7 +160,7 @@ prometheus:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 100Gi
+              storage: ${get_pvc_size}
 
   additionalServiceMonitors:
     - name: lily-service
