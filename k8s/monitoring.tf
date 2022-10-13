@@ -1,5 +1,16 @@
-#TODO: probably, we should move this code to module, 'cause it will be easier to customize values and remaing defaults,
+# TODO: probably, we should move this code to module, 'cause it will be easier to customize values and remaing defaults,
 #  but for now, I believe it will be enough and not critical
+
+# WARNING: `get_pvc_size` variable wouldn't resize your pvc and
+#   will work only on installation of the monitoring helm chart
+# Mitigation: monitoring pvcs with https://grafana.com/grafana/dashboards/17092-kubernetes-persistent-volumes/ and 
+#   notify after usage of more then 80%
+# Workaround: please do resize via `kubectl edit pvc`
+# Issue: https://github.com/prometheus-community/helm-charts/issues/957
+# ---
+# Idea: Probably this is how pvc are working in k8s, if you interested you can go deeper in the k8s and csi,
+#   for me it was onetime task:
+# Docu: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims
 resource "helm_release" "monitoring" {
   name       = "monitoring"
   repository = "https://prometheus-community.github.io/helm-charts"
