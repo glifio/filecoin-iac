@@ -10,11 +10,22 @@ resource "aws_iam_account_password_policy" "main" {
   require_symbols                = true
 }
 
+################## Developer Policies
+resource "aws_iam_group_policy_attachment" "developers" {
+  group      = aws_iam_group.developers.name
+  policy_arn = local.developers_role.aws_policy
+}
+
+resource "aws_iam_group_policy_attachment" "developers_group" {
+  group      = aws_iam_group.developers.name
+  policy_arn = aws_iam_policy.manage_own_credentials.arn
+}
+
 
 ################## Devops Policies
 resource "aws_iam_group_policy_attachment" "devops" {
   group      = aws_iam_group.devops.name
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+  policy_arn = local.devops_role.aws_policy 
 }
 
 resource "aws_iam_group_policy_attachment" "devops_group" {
