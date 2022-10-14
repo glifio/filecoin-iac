@@ -7,9 +7,9 @@ resource "kubernetes_config_map_v1_data" "users_list_testnet" {
   data = {
     "mapUsers" = templatefile("${path.module}/configs/user_management/eks_users_list.yaml", {
       aws_account_id = data.aws_caller_identity.current.account_id,
-      get_users = [for user in local.users : user.username
-        if contains(lookup(user, "eks_access", []), local.eks_cluster_testnet)
-      ]
+      get_users = {for user in local.users : user.username => lookup(user.eks_access, local.eks_cluster_testnet,"")
+        if contains(keys(lookup(user, "eks_access", [])), local.eks_cluster_testnet)
+      }
     })
   }
   force = true
@@ -25,9 +25,9 @@ resource "kubernetes_config_map_v1_data" "users_list_mainnet" {
   data = {
     "mapUsers" = templatefile("${path.module}/configs/user_management/eks_users_list.yaml", {
       aws_account_id = data.aws_caller_identity.current.account_id,
-      get_users = [for user in local.users : user.username
-        if contains(lookup(user, "eks_access", []), local.eks_cluster_mainnet)
-      ]
+      get_users = {for user in local.users : user.username => lookup(user.eks_access, local.eks_cluster_mainnet,"")
+        if contains(keys(lookup(user, "eks_access", [])), local.eks_cluster_mainnet)
+      }
     })
   }
   force = true
