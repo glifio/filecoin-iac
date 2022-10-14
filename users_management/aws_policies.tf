@@ -12,25 +12,16 @@ resource "aws_iam_account_password_policy" "main" {
 
 ################## Developer Policies
 resource "aws_iam_group_policy_attachment" "developers" {
+  count      = length(local.developers_role.aws_policies)
   group      = aws_iam_group.developers.name
-  policy_arn = local.developers_role.aws_policy
+  policy_arn = local.developers_role.aws_policies[count.index]
 }
-
-resource "aws_iam_group_policy_attachment" "developers_group" {
-  group      = aws_iam_group.developers.name
-  policy_arn = aws_iam_policy.manage_own_credentials.arn
-}
-
 
 ################## Devops Policies
 resource "aws_iam_group_policy_attachment" "devops" {
+  count      = length(local.devops_role.aws_policies)
   group      = aws_iam_group.devops.name
-  policy_arn = local.devops_role.aws_policy 
-}
-
-resource "aws_iam_group_policy_attachment" "devops_group" {
-  group      = aws_iam_group.devops.name
-  policy_arn = aws_iam_policy.manage_own_credentials.arn
+  policy_arn = local.devops_role.aws_policies[count.index] 
 }
 
 ################## Base Policies
@@ -41,6 +32,16 @@ resource "aws_iam_policy" "manage_own_credentials" {
   description = "Policy to allow users to manage their own credentials"
   path        = "/"
   policy      = file("${path.module}/policies/manage_own_credentials.pol.tpl")
+
+  tags = module.generator_global.common_tags
+}
+
+# https://computingforgeeks.com/grant-developers-access-to-eks-kubernetes-cluster/
+resource "aws_iam_policy" "eks_devs" {
+  name        = "${module.generator_global.prefix}-connect-to-eks"
+  description = "Policy to allow developers to connect to EKS cluster"
+  path        = "/"
+  policy      = file("${path.module}/policies/eks_devs.pol.tpl")
 
   tags = module.generator_global.common_tags
 }
