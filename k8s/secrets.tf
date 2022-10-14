@@ -262,18 +262,6 @@ resource "kubernetes_secret_v1" "cid_checker_calibration_secret" {
   }
 }
 
-resource "kubernetes_secret_v1" "cid_checker_wallaby_secret" {
-  count = local.is_dev_envs
-  metadata {
-    name      = "cid-checker-wallaby-secret"
-    namespace = "default"
-  }
-  data = {
-    dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_wallaby[0].secret_string), "dbUsername", null)
-    dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_wallaby[0].secret_string), "dbPassword", null)
-  }
-}
-
 resource "kubernetes_secret_v1" "github_ssh_gist_updater" {
   metadata {
     name      = "github-ssh-gist-updater"

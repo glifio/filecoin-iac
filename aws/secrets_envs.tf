@@ -72,15 +72,6 @@ resource "aws_secretsmanager_secret" "cid_checker_calibration" {
     module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "cid_checker_wallaby" {
-  count                   = local.is_dev_envs
-  name                    = "${module.generator.prefix}-cid-checker-wallaby"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-cid-checker-wallaby" },
-    module.generator.common_tags)
-}
-
 ################# END BLOCK DEV ENV SECRETS LIST #################
 
 
