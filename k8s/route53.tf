@@ -90,7 +90,7 @@ resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_mainnet" 
 }
 
 # CID Checkers uptimerobot
-resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_mainnet" {
+resource "aws_route53_record" "cid_filecoin_tools_status" {
   count           = local.is_dev_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
   name            = "status.filecoin.tools"
