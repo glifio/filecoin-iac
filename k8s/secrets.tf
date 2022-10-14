@@ -31,6 +31,7 @@ resource "kubernetes_secret_v1" "lotus_wallaby_archive_node_secret" {
   data = {
     privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_lotus[0].secret_string), "private_key", null)
     token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_lotus[0].secret_string), "jwt_token", null)
+    nodeid     = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_lotus[0].secret_string), "bootstrap_node_id", null)
   }
 }
 
