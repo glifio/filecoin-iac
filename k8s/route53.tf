@@ -89,6 +89,17 @@ resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_mainnet" 
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
+# CID Checkers uptimerobot
+resource "aws_route53_record" "cid_filecoin_tools_status" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "status.filecoin.tools"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = ["stats.uptimerobot.com"]
+}
+
 # Route53 record from calibration.node.glif.io to external nlb
 resource "aws_route53_record" "nlb_ingress_external_calibration" {
   count           = local.is_dev_envs
