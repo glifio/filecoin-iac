@@ -31,6 +31,7 @@ resource "kubernetes_secret_v1" "lotus_wallaby_archive_node_secret" {
   data = {
     privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_lotus[0].secret_string), "private_key", null)
     token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_lotus[0].secret_string), "jwt_token", null)
+    nodeid     = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_lotus[0].secret_string), "bootstrap_node_id", null)
   }
 }
 
@@ -258,18 +259,6 @@ resource "kubernetes_secret_v1" "cid_checker_calibration_secret" {
   data = {
     dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_calibration[0].secret_string), "dbUsername", null)
     dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_calibration[0].secret_string), "dbPassword", null)
-  }
-}
-
-resource "kubernetes_secret_v1" "cid_checker_wallaby_secret" {
-  count = local.is_dev_envs
-  metadata {
-    name      = "cid-checker-wallaby-secret"
-    namespace = "default"
-  }
-  data = {
-    dbUsername = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_wallaby[0].secret_string), "dbUsername", null)
-    dbPassword = lookup(jsondecode(data.aws_secretsmanager_secret_version.cid_checker_wallaby[0].secret_string), "dbPassword", null)
   }
 }
 
