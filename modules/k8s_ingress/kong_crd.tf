@@ -17,7 +17,7 @@ resource "kubernetes_manifest" "request_transformer_auth_header_replace_url" {
     "config" = {
       "add" = {
         "headers" = [
-          "Authorization: Bearer ${lookup(jsondecode(data.aws_secretsmanager_secret_version.current[0].secret_string), "jwt_token_kong_rw", null)}"
+          var.is_kong_auth_header_block_public_access ? "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJyZWFkIl19.3Yqei1I2T_qS88XZqVNxFbVTxI1AfBJwrpMXnyqSP7E" : "Authorization: Bearer ${lookup(jsondecode(data.aws_secretsmanager_secret_version.current[0].secret_string), "jwt_token_kong_rw", null)}"
         ]
       }
       "replace" = {

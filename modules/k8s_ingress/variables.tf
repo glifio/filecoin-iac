@@ -65,6 +65,11 @@ variable "enable_whitelist_ip" {
   default = false
 }
 
+variable "is_kong_auth_header_block_public_access" {
+  type = bool
+  default = true
+}
+
 variable "get_whitelist_ips" {
   default = [
     "212.58.119.174",
