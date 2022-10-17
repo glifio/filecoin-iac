@@ -1,4 +1,4 @@
-module "calibrationapi_chain_snapshot" {
+module "mainnet_chain_snapshot" {
   count     = local.is_mainnet_envs
   source    = "../modules/cronjob_lotus_chain_snapshots"
   sts_name  = "space00"
