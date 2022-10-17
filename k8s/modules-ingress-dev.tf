@@ -252,7 +252,6 @@ module "ingress-kong_calibrationapi-node-archive" {
   get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                           = "calibration.node.glif.io"
   type_lb_scheme                          = "external"
-  is_kong_auth_header_block_public_access = false
 }
 
 
@@ -294,7 +293,6 @@ module "ingress-kong_wallaby_external" {
   get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                           = "wallaby.dev.node.glif.io"
   type_lb_scheme                          = "external"
-  is_kong_auth_header_block_public_access = false
 }
 
 module "ingress-kong_api-read-dev-lotus-2346" {
