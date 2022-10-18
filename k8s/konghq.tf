@@ -7,6 +7,12 @@ resource "helm_release" "konghq-external" {
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
   version    = "2.12.0"
 
+  values = [
+    templatefile("${path.module}/configs/konghq/antiaffinity.yaml", {
+      app = helm_release.konghq-internal.name
+    })
+  ]
+
   set {
     name  = "ingressController.ingressClass"
     value = "kong-external-lb"
