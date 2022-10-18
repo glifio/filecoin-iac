@@ -66,7 +66,7 @@ variable "enable_whitelist_ip" {
 }
 
 variable "is_kong_auth_header_block_public_access" {
-  type = bool
+  type    = bool
   default = true
 }
 
