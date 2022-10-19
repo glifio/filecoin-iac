@@ -187,7 +187,9 @@ Among the others, the repository uses:
 
 [Uptime Robot](uptimerobot.com) is used to monitor web-accessible endpoints.
 
-Summary on the uptime is available here: https://status.node.glif.io
+Summary on the uptime is available here:
+- Production: https://status.node.glif.io
+- Development: https://status.dev.node.glif.io
 
 | Endpoint | Method | Payload |
 | --- | --- | --- |
