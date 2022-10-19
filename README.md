@@ -114,10 +114,22 @@ Here's a short list of domain names that are pointing to API Gateways.
 
 | Hostname | Path | Match Type | Load Balancer | Namespace | Service |
 | --- | --- | --- | --- | --- | --- |
-| cid.calibration.node.glif.io | `/` | Prefix | external | default | `cid-checker-frontend:80` |  
-| cid.calibration.node.glif.io | `/api/(.*)` | Exact | external | default | `cid-checker-backend:3000` | 
-| cid-another.calibration.node.glif.io | `/` | Prefix | external | default | `cid-checker-frontend:80` |  
-| cid-another.calibration.node.glif.io | `/api/(.*)` | Exact | external | default | `cid-checker-backend:3000` | 
+| wallaby.filecoin.tools | `/` | Prefix | external | default | `cid-checker-wallaby-frontend:80` |
+| wallaby.filecoin.tools | `/api/(.*)` | Exact | external | default | `cid-checker-wallaby-backend:3000` |
+| wallaby.filecoin.tools | `/docs` | Exact | external | default | `cid-checker-wallaby-backend:3000` |
+| wallaby.filecoin.tools | `/docs/(.*)` | Exact | external | default | `cid-checker-wallaby-backend:3000` |
+| cid.wallaby.filecoin.tools | `/` | Prefix | external | default | `cid-checker-wallaby-frontend:80` |
+| cid.wallaby.filecoin.tools | `/api/(.*)` | Exact | external | default | `cid-checker-wallaby-backend:3000` |
+| cid.wallaby.filecoin.tools | `/docs` | Exact | external | default | `cid-checker-wallaby-backend:3000` |
+| cid.wallaby.filecoin.tools | `/docs/(.*)` | Exact | external | default | `cid-checker-wallaby-backend:3000` |
+| calibration.filecoin.tools | `/` | Prefix | external | default | `cid-checker-calibration-frontend:80` |
+| calibration.filecoin.tools | `/api/(.*)` | Exact | external | default | `cid-checker-calibration-backend:3000` |
+| calibration.filecoin.tools | `/docs` | Exact | external | default | `cid-checker-calibration-backend:3000` |
+| calibration.filecoin.tools | `/docs/(.*)` | Exact | external | default | `cid-checker-calibration-backend:3000` |
+| cid.calibration.filecoin.tools | `/` | Prefix | external | default | `cid-checker-calibration-frontend:80` |
+| cid.calibration.filecoin.tools | `/api/(.*)` | Exact | external | default | `cid-checker-calibration-backend:3000` |
+| cid.calibration.filecoin.tools | `/docs` | Exact | external | default | `cid-checker-calibration-backend:3000` |
+| cid.calibration.filecoin.tools | `/docs/(.*)` | Exact | external | default | `cid-checker-calibration-backend:3000` |
 | calibration.node.glif.io | `/archive/lotus/(.*)` | Exact | external | network | `calibrationapi-archive-node-lotus:1234` | 
 | calibration.node.glif.io | `/calibrationapi/ipfs/(.*)` | Exact | external | network | `calibrationapi-ipfs:4001` | 
 | calibration.node.glif.io | `/calibrationapi/ipfs/(.*)` | Exact | external | network | `calibrationapi-ipfs:8080` | 
@@ -132,10 +144,14 @@ Here's a short list of domain names that are pointing to API Gateways.
 #### Production
 | Hostname | Path | Match Type | Load Balancer | Namespace | Service |
 | --- | --- | --- | --- | --- | --- |
-| cid.node.glif.io | `/` | Prefix | external | default | `cid-checker-frontend:80` |  
-| cid.node.glif.io | `/api/(.*)` | Exact | external | default | `cid-checker-backend:3000` | 
-| cid-another.node.glif.io | `/` | Prefix | external | default | `cid-checker-frontend:80` |  
-| cid-another.node.glif.io | `/api/(.*)` | Exact | external | default | `cid-checker-backend:3000` | 
+| filecoin.tools | `/` | Prefix | external | default | `cid-checker-mainnet-frontend:80` |
+| filecoin.tools | `/api/(.*)` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
+| filecoin.tools | `/docs` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
+| filecoin.tools | `/docs/(.*)` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
+| cid.filecoin.tools | `/` | Prefix | external | default | `cid-checker-mainnet-frontend:80` |
+| cid.filecoin.tools | `/api/(.*)` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
+| cid.filecoin.tools | `/docs` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
+| cid.filecoin.tools | `/docs/(.*)` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
 | node.glif.io | `/space00/lotus/(.*)` | Exact | external | network | `space00-lotus:1234` | 
 | node.glif.io | `/space06/lotus/(.*)` | Exact | external | network | `space06-lotus:1234` | 
 | node.glif.io | `/space07/lotus/(.*)` | Exact | external | network | `space07-lotus:1234` | 
