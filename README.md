@@ -66,7 +66,7 @@ The most high-level view on the infrastructure is shown on the image below.
 
 ![C4 Software System](assets/images/filecoin-c4.drawio.png)
 
-More detailed view on how the infrastructure works is shorn on the image below.
+More detailed view on how the infrastructure works is shown on the image below.
 
 ![C4 Containers](assets/images/c4-containers.drawio.png)
 
@@ -74,7 +74,7 @@ More detailed view on how the infrastructure works is shorn on the image below.
 
 ### API Endpoints
 
-Requests to Internal Load Balancer are redirectet either to `dev-internal.dev.node.glif.io` or `mainnet-internal.node.glif.io` depending on the environment. What kind of services are listening to such requests is described in ingress rules, refer to [k8s_ingress](#k8s_ingress).
+Requests to Internal Load Balancer are redirectet either to `dev-internal.dev.node.glif.io` or `mainnet-internal.node.glif.io` depending on the environment. What kind of services are listening to such requests is described in ingress rules, refer to [ingress rules](#ingress-rules).
 
 Endpoint | Destination |
 | --- | --- | 
