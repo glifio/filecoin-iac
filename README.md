@@ -81,7 +81,7 @@ Endpoint | Destination |
 | `GET /` | https://node.glif.link |
 | `OPTIONS /` | Mock Endpoint |
 | `POST /` | Internal Load Balancer |
-| `GET /delutedsupply` | https://circulatingsupply.s3.amazonaws.com/delutedsupply |
+| `GET /dilutedsupply` | https://circulatingsupply.s3.amazonaws.com/diluted_supply.html |
 | `GET /rpc/v0` | https://node.glif.link |
 | `POST /rpc/v0` | Internal Load Balancer |
 | `OPTIONS /rpc/v0` | Mock Endpoint |
@@ -89,8 +89,8 @@ Endpoint | Destination |
 | `POST /rpc/v1` | Internal Load Balancer |
 | `OPTIONS /rpc/v1` | Mock Endpoint |
 | `GET /statecirculatingsupply` | Internal Load Balancer |
-| `GET /statecirculatingsupply/fil` | https://circulatingsupply.s3.amazonaws.com/delutedsupply |
-| `GET /statecirculatingsupply/fil/v2` | https://circulatingsupply.s3.amazonaws.com/delutedsupply |
+| `GET /statecirculatingsupply/fil` | https://circulatingsupply.s3.amazonaws.com/index.html |
+| `GET /statecirculatingsupply/fil/v2` | https://circulatingsupply-staging.s3.amazonaws.com/index.html |
 | `GET /vmcirculatingsupply` | Internal Load Balancer |
 | `ANY /{_next+}` | https://node.glif.link/{_next} |
 
