@@ -2,7 +2,7 @@
 
 ## Summary
 
-This module provides resources to create and configure chain snapshots.
+This module provides resources to create and configure chain snapshots and store them in a gist.
 
 ## Resources
 
@@ -17,11 +17,11 @@ This module provides resources to create and configure chain snapshots.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_blocks_to_export"></a> [blocks\_to\_export](#input\_blocks\_to\_export) | n/a | `number` | `900` | no |
-| <a name="input_git_author"></a> [git\_author](#input\_git\_author) | n/a | `string` | `"Protofire Bot"` | no |
-| <a name="input_git_email"></a> [git\_email](#input\_git\_email) | n/a | `string` | `"openworklabbot@gmail.com"` | no |
-| <a name="input_git_repo"></a> [git\_repo](#input\_git\_repo) | n/a | `string` | n/a | yes |
-| <a name="input_namespace"></a> [namespace](#input\_namespace) | n/a | `string` | n/a | yes |
-| <a name="input_schedule"></a> [schedule](#input\_schedule) | n/a | `string` | `"0 0 * * *"` | no |
-| <a name="input_sts_name"></a> [sts\_name](#input\_sts\_name) | n/a | `string` | n/a | yes |
-| <a name="input_sts_name_postfix"></a> [sts\_name\_postfix](#input\_sts\_name\_postfix) | n/a | `string` | `"lotus-0"` | no |
+| <a name="input_blocks_to_export"></a> [blocks\_to\_export](#input\_blocks\_to\_export) | How many blocks to store in the snapshot | `number` | `900` | no |
+| <a name="input_git_author"></a> [git\_author](#input\_git\_author) | Git commit author name | `string` | `"Protofire Bot"` | no |
+| <a name="input_git_email"></a> [git\_email](#input\_git\_email) | Git commit author email | `string` | `"openworklabbot@gmail.com"` | no |
+| <a name="input_git_repo"></a> [git\_repo](#input\_git\_repo) | Repository to store the snapshot in | `string` | n/a | yes |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace to create the job in | `string` | n/a | yes |
+| <a name="input_schedule"></a> [schedule](#input\_schedule) | Scheduler expression | `string` | `"0 0 * * *"` | no |
+| <a name="input_sts_name"></a> [sts\_name](#input\_sts\_name) | Steteful set to make a snapshot of | `string` | n/a | yes |
+| <a name="input_sts_name_postfix"></a> [sts\_name\_postfix](#input\_sts\_name\_postfix) | Stateful set postfix | `string` | `"lotus-0"` | no |
