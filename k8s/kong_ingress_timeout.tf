@@ -23,3 +23,22 @@ resource "kubernetes_manifest" "kong_ingress_read_timeout" {
     }
   }
 }
+
+resource "kubernetes_manifest" "kong_ingress_read_one_day_timeout" {
+  count = local.is_mainnet_envs
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongIngress"
+    "metadata" = {
+      "name"      = "kong-ingress-one-day-read-timeout"
+      "namespace" = kubernetes_namespace_v1.network.metadata[0].name
+      "annotations" = {
+        "kubernetes.io/ingress.class" = "kong-external-lb"
+      }
+    }
+    "proxy" = {
+      "protocol"     = "http"
+      "read_timeout" = 86400000
+    }
+  }
+}
