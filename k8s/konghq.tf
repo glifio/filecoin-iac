@@ -7,6 +7,13 @@ resource "helm_release" "konghq-external" {
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
   version    = "2.12.0"
 
+  values = [templatefile("${path.module}/configs/konghq/antiaffinity.yaml", {app = "${module.generator.prefix}-kong-external"})]
+
+  set {
+    name = "replicaCount"
+    value = 2
+  }
+
   set {
     name  = "ingressController.ingressClass"
     value = "kong-external-lb"
@@ -96,6 +103,13 @@ resource "helm_release" "konghq-internal" {
   chart      = "kong"
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
   version    = "2.10.2"
+
+  values = [templatefile("${path.module}/configs/konghq/antiaffinity.yaml", {app = "${module.generator.prefix}-kong-internal"})]
+
+  set {
+    name = "replicaCount"
+    value = 2
+  }
 
   set {
     name  = "ingressController.installCRDs"
