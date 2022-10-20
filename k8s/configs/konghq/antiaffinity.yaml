@@ -1,9 +1,10 @@
-podAntiAffinity:
-  preferredDuringSchedulingIgnoredDuringExecution:
-  - labelSelector:
-      matchExpressions:
-      - key: app
-        operator: In
-        values:
-        - ${app}
-    topologyKey: topology.kubernetes.io/zone
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - ${app}
+      topologyKey: topology.kubernetes.io/zone
