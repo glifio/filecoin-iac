@@ -1,4 +1,6 @@
-resource "aws_s3_bucket" "marketdeals_bucket" {
+#### MARKETDEALS MAINNET
+
+resource "aws_s3_bucket" "cid_checker_marketdeals_bucket_mainnet" {
   count         = local.is_mainnet_envs
   bucket        = "marketdeals"
   force_destroy = true
@@ -11,52 +13,51 @@ resource "aws_s3_bucket" "marketdeals_bucket" {
   )
 }
 
-resource "aws_iam_role" "sync_marketdeals" {
+resource "aws_iam_role" "cid_checker_sync_marketdeals_mainnet" {
   count       = local.is_mainnet_envs
-  name        = "${terraform.workspace}-cronjob-sync-marketdeals"
-  description = "${terraform.workspace} allow cronjob-sync-marketdeals access to s3 bucket"
+  name        = "${terraform.workspace}-cronjob-marketdeals-mainnet"
+  description = "${terraform.workspace} allow cronjob-marketdeals access to s3 bucket on mainnet"
 
   assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl", {
     aws_account_id  = data.aws_caller_identity.current.account_id
     oidc            = local.oidc_URL
-    namespace       = kubernetes_namespace_v1.network.metadata[0].name
-    sa_market_deals = var.sync_marketdeals_name
+    namespace       = "default" 
+    sa_market_deals = "cid-checker-mainnet-sync-s3-sa" 
   })
 
   tags = merge(
     {
-      "Name" = "${module.generator.prefix}-cronjob-sync-marketdeals"
+      "Name" = "${module.generator.prefix}-cronjob-marketdeals"
     },
     module.generator.common_tags
   )
 }
 
-resource "aws_iam_policy" "sync_marketdeals" {
+resource "aws_iam_policy" "cid_checker_sync_marketdeals_mainnet" {
   count       = local.is_mainnet_envs
-  name        = "${module.generator.prefix}-cronjob-sync-marketdeals"
-  description = "Allow cronjob-sync-marketdeals access to s3 bucket"
+  name        = "${module.generator.prefix}-cronjob-marketdeals-mainnet"
+  description = "Allow cronjob-marketdeals access to s3 bucket on mainnet"
   policy = templatefile("${path.module}/templates/policies/sync_marketdeals_policy.pol.tpl", {
-    sync_marketdeals_s3_bucket = aws_s3_bucket.marketdeals_bucket[0].id
+    sync_marketdeals_s3_bucket = aws_s3_bucket.cid_checker_marketdeals_bucket_mainnet[0].id
   })
 
   tags = module.generator.common_tags
 }
 
-resource "aws_iam_role_policy_attachment" "sync_marketdeals" {
+resource "aws_iam_role_policy_attachment" "cid_checker_sync_marketdeals_mainnet" {
   count      = local.is_mainnet_envs
-  role       = aws_iam_role.sync_marketdeals[0].name
-  policy_arn = aws_iam_policy.sync_marketdeals[0].arn
+  role       = aws_iam_role.cid_checker_sync_marketdeals_mainnet[0].name
+  policy_arn = aws_iam_policy.cid_checker_sync_marketdeals_mainnet[0].arn
 }
 
-
-resource "kubernetes_service_account_v1" "sync_marketdeals" {
+resource "kubernetes_service_account_v1" "cid_checker_sync_marketdeals_mainnet" {
   count = local.is_mainnet_envs
   metadata {
-    name      = var.sync_marketdeals_name
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
+    name      = "cid-checker-mainnet-sync-s3-sa"
+    namespace = "default" 
 
     annotations = {
-      "eks.amazonaws.com/role-arn" = aws_iam_role.sync_marketdeals[0].arn
+      "eks.amazonaws.com/role-arn" = aws_iam_role.cid_checker_sync_marketdeals_mainnet[0].arn
     }
 
     # TODO: add some meaningful label like created by tf
@@ -65,39 +66,138 @@ resource "kubernetes_service_account_v1" "sync_marketdeals" {
   }
 }
 
+#### MARKETDEALS CALIBRATION
 
-resource "kubernetes_cron_job_v1" "sync_marketdeals" {
-  count = local.is_mainnet_envs
-  metadata {
-    name      = "sync-marketdeals"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  spec {
-    concurrency_policy            = "Replace"
-    failed_jobs_history_limit     = 1
-    schedule                      = "*/20 * * * *"
-    successful_jobs_history_limit = 1
-    job_template {
-      metadata {}
-      spec {
-        backoff_limit              = 2
-        ttl_seconds_after_finished = 10
-        template {
-          metadata {}
-          spec {
-            service_account_name = kubernetes_service_account_v1.sync_marketdeals[0].metadata[0].name
-            container {
-              name  = "sync-marketdeals"
-              image = "glif/sync-s3-marketdeals:0.0.1"
-              command = ["sh", "-c", templatefile("${path.module}/configs/sync_s3_marketdeals/sync_s3_marketdeals.sh", {
-                set_s3_bucket_name = aws_s3_bucket.marketdeals_bucket[0].id
-                set_endpoint_s3    = "http://space00-lotus-service:1234/rpc/v0"
-                })
-              ]
-            }
-          }
-        }
-      }
+resource "aws_s3_bucket" "cid_checker_marketdeals_bucket_calibration" {
+  count         = local.is_dev_envs
+  bucket        = "marketdeals-calibration"
+  force_destroy = true
+
+  tags = merge(
+    module.generator.common_tags,
+    {
+      Description = "Bucket to store s3-market deals calibration files"
     }
+  )
+}
+
+resource "aws_iam_role" "cid_checker_sync_marketdeals_calibration" {
+  count       = local.is_dev_envs
+  name        = "${terraform.workspace}-cronjob-marketdeals-calibration"
+  description = "${terraform.workspace} allow cronjob-marketdeals access to s3 bucket on calibration"
+
+  assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl", {
+    aws_account_id  = data.aws_caller_identity.current.account_id
+    oidc            = local.oidc_URL
+    namespace       = "default" 
+    sa_market_deals = "cid-checker-calibration-sync-s3-sa" 
+  })
+
+  tags = merge(
+    {
+      "Name" = "${module.generator.prefix}-cronjob-marketdeals"
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_iam_policy" "cid_checker_sync_marketdeals_calibration" {
+  count       = local.is_dev_envs
+  name        = "${module.generator.prefix}-cronjob-marketdeals-calibration"
+  description = "Allow cronjob-marketdeals access to s3 bucket on calibration"
+  policy = templatefile("${path.module}/templates/policies/sync_marketdeals_policy.pol.tpl", {
+    sync_marketdeals_s3_bucket = aws_s3_bucket.cid_checker_marketdeals_bucket_calibration[0].id
+  })
+
+  tags = module.generator.common_tags
+}
+
+resource "aws_iam_role_policy_attachment" "cid_checker_sync_marketdeals_calibration" {
+  count      = local.is_dev_envs
+  role       = aws_iam_role.cid_checker_sync_marketdeals_calibration[0].name
+  policy_arn = aws_iam_policy.cid_checker_sync_marketdeals_calibration[0].arn
+}
+
+resource "kubernetes_service_account_v1" "cid_checker_sync_marketdeals_calibration" {
+  count = local.is_dev_envs
+  metadata {
+    name      = "cid-checker-calibration-sync-s3-sa"
+    namespace = "default"
+
+    annotations = {
+      "eks.amazonaws.com/role-arn" = aws_iam_role.cid_checker_sync_marketdeals_calibration[0].arn
+    }
+
+    # TODO: add some meaningful label like created by tf
+    # labels = {
+    # }
+  }
+}
+
+#### MARKETDEALS WALLABY
+
+resource "aws_s3_bucket" "cid_checker_marketdeals_bucket_wallaby" {
+  count         = local.is_dev_envs
+  bucket        = "marketdeals-wallaby"
+  force_destroy = true
+
+  tags = merge(
+    module.generator.common_tags,
+    {
+      Description = "Bucket to store s3-market deals wallaby files"
+    }
+  )
+}
+
+resource "aws_iam_role" "cid_checker_sync_marketdeals_wallaby" {
+  count       = local.is_dev_envs
+  name        = "${terraform.workspace}-cronjob-marketdeals-wallaby"
+  description = "${terraform.workspace} allow cronjob-marketdeals access to s3 bucket on wallaby"
+
+  assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl", {
+    aws_account_id  = data.aws_caller_identity.current.account_id
+    oidc            = local.oidc_URL
+    namespace       = "default" 
+    sa_market_deals = "cid-checker-wallaby-sync-s3-sa" 
+  })
+
+  tags = merge(
+    {
+      "Name" = "${module.generator.prefix}-cronjob-marketdeals"
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_iam_policy" "cid_checker_sync_marketdeals_wallaby" {
+  count       = local.is_dev_envs
+  name        = "${module.generator.prefix}-cronjob-marketdeals-wallaby"
+  description = "Allow cronjob-marketdeals access to s3 bucket on wallaby"
+  policy = templatefile("${path.module}/templates/policies/sync_marketdeals_policy.pol.tpl", {
+    sync_marketdeals_s3_bucket = aws_s3_bucket.cid_checker_marketdeals_bucket_wallaby[0].id
+  })
+
+  tags = module.generator.common_tags
+}
+
+resource "aws_iam_role_policy_attachment" "cid_checker_sync_marketdeals_wallaby" {
+  count      = local.is_dev_envs
+  role       = aws_iam_role.cid_checker_sync_marketdeals_wallaby[0].name
+  policy_arn = aws_iam_policy.cid_checker_sync_marketdeals_wallaby[0].arn
+}
+
+resource "kubernetes_service_account_v1" "cid_checker_sync_marketdeals_wallaby" {
+  count = local.is_dev_envs
+  metadata {
+    name      = "cid-checker-wallaby-sync-s3-sa"
+    namespace = "default"
+
+    annotations = {
+      "eks.amazonaws.com/role-arn" = aws_iam_role.cid_checker_sync_marketdeals_wallaby[0].arn
+    }
+
+    # TODO: add some meaningful label like created by tf
+    # labels = {
+    # }
   }
 }

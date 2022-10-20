@@ -41,10 +41,5 @@ variable "http_endpoint_uri" {
   type = string
 }
 
-variable "sync_marketdeals_name" {
-  type    = string
-  default = "sync-marketdeals"
-}
-
 variable "whitelist_ips" {}
 
