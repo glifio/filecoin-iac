@@ -214,3 +214,18 @@ Summary on the uptime is available here:
 Prometheus settings are stored here: [values.yaml](k8s/configs/prometheus/values.yaml).
 Grafana custom dashboards are stored in [openworklabbot](https://grafana.com/orgs/openworklabbot) organization on Grafana and retrieved by `id`.
 To update a custom dashboard update `revision` number of the dashboard in [values.yaml](k8s/configs/prometheus/values.yaml).
+
+There are a total of 5 custom dashboards:
+1. `lotus/Kubernetes Persistent Volumes`:
+   - Volume Space Usage in percentage
+   - Volume stats for `vol-ipfs-space00-lotus-0`
+   - Volume stats for `vol-lotus-io2-space00-lotus-0`
+   - Volume stats for `vol-lotus-io2-space07-lotus-0`
+2. `lotus/Lotus API Endpoints` – contains information on methods usage, timeouts, etc.
+3. `lotus/Lotus NGINX Ingress` – deprecated.
+4. `lotus/Lotus Node Health` – contains information on node health, including:
+    - node versions
+    - peer numbers per node
+    - network height per node
+    - duration of validation per node
+5. `lotus/Lotus PubSub` – counts PubSub Message pool RPC requests per node
