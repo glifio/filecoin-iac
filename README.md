@@ -23,7 +23,7 @@ This repository provides Infrastructure as Code (IaC) resources to configure and
 ## Installation
 
 To deploy the infrastructure, do the following:
-1. In the [init_configuration](init_configuration/) folder:
+1. **NB! One-time operation during the first installation.** In the [init_configuration](init_configuration/) folder:
     1. Run `terraform init`
     2. Run `terraform apply -var-file=tfvars/filecoin-glif-dev-apn1.tfvars`. That will create the backed S3 and DynamoDB tables for dev environment.
     3. Run `terraform apply -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars`. That will create the backed S3 and DynamoDB tables for mainnet environment.
