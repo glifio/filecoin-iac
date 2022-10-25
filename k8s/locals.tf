@@ -57,6 +57,8 @@ locals {
       "*.calibration.filecoin.tools",
       "wallaby.filecoin.tools",
       "*.wallaby.filecoin.tools",
+      "wss.wallaby.node.glif.io",
+      "*.wss.wallaby.node.glif.io"
     ]
     filecoin-mainnet-apn1-glif-eks = [
       "*.${var.route53_domain}",
