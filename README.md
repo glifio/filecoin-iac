@@ -18,7 +18,7 @@
 
 ## Summary
 
-This repository provides Infrastructure as Code (IaC) resources to configure and deploy the Filecoin infrastructure.
+This repository provides Infrastructure as Code (IaC) resources to configure and deploy the Glif.io infrastructure.
 
 ## Installation
 

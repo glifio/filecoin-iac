@@ -2,7 +2,7 @@
 
 ## Summary
 
-This module provides resources to create and configure EKS nodegroup.
+This module provides resources to create and configure EKS nodegroup. EC2 instances of the nodegroups can be of different types (e.g. on-demand and spot) and sizes, and it is possible to deploy application to the specific instance using a `nodeGroup` selector.
 
 ## Resources
 
