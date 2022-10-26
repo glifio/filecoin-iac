@@ -120,8 +120,8 @@ grafana:
         revision: 7
       Kong:
         datasource: Prometheus
-        gnetId: 7424
-        revision: 9
+        gnetId: 17269
+        revision: 1
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 kubelet:
@@ -216,6 +216,15 @@ prometheus:
           port: metrics
           scheme: http
           path: /metrics
+    - name: kong
+      selector:
+        matchLabels:
+          app: kong-monitoring-service
+      namespaceSelector:
+        matchNames:
+          - ${get_app_namespace}
+      endpoints:
+      - port: metrics
     - name: lotus-cache
       selector:
         matchLabels:
