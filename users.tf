@@ -70,7 +70,7 @@ locals {
       },
     },
     {
-      username = "mariya.lazavik@protofire.io",
+      username = "maryia.lazavik@protofire.io",
       aws_account = [
         "devops"
       ],
