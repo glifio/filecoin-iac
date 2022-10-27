@@ -37,6 +37,7 @@ locals {
       ],
       eks_access = {
         "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}",
+        "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}",
       },
     },
     {
