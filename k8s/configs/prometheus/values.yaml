@@ -222,9 +222,12 @@ prometheus:
           app: kong-monitoring-service
       namespaceSelector:
         matchNames:
-          - ${get_app_namespace}
+          - kong
       endpoints:
-      - port: metrics
+        - interval: 30s
+          port: metrics
+          scheme: http
+          path: /metrics
     - name: lotus-cache
       selector:
         matchLabels:
