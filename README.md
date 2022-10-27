@@ -15,6 +15,7 @@
   - [Monitoring](#monitoring)
     - [Uptibe Robot](#uptibe-robot)
     - [Prometheus Stack](#prometheus-stack)
+    - [OpenSearch](#opensearch)
 
 ## Summary
 
@@ -229,3 +230,10 @@ There are a total of 5 custom dashboards:
     - network height per node
     - duration of validation per node
 5. `lotus/Lotus PubSub` – counts PubSub Message pool RPC requests per node
+
+### OpenSearch
+
+After the installation, there's a few manual operations that need to be done in order for OpenSearch to collect the logs.
+1. Go to `Settings > Roles` and create a role with `crud` cluster permissions and `crud` and `create_indexes` index permissions.
+2. Map the role a user, as a username use role ARN of fluenbit.
+3. Check if indexes are created in `Stack Management > Indeces`.
