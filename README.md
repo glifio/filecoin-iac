@@ -34,7 +34,7 @@ To deploy the infrastructure, do the following:
    3. Plan and apply the configuration with `-var-file=tfvars/filecoin-glif-dev-apn1.tfvars`.
    4. Repeat those steps for `filecoin-glif-mainnet-apn1` workspace.
 3. In the [k8s](k8s/) folder repeat the same actions as in step 2, but the workspace names would be `filecoin-dev-apn1-glif-eks` and `filecoin-mainnet-apn1-glif-eks` respectively.
-4. In the [user_management](users_management/) folder initialize the module with `-backend-config=../filecoin-glif-dev-apn1.hcl` only and select `filecoin-glif-dev-apn1` workspace. Then you can apply the config with `-var-file=tfvars/filecoin-users.tfvars`.
+4. In the [user_management](users_management/) folder initialize the module with `-backend-config=../filecoin-glif-dev-apn1.hcl` only and select `default` workspace. Then you can apply the config with `-var-file=tfvars/filecoin-users.tfvars`.
 
 ## Structure
 
