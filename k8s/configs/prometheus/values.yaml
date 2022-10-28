@@ -118,10 +118,6 @@ grafana:
         datasource: Prometheus
         gnetId: 17092
         revision: 7
-      Kong:
-        datasource: Prometheus
-        gnetId: 7424
-        revision: 9
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 kubelet:
