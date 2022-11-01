@@ -13,7 +13,6 @@ resource "kubernetes_manifest" "kong_monitoring_plugin_external" {
     }
 
     config = {
-        per_consumer = true
         status_code_metrics = true
         latency_metrics = true
         bandwidth_metrics = true
@@ -39,7 +38,6 @@ resource "kubernetes_manifest" "kong_monitoring_plugin_internal" {
     }
 
     config = {
-        per_consumer = true
         status_code_metrics = true
         latency_metrics = true
         bandwidth_metrics = true
@@ -48,30 +46,4 @@ resource "kubernetes_manifest" "kong_monitoring_plugin_internal" {
 
     plugin = "prometheus"
   }
-}
-
-
-
-resource "kubernetes_service" "kong_monitoring_service" {
-    metadata {
-        name = "${terraform.workspace}-kong-monitoring-service"
-        namespace = kubernetes_namespace_v1.kong.metadata[0].name
-        labels = {
-            app = "kong-monitoring-service"
-        }
-    }
-
-    spec {
-        selector = {
-            "app.kubernetes.io/name" = "kong"
-        }
-
-        port {
-            name = "metrics"
-            port = 8100
-            target_port = 8100
-        }
-
-        type = "ClusterIP"
-    }
 }
