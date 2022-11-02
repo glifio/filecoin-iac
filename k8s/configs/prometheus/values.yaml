@@ -118,6 +118,10 @@ grafana:
         datasource: Prometheus
         gnetId: 17092
         revision: 7
+      Kong:
+        datasource: Prometheus
+        gnetId: 17269
+        revision: 3
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 kubelet:
@@ -188,30 +192,6 @@ prometheus:
           path: /debug/metrics
           port: tcp-api
           scheme: http
-    - name: kong-external-ingress
-      selector:
-        matchLabels:
-          app.kubernetes.io/instance: ${get_kong_ingress_external}
-      namespaceSelector:
-        matchNames:
-          - kong
-      endpoints:
-        - interval: 30s
-          port: metrics
-          scheme: http
-          path: /metrics
-    - name: kong-internal-ingress
-      selector:
-        matchLabels:
-          app.kubernetes.io/instance: ${get_kong_ingress_internal}
-      namespaceSelector:
-        matchNames:
-          - kong
-      endpoints:
-        - interval: 30s
-          port: metrics
-          scheme: http
-          path: /metrics
     - name: lotus-cache
       selector:
         matchLabels:
@@ -224,3 +204,29 @@ prometheus:
           path: /metrics
           port: cache-port
           scheme: http
+
+  additionalPodMonitors:
+    - name: kong-external-ingress
+      namespaceSelector:
+        matchNames:
+          - kong
+      selector:
+        matchLabels:
+          app.kubernetes.io/instance: ${get_kong_ingress_external}
+      podMetricsEndpoints:
+        - interval: 30s
+          targetPort: 8100
+          scheme: http
+          path: /metrics
+    - name: kong-internal-ingress
+      namespaceSelector:
+        matchNames:
+          - kong
+      selector:
+        matchLabels:
+          app.kubernetes.io/instance: ${get_kong_ingress_internal}
+      podMetricsEndpoints:
+        - interval: 30s
+          targetPort: 8100
+          scheme: http
+          path: /metrics
