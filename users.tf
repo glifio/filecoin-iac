@@ -69,5 +69,14 @@ locals {
         "${local.eks_cluster_testnet}" = "${local.developers_role.eks_group}",
       },
     },
+    {
+      username = "maryia.lazavik@protofire.io",
+      aws_account = [
+        "devops"
+      ],
+      eks_access = {
+        "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}",
+      },
+    },
   ]
 }
