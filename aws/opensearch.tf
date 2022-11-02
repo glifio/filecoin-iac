@@ -49,7 +49,7 @@ resource "aws_opensearch_domain" "main" {
   }
 
   cluster_config {
-    instance_type = "r5.large.search"
+    instance_type = "c5.large.search"
     warm_enabled  = false
 
     #    zone_awareness_config {
@@ -58,8 +58,9 @@ resource "aws_opensearch_domain" "main" {
   }
 
   ebs_options {
+    volume_type = "gp3"
     ebs_enabled = true
-    volume_size = 300
+    volume_size = 256
     iops        = 3000
   }
   tags = module.generator.common_tags
