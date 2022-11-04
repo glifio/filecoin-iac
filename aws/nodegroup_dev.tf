@@ -24,4 +24,15 @@ module "eks_nodegroup_spot_group2" {
   is_spot_instance                        = true
 }
 
+# this group is for future spot tests
+# module "eks_nodegroup_spot_group5" {
+#   count                                   = local.is_dev_envs
+#   source                                  = "../modules/eks_nodegroup"
+#   get_instance_type                       = "r6id.2xlarge, r5ad.2xlarge, r5dn.2xlarge, r5d.2xlarge"
+#   get_nodegroup_name                      = "group5" # don't need to type ondemand/spot in the name, it will be added automatically.
+#   get_global_configuration                = local.make_global_configuration
+#   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#   is_spot_instance                        = true
+# }
+
 ################# END BLOCK SPOT NODE-GROUP LIST #################

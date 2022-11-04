@@ -1,6 +1,8 @@
 variable "get_global_configuration" {}
 variable "get_eks_nodegroups_global_configuration" {}
-variable "get_instance_type" {}
+variable "get_instance_type" {
+  type    = string
+}
 variable "is_spot_instance" {
   type    = bool
   default = false
