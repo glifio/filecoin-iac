@@ -21,6 +21,23 @@ Content-Disposition: attachment; filename="userdata.txt"
 
 #set -ux
 
+is_instance_type_nvme() {
+  #list of NMVE types
+  NMVE_INSTANCES=(c6gd g4ad g4dn g5 i3 i3en i4i i4i im4gn is4gen m5d m5dn m6gd m6id r5ad r5dn r6gd r6id)
+  # Retrieve instance metadata from IMDSv2
+  token=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+  current_type=$(curl -H "X-aws-ec2-metadata-token: ${token}" -v http://169.254.169.254/latest/meta-data/instance-type)
+  # Filter instance type. The goal is to detect NVME instance, which we need to format and mount.
+  # Link to check NVMEs - https://instances.vantage.sh/?region=ap-northeast-1
+  for instance in "${NMVE_INSTANCES[@]}"; do
+    if [[ "$current_type" =~  ${instance} ]]; then
+      return 0
+    fi
+  done
+  # if there is no match in $NMVE_INSTANCES list exit code is 1`
+  return 1
+}
+
 # making_nvme_file_system makes filesystem from nvme volume.
 making_nvme_file_system() {
   mkfs -t xfs $1
@@ -59,13 +76,7 @@ if mount | grep -q $mount_path; then
   exit 0
 fi
 
-# Retrieve instance metadata from IMDSv2
-token=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
-instance_type=$(curl -H "X-aws-ec2-metadata-token: $token" -v http://169.254.169.254/latest/meta-data/instance-type)
-
-# Filter instance type. The goal is to detect i3 instance.
-# The i3 instance has nvme, which we need to format and mount.
-[[ "$instance_type" =~  "i3" ]] && EXCEPTION="nvme" || exit 0
+is_instance_type_nvme && EXCEPTION="nvme" || exit 0
 mkdir -p $mount_path
 nvme_volumes_count="$(find /dev -maxdepth 1 ! -type l -name 'xvd[b-z]' -o -name 'nvme?n?' | grep $EXCEPTION)"
 ARRAY=()
