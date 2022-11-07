@@ -22,11 +22,12 @@ variable "oidc" {
 }
 
 variable "name_prefix" {
+  description = "General name prefix for IAM."
   type = string
 }
 
 variable "kubernetes_service_account" {
-  description = "Variables for kubernetes service account"
+  description = "Variables for kubernetes service account."
   type = object({
     namespace   = string
   })
