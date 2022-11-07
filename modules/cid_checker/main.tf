@@ -4,10 +4,10 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "cid_checker_market_deals" {
   bucket        = "marketdeals-${var.bucket_name}"
-  force_destroy = var.force_destroy
+  force_destroy = true
 
   tags = merge(
-    var.tags,
+    module.generator.common_tags,
     {
       Description = "Bucket to store s3-market deals ${var.bucket_name} files"
     }
@@ -29,22 +29,22 @@ resource "aws_iam_role" "cid_checker_sync_market_deals" {
 
   tags = merge(
     {
-      "Name" = "${var.name_prefix}-cronjob-marketdeals"
+      "Name" = "${module.generator.prefix}-cronjob-marketdeals"
     },
-    var.tags
+    module.generator.common_tags
   )
 }
 
 #### AWS IAM  policy  for market deals. #####
 
 resource "aws_iam_policy" "cid_checker_sync_market_deals" {
-  name        = "${var.name_prefix}-cronjob-marketdeals-${var.bucket_name}"
+  name        = "${module.generator.prefix}-cronjob-marketdeals-${var.bucket_name}"
   description = "Allow cronjob-marketdeals access to s3 bucket on ${var.bucket_name}"
   policy = templatefile("../modules/../k8s/templates/policies/sync_marketdeals_policy.pol.tpl", {
     sync_marketdeals_s3_bucket = aws_s3_bucket.cid_checker_market_deals.id
   })
 
-  tags = var.tags
+  tags = module.generator.common_tags
 }
 
 #### AWS IAM  policy attachment for market deals. #####
@@ -59,14 +59,10 @@ resource "aws_iam_role_policy_attachment" "cid_checker_sync_market_deals" {
 resource "kubernetes_service_account_v1" "cid_checker_sync_market_deals" {
   metadata {
     name      = "cid-checker-${var.bucket_name}-sync-s3-sa"
-    namespace = var.kubernetes_service_account.namespace
+    namespace = var.get_sa_namespace
 
     annotations = {
       "eks.amazonaws.com/role-arn" = aws_iam_role.cid_checker_sync_market_deals.arn
     }
-
-    # TODO: add some meaningful label like created by tf
-    # labels = {
-    # }
   }
 }
