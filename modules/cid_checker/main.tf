@@ -20,7 +20,7 @@ resource "aws_iam_role" "cid_checker_sync_market_deals" {
   name        = "${terraform.workspace}-cronjob-marketdeals-${var.bucket_name}"
   description = "${terraform.workspace} allow cronjob-marketdeals access to s3 bucket on ${var.bucket_name} "
 
-  assume_role_policy = templatefile("../modules/../k8s/templates/roles/iodc_sync_marketdeals.pol.tpl",{
+  assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl",{
     aws_account_id  = data.aws_caller_identity.current.account_id
     oidc            = var.oidc
     namespace       = "default"
@@ -40,7 +40,7 @@ resource "aws_iam_role" "cid_checker_sync_market_deals" {
 resource "aws_iam_policy" "cid_checker_sync_market_deals" {
   name        = "${module.generator.prefix}-cronjob-marketdeals-${var.bucket_name}"
   description = "Allow cronjob-marketdeals access to s3 bucket on ${var.bucket_name}"
-  policy = templatefile("../modules/../k8s/templates/policies/sync_marketdeals_policy.pol.tpl", {
+  policy = templatefile("${path.module}/templates/policies/sync_marketdeals_policy.pol.tpl", {
     sync_marketdeals_s3_bucket = aws_s3_bucket.cid_checker_market_deals.id
   })
 
