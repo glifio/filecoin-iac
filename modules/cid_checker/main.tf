@@ -1,9 +1,7 @@
-data "aws_caller_identity" "current" {}
-
 #### AWS s3 bucket for market deals. ####
 
 resource "aws_s3_bucket" "cid_checker_market_deals" {
-  bucket        = "marketdeals-${var.bucket_name}"
+  bucket        = "${module.generator.prefix}-marketdeals-${var.bucket_name}"
   force_destroy = true
 
   tags = merge(
@@ -22,7 +20,7 @@ resource "aws_iam_role" "cid_checker_sync_market_deals" {
 
   assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl",{
     aws_account_id  = data.aws_caller_identity.current.account_id
-    oidc            = var.oidc
+    oidc            = local.oidc_URL
     namespace       = "default"
     sa_market_deals = "cid-checker-${var.bucket_name}-sync-s3-sa"
   })

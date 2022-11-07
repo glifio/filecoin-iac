@@ -6,11 +6,6 @@ variable "bucket_name" {
   type = string
 }
 
-variable "oidc" {
-  description = "OpenID Connect endpoint URLs for cluster."
-  type = string
-}
-
 variable "get_sa_namespace" {
   description = "Variables for kubernetes service account."
   type = string
