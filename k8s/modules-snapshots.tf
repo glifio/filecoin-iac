@@ -43,6 +43,7 @@ module "mainnet_chain_snapshot" {
   namespace = kubernetes_namespace_v1.network.metadata[0].name
   git_repo  = "git@gist.github.com:d03393d1f6e70e089e9e8d18922474f6.git"
   schedule  = "0 12 * * *"
+  is_suspended = true
 }
 
 ### End block: Snapshot for mainnet ###
