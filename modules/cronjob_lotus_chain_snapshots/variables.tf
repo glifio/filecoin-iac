@@ -34,3 +34,9 @@ variable "blocks_to_export" {
   type    = number
   default = 900
 }
+
+variable "is_suspended" {
+  type = bool
+  default = false
+  description = "Set cronjob status to suspended if true"
+}

@@ -51,6 +51,7 @@ resource "kubernetes_cron_job_v1" "this" {
     failed_jobs_history_limit     = 1
     schedule                      = var.schedule
     successful_jobs_history_limit = 1
+    suspend = var.is_suspended
     job_template {
       metadata {}
       spec {
