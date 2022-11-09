@@ -1,13 +1,13 @@
 #### AWS s3 bucket for market deals. ####
 
 resource "aws_s3_bucket" "cid_checker_market_deals" {
-  bucket        = "${module.generator.prefix}-marketdeals-${var.bucket_name}"
+  bucket        = var.bucket_name
   force_destroy = true
 
   tags = merge(
     module.generator.common_tags,
     {
-      Description = "Bucket to store s3-market deals ${var.bucket_name} files"
+      Description = "Bucket to store s3-${var.bucket_name} files"
     }
   )
 }
@@ -15,8 +15,8 @@ resource "aws_s3_bucket" "cid_checker_market_deals" {
 #### AWS IAM role for market deals. ####
 
 resource "aws_iam_role" "cid_checker_sync_market_deals" {
-  name        = "${terraform.workspace}-cronjob-marketdeals-${var.bucket_name}"
-  description = "${terraform.workspace} allow cronjob-marketdeals access to s3 bucket on ${var.bucket_name} "
+  name        = "${terraform.workspace}-cronjob-${var.bucket_name}"
+  description = "${terraform.workspace} allow cronjob-${var.bucket_name} access to s3 bucket."
 
   assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl",{
     aws_account_id  = data.aws_caller_identity.current.account_id
@@ -36,8 +36,8 @@ resource "aws_iam_role" "cid_checker_sync_market_deals" {
 #### AWS IAM  policy  for market deals. #####
 
 resource "aws_iam_policy" "cid_checker_sync_market_deals" {
-  name        = "${module.generator.prefix}-cronjob-marketdeals-${var.bucket_name}"
-  description = "Allow cronjob-marketdeals access to s3 bucket on ${var.bucket_name}"
+  name        = "${module.generator.prefix}-cronjob-${var.bucket_name}"
+  description = "Allow cronjob-${var.bucket_name} access to s3 bucket."
   policy = templatefile("${path.module}/templates/policies/sync_marketdeals_policy.pol.tpl", {
     sync_marketdeals_s3_bucket = aws_s3_bucket.cid_checker_market_deals.id
   })
