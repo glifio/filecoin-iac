@@ -24,6 +24,7 @@ locals {
       "lifecycle"     = var.is_spot_instance ? "spot" : "ondemand"
       "nodeGroupName" = local.get_nodegroup_postfix
       "environment"   = local.get_environment
+      "is_allow_all_nodes" = var.is_allow_all_nodes == false ? "specific_nodes" : "allow_all_nodes"
     }
   )
 

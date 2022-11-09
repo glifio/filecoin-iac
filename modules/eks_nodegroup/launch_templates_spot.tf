@@ -47,6 +47,7 @@ resource "aws_launch_template" "lt_spot" {
         "Name"          = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot",
         "Type"          = "spot",
         "nodeGroupName" = local.get_nodegroup_postfix
+        "is_allow_to_nodes" = var.is_allow_all_nodes
       },
       module.generator.common_tags
     )

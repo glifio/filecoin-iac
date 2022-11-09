@@ -11,6 +11,11 @@ variable "get_nodegroup_name" {
   default = null
 }
 
+variable "is_allow_all_nodes" {
+  type    = bool
+  default = true
+}
+
 variable "public_key" {
   type    = string
   default = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHMC7lI58Is6qjyARyNAJw9jm/LWcmjXsIZL5t2urMcl common alexey_kulik"
