@@ -16,3 +16,4 @@
 | `terraform state rm` | `./aws` or `./k8s` | Delete resource from state |
 | `terraform import -var-file=tfvars/filecoin-glif-dev-apn1.tfvars <resourceName> <resourceId>` | `./aws` or `./k8s` | Import resource to dev |
 | `terraform import -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars <resourceName> <resourceId>` | `./aws` or `./k8s` | Import resource to mainnet |
+| `git fetch --all` and `git pull --rebase=i --autostash origin main` | anywhere | Rebase on main |
