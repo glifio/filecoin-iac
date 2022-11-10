@@ -4,10 +4,10 @@ module "ingress-kong_cid-checker-mainnet" {
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
-  get_ingress_pathType              = "Prefix"
+  get_ingress_pathType               = "Prefix"
   get_ingress_backend_service_name   = "cid-checker-mainnet-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
-  get_ingress_namespace              = "default" 
+  get_ingress_namespace              = "default"
   get_rule_host                      = "filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
@@ -61,7 +61,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet" {
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
-  get_ingress_pathType              = "Prefix"
+  get_ingress_pathType               = "Prefix"
   get_ingress_backend_service_name   = "cid-checker-mainnet-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"

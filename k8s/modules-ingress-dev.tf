@@ -4,10 +4,10 @@ module "ingress-kong_cid-checker-wallaby" {
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
-  get_ingress_pathType              = "Prefix"
+  get_ingress_pathType               = "Prefix"
   get_ingress_backend_service_name   = "cid-checker-wallaby-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
-  get_ingress_namespace              = "default" 
+  get_ingress_namespace              = "default"
   get_rule_host                      = "wallaby.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
@@ -61,7 +61,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby" {
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
-  get_ingress_pathType              = "Prefix"
+  get_ingress_pathType               = "Prefix"
   get_ingress_backend_service_name   = "cid-checker-wallaby-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
@@ -119,10 +119,10 @@ module "ingress-kong_cid-checker-calibration" {
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
-  get_ingress_pathType              = "Prefix"
+  get_ingress_pathType               = "Prefix"
   get_ingress_backend_service_name   = "cid-checker-calibration-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
-  get_ingress_namespace              = "default" 
+  get_ingress_namespace              = "default"
   get_rule_host                      = "calibration.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
@@ -176,7 +176,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration" {
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
-  get_ingress_pathType              = "Prefix"
+  get_ingress_pathType               = "Prefix"
   get_ingress_backend_service_name   = "cid-checker-calibration-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
@@ -243,15 +243,15 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresource
 #}
 
 module "ingress-kong_calibrationapi-node-archive" {
-  count                                   = local.is_dev_envs
-  source                                  = "../modules/k8s_ingress"
-  get_global_configuration                = local.make_global_configuration
-  get_ingress_http_path                   = "/archive/lotus/(.*)"
-  get_ingress_backend_service_name        = "calibrationapi-archive-node-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port        = 1234
-  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                           = "calibration.node.glif.io"
-  type_lb_scheme                          = "external"
+  count                            = local.is_dev_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/archive/lotus/(.*)"
+  get_ingress_backend_service_name = "calibrationapi-archive-node-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 1234
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "calibration.node.glif.io"
+  type_lb_scheme                   = "external"
 }
 
 
@@ -284,15 +284,15 @@ module "ingress-kong_calibrationapi-ipfs-service-8080" {
 ############wallaby.dev.node.glif.io##########################
 
 module "ingress-kong_wallaby_external" {
-  count                                   = local.is_dev_envs
-  source                                  = "../modules/k8s_ingress"
-  get_global_configuration                = local.make_global_configuration
-  get_ingress_http_path                   = "/archive/lotus/(.*)"
-  get_ingress_backend_service_name        = "wallaby-archive-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port        = 1234
-  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                           = "wallaby.dev.node.glif.io"
-  type_lb_scheme                          = "external"
+  count                            = local.is_dev_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/archive/lotus/(.*)"
+  get_ingress_backend_service_name = "wallaby-archive-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 1234
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "wallaby.dev.node.glif.io"
+  type_lb_scheme                   = "external"
 }
 
 module "ingress-kong_api-read-dev-lotus-2346" {
@@ -329,15 +329,15 @@ module "ingress-kong_calibrationapi-ingress-lotus-1" {
 }
 
 module "ingress-kong_api-read-cache-dev-cache-8080" {
-  count                                   = local.is_dev_envs
-  source                                  = "../modules/k8s_ingress"
-  get_global_configuration                = local.make_global_configuration
-  get_ingress_http_path                   = "/api-read-dev/cache/(.*)"
-  get_ingress_backend_service_name        = "api-read-cache-dev" // the "-service" string will be added automatically
-  get_ingress_backend_service_port        = 8080
-  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                           = "dev-internal.dev.node.glif.io"
-  type_lb_scheme                          = "internal"
+  count                            = local.is_dev_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/api-read-dev/cache/(.*)"
+  get_ingress_backend_service_name = "api-read-cache-dev" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 8080
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "dev-internal.dev.node.glif.io"
+  type_lb_scheme                   = "internal"
   #    is_kong_auth_header_enabled      = false
   is_kong_auth_header_block_public_access = false
 }
