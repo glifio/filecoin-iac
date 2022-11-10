@@ -21,8 +21,8 @@ resource "aws_iam_role" "cid_checker_sync_marketdeals_mainnet" {
   assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl", {
     aws_account_id  = data.aws_caller_identity.current.account_id
     oidc            = local.oidc_URL
-    namespace       = "default" 
-    sa_market_deals = "cid-checker-mainnet-sync-s3-sa" 
+    namespace       = "default"
+    sa_market_deals = "cid-checker-mainnet-sync-s3-sa"
   })
 
   tags = merge(
@@ -54,7 +54,7 @@ resource "kubernetes_service_account_v1" "cid_checker_sync_marketdeals_mainnet" 
   count = local.is_mainnet_envs
   metadata {
     name      = "cid-checker-mainnet-sync-s3-sa"
-    namespace = "default" 
+    namespace = "default"
 
     annotations = {
       "eks.amazonaws.com/role-arn" = aws_iam_role.cid_checker_sync_marketdeals_mainnet[0].arn
@@ -89,8 +89,8 @@ resource "aws_iam_role" "cid_checker_sync_marketdeals_calibration" {
   assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl", {
     aws_account_id  = data.aws_caller_identity.current.account_id
     oidc            = local.oidc_URL
-    namespace       = "default" 
-    sa_market_deals = "cid-checker-calibration-sync-s3-sa" 
+    namespace       = "default"
+    sa_market_deals = "cid-checker-calibration-sync-s3-sa"
   })
 
   tags = merge(
@@ -157,8 +157,8 @@ resource "aws_iam_role" "cid_checker_sync_marketdeals_wallaby" {
   assume_role_policy = templatefile("${path.module}/templates/roles/iodc_sync_marketdeals.pol.tpl", {
     aws_account_id  = data.aws_caller_identity.current.account_id
     oidc            = local.oidc_URL
-    namespace       = "default" 
-    sa_market_deals = "cid-checker-wallaby-sync-s3-sa" 
+    namespace       = "default"
+    sa_market_deals = "cid-checker-wallaby-sync-s3-sa"
   })
 
   tags = merge(
