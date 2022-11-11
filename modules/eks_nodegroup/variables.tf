@@ -11,9 +11,9 @@ variable "get_nodegroup_name" {
   default = null
 }
 
-variable "is_allow_all_nodes" {
+variable "assign_pods_to_key_nodes" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "public_key" {
