@@ -70,7 +70,7 @@ resource "aws_api_gateway_model" "ReadAllandWriteMpoolPush" {
   name         = "ReadAllandWriteMpoolPush"
   description  = "${module.generator.prefix}-model"
   content_type = "application/json"
-  schema       = local.is_dev_envs == 1 ? file("${path.module}/configs/api_gateway_models/wallaby_read_all_and_write_mpool_push.pol.tpl") : file("${path.module}/configs/api_gateway_models/read_all_and_write_mpool_push.pol.tpl")
+  schema       = file("${path.module}/configs/api_gateway_models/wallaby_read_all_and_write_mpool_push.pol.tpl")
 }
 
 # Note: https://github.com/hashicorp/terraform-provider-aws/issues/2550#issuecomment-402369701

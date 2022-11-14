@@ -30,7 +30,7 @@ resource "kubernetes_manifest" "kong_tcp_ingress" {
 }
 
 resource "kubernetes_manifest" "kong_tcp_ingress_wallaby" {
-  count = local.is_dev_envs
+  count = local.is_mainnet_envs
   manifest = {
     apiVersion = "configuration.konghq.com/v1beta1"
     kind       = "TCPIngress"

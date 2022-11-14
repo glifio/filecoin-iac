@@ -60,42 +60,42 @@ data "aws_route53_zone" "filecoin_tools" {
 }
 
 data "aws_secretsmanager_secret" "calibrationapi_archive_lotus" {
-  count = local.is_dev_envs
+  count = local.is_mainnet_envs
   name  = "${module.generator.prefix}-calibrationapi-archive-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "calibrationapi_archive_lotus" {
-  count     = local.is_dev_envs
+  count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "calibrationapi_archive_node_lotus" {
-  count = local.is_dev_envs
+  count = local.is_mainnet_envs
   name  = "${module.generator.prefix}-calibrationapi-archive-node-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "calibrationapi_archive_node_lotus" {
-  count     = local.is_dev_envs
+  count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_node_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "wallaby_archive_lotus" {
-  count = local.is_dev_envs
+  count = local.is_mainnet_envs
   name  = "${module.generator.prefix}-wallaby-archive-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "wallaby_archive_lotus" {
-  count     = local.is_dev_envs
+  count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.wallaby_archive_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "calibrationapi_lotus" {
-  count = local.is_dev_envs
+  count = local.is_mainnet_envs
   name  = "${module.generator.prefix}-calibrationapi-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "calibrationapi_lotus" {
-  count     = local.is_dev_envs
+  count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.calibrationapi_lotus[0].id
 }
 
@@ -120,12 +120,12 @@ data "aws_secretsmanager_secret_version" "api_read_cache_dev" {
 }
 
 data "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
-  count = local.is_dev_envs
+  count = local.is_mainnet_envs
   name  = "${module.generator.prefix}-calibrationapi-jwt-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "calibrationapi_jwt_lotus" {
-  count     = local.is_dev_envs
+  count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.calibrationapi_jwt_lotus[0].id
 }
 
@@ -228,17 +228,17 @@ data "aws_secretsmanager_secret_version" "cid_checker" {
 }
 
 data "aws_secretsmanager_secret" "cid_checker_calibration" {
-  count = local.is_dev_envs
+  count = local.is_mainnet_envs
   name  = "${module.generator.prefix}-cid-checker-calibration"
 }
 
 data "aws_secretsmanager_secret_version" "cid_checker_calibration" {
-  count     = local.is_dev_envs
+  count     = local.is_mainnet_envs
   secret_id = data.aws_secretsmanager_secret.cid_checker_calibration[0].id
 }
 
 data "aws_secretsmanager_secret" "github_ssh_gist_updater" {
-  name  = "${module.generator.prefix}/github_ssh_gist_updater"
+  name = "${module.generator.prefix}/github_ssh_gist_updater"
 }
 
 data "aws_secretsmanager_secret_version" "github_ssh_gist_updater" {

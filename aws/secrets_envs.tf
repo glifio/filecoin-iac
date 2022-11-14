@@ -1,7 +1,7 @@
 ################# START BLOCK DEV ENV SECRETS LIST #################
 
 resource "aws_secretsmanager_secret" "calibrationapi-archive-lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-calibrationapi-archive-lotus"
   recovery_window_in_days = 30
 
@@ -10,7 +10,7 @@ resource "aws_secretsmanager_secret" "calibrationapi-archive-lotus" {
 }
 
 resource "aws_secretsmanager_secret" "calibrationapi-archive-node-lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-calibrationapi-archive-node-lotus"
   recovery_window_in_days = 30
 
@@ -37,7 +37,7 @@ resource "aws_secretsmanager_secret" "api_read_cache_dev" {
 }
 
 resource "aws_secretsmanager_secret" "calibrationapi_lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-calibrationapi-lotus"
   recovery_window_in_days = 30
 
@@ -46,7 +46,7 @@ resource "aws_secretsmanager_secret" "calibrationapi_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-calibrationapi-jwt-lotus"
   recovery_window_in_days = 30
 
@@ -55,7 +55,7 @@ resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-wallaby-archive-lotus"
   recovery_window_in_days = 30
 
@@ -64,7 +64,7 @@ resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "cid_checker_calibration" {
-  count                   = local.is_dev_envs
+  count                   = local.is_mainnet_envs
   name                    = "${module.generator.prefix}-cid-checker-calibration"
   recovery_window_in_days = 30
 
