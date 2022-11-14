@@ -126,7 +126,7 @@ resource "aws_route53_record" "api_calibration_node_glif_io" {
 }
 
 resource "aws_route53_record" "monitoring" {
-  count           = local.is_mainnet_envs
+  count           = local.is_dev_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "monitoring.${var.route53_domain}"
   allow_overwrite = true
