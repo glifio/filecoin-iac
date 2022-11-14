@@ -24,7 +24,7 @@ resource "aws_route53_record" "dev_nlb_ingress_internal" {
 
 # CID CHECKER Wallaby
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_wallaby" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
   name            = "wallaby.filecoin.tools"
   allow_overwrite = true
@@ -34,7 +34,7 @@ resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_wallaby" {
 }
 
 resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_wallaby" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
   name            = "cid.wallaby.filecoin.tools"
   allow_overwrite = true
@@ -45,7 +45,7 @@ resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_wallaby" 
 
 # CID CHECKER Calibration
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
   name            = "calibration.filecoin.tools"
   allow_overwrite = true
@@ -55,7 +55,7 @@ resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" 
 }
 
 resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_calibration" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
   name            = "cid.calibration.filecoin.tools"
   allow_overwrite = true
@@ -102,7 +102,7 @@ resource "aws_route53_record" "cid_filecoin_tools_status" {
 
 # Route53 record from calibration.node.glif.io to external nlb
 resource "aws_route53_record" "nlb_ingress_external_calibration" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.node_glif_io.zone_id
   name            = "calibration.node.glif.io"
   allow_overwrite = true
@@ -112,7 +112,7 @@ resource "aws_route53_record" "nlb_ingress_external_calibration" {
 }
 
 resource "aws_route53_record" "api_calibration_node_glif_io" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   name            = "api.calibration.node.glif.io"
   type            = "A"
   allow_overwrite = true
@@ -126,7 +126,7 @@ resource "aws_route53_record" "api_calibration_node_glif_io" {
 }
 
 resource "aws_route53_record" "monitoring" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "monitoring.${var.route53_domain}"
   allow_overwrite = true
@@ -137,7 +137,7 @@ resource "aws_route53_record" "monitoring" {
 
 # Route53 record from wallaby.node.glif.io
 resource "aws_route53_record" "wallaby_node_glif_io" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   name            = "wallaby.node.glif.io"
   type            = "A"
   allow_overwrite = true
@@ -152,7 +152,7 @@ resource "aws_route53_record" "wallaby_node_glif_io" {
 
 # Route53 record from wallaby.dev.node.glif.io to external nlb
 resource "aws_route53_record" "nlb_ingress_external_wallaby" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "wallaby.dev.node.glif.io"
   allow_overwrite = true
@@ -162,7 +162,7 @@ resource "aws_route53_record" "nlb_ingress_external_wallaby" {
 }
 
 resource "aws_route53_record" "nlb_ingress_external_wallaby_ws" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.node_glif_io.zone_id
   name            = "wss.wallaby.node.glif.io"
   allow_overwrite = true
@@ -173,7 +173,7 @@ resource "aws_route53_record" "nlb_ingress_external_wallaby_ws" {
 
 # Route53 record from wss.dev.node.glif.io to external nlb (lotus wateway)
 resource "aws_route53_record" "nlb_ingress_external_wss" {
-  count           = local.is_dev_envs
+  count           = local.is_mainnet_envs
   zone_id         = data.aws_route53_zone.node_glif_io.zone_id
   name            = "wss.calibration.node.glif.io"
   allow_overwrite = true

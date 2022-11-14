@@ -50,7 +50,12 @@ locals {
 
   external_lb_certificate = {
     filecoin-dev-apn1-glif-eks = [
+      "*.${var.route53_domain}"
+    ]
+    filecoin-mainnet-apn1-glif-eks = [
       "*.${var.route53_domain}",
+      "filecoin.tools",
+      "*.filecoin.tools",
       "calibration.node.glif.io",
       "*.calibration.node.glif.io",
       "calibration.filecoin.tools",
@@ -59,11 +64,6 @@ locals {
       "*.wallaby.filecoin.tools",
       "wss.wallaby.node.glif.io",
       "*.wss.wallaby.node.glif.io"
-    ]
-    filecoin-mainnet-apn1-glif-eks = [
-      "*.${var.route53_domain}",
-      "filecoin.tools",
-      "*.filecoin.tools",
     ]
   }
   external_lb_certificates = local.external_lb_certificate[terraform.workspace]

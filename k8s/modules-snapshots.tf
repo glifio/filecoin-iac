@@ -1,7 +1,7 @@
 ### Start block: Snapshot for dev ###
 
 module "calibrationapi_chain_snapshot" {
-  count     = local.is_dev_envs
+  count     = local.is_mainnet_envs
   source    = "../modules/cronjob_lotus_chain_snapshots"
   sts_name  = "calibrationapi"
   namespace = kubernetes_namespace_v1.network.metadata[0].name
@@ -10,7 +10,7 @@ module "calibrationapi_chain_snapshot" {
 }
 
 module "calibrationapi_archive_node_snapshot" {
-  count         = local.is_dev_envs
+  count         = local.is_mainnet_envs
   source        = "../modules/cronjob_aws_snapshots_managment"
   sts_name      = "calibrationapi-archive-node"
   namespace     = kubernetes_namespace_v1.network.metadata[0].name
