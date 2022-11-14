@@ -44,9 +44,9 @@ resource "aws_launch_template" "lt_ondemand" {
 
     tags = merge(
       {
-        "Name"          = "${module.generator.prefix}-${local.get_nodegroup_postfix}-ondemand",
-        "Type"          = "ondemand"
-        "nodeGroupName" = local.get_nodegroup_postfix
+        "Name"                     = "${module.generator.prefix}-${local.get_nodegroup_postfix}-ondemand",
+        "Type"                     = "ondemand"
+        "nodeGroupName"            = local.get_nodegroup_postfix
         "assign_pods_to_key_nodes" = var.assign_pods_to_key_nodes
       },
       module.generator.common_tags
