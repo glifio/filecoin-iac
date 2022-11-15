@@ -21,10 +21,10 @@ locals {
   # the logic which uses for making labels inside k8s nodes
   make_custom_k8s_labels = merge(
     {
-      "lifecycle"                = var.is_spot_instance ? "spot" : "ondemand"
-      "nodeGroupName"            = local.get_nodegroup_postfix
-      "environment"              = local.get_environment
-      "assign_pods_to_key_nodes" = var.assign_pods_to_key_nodes == true ? "allow_only_critical_pods" : "allow_any_pods"
+      "lifecycle"                  = var.is_spot_instance ? "spot" : "ondemand"
+      "nodeGroupName"              = local.get_nodegroup_postfix
+      "environment"                = local.get_environment
+      "assign_to_space00_07_nodes" = var.assign_to_space00_07_nodes == true ? "allow_only_critical_pods" : "allow_any_pods"
     }
   )
 

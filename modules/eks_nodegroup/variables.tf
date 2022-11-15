@@ -11,7 +11,7 @@ variable "get_nodegroup_name" {
   default = null
 }
 
-variable "assign_pods_to_key_nodes" {
+variable "assign_to_space00_07_nodes" {
   type    = bool
   default = false
 }

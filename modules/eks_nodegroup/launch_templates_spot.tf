@@ -44,10 +44,9 @@ resource "aws_launch_template" "lt_spot" {
 
     tags = merge(
       {
-        "Name"                     = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot",
-        "Type"                     = "spot",
-        "nodeGroupName"            = local.get_nodegroup_postfix
-        "assign_pods_to_key_nodes" = var.assign_pods_to_key_nodes
+        "Name"          = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot",
+        "Type"          = "spot",
+        "nodeGroupName" = local.get_nodegroup_postfix
       },
       module.generator.common_tags
     )
