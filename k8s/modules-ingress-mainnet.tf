@@ -1,6 +1,6 @@
 ############CID Checker Wallaby#######################################
 module "ingress-kong_cid-checker-wallaby" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
@@ -15,7 +15,7 @@ module "ingress-kong_cid-checker-wallaby" {
 }
 
 module "ingress-kong_cid-checker-wallaby-api" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
@@ -29,7 +29,7 @@ module "ingress-kong_cid-checker-wallaby-api" {
 }
 
 module "ingress-kong_cid-checker-wallaby-docs" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs"
@@ -43,7 +43,7 @@ module "ingress-kong_cid-checker-wallaby-docs" {
 }
 
 module "ingress-kong_cid-checker-wallaby-docs-subresources" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs/(.*)"
@@ -57,7 +57,7 @@ module "ingress-kong_cid-checker-wallaby-docs-subresources" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
@@ -72,7 +72,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby-api" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
@@ -86,7 +86,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby-api" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby-docs" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs"
@@ -100,7 +100,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby-docs" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-wallaby-docs-subresources" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs/(.*)"
@@ -115,7 +115,7 @@ module "ingress-kong_cid-checker-alternative-domain-wallaby-docs-subresources" {
 
 ############CID Checker Calibration#######################################
 module "ingress-kong_cid-checker-calibration" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
@@ -130,7 +130,7 @@ module "ingress-kong_cid-checker-calibration" {
 }
 
 module "ingress-kong_cid-checker-calibration-api" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
@@ -144,7 +144,7 @@ module "ingress-kong_cid-checker-calibration-api" {
 }
 
 module "ingress-kong_cid-checker-calibration-docs" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs"
@@ -158,7 +158,7 @@ module "ingress-kong_cid-checker-calibration-docs" {
 }
 
 module "ingress-kong_cid-checker-calibration-docs-subresources" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs/(.*)"
@@ -172,7 +172,7 @@ module "ingress-kong_cid-checker-calibration-docs-subresources" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibration" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
@@ -187,7 +187,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibration-api" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
@@ -201,7 +201,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-api" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibration-docs" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs"
@@ -215,7 +215,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresources" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs/(.*)"
@@ -230,7 +230,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresource
 
 ############CID Checker#######################################
 module "ingress-kong_cid-checker-mainnet" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
@@ -245,7 +245,7 @@ module "ingress-kong_cid-checker-mainnet" {
 }
 
 module "ingress-kong_cid-checker-mainnet-api" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
@@ -259,7 +259,7 @@ module "ingress-kong_cid-checker-mainnet-api" {
 }
 
 module "ingress-kong_cid-checker-mainnet-docs" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs"
@@ -273,7 +273,7 @@ module "ingress-kong_cid-checker-mainnet-docs" {
 }
 
 module "ingress-kong_cid-checker-mainnet-docs-subresources" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs/(.*)"
@@ -287,7 +287,7 @@ module "ingress-kong_cid-checker-mainnet-docs-subresources" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-mainnet" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
@@ -302,7 +302,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-mainnet-api" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/api/(.*)"
@@ -316,7 +316,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-api" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-mainnet-docs" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs"
@@ -330,7 +330,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-docs" {
 }
 
 module "ingress-kong_cid-checker-alternative-domain-mainnet-docs-subresources" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/docs/(.*)"
@@ -346,7 +346,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-docs-subresources" {
 #############node.glif.io##########################
 
 module "ingress-kong_space00-1234" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/space00/lotus/(.*)"
@@ -358,7 +358,7 @@ module "ingress-kong_space00-1234" {
 }
 
 module "ingress-kong_space06-1234" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/space06/lotus/(.*)"
@@ -370,7 +370,7 @@ module "ingress-kong_space06-1234" {
 }
 
 module "ingress-kong_space07-1234" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/space07/lotus/(.*)"
@@ -382,7 +382,7 @@ module "ingress-kong_space07-1234" {
 }
 
 module "ingress-kong_space06-cache-8080" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/space06/cache/(.*)"
@@ -394,7 +394,7 @@ module "ingress-kong_space06-cache-8080" {
 }
 
 module "ingress-kong_space07-cache-8080" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/space07/cache/(.*)"
@@ -406,7 +406,7 @@ module "ingress-kong_space07-cache-8080" {
 }
 
 module "ingress-kong_space00-ipfs-service-4001" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/space00/ipfs/4001/(.*)"
@@ -419,7 +419,7 @@ module "ingress-kong_space00-ipfs-service-4001" {
 }
 
 module "ingress-kong_space00-ipfs-service-8080" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/space00/ipfs/8080/(.*)"
@@ -432,7 +432,7 @@ module "ingress-kong_space00-ipfs-service-8080" {
 }
 
 module "ingress-kong_lotusgateway-2346" {
-  count                                   = local.is_mainnet_envs
+  count                                   = local.is_prod_envs
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/apigw/lotus/(.*)"
@@ -451,7 +451,7 @@ module "ingress-kong_lotusgateway-2346" {
 ### FYI: Internal LoadBalancer works via API-GW
 
 module "ingress-kong_api-read-v0-cache-8080" {
-  count                                   = local.is_mainnet_envs
+  count                                   = local.is_prod_envs
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/api-read/cache/(.*)"
@@ -464,7 +464,7 @@ module "ingress-kong_api-read-v0-cache-8080" {
 }
 
 module "ingress-kong_calibrationapi-ingress-lotus-1" {
-  count                                   = local.is_mainnet_envs
+  count                                   = local.is_prod_envs
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/calibrationapi/lotus/(.*)"
@@ -477,7 +477,7 @@ module "ingress-kong_calibrationapi-ingress-lotus-1" {
 }
 
 module "ingress-kong_wallaby-archive" {
-  count                                   = local.is_mainnet_envs
+  count                                   = local.is_prod_envs
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/wallaby/lotus/(.*)"
@@ -490,7 +490,7 @@ module "ingress-kong_wallaby-archive" {
 }
 
 module "ingress-kong_wallaby-dev-lotus-2346" {
-  count                                   = local.is_mainnet_envs
+  count                                   = local.is_prod_envs
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/apigw/lotus/(.*)"
@@ -507,7 +507,7 @@ module "ingress-kong_wallaby-dev-lotus-2346" {
 #############common service external##########################
 
 module "ingress-kong_mainnet_monitoring-80" {
-  count                              = local.is_mainnet_envs
+  count                              = local.is_prod_envs
   source                             = "../modules/k8s_ingress"
   get_global_configuration           = local.make_global_configuration
   get_ingress_http_path              = "/"
@@ -539,7 +539,7 @@ module "ingress-kong_mainnet_monitoring-80" {
 #}
 
 module "ingress-kong_api-read-dev-lotus-2346" {
-  count                                   = local.is_mainnet_envs
+  count                                   = local.is_prod_envs
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/apigw/lotus/(.*)"
@@ -553,7 +553,7 @@ module "ingress-kong_api-read-dev-lotus-2346" {
 
 
 module "ingress-kong_calibrationapi-node-archive" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/archive/lotus/(.*)"
@@ -566,7 +566,7 @@ module "ingress-kong_calibrationapi-node-archive" {
 
 
 module "ingress-kong_calibrationapi-ipfs-service-4001" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/calibrationapi/ipfs/4001/(.*)"
@@ -579,7 +579,7 @@ module "ingress-kong_calibrationapi-ipfs-service-4001" {
 }
 
 module "ingress-kong_calibrationapi-ipfs-service-8080" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/calibrationapi/ipfs/8080/(.*)"
@@ -594,7 +594,7 @@ module "ingress-kong_calibrationapi-ipfs-service-8080" {
 ############wallaby.dev.node.glif.io##########################
 
 module "ingress-kong_wallaby_external" {
-  count                            = local.is_mainnet_envs
+  count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
   get_global_configuration         = local.make_global_configuration
   get_ingress_http_path            = "/archive/lotus/(.*)"

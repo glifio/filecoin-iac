@@ -5,7 +5,7 @@
 # Warning: you need to place your TCPIngress CRD into the same namespace with the target service!
 
 resource "kubernetes_manifest" "kong_tcp_ingress" {
-  count = local.is_mainnet_envs
+  count = local.is_prod_envs
   manifest = {
     apiVersion = "configuration.konghq.com/v1beta1"
     kind       = "TCPIngress"
@@ -30,7 +30,7 @@ resource "kubernetes_manifest" "kong_tcp_ingress" {
 }
 
 resource "kubernetes_manifest" "kong_tcp_ingress_wallaby" {
-  count = local.is_mainnet_envs
+  count = local.is_prod_envs
   manifest = {
     apiVersion = "configuration.konghq.com/v1beta1"
     kind       = "TCPIngress"

@@ -6,7 +6,7 @@
 #   whole KongIngress config
 
 resource "kubernetes_manifest" "kong_ingress_read_timeout" {
-  count = local.is_mainnet_envs
+  count = local.is_prod_envs
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongIngress"
@@ -25,7 +25,7 @@ resource "kubernetes_manifest" "kong_ingress_read_timeout" {
 }
 
 resource "kubernetes_manifest" "kong_ingress_read_one_day_timeout" {
-  count = local.is_mainnet_envs
+  count = local.is_prod_envs
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongIngress"

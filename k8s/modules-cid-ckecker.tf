@@ -1,5 +1,5 @@
 module "marketdeals_calibration" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/cid_checker"
   bucket_name              = "marketdeals-calibration"
   get_sa_namespace         = "default"
@@ -7,7 +7,7 @@ module "marketdeals_calibration" {
 }
 
 module "marketdeals_mainnet" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/cid_checker"
   bucket_name              = "marketdeals"
   get_sa_namespace         = "default"
@@ -15,7 +15,7 @@ module "marketdeals_mainnet" {
 }
 
 module "marketdeals_wallaby" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/cid_checker"
   bucket_name              = "marketdeals-wallaby"
   get_sa_namespace         = "default"

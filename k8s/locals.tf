@@ -41,11 +41,11 @@ locals {
   }
   monitoring_nodegroups = local.monitoring_nodegroup[terraform.workspace]
 
-  is_mainnet_env = {
+  is_prod_env = {
     filecoin-dev-apn1-glif-eks     = 0
     filecoin-mainnet-apn1-glif-eks = 1
   }
-  is_mainnet_envs = local.is_mainnet_env[terraform.workspace]
+  is_prod_envs = local.is_prod_env[terraform.workspace]
 
 
   external_lb_certificate = {
