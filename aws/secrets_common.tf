@@ -25,7 +25,7 @@ resource "aws_secretsmanager_secret" "github_cd_token_secret" {
 }
 
 resource "aws_secretsmanager_secret" "dockerhub_glifio" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-dockerhub-glifio"
   recovery_window_in_days = 30
 

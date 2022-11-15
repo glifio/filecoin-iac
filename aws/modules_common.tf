@@ -16,7 +16,7 @@ module "codebuild_cd-filecoin-fluent-bit" {
 }
 
 module "codebuild_ci_cid-checker_mainnet" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
@@ -32,7 +32,7 @@ module "codebuild_ci_cid-checker_mainnet" {
 }
 
 module "codebuild_ci_cid-checker_calibration" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
@@ -48,7 +48,7 @@ module "codebuild_ci_cid-checker_calibration" {
 }
 
 module "codebuild_ci_cid-checker_wallaby" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
@@ -64,7 +64,7 @@ module "codebuild_ci_cid-checker_wallaby" {
 }
 
 module "codebuild_cd_cid-checker_mainnet" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
@@ -79,7 +79,7 @@ module "codebuild_cd_cid-checker_mainnet" {
 }
 
 module "codebuild_cd_cid-checker_calibration" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
@@ -94,7 +94,7 @@ module "codebuild_cd_cid-checker_calibration" {
 }
 
 module "codebuild_cd_cid-checker_wallaby" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
   git_repository_name      = "cid-checker"
   get_global_configuration = local.make_codebuild_global_configuration
@@ -109,7 +109,7 @@ module "codebuild_cd_cid-checker_wallaby" {
 }
 
 module "codebuild_multirepository_cd_wallaby" {
-  count                    = local.is_mainnet_envs
+  count                    = local.is_prod_envs
   source                   = "../modules/codebuild_multirepositories"
   git_repository_name      = "wallaby"
   buildspec_logic          = file("${path.module}/templates/codebuild/deploy_wallaby.yaml")

@@ -21,7 +21,7 @@ resource "aws_ecr_repository" "external_snapshotter_chart" {
 }
 
 resource "aws_ecr_repository" "cid_checker" {
-  count                = local.is_mainnet_envs
+  count                = local.is_prod_envs
   name                 = "${module.generator.prefix}-cid-checker"
   image_tag_mutability = "MUTABLE"
   force_delete         = true
