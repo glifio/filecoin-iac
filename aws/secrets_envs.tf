@@ -69,7 +69,7 @@ resource "aws_secretsmanager_secret" "cid_checker_calibration" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-cid-checker-calibration" },
-    module.generator.common_tags)
+  module.generator.common_tags)
 }
 
 ################# END BLOCK DEV ENV SECRETS LIST #################
@@ -155,7 +155,7 @@ resource "aws_secretsmanager_secret" "cid_checker" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-cid-checker" },
-    module.generator.common_tags)
+  module.generator.common_tags)
 }
 
 ################# END BLOCK MAINNET ENV SECRETS LIST #################
