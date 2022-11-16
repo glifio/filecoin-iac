@@ -54,6 +54,11 @@ data "aws_route53_zone" "node_glif_io" {
   private_zone = false
 }
 
+data "aws_route53_zone" "dev_node_glif_io" {
+  name         = "dev.node.glif.io"
+  private_zone = false
+}
+
 data "aws_route53_zone" "filecoin_tools" {
   name         = "filecoin.tools"
   private_zone = false
