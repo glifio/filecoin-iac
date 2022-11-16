@@ -31,11 +31,11 @@ locals {
   }
   is_dev_envs = local.is_dev_env[terraform.workspace]
 
-  is_mainnet_env = {
+  is_prod_env = {
     filecoin-glif-dev-apn1     = 0
     filecoin-glif-mainnet-apn1 = 1
   }
-  is_mainnet_envs = local.is_mainnet_env[terraform.workspace]
+  is_prod_envs = local.is_prod_env[terraform.workspace]
 
   make_codebuild_global_configuration = {
     project           = var.project

@@ -1,7 +1,7 @@
 ################# START BLOCK DEV ENV SECRETS LIST #################
 
 resource "aws_secretsmanager_secret" "calibrationapi-archive-lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-calibrationapi-archive-lotus"
   recovery_window_in_days = 30
 
@@ -10,7 +10,7 @@ resource "aws_secretsmanager_secret" "calibrationapi-archive-lotus" {
 }
 
 resource "aws_secretsmanager_secret" "calibrationapi-archive-node-lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-calibrationapi-archive-node-lotus"
   recovery_window_in_days = 30
 
@@ -37,7 +37,7 @@ resource "aws_secretsmanager_secret" "api_read_cache_dev" {
 }
 
 resource "aws_secretsmanager_secret" "calibrationapi_lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-calibrationapi-lotus"
   recovery_window_in_days = 30
 
@@ -46,7 +46,7 @@ resource "aws_secretsmanager_secret" "calibrationapi_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-calibrationapi-jwt-lotus"
   recovery_window_in_days = 30
 
@@ -55,7 +55,7 @@ resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
-  count                   = local.is_dev_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-wallaby-archive-lotus"
   recovery_window_in_days = 30
 
@@ -64,7 +64,7 @@ resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "cid_checker_calibration" {
-  count                   = local.is_dev_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-cid-checker-calibration"
   recovery_window_in_days = 30
 
@@ -78,7 +78,7 @@ resource "aws_secretsmanager_secret" "cid_checker_calibration" {
 ################# START BLOCK MAINNET ENV SECRETS LIST #################
 
 resource "aws_secretsmanager_secret" "api_read_v0_cache" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-api-read-v0-cache"
   recovery_window_in_days = 30
 
@@ -87,7 +87,7 @@ resource "aws_secretsmanager_secret" "api_read_v0_cache" {
 }
 
 resource "aws_secretsmanager_secret" "api_read_master_lotus" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-api-read-master-lotus"
   recovery_window_in_days = 30
 
@@ -96,7 +96,7 @@ resource "aws_secretsmanager_secret" "api_read_master_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "space00_lotus" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-space00-lotus"
   recovery_window_in_days = 30
 
@@ -105,7 +105,7 @@ resource "aws_secretsmanager_secret" "space00_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "space06_lotus" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-space06-lotus"
   recovery_window_in_days = 30
 
@@ -114,7 +114,7 @@ resource "aws_secretsmanager_secret" "space06_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "space06_cache" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-space06-cache"
   recovery_window_in_days = 30
 
@@ -123,7 +123,7 @@ resource "aws_secretsmanager_secret" "space06_cache" {
 }
 
 resource "aws_secretsmanager_secret" "space06-1_lotus" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-space06-1-lotus"
   recovery_window_in_days = 30
 
@@ -132,7 +132,7 @@ resource "aws_secretsmanager_secret" "space06-1_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "space07_lotus" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-space07-lotus"
   recovery_window_in_days = 30
 
@@ -141,7 +141,7 @@ resource "aws_secretsmanager_secret" "space07_lotus" {
 }
 
 resource "aws_secretsmanager_secret" "space07_cache" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-space07-cache"
   recovery_window_in_days = 30
 
@@ -150,7 +150,7 @@ resource "aws_secretsmanager_secret" "space07_cache" {
 }
 
 resource "aws_secretsmanager_secret" "cid_checker" {
-  count                   = local.is_mainnet_envs
+  count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-cid-checker"
   recovery_window_in_days = 30
 

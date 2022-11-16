@@ -18,6 +18,15 @@ git_configuration = [
   },
   {
     config = {
+      project_name      = "wallaby",
+      name              = "wallaby"
+      organization_name = "protofire",
+      description       = "CI/CD pipeline for a filecoin wallaby application",
+      repo_name         = "wallaby",
+    }
+  },
+  {
+    config = {
       project_name      = "cid-checker",
       name              = "cid-checker"
       organization_name = "protofire",

@@ -70,7 +70,7 @@ resource "aws_api_gateway_model" "ReadAllandWriteMpoolPush" {
   name         = "ReadAllandWriteMpoolPush"
   description  = "${module.generator.prefix}-model"
   content_type = "application/json"
-  schema       = local.is_dev_envs == 1 ? file("${path.module}/configs/api_gateway_models/wallaby_read_all_and_write_mpool_push.pol.tpl") : file("${path.module}/configs/api_gateway_models/read_all_and_write_mpool_push.pol.tpl")
+  schema       = file("${path.module}/configs/api_gateway_models/wallaby_read_all_and_write_mpool_push.pol.tpl")
 }
 
 # Note: https://github.com/hashicorp/terraform-provider-aws/issues/2550#issuecomment-402369701
@@ -111,12 +111,12 @@ resource "aws_iam_role_policy_attachment" "account_logging_dev" {
 
 
 resource "aws_api_gateway_account" "account_logging_mainnet" {
-  count               = local.is_mainnet_envs
+  count               = local.is_prod_envs
   cloudwatch_role_arn = aws_iam_role.account_logging_mainnet[0].arn
 }
 
 resource "aws_iam_role" "account_logging_mainnet" {
-  count              = local.is_mainnet_envs
+  count              = local.is_prod_envs
   name               = "${module.generator.prefix}-apigw-logging"
   assume_role_policy = file("${path.module}/templates/roles/cloudwatch_apigw_logging.pol.tpl")
 
@@ -124,7 +124,7 @@ resource "aws_iam_role" "account_logging_mainnet" {
 }
 
 resource "aws_iam_role_policy_attachment" "account_logging_mainnet" {
-  count      = local.is_mainnet_envs
+  count      = local.is_prod_envs
   role       = aws_iam_role.account_logging_mainnet[0].name
   policy_arn = aws_iam_policy.account_logging.arn
 }
