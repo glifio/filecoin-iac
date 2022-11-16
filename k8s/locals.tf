@@ -50,7 +50,15 @@ locals {
 
   external_lb_certificate = {
     filecoin-dev-apn1-glif-eks = [
-      "*.${var.route53_domain}"
+      "*.${var.route53_domain}",
+      "calibration.node.glif.io",
+      "*.calibration.node.glif.io",
+      "calibration.filecoin.tools",
+      "*.calibration.filecoin.tools",
+      "wallaby.filecoin.tools",
+      "*.wallaby.filecoin.tools",
+      "wss.wallaby.node.glif.io",
+      "*.wss.wallaby.node.glif.io"
     ]
     filecoin-mainnet-apn1-glif-eks = [
       "*.${var.route53_domain}",
