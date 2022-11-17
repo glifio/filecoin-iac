@@ -47,3 +47,6 @@ phases:
       - kubectl -n network scale --replicas 0 statefulset wallaby-archive-slave-lotus
       - kubectl -n network delete pvc vol-lotus-wallaby-archive-slave-lotus-0
       - kubectl -n network scale --replicas 1 statefulset wallaby-archive-slave-lotus
+      - kubectl -n network scale --replicas 0 statefulset wallaby-archive-slave-1-lotus
+      - kubectl -n network delete pvc vol-lotus-wallaby-archive-slave-1-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset wallaby-archive-slave-1-lotus
