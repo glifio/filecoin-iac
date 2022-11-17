@@ -153,7 +153,7 @@ resource "aws_route53_record" "wallaby_node_glif_io" {
 # Route53 record from wallaby.dev.node.glif.io to external nlb
 resource "aws_route53_record" "nlb_ingress_external_wallaby" {
   count           = local.is_prod_envs
-  zone_id         = data.aws_route53_zone.selected.zone_id
+  zone_id         = data.aws_route53_zone.dev_node_glif_io.zone_id
   name            = "wallaby.dev.node.glif.io"
   allow_overwrite = true
   type            = "CNAME"
