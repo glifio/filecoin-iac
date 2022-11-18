@@ -44,12 +44,12 @@ phases:
       - kubectl -n network scale --replicas 0 statefulset wallaby-archive-lotus
       - kubectl -n network delete pvc vol-lotus-wallaby-archive-lotus-0
       - kubectl -n network scale --replicas 1 statefulset wallaby-archive-lotus
-      - kubectl -n network wait --for=condition=ready pod/wallaby-archive-lotus-0
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/wallaby-archive-lotus-0
       - kubectl -n network scale --replicas 0 statefulset wallaby-archive-slave-lotus
       - kubectl -n network delete pvc vol-lotus-wallaby-archive-slave-lotus-0
       - kubectl -n network scale --replicas 1 statefulset wallaby-archive-slave-lotus
-      - kubectl -n network wait --for=condition=ready pod/wallaby-archive-slave-lotus-0
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/wallaby-archive-slave-lotus-0
       - kubectl -n network scale --replicas 0 statefulset wallaby-archive-slave-1-lotus
       - kubectl -n network delete pvc vol-lotus-wallaby-archive-slave-1-lotus-0
       - kubectl -n network scale --replicas 1 statefulset wallaby-archive-slave-1-lotus
-      - kubectl -n network wait --for=condition=ready pod/wallaby-archive-slave-1-lotus-0
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/wallaby-archive-slave-1-lotus-0
