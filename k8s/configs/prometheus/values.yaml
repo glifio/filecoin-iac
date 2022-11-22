@@ -105,14 +105,10 @@ grafana:
       LotusNodeHealth:
         datasource: Prometheus
         gnetId: 13250
-        revision: 6
+        revision: 7
       LotusPubSubdashboard:
         datasource: Prometheus
         gnetId: 13249
-        revision: 2
-      LotusNginx:
-        datasource: Prometheus
-        gnetId: 13901
         revision: 2
       LotusVolumes:
         datasource: Prometheus
@@ -171,19 +167,6 @@ prometheus:
               storage: ${get_pvc_size}
 
   additionalServiceMonitors:
-    - name: lily-service
-      selector:
-        matchLabels:
-          app.kubernetes.io/instance: calib10
-          app.kubernetes.io/name: filecoin
-      namespaceSelector:
-        matchNames:
-          - ${get_app_namespace}
-      endpoints:
-        - interval: 30s
-          path: /metrics
-          port: metrics
-          scheme: http
     - name: lotus-service
       selector:
         matchLabels:
