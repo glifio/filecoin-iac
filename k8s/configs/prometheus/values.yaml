@@ -122,6 +122,10 @@ grafana:
         datasource: Prometheus
         gnetId: 17269
         revision: 3
+      LotusNVMEdashboard:
+        datasource: Prometheus
+        gnetId: 17431
+        revision: 3
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 kubelet:
