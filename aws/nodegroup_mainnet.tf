@@ -14,7 +14,7 @@ module "eks_nodegroup_mainnet_ondemand_group1" {
 module "eks_nodegroup_mainnet_ondemand_group2" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.8xlarge"
+  get_instance_type                       = "i3.4xlarge"
   get_nodegroup_name                      = "group2" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
@@ -64,7 +64,7 @@ module "eks_nodegroup_mainnet_ondemand_group6" {
 module "eks_nodegroup_mainnet_ondemand_group7" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.8xlarge"
+  get_instance_type                       = "i3.4xlarge"
   get_nodegroup_name                      = "group7" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
