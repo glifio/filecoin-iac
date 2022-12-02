@@ -14,7 +14,7 @@ module "eks_nodegroup_mainnet_ondemand_group1" {
 module "eks_nodegroup_mainnet_ondemand_group2" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.4xlarge"
+  get_instance_type                       = "i3.8xlarge"
   get_nodegroup_name                      = "group2" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
@@ -34,7 +34,7 @@ module "eks_nodegroup_mainnet_ondemand_group3" {
 module "eks_nodegroup_mainnet_ondemand_group4" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "r5b.8xlarge"
+  get_instance_type                       = "r5b.12xlarge"
   get_nodegroup_name                      = "group4" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
@@ -64,7 +64,7 @@ module "eks_nodegroup_mainnet_ondemand_group6" {
 module "eks_nodegroup_mainnet_ondemand_group7" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.4xlarge"
+  get_instance_type                       = "i3.8xlarge"
   get_nodegroup_name                      = "group7" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
@@ -98,7 +98,7 @@ module "eks_nodegroup_ondemand_group12" {
 module "eks_nodegroup_mainnet_spot_group8" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.4xlarge"
+  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
   get_nodegroup_name                      = "group8" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
@@ -109,7 +109,7 @@ module "eks_nodegroup_mainnet_spot_group8" {
 module "eks_nodegroup_mainnet_spot_group9" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.4xlarge"
+  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
   get_nodegroup_name                      = "group9" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
@@ -120,7 +120,7 @@ module "eks_nodegroup_mainnet_spot_group9" {
 module "eks_nodegroup_mainnet_spot_group10" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "r5ad.4xlarge,r5dn.4xlarge,r5d.2xlarge,r6id.2xlarge"
+  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
   get_nodegroup_name                      = "group10" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
