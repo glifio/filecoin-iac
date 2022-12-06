@@ -42,3 +42,8 @@ variable "availability_zone_postfix" {
   type    = string
   default = "a"
 }
+
+variable "ami_type" {
+  type    = string
+  default = "AL2_x86_64"
+}
