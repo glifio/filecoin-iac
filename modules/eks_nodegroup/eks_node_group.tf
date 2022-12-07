@@ -65,3 +65,17 @@ resource "aws_iam_role_policy_attachment" "eks_nodegroup_AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.eks_nodegroup.name
 }
+
+resource "aws_iam_policy" "attach_ebs" {
+  count  = var.use_existing_ebs ? 1 : 0
+  name   = "${module.generator.prefix}-attach-ebs-${local.get_nodegroup_postfix}"
+  policy = file("${path.module}/templates/policies/attach_ebs_volumes_policy.tpl")
+
+  tags = module.generator.common_tags
+}
+
+resource "aws_iam_role_policy_attachment" "attach_ebs" {
+  count      = var.use_existing_ebs ? 1 : 0
+  policy_arn = aws_iam_policy.attach_ebs[0].arn
+  role       = aws_iam_role.eks_nodegroup.name
+}

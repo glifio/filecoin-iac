@@ -52,3 +52,15 @@ variable "user_data_script" {
   type = string
   default = "nvme.sh"
 }
+
+variable "use_existing_ebs" {
+  type    = bool
+  default = false
+  description = "If true, EBS volumes matching ebs_tenant will be attached on launch"
+}
+
+variable "ebs_tenant" {
+  type = string
+  default = null
+  description = "Tenant tag value to search EBS volumes by"
+}
