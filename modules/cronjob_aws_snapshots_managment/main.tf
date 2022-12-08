@@ -67,6 +67,10 @@ resource "kubernetes_cron_job_v1" "snap_creator" {
           spec {
             service_account_name = kubernetes_service_account_v1.this.metadata[0].name
             restart_policy       = "Never"
+            node_selector = {
+              "kubernetes.io/arch" = "amd64"
+              "assign_to_space00_07_nodes" = "allow_any_pods"
+            }
             container {
               name  = "${var.sts_name}-snap-creator"
               image = "bitnami/kubectl"

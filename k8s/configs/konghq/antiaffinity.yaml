@@ -8,3 +8,7 @@ affinity:
           values:
           - ${app}
       topologyKey: topology.kubernetes.io/zone
+nodeSelector:
+  assign_to_space00_07_nodes: allow_any_pods
+  kubernetes.io/arch: amd64
+

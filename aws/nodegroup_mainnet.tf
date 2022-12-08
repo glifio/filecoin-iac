@@ -10,15 +10,15 @@ module "eks_nodegroup_mainnet_ondemand_group1" {
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
 
-#prod-api-i3-4x-ondemand-a-1-19-Node
-module "eks_nodegroup_mainnet_ondemand_group2" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.4xlarge"
-  get_nodegroup_name                      = "group2" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-}
+##prod-api-i3-4x-ondemand-a-1-19-Node
+#module "eks_nodegroup_mainnet_ondemand_group2" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "i3.4xlarge"
+#  get_nodegroup_name                      = "group2" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#}
 
 #prod-space06-ondemand-i3-4x-b-1-19-Node
 module "eks_nodegroup_mainnet_ondemand_group3" {
@@ -61,34 +61,103 @@ module "eks_nodegroup_mainnet_ondemand_group6" {
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
 
-module "eks_nodegroup_mainnet_ondemand_group7" {
+#module "eks_nodegroup_mainnet_ondemand_group7" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "i3.4xlarge"
+#  get_nodegroup_name                      = "group7" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  assign_to_space00_07_nodes              = true
+#}
+
+#
+#module "eks_nodegroup_ondemand_group11" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "r5.2xlarge"
+#  get_nodegroup_name                      = "group11" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#}
+#
+#module "eks_nodegroup_ondemand_group12" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "r6gd.4xlarge"
+#  get_nodegroup_name                      = "group12" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#}
+
+module "eks_nodegroup_ondemand_group13" {
+   count                                   = local.is_prod_envs
+   source                                  = "../modules/eks_nodegroup"
+   ami_type                                = "AL2_ARM_64"
+   get_instance_type                       = "r6gd.xlarge"
+   get_nodegroup_name                      = "group13" # don't need to type ondemand/spot in the name, it will be added automatically.
+   get_global_configuration                = local.make_global_configuration
+   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+   user_data_script                        = "nvme-spot.sh"
+ }
+
+module "eks_nodegroup_ondemand_group14" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.4xlarge"
-  get_nodegroup_name                      = "group7" # don't need to type ondemand/spot in the name, it will be added automatically.
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "group14" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+}
+
+module "eks_nodegroup_ondemand_group15" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.12xlarge"
+  get_nodegroup_name                      = "group15" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+  use_existing_ebs                        = true
+  ebs_tenant                              = "space00"
   assign_to_space00_07_nodes              = true
 }
 
-
-module "eks_nodegroup_ondemand_group11" {
+module "eks_nodegroup_ondemand_group16" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "r5.2xlarge"
-  get_nodegroup_name                      = "group11" # don't need to type ondemand/spot in the name, it will be added automatically.
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.4xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "group16" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
 
-module "eks_nodegroup_ondemand_group12" {
+module "eks_nodegroup_ondemand_group17" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "r5.2xlarge"
-  get_nodegroup_name                      = "group12" # don't need to type ondemand/spot in the name, it will be added automatically.
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.4xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "group17" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
+
+module "eks_nodegroup_ondemand_group18" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.4xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "group18" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+}
+
 ################# END BLOCK ONDEMAND NODE-GROUP LIST #################
 
 

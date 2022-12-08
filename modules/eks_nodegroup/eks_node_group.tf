@@ -3,7 +3,7 @@ resource "aws_eks_node_group" "nodegroup" {
   node_group_name      = "${module.generator.prefix}-${local.join_nodegrpup_name_capacity_type}"
   node_role_arn        = aws_iam_role.eks_nodegroup.arn
   subnet_ids           = flatten([local.get_subnet_id])
-  ami_type             = "AL2_x86_64"
+  ami_type             = var.ami_type
   instance_types       = split(",",var.get_instance_type)
   capacity_type        = var.is_spot_instance ? "SPOT" : null
   force_update_version = true
@@ -63,5 +63,19 @@ resource "aws_iam_role_policy_attachment" "eks_nodegroup_AmazonEC2ContainerRegis
 
 resource "aws_iam_role_policy_attachment" "eks_nodegroup_AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks_nodegroup.name
+}
+
+resource "aws_iam_policy" "attach_ebs" {
+  count  = var.use_existing_ebs ? 1 : 0
+  name   = "${module.generator.prefix}-attach-ebs-${local.get_nodegroup_postfix}"
+  policy = file("${path.module}/templates/policies/attach_ebs_volumes_policy.tpl")
+
+  tags = module.generator.common_tags
+}
+
+resource "aws_iam_role_policy_attachment" "attach_ebs" {
+  count      = var.use_existing_ebs ? 1 : 0
+  policy_arn = aws_iam_policy.attach_ebs[0].arn
   role       = aws_iam_role.eks_nodegroup.name
 }
