@@ -24,7 +24,7 @@ phases:
     commands:
       - echo Environment Variables
       - printenv
-      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.7/2022-10-31/bin/linux/arm64/kubectl
+      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/2022-10-31/bin/linux/arm64/kubectl
       - chmod +x ./kubectl
       - mv kubectl /usr/bin/
       - aws eks --region $AWS_REGION update-kubeconfig --name $PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-eks
