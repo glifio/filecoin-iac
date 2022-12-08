@@ -4,7 +4,7 @@ resource "aws_launch_template" "lt_ondemand" {
   disable_api_termination = false
   ebs_optimized           = true
   key_name                = aws_key_pair.eks_node.key_name
-  user_data               = filebase64("${path.module}/bootstrap/early-customizations/nvme.sh")
+  user_data               = filebase64("${path.module}/bootstrap/early-customizations/${var.user_data_script}")
 
   block_device_mappings {
     device_name = "/dev/xvda"

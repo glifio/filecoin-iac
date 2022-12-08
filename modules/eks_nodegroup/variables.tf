@@ -47,3 +47,8 @@ variable "ami_type" {
   type    = string
   default = "AL2_x86_64"
 }
+
+variable "user_data_script" {
+  type = string
+  default = "nvme.sh"
+}
