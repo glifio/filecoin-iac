@@ -33,7 +33,7 @@ variable "environment_compute_type" {
 }
 
 variable "codebuild_image" {
-  default = "aws/codebuild/amazonlinux2-aarch64-standard:2.0"
+  default = "aws/codebuild/standard:6.0"
 }
 
 variable "notifications_enabled" {

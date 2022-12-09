@@ -3,7 +3,7 @@ resource "aws_eks_node_group" "nodegroup" {
   node_group_name      = "${module.generator.prefix}-${local.join_nodegrpup_name_capacity_type}"
   node_role_arn        = aws_iam_role.eks_nodegroup.arn
   subnet_ids           = flatten([local.get_subnet_id])
-  ami_type             = "AL2_x86_64"
+  ami_type             = var.ami_type
   instance_types       = split(",",var.get_instance_type)
   capacity_type        = var.is_spot_instance ? "SPOT" : null
   force_update_version = true
