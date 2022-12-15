@@ -38,9 +38,9 @@ phases:
       - echo Image built
       - kubectl get ns
       - cd ../../glifio/filecoin-docker/
-      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_WALLABY_TAG -t $IMAGE_NAME:latest .
-      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:wallaby_latest
-      - docker push $DOCKERUHUB_ORGANIZATION/lotus:wallaby_latest
+      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_WALLABY_TAG -t $IMAGE_NAME:latest -f Dockerfile_arm .
+      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:wallaby_latest_arm
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:wallaby_latest_arm
       - kubectl -n network scale --replicas 0 statefulset wallaby-archive-lotus
       - kubectl -n network delete pvc vol-lotus-wallaby-archive-lotus-0
       - kubectl -n network scale --replicas 1 statefulset wallaby-archive-lotus
