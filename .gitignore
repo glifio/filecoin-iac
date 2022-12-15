@@ -70,3 +70,6 @@ Thumbs.db
 .terraform.lock.hcl
 **/.terraform.lock.hcl
 /tmp/*
+
+# VS Code
+.vscode/

@@ -87,6 +87,10 @@ resource "kubernetes_cron_job_v1" "this" {
                 })
               ]
             }
+            node_selector = {
+              "kubernetes.io/arch" = "amd64"
+              "assign_to_space00_07_nodes" = "allow_any_pods"
+            }
             container {
               name  = "${var.sts_name}-chain-snap-gitter"
               image = "bitnami/kubectl"
