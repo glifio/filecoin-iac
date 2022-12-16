@@ -41,15 +41,15 @@ module "eks_nodegroup_mainnet_ondemand_group4" {
 }
 
 #prod-ng-r5-12x-workers-ondemand-a-1-19-Node
-module "eks_nodegroup_mainnet_ondemand_group5" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "r5b.12xlarge"
-  get_nodegroup_name                      = "group5" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  assign_to_space00_07_nodes              = true
-}
+#module "eks_nodegroup_mainnet_ondemand_group5" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "r5b.12xlarge"
+#  get_nodegroup_name                      = "group5" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  assign_to_space00_07_nodes              = true
+#}
 
 #prod-api-i3-4x-ondemand-a-1-19-Node
 module "eks_nodegroup_mainnet_ondemand_group6" {
