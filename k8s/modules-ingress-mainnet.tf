@@ -606,3 +606,15 @@ module "ingress-kong_wallaby_external" {
 }
 
 #########################################################
+
+module "ingress-kong_wallaby_private_0" {
+  count                            = local.is_prod_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/lotus/(.*)"
+  get_ingress_backend_service_name = "wallaby-archive-private-0-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 1234
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "archive.wallaby.node.glif.io"
+  type_lb_scheme                   = "external"
+}

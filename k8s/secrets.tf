@@ -35,6 +35,18 @@ resource "kubernetes_secret_v1" "lotus_wallaby_archive_node_secret" {
   }
 }
 
+resource "kubernetes_secret_v1" "wallaby_archive_private_0_lotus" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "wallaby-archive-private-0-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_private_0_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.wallaby_archive_private_0_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
 resource "kubernetes_secret_v1" "lotus_wallaby_archive_slave_node_secret" {
   count = local.is_prod_envs
   metadata {
