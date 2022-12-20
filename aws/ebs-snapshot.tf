@@ -1,14 +1,14 @@
 resource "aws_iam_role" "dlm" {
-    name               = "${module.generator.prefix}-dlm"
-    description        = "${module.generator.prefix} dlm role"
-    assume_role_policy = file("${path.module}/templates/roles/dlm_role.pol.tpl")
+  name               = "${module.generator.prefix}-dlm"
+  description        = "${module.generator.prefix} dlm role"
+  assume_role_policy = file("${path.module}/templates/roles/dlm_role.pol.tpl")
 
-    tags = merge(
+  tags = merge(
     {
-        "Name" = "${module.generator.prefix}-dlm"
+      "Name" = "${module.generator.prefix}-dlm"
     },
     module.generator.common_tags
-    )
+  )
 }
 
 resource "aws_iam_role_policy" "dlm" {
@@ -19,11 +19,11 @@ resource "aws_iam_role_policy" "dlm" {
 }
 
 resource "aws_dlm_lifecycle_policy" "space00" {
-    description        = "Make snapshots of space00 LVM volumes"
-    execution_role_arn = aws_iam_role.dlm.arn
-    state              = "ENABLED"
+  description        = "Make snapshots of space00 LVM volumes"
+  execution_role_arn = aws_iam_role.dlm.arn
+  state              = "ENABLED"
 
-    policy_details {
+  policy_details {
     resource_types = ["VOLUME"]
 
     schedule {
@@ -43,7 +43,7 @@ resource "aws_dlm_lifecycle_policy" "space00" {
         SnapshotCreator = "DLM"
       }
 
-      copy_tags = false
+      copy_tags = true
     }
 
     target_tags = {

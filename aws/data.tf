@@ -15,3 +15,67 @@ data "aws_route53_zone" "selected" {
   name         = var.route53_domain
   private_zone = false
 }
+
+data "aws_ebs_snapshot" "space00_1" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["space00"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [1]
+  }
+}
+
+data "aws_ebs_snapshot" "space00_2" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["space00"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [2]
+  }
+}
+
+data "aws_ebs_snapshot" "space00_3" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["space00"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [3]
+  }
+}
+
+data "aws_ebs_snapshot" "space00_4" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["space00"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [4]
+  }
+}
