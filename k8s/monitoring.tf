@@ -30,7 +30,7 @@ resource "helm_release" "monitoring" {
       get_kong_ingress_external    = helm_release.konghq-external.name
       get_kong_ingress_internal    = helm_release.konghq-internal.name
       get_grafana_notif_url        = local.is_dev_envs == 1 ? "monitoring.dev.node.glif.io" : "monitoring.node.glif.io"
-      get_pvc_size                 = local.is_dev_envs == 1 ? "100Gi" : "210Gi"
+      get_pvc_size                 = local.is_dev_envs == 1 ? "100Gi" : "265Gi"
     })
   ]
 
