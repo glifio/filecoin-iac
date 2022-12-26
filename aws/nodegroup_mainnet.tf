@@ -21,14 +21,14 @@ module "eks_nodegroup_mainnet_ondemand_group1" {
 #}
 
 #prod-space06-ondemand-i3-4x-b-1-19-Node
-module "eks_nodegroup_mainnet_ondemand_group3" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "i3.4xlarge"
-  get_nodegroup_name                      = "group3" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-}
+#module "eks_nodegroup_mainnet_ondemand_group3" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "i3.4xlarge"
+#  get_nodegroup_name                      = "group3" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#}
 
 #prod-ng-r5-8x-workers-ondemand-b-1-19-Node
 #module "eks_nodegroup_mainnet_ondemand_group4" {
@@ -68,7 +68,6 @@ module "eks_nodegroup_mainnet_ondemand_group6" {
 #  get_nodegroup_name                      = "group7" # don't need to type ondemand/spot in the name, it will be added automatically.
 #  get_global_configuration                = local.make_global_configuration
 #  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-#  assign_to_space00_07_nodes              = true
 #}
 
 #
@@ -90,6 +89,8 @@ module "eks_nodegroup_mainnet_ondemand_group6" {
 #  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 #}
 
+
+# ARM ONDEMAND NODES #
 module "eks_nodegroup_ondemand_group13" {
    count                                   = local.is_prod_envs
    source                                  = "../modules/eks_nodegroup"
@@ -169,6 +170,17 @@ module "eks_nodegroup_ondemand_group19" {
   use_existing_ebs                        = true
   ebs_tenant                              = "space07"
   assign_to_space00_07_nodes              = true
+}
+
+module "eks_nodegroup_ondemand_group20" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.4xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "group20" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
 ################# END BLOCK ONDEMAND NODE-GROUP LIST #################
 
