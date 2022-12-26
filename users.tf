@@ -80,5 +80,14 @@ locals {
         "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}",
       },
     },
+    {
+      username = "codebuild_wallaby_user",
+      aws_account = [
+        "developers"
+      ],
+      eks_access = {
+        "${local.eks_cluster_mainnet}" = "${local.codebuild_wallaby_role.eks_group}"
+      },
+    },
   ]
 }

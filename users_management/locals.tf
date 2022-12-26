@@ -11,4 +11,9 @@ locals {
     aws_policies = ["arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess", aws_iam_policy.manage_own_credentials.arn, aws_iam_policy.eks_devs.arn]
     eks_group  = "default_admin_group"
   }
+
+  codebuild_wallaby_role = {
+    aws_policies = ["arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess", aws_iam_policy.manage_own_credentials.arn, aws_iam_policy.eks_devs.arn]
+    eks_group = "codebuild_wallaby_group"
+  }
 }
