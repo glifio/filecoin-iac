@@ -1,8 +1,8 @@
 # Role with basic permissions for CodeBuild 
-resource "kubernetes_role" "codebuild_wallaby_sts" {
+resource "kubernetes_role" "codebuild_wallaby" {
   provider = kubernetes.k8s_cluster_mainnet
   metadata {
-    name      = "codebuild_wallaby_sts_role"
+    name      = "codebuild_wallaby_role"
     namespace = "network"
   }
 
@@ -11,69 +11,17 @@ resource "kubernetes_role" "codebuild_wallaby_sts" {
     resources  = ["statefulsets", "statefulsets/scale"]
     verbs      = ["get", "patch"]
   }
-}
-
-resource "kubernetes_role_binding" "codebuild_wallaby_sts" {
-  provider = kubernetes.k8s_cluster_mainnet
-  metadata {
-    name      = "codebuild_wallaby_sts_rolebinding"
-    namespace = "network"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "Role"
-    name      = "codebuild_wallaby_sts_role"
-  }
-  subject {
-    kind      = "Group"
-    name      = local.codebuild_wallaby_role.eks_group
-    api_group = "rbac.authorization.k8s.io"
-  }
-}
-
-resource "kubernetes_role" "codebuild_wallaby_pod" {
-  provider = kubernetes.k8s_cluster_mainnet
-  metadata {
-    name      = "codebuild_wallaby_pod_role"
-    namespace = "network"
-  }
 
   rule {
     api_groups = [""]
     resources  = ["pods"]
     verbs      = ["get", "list", "watch"]
   }
-}
 
-resource "kubernetes_role_binding" "codebuild_wallaby_pod" {
-  provider = kubernetes.k8s_cluster_mainnet
-  metadata {
-    name      = "codebuild_wallaby_pod_rolebinding"
-    namespace = "network"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "Role"
-    name      = "codebuild_wallaby_pod_role"
-  }
-  subject {
-    kind      = "Group"
-    name      = local.codebuild_wallaby_role.eks_group
-    api_group = "rbac.authorization.k8s.io"
-  }
-}
-
-# Kubernetes currently doesn't support refering to resources by name prefixes
-# nor it supports doing that by labels, so each time a new pvc of wallaby 
-# is created or changed, it has to be added below
-# in order for CodeBuild to work
-resource "kubernetes_role" "codebuild_wallaby_pvc" {
-  provider = kubernetes.k8s_cluster_mainnet
-  metadata {
-    name      = "codebuild_wallaby_pvc_role"
-    namespace = "network"
-  }
-
+  # Kubernetes currently doesn't support refering to resources by name prefixes
+  # nor it supports doing that by labels, so each time a new pvc of wallaby 
+  # is created or changed, it has to be added below
+  # in order for CodeBuild to work
   rule {
     api_groups = [""]
     resources  = ["persistentvolumeclaims"]
@@ -87,16 +35,16 @@ resource "kubernetes_role" "codebuild_wallaby_pvc" {
   }
 }
 
-resource "kubernetes_role_binding" "codebuild_wallaby_vpc" {
+resource "kubernetes_role_binding" "codebuild_wallaby" {
   provider = kubernetes.k8s_cluster_mainnet
   metadata {
-    name      = "codebuild_wallaby_pvc_rolebinding"
+    name      = "codebuild_wallaby_rolebinding"
     namespace = "network"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "Role"
-    name      = "codebuild_wallaby_pvc_role"
+    name      = "codebuild_wallaby_role"
   }
   subject {
     kind      = "Group"
