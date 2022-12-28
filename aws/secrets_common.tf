@@ -42,6 +42,15 @@ resource "aws_secretsmanager_secret" "codebuild_user" {
   module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "codebuild_wallaby_user" {
+  count                   = local.is_prod_envs
+  name                    = "${module.generator.prefix}-codebuild-wallaby-user"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-codebuild-wallaby-user" },
+  module.generator.common_tags)
+}
+
 resource "aws_secretsmanager_secret" "github_ssh_gist_updater" {
   name                    = "${module.generator.prefix}/github_ssh_gist_updater"
   recovery_window_in_days = 30
