@@ -36,7 +36,6 @@ phases:
   build:
     commands:
       - echo Image built
-      - kubectl get ns
       - cd ../../glifio/filecoin-docker/
       - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_WALLABY_TAG -t $IMAGE_NAME:latest -f Dockerfile_arm .
       - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:wallaby_latest_arm
