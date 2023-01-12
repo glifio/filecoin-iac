@@ -21,3 +21,11 @@ module "marketdeals_wallaby" {
   get_sa_namespace         = "default"
   get_global_configuration = local.make_global_configuration
 }
+
+module "marketdeals_hyperspace" {
+  count                    = local.is_prod_envs
+  source                   = "../modules/cid_checker"
+  bucket_name              = "marketdeals-hyperspace"
+  get_sa_namespace         = "default"
+  get_global_configuration = local.make_global_configuration
+}

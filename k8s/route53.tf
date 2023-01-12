@@ -43,6 +43,27 @@ resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_wallaby" 
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
+# Cid Checker Hyperspace
+resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_hyperspace" {
+  count           = local.is_prod_envs
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "hyperspace.filecoin.tools"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_hyperspace" {
+  count           = local.is_prod_envs
+  zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
+  name            = "cid.hyperspace.filecoin.tools"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
 # CID CHECKER Calibration
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" {
   count           = local.is_prod_envs

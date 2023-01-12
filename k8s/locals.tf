@@ -68,6 +68,7 @@ locals {
       "*.filecoin.tools",
       "*.wallaby.filecoin.tools",
       "*.calibration.filecoin.tools",
+      "*.hyperspace.filecoin.tools",
       "*.dev.node.glif.io",
       "*.hyperspace.node.glif.io"
     ]
