@@ -104,6 +104,16 @@ data "aws_secretsmanager_secret_version" "wallaby_archive_private_0_lotus" {
   secret_id = data.aws_secretsmanager_secret.wallaby_archive_private_0_lotus[0].id
 }
 
+data "aws_secretsmanager_secret" "hyperspace_lotus" {
+  count = local.is_prod_envs
+  name  = "${module.generator.prefix}-hyperspace-lotus"
+}
+
+data "aws_secretsmanager_secret_version" "hyperspace_lotus" {
+  count     = local.is_prod_envs
+  secret_id = data.aws_secretsmanager_secret.hyperspace_lotus[0].id
+}
+
 data "aws_secretsmanager_secret" "calibrationapi_lotus" {
   count = local.is_prod_envs
   name  = "${module.generator.prefix}-calibrationapi-lotus"

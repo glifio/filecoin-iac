@@ -63,6 +63,15 @@ resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
   module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "hyperspace_lotus" {
+  count                   = local.is_prod_envs
+  name                    = "${module.generator.prefix}-hyperspace-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-hyperspace-lotus" },
+  module.generator.common_tags)
+}
+
 resource "aws_secretsmanager_secret" "wallaby_archive_private_0_lotus" {
   count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-wallaby-archive-private-0-lotus"
