@@ -160,6 +160,16 @@ resource "aws_route53_record" "api_hyperspace_node_glif_io" {
   }
 }
 
+resource "aws_route53_record" "nlb_ingress_external_hyperspace" {
+  count           = local.is_prod_envs
+  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
+  name            = "hyperspace.node.glif.io"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
 resource "aws_route53_record" "nlb_ingress_external_hyperspace_ws" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.node_glif_io.zone_id
