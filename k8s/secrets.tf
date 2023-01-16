@@ -84,6 +84,30 @@ resource "kubernetes_secret_v1" "lotus_hyperspace_node_secret" {
   }
 }
 
+resource "kubernetes_secret_v1" "lotus_hyperspace_slave_0_node_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "hyperspace-slave-0-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
+resource "kubernetes_secret_v1" "lotus_hyperspace_slave_1_node_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "hyperspace-slave-1-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
 resource "kubernetes_secret_v1" "hyperspace_private_0_lotus" {
   count = local.is_prod_envs
   metadata {
