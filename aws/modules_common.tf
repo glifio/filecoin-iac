@@ -63,6 +63,22 @@ module "codebuild_ci_cid-checker_wallaby" {
   ]
 }
 
+module "codebuild_ci_cid-checker_hyperspace" {
+  count                    = local.is_prod_envs
+  source                   = "../modules/codebuild"
+  git_repository_name      = "cid-checker"
+  get_global_configuration = local.make_codebuild_global_configuration
+  is_build_only            = true
+  privileged_mode          = true
+  is_build_concurrent      = false
+  specific_branch          = "hyperspace"
+  specific_envs            = { "NETWORK" : "hyperspace" }
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
+
 module "codebuild_cd_cid-checker_mainnet" {
   count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
@@ -102,6 +118,21 @@ module "codebuild_cd_cid-checker_wallaby" {
   is_build_concurrent      = false
   specific_branch          = "wallaby"
   specific_envs            = { "NETWORK" : "wallaby" }
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
+
+module "codebuild_cd_cid-checker_hyperspace" {
+  count                    = local.is_prod_envs
+  source                   = "../modules/codebuild"
+  git_repository_name      = "cid-checker"
+  get_global_configuration = local.make_codebuild_global_configuration
+  privileged_mode          = true
+  is_build_concurrent      = false
+  specific_branch          = "hyperspace"
+  specific_envs            = { "NETWORK" : "hyperspace" }
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
