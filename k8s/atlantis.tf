@@ -20,5 +20,4 @@ resource "helm_release" "atlantis" {
     name  = "orgWhitelist"
     value = "github.com/glifio/*"
   }
- # https://github.com/glifio/
 }
