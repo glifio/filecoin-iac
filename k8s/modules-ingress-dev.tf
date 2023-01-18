@@ -50,6 +50,8 @@ module "ingress-kong_monitoring-80" {
   type_lb_scheme                     = "external"
 }
 
+# Ingress for atlantis
+
 module "ingress-atlantis-80" {
   count                              = local.is_dev_envs
   source                             = "../modules/k8s_ingress"
