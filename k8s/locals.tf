@@ -68,7 +68,9 @@ locals {
       "*.filecoin.tools",
       "*.wallaby.filecoin.tools",
       "*.calibration.filecoin.tools",
-      "*.dev.node.glif.io"
+      "*.hyperspace.filecoin.tools",
+      "*.dev.node.glif.io",
+      "*.hyperspace.node.glif.io"
     ]
   }
   external_lb_certificates = local.external_lb_certificate[terraform.workspace]
