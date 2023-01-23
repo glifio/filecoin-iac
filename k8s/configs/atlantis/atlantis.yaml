@@ -1,0 +1,21 @@
+version: 3
+projects:
+- name: k8s
+  dir: https://github.com/glifio/filecoin-iac/k8s
+  workspace: filecoin-dev-apn1-glif-eks
+  workflow: k8s
+  terraform_version: 1.3.1
+  autoplan:
+    enabled: true
+  plan_requirements: [ ]
+  apply_requirements: [ ]
+  import_requirements: [ ]
+workflows:
+  k8s:
+    plan:
+      steps:
+      - init:
+          extra_args: ["-backend-config=./filecoin-glif-dev-apn1.hcl"]
+      - run: terraform workspace select $WORKSPACE
+      - plan:
+          extra_args: ["-var-file", "-var-file=tfvars/filecoin-glif-dev-apn1.tfvars"]

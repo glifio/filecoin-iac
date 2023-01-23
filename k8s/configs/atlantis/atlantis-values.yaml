@@ -1,0 +1,25 @@
+
+# Replace this with your own repo whitelist:
+orgWhitelist: ${orgWhitelist}
+github:
+  user:   ${github_user}
+  token:  ${github_token}
+  secret: ${github_secret}
+  # (The chart will perform the base64 encoding for you for values that are stored in secrets.)
+
+## atlantis configuration
+
+repoConfig: |
+  ---
+  repos:
+  - id: /.*/
+    branch: /.*/
+    repo_config_file: {path.module}/configs/atlantis.yaml
+    plan_requirements: [approved, mergeable, undiverged]
+    apply_requirements: [approved, mergeable]
+    import_requirements: [approved, mergeable, undiverged]
+    allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge, repo_locking]
+    allowed_workflows: [workflow]
+    allow_custom_workflows: true
+    delete_source_branch_on_merge: true
+    repo_locking: false
