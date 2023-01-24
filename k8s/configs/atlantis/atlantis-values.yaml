@@ -14,7 +14,7 @@ repoConfig: |
   repos:
   - id: /.*/
     branch: /.*/
-    repo_config_file: {path.module}/configs/atlantis.yaml
+    repo_config_file: ../configs/atlantis.yaml
     plan_requirements: [approved, mergeable, undiverged]
     apply_requirements: [approved, mergeable]
     import_requirements: [approved, mergeable, undiverged]
