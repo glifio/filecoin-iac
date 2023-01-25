@@ -14,10 +14,10 @@ env:
     DOCKERUHUB_ORGANIZATION: 'glif'
     KUBECTL_VERSION: 1.24.7
   secrets-manager:
-    DOCKERHUB_USERNAME: "filecoin-dev-apn1-glif-dockerhub-glifio:username"
-    DOCKERHUB_PASS: "filecoin-dev-apn1-glif-dockerhub-glifio:password"
-    AWS_ACCESS_KEY_ID: "filecoin-dev-apn1-glif-codebuild-wallaby-user:AWS_ACCESS_KEY_ID"
-    AWS_SECRET_ACCESS_KEY: "filecoin-dev-apn1-glif-codebuild-wallaby-user:AWS_SECRET_ACCESS_KEY"
+    DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
+    DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
+    AWS_ACCESS_KEY_ID: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_ACCESS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_SECRET_ACCESS_KEY"
 
 phases:
   install:
@@ -40,3 +40,16 @@ phases:
       - cd ../../glifio/filecoin-docker/
       - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f Dockerfile_arm .
       - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:hyperspace-arm
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:hyperspace-arm
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-lotus-0
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-lotus-0
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-slave-0-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-slave-0-lotus-0
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-slave-0-lotus-0
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-slave-1-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-slave-1-lotus-0
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-slave-1-lotus-0
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-private-0-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-private-0-lotus-0
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-private-0-lotus-0
