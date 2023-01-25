@@ -1,6 +1,16 @@
 variable "git_repository_name" {}
 variable "get_global_configuration" {}
 
+variable "create_build_webhook" {
+  type = bool
+  default = false
+}
+
+variable "create_deploy_webhook" {
+  type = bool
+  default = false
+}
+
 variable "is_build_only" {
   type    = bool
   default = false
