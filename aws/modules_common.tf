@@ -157,3 +157,21 @@ module "codebuild_multirepository_cd_wallaby" {
     aws_secretsmanager_secret.github_cd_token_secret
   ]
 }
+module "codebuild_multirepository_cd_hyperspace" {
+  count                    = local.is_dev_envs
+  source                   = "../modules/codebuild_multirepositories"
+  git_repository_name      = "lotus"
+  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_hyperspace.yaml")
+  get_global_configuration = local.make_codebuild_global_configuration
+  privileged_mode          = true
+  is_build_concurrent      = false
+  github_cd_token_secret   = "github_cd_rersonal_token_secret"
+  specific_branch          = "ntwk/hyperspace"
+#  webhook_custom_type      = true
+#  get_webhook_custom_type  = "^refs/tags/*"
+  environment_compute_type = "BUILD_GENERAL1_LARGE"
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
