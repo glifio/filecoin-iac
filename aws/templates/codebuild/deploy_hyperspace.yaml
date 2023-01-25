@@ -7,7 +7,7 @@ env:
     IMAGE_NETWORK: 'hyperspacenet'
     CUSTOM_TAG: 'ntwk/hyperspace'
     PROJECT: 'filecoin'
-    ENVIRONMENT: 'dev'
+    ENVIRONMENT: 'mainnet'
     SUB_ENV: 'glif'
     SHORT_REGION: 'apn1'
     AWS_ACCOUNT_ID: '499623857295'
