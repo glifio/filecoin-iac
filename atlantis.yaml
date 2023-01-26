@@ -6,9 +6,9 @@ projects:
     dir: https://github.com/glifio/filecoin-iac/k8s
     workspace: filecoin-dev-apn1-glif-eks
     workflow: k8s
-  - name: aws
-    dir: .
-    workflow: aws
+#  - name: aws
+#    dir: .
+#    workflow: aws
 #  - name: k8s
 #    dir: .
 #    workflow: k8s
@@ -26,15 +26,15 @@ workflows:
         - run:  /atlantis-data/bin/terraform$ATLANTIS_TERRAFORM_VERSION workspace select -no-color $WORKSPACE
         - plan:
             extra_args: [-var-file=tfvars/filecoin-glif-dev-apn1.tfvars]
-  aws:
-    plan:
-      steps:
-        - run: rm -rf .terraform
-        - init:
-            extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
-        - run: terraform workspace select filecoin-glif-dev-apn1
-        - plan:
-            extra_args: [-var-file=environments/pre-prod/dus1.tfvars]
+#  aws:
+#    plan:
+#      steps:
+#        - run: rm -rf .terraform
+#        - init:
+#            extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
+#        - run: terraform workspace select filecoin-glif-dev-apn1
+#        - plan:
+#            extra_args: [-var-file=environments/pre-prod/dus1.tfvars]
 
 
 
