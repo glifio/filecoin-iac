@@ -130,7 +130,7 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
       "add" = {
         "headers" = [
           # TODO: Replace with the secret value
-          "Authorization: false"
+          "Authorization: Bearer ${local.auth_token}"
         ]
       }
     }

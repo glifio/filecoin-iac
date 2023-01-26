@@ -18,4 +18,6 @@ locals {
     diluted_supply = "/diluted_supply.html"
     index = "/index.html"
   }
+
+  auth_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.current.secret_string), "jwt_token_kong_rw")
 }
