@@ -3,7 +3,7 @@ version: 2
 
 projects:
   - name: k8s
-    dir: https://github.com/glifio/filecoin-iac/tree/main/k8s
+    dir: https://github.com/glifio/filecoin-iac/k8s
     workspace: filecoin-dev-apn1-glif-eks
     workflow: k8s
   - name: aws
