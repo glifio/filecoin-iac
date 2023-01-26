@@ -254,6 +254,45 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
   }
 }
 
+resource "kubernetes_ingress_v1" "get_circulating_supply" {
+  metadata {
+    name      = "${local.prefix}-get-circulating-supply"
+    namespace = var.namespace
+
+    annotations = {
+      "kubernetes.io/ingress.class" = var.ingress_class
+      "konghq.com/protocols"        = "https"
+      "konghq.com/methods"          = "GET"
+
+      "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
+        kubernetes_manifest.request_transformer-statecirculatingsupply.manifest.metadata.name,
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
+      ]))
+    }
+  }
+
+  spec {
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/statecirculatingsupply"
+          path_type = "Exact"
+          backend {
+            service {
+              name = var.upstream_service
+              port {
+                number = var.upstream_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
   metadata {
     name      = "${local.prefix}-get-circulating-supply-fil"
@@ -319,6 +358,45 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
               name = kubernetes_service.circulating_supply_staging.metadata.name
               port {
                 number = 443
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
+  metadata {
+    name      = "${local.prefix}-get-vm-circulating-supply"
+    namespace = var.namespace
+
+    annotations = {
+      "kubernetes.io/ingress.class" = var.ingress_class
+      "konghq.com/protocols"        = "https"
+      "konghq.com/methods"          = "GET"
+
+      "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
+        kubernetes_manifest.request_transformer-vmcirculatingsupply.manifest.metadata.name,
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
+      ]))
+    }
+  }
+
+  spec {
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/vmcirculatingsupply"
+          path_type = "Exact"
+          backend {
+            service {
+              name = var.upstream_service
+              port {
+                number = var.upstream_port
               }
             }
           }

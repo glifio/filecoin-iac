@@ -66,6 +66,58 @@ resource "kubernetes_manifest" "request_transformer-to_index" {
   }
 }
 
+resource "kubernetes_manifest" "request_transformer-statecirculatingsupply" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name" = "${locals.prefix}-request-transformer-statecirculatingsupply"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "http_method" = "POST"
+      "headers" = [
+        "Content-Type:application/json"
+      ]
+      "add" = {
+        "body" = [
+          "jsonrpc:2.0",
+          "method:Filecoin.StateCirculatingSupply",
+          "id:42",
+          "params:[[]]"
+        ]
+      }
+    }
+    "plugin" = "request-transformer"
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-vmcirculatingsupply" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name" = "${locals.prefix}-request-transformer-vmcirculatingsupply"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "http_method" = "POST"
+      "add" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
+        "body" = [
+          "jsonrpc:2.0",
+          "method:Filecoin.StateVMCirculatingSupplyInternal",
+          "id:42",
+          "params:[[]]"
+        ]
+      }
+    }
+    "plugin" = "request-transformer"
+  }
+}
+
 resource "kubernetes_manifest" "request_transformer-public_access" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
