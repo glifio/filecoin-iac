@@ -13,10 +13,10 @@ locals {
   }
 
   paths = {
-    rpc_v0 = "/rpc/v0"
-    rpc_v1 = "/rpv/v1"
+    rpc_v0         = "/rpc/v0"
+    rpc_v1         = "/rpv/v1"
     diluted_supply = "/diluted_supply.html"
-    index = "/index.html"
+    index          = "/index.html"
   }
 
   auth_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.current.secret_string), "jwt_token_kong_rw")

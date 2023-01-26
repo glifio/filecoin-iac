@@ -21,6 +21,6 @@ variable "upstream_service" {
 }
 
 variable "upstream_port" {
-  type = number
+  type    = number
   default = 2346
 }
