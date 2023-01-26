@@ -13,13 +13,13 @@ repoConfig: |
   ---
   repos:
   - id: /.*/
-    branch: /.*/
-    repo_config_file: ../configs/atlantis.yaml
-    plan_requirements: [approved, mergeable, undiverged]
-    apply_requirements: [approved, mergeable]
-    import_requirements: [approved, mergeable, undiverged]
-    allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge, repo_locking]
-    allowed_workflows: [workflow]
+    apply_requirements: [approved, mergeable] 
+    workflow: default
+    allowed_overrides: [apply_requirements, workflow]
     allow_custom_workflows: true
-    delete_source_branch_on_merge: true
-    repo_locking: false
+  workflows:
+    default:
+      plan:
+        steps: [init, plan]
+      apply:
+        steps: [apply]

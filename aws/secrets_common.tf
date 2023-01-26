@@ -58,3 +58,11 @@ resource "aws_secretsmanager_secret" "github_ssh_gist_updater" {
   tags = merge({ "Name" = "${module.generator.prefix}-github-ssh-gist-updater" },
   module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "github_token_atlantis" {
+  name                    = "${module.generator.prefix}/github-token-atlantis"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-github-token-atlantis" },
+    module.generator.common_tags)
+}
