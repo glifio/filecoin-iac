@@ -6,7 +6,7 @@ resource "kubernetes_service" "homepage" {
 
   spec {
     type          = "ExternalName"
-    external_name = locals.domain_names.homepage
+    external_name = local.domain_names.homepage
   }
 }
 
@@ -18,7 +18,7 @@ resource "kubernetes_service" "circulating_supply" {
 
   spec {
     type          = "ExternalName"
-    external_name = locals.domain_names.circulating_supply
+    external_name = local.domain_names.circulating_supply
   }
 }
 
@@ -30,6 +30,6 @@ resource "kubernetes_service" "circulating_supply_staging" {
 
   spec {
     type          = "ExternalName"
-    external_name = locals.domain_names.circulating_supply_staging
+    external_name = local.domain_names.circulating_supply_staging
   }
 }

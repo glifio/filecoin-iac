@@ -24,7 +24,7 @@ resource "kubernetes_ingress_v1" "post_root" {
           path_type = "Exact"
           backend {
             service {
-              name = var.upstream_service
+              name = local.upstream_service
               port {
                 number = var.upstream_port
               }
@@ -57,7 +57,7 @@ resource "kubernetes_ingress_v1" "get_root" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata.name
+              name = kubernetes_service.homepage.metadata[0].name
               port {
                 number = 443
               }
@@ -94,7 +94,7 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.circulating_supply.metadata.name
+              name = kubernetes_service.circulating_supply.metadata[0].name
               port {
                 number = 443
               }
@@ -131,7 +131,7 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata.name
+              name = kubernetes_service.homepage.metadata[0].name
               port {
                 number = 443
               }
@@ -168,7 +168,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
           path_type = "Exact"
           backend {
             service {
-              name = var.upstream_service
+              name = local.upstream_service
               port {
                 number = var.upstream_port
               }
@@ -205,7 +205,7 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata.name
+              name = kubernetes_service.homepage.metadata[0].name
               port {
                 number = 443
               }
@@ -242,7 +242,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
           path_type = "Exact"
           backend {
             service {
-              name = var.upstream_service
+              name = local.upstream_service
               port {
                 number = var.upstream_port
               }
@@ -281,7 +281,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
           path_type = "Exact"
           backend {
             service {
-              name = var.upstream_service
+              name = local.upstream_service
               port {
                 number = var.upstream_port
               }
@@ -318,7 +318,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.circulating_supply.metadata.name
+              name = kubernetes_service.circulating_supply.metadata[0].name
               port {
                 number = 443
               }
@@ -355,7 +355,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.circulating_supply_staging.metadata.name
+              name = kubernetes_service.circulating_supply_staging.metadata[0].name
               port {
                 number = 443
               }
@@ -394,7 +394,7 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
           path_type = "Exact"
           backend {
             service {
-              name = var.upstream_service
+              name = local.upstream_service
               port {
                 number = var.upstream_port
               }

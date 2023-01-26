@@ -3,7 +3,7 @@ resource "kubernetes_manifest" "request_transformer-to_rpc_v0" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${locals.prefix}-request-transformer-to-rpc-v0"
+      "name"      = "${local.prefix}-request-transformer-to-rpc-v0"
       "namespace" = var.namespace
     }
     "config" = {
@@ -20,7 +20,7 @@ resource "kubernetes_manifest" "request_transformer-to_diluted_supply" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${locals.prefix}-request-transformer-to-dilutedsupply"
+      "name"      = "${local.prefix}-request-transformer-to-dilutedsupply"
       "namespace" = var.namespace
     }
     "config" = {
@@ -37,7 +37,7 @@ resource "kubernetes_manifest" "request_transformer-to_root" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${locals.prefix}-request-transformer-to-root"
+      "name"      = "${local.prefix}-request-transformer-to-root"
       "namespace" = var.namespace
     }
     "config" = {
@@ -54,7 +54,7 @@ resource "kubernetes_manifest" "request_transformer-to_index" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${locals.prefix}-request-transformer-to-index"
+      "name"      = "${local.prefix}-request-transformer-to-index"
       "namespace" = var.namespace
     }
     "config" = {
@@ -71,7 +71,7 @@ resource "kubernetes_manifest" "request_transformer-statecirculatingsupply" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${locals.prefix}-request-transformer-statecirculatingsupply"
+      "name"      = "${local.prefix}-request-transformer-statecirculatingsupply"
       "namespace" = var.namespace
     }
     "config" = {
@@ -97,7 +97,7 @@ resource "kubernetes_manifest" "request_transformer-vmcirculatingsupply" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${locals.prefix}-request-transformer-vmcirculatingsupply"
+      "name"      = "${local.prefix}-request-transformer-vmcirculatingsupply"
       "namespace" = var.namespace
     }
     "config" = {
@@ -123,7 +123,7 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${locals.prefix}-request-transformer-to-rpcv0"
+      "name"      = "${local.prefix}-request-transformer-to-rpcv0"
       "namespace" = var.namespace
     }
     "config" = {

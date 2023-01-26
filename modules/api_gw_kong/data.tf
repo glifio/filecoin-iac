@@ -3,5 +3,5 @@ data "aws_secretsmanager_secret" "current" {
 }
 
 data "aws_secretsmanager_secret_version" "current" {
-  secret_id = data.aws_secretsmanager_secret.current
+  secret_id = data.aws_secretsmanager_secret.current.id
 }

@@ -1,10 +1,12 @@
 locals {
   project = lookup(var.global_config, "project", "")
-  region  = local(var.global_config, "region", "")
-  env     = local(var.global_config, "environment", "")
-  sub_env = local(var.global_config, "sub_environment", "")
+  region  = lookup(var.global_config, "region", "")
+  env     = lookup(var.global_config, "environment", "")
+  sub_env = lookup(var.global_config, "sub_environment", "")
 
   prefix = "kong-apigw-${var.stage_name}"
+
+  upstream_service = "${var.upstream_service}-service"
 
   domain_names = {
     homepage                   = "node.glif.link"
