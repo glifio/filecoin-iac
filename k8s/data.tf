@@ -260,10 +260,10 @@ data "aws_secretsmanager_secret_version" "github_ssh_gist_updater" {
   secret_id = data.aws_secretsmanager_secret.github_ssh_gist_updater.id
 }
 
-data "aws_secretsmanager_secret" "atlantis_github_token" {
-  name = "${module.generator.prefix}/github-atlantis-token"
+data "aws_secretsmanager_secret" "github_token_atlantis" {
+  name = "${module.generator.prefix}/github-token-atlantis"
 }
 
-data "aws_secretsmanager_secret_version" "atlantis_github_token" {
-  secret_id = data.aws_secretsmanager_secret.atlantis_github_token.id
+data "aws_secretsmanager_secret_version" "github_token_atlantis" {
+  secret_id = data.aws_secretsmanager_secret.github_token_atlantis.id
 }
