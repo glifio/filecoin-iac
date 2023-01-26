@@ -20,10 +20,9 @@ workflows:
   k8s:
     plan:
       steps:
-        - run: rm -rf .terraform
         - init:
             extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
-        - run:  /atlantis-data/bin/terraform$ATLANTIS_TERRAFORM_VERSION workspace select -no-color $WORKSPACE
+        - run:  terraform workspace select  $WORKSPACE
         - plan:
             extra_args: [-var-file=tfvars/filecoin-glif-dev-apn1.tfvars]
 #  aws:
