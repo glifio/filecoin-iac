@@ -1,0 +1,82 @@
+---
+version: 2
+
+projects:
+  - name: k8s
+    dir: https://github.com/glifio/filecoin-iac/tree/main/k8s
+    workspace: filecoin-dev-apn1-glif-eks
+    workflow: k8s
+  - name: aws
+    dir: .
+    workflow: aws
+#  - name: k8s
+#    dir: .
+#    workflow: k8s
+#  - name: aws
+#    dir: .
+#    workflow: aws
+
+workflows:
+  k8s:
+    plan:
+      steps:
+        - run: rm -rf .terraform
+        - init:
+            extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
+        - run:  /atlantis-data/bin/terraform$ATLANTIS_TERRAFORM_VERSION workspace select -no-color $WORKSPACE
+        - plan:
+            extra_args: [-var-file=tfvars/filecoin-glif-dev-apn1.tfvars]
+  aws:
+    plan:
+      steps:
+        - run: rm -rf .terraform
+        - init:
+            extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
+        - run: terraform workspace select filecoin-glif-dev-apn1
+        - plan:
+            extra_args: [-var-file=environments/pre-prod/dus1.tfvars]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+### atlantis.yaml file - This file overwrites the Server Side Repo Config section specfied in the values.yaml file
+#version: 3
+#automerge: true
+#projects:
+#  - name: k8s
+#    dir: https://github.com/glifio/filecoin-iac/k8s
+#    workspace: filecoin-dev-apn1-glif-eks
+#    terraform_version: 1.3.1
+#    autoplan:
+#      enabled: true
+#    workflow: k8s
+#  - name: aws
+#    dir: /https://github.com/glifio/filecoin-iac/aws
+#    workspace: filecoin-glif-mainnet-apn1
+#    terraform_version: 1.3.1
+#    autoplan:
+#      enabled: true
+#    workflow: aws
+#workflows:
+#  k8s:
+#    plan:
+#      steps:
+#        - init:
+#            extra_args: [ "-backend-config=./filecoin-glif-dev-apn1.hcl" ]
+#        - run: terraform workspace select $WORKSPACE
+#        - plan:
+#            extra_args: [ "-var-file", "-var-file=tfvars/filecoin-glif-dev-apn1.tfvars" ]
