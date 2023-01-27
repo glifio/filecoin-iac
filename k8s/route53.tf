@@ -308,6 +308,17 @@ resource "aws_route53_record" "wss_mainnet" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
+# Test record
+resource "aws_route53_record" "nlb_ingress_external_api_test" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.dev_node_glif_io.zone_id
+  name            = "api-test.dev.node.glif.io"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
 # Route53 record from atlantis to external nlb
 
 resource "aws_route53_record" "atlantis" {

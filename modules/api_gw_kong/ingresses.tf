@@ -5,7 +5,7 @@ resource "kubernetes_ingress_v1" "post_root" {
 
     annotations = {
       "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
+      "konghq.com/protocols"        = "https, http"
       "konghq.com/methods"          = "POST"
 
       "konghq.com/plugins" = join(", ", compact([
@@ -43,7 +43,7 @@ resource "kubernetes_ingress_v1" "get_root" {
 
     annotations = {
       "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
+      "konghq.com/protocols"        = "https, http"
       "konghq.com/methods"          = "GET"
     }
   }
