@@ -37,7 +37,7 @@ locals {
 
   monitoring_nodegroup = {
     filecoin-dev-apn1-glif-eks     = "group1"
-    filecoin-mainnet-apn1-glif-eks = "group1"
+    filecoin-mainnet-apn1-glif-eks = "group13"
   }
   monitoring_nodegroups = local.monitoring_nodegroup[terraform.workspace]
 
