@@ -27,6 +27,15 @@ git_configuration = [
   },
   {
     config = {
+      project_name      = "hyperspace",
+      name              = "hyperspace"
+      organization_name = "filecoin-project",
+      description       = "CI/CD pipeline for a filecoin hyperspace application",
+      repo_name         = "lotus",
+    }
+  },
+  {
+    config = {
       project_name      = "cid-checker",
       name              = "cid-checker"
       organization_name = "protofire",

@@ -1,5 +1,5 @@
 resource "aws_codebuild_webhook" "webhook_codebuild_build" {
-  count        = local.is_build_only
+  count        = local.create_build_webhook
   build_type   = "BUILD"
   project_name = aws_codebuild_project.codebuild.name
 
@@ -17,7 +17,7 @@ resource "aws_codebuild_webhook" "webhook_codebuild_build" {
 }
 
 resource "aws_codebuild_webhook" "webhook_codebuild_deploy" {
-  count        = local.is_deploy_only
+  count        = local.create_deploy_webhook
   build_type   = "BUILD"
   project_name = aws_codebuild_project.codebuild.name
 

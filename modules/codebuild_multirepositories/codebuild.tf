@@ -42,7 +42,7 @@ resource "aws_codebuild_project" "codebuild" {
 
   secondary_source_version {
     source_identifier = "SECOND"
-    source_version    = "build_file_for_wallaby"
+    source_version    = var.repo_docker_branch
   }
 
 
