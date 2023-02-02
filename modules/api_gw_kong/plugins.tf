@@ -119,6 +119,21 @@ resource "kubernetes_manifest" "request_transformer-vmcirculatingsupply" {
   }
 }
 
+resource "kubernetes_manifest" "serverless_function-statecirculatingsupply" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-statecirculatingsupply"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access" = [file("${path.module}/scripts/statecirculatingsupply.lua")]
+    }
+    "plugin" = "pre-function"
+  }
+}
+
 resource "kubernetes_manifest" "request_transformer-public_access" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"

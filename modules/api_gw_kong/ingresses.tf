@@ -280,7 +280,8 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
         kubernetes_manifest.request_transformer-statecirculatingsupply.manifest.metadata.name,
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.serverless_function-statecirculatingsupply.manifest.metadata.name
       ])
     }
   }
@@ -297,7 +298,9 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
             service {
               name = local.upstream_service
               port {
-                number = var.upstream_port
+                # Method Filecoin.StateCirculatingSupply is not
+                # yet supported in Lotus Gateway
+                number = 1234
               }
             }
           }
