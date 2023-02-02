@@ -5,7 +5,7 @@ env:
   variables:
     IMAGE_NAME: 'hyperspace'
     IMAGE_NETWORK: 'hyperspacenet'
-    CUSTOM_TAG: 'v1.20.0-hyperspace-0131'
+    CUSTOM_TAG: 'v1.20.0-hyperspace-0201'
     PROJECT: 'filecoin'
     ENVIRONMENT: 'mainnet'
     SUB_ENV: 'glif'
@@ -42,14 +42,18 @@ phases:
       - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:hyperspace-arm
       - docker push $DOCKERUHUB_ORGANIZATION/lotus:hyperspace-arm
       - kubectl -n network scale --replicas 0 statefulset hyperspace-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-lotus-0
       - kubectl -n network scale --replicas 1 statefulset hyperspace-lotus
       - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-lotus-0
       - kubectl -n network scale --replicas 0 statefulset hyperspace-slave-0-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-slave-0-lotus-0
       - kubectl -n network scale --replicas 1 statefulset hyperspace-slave-0-lotus
       - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-slave-0-lotus-0
       - kubectl -n network scale --replicas 0 statefulset hyperspace-slave-1-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-slave-1-lotus-0
       - kubectl -n network scale --replicas 1 statefulset hyperspace-slave-1-lotus
       - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-slave-1-lotus-0
       - kubectl -n network scale --replicas 0 statefulset hyperspace-private-0-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-private-0-lotus-0
       - kubectl -n network scale --replicas 1 statefulset hyperspace-private-0-lotus
       - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-private-0-lotus-0
