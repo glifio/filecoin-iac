@@ -21,7 +21,7 @@ workflows:
   k8s:
     plan:
       steps:
-        - run: terraform version
+        - run: tfenv use ${ATLANTIS_TERRAFORM_VERSION}
         - init:
             extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
         - run: terraform init -backend-config=../filecoin-glif-dev-apn1.hcl
