@@ -308,8 +308,6 @@ resource "aws_route53_record" "wss_mainnet" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-<<<<<<< HEAD
-=======
 # Test record
 resource "aws_route53_record" "nlb_ingress_external_api_test" {
   count           = local.is_dev_envs
