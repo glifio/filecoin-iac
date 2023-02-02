@@ -5,6 +5,16 @@ resource "kubernetes_service" "homepage" {
   }
 
   spec {
+    port {
+      name     = "http"
+      protocol = "TCP"
+      port     = 80
+    }
+    port {
+      name     = "https"
+      protocol = "TCP"
+      port     = 443
+    }
     type          = "ExternalName"
     external_name = local.domain_names.homepage
   }
@@ -17,6 +27,16 @@ resource "kubernetes_service" "circulating_supply" {
   }
 
   spec {
+    port {
+      name     = "http"
+      protocol = "TCP"
+      port     = 80
+    }
+    port {
+      name     = "https"
+      protocol = "TCP"
+      port     = 443
+    }
     type          = "ExternalName"
     external_name = local.domain_names.circulating_supply
   }
@@ -29,6 +49,16 @@ resource "kubernetes_service" "circulating_supply_staging" {
   }
 
   spec {
+    port {
+      name     = "http"
+      protocol = "TCP"
+      port     = 80
+    }
+    port {
+      name     = "https"
+      protocol = "TCP"
+      port     = 443
+    }
     type          = "ExternalName"
     external_name = local.domain_names.circulating_supply_staging
   }

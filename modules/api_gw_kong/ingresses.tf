@@ -4,18 +4,26 @@ resource "kubernetes_ingress_v1" "post_root" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https, http"
-      "konghq.com/methods"          = "POST"
+      # Due to network load balancer (NLB) decrypting SSL traffic
+      # before it comes to ingress controller, the only
+      # usable protocol here is http. Using https here
+      # will cause 426 status code stating that the traffic
+      # has to be upgraded to TLS 1.2 which will never happen
+      # unless NLB stops decrypting traffic
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "POST"
+      "konghq.com/preserve-host" = "false"
 
-      "konghq.com/plugins" = join(", ", compact([
+
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -42,24 +50,29 @@ resource "kubernetes_ingress_v1" "get_root" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https, http"
-      "konghq.com/methods"          = "GET"
+      # If this annotation is not present, the request
+      # will be looping over the host name infinitely
+      "konghq.com/preserve-host" = "false"
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "GET"
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
         path {
           path      = "/"
-          path_type = "Exact"
+          path_type = "Prefix"
           backend {
             service {
               name = kubernetes_service.homepage.metadata[0].name
               port {
-                number = 443
+                # If backend service is of type ExternalName,
+                # then ports are available only by numeric values
+                number = 80
               }
             }
           }
@@ -75,13 +88,14 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "GET"
+      "konghq.com/preserve-host" = "false"
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "GET"
 
-      "konghq.com/plugins" = join(", ", compact([
+
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_diluted_supply.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
@@ -96,7 +110,7 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
             service {
               name = kubernetes_service.circulating_supply.metadata[0].name
               port {
-                number = 443
+                number = 80
               }
             }
           }
@@ -112,17 +126,17 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "GET"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -133,7 +147,7 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
             service {
               name = kubernetes_service.homepage.metadata[0].name
               port {
-                number = 443
+                number = 80
               }
             }
           }
@@ -149,17 +163,17 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "POST"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "POST"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -186,17 +200,17 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "GET"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -207,7 +221,7 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
             service {
               name = kubernetes_service.homepage.metadata[0].name
               port {
-                number = 443
+                number = 80
               }
             }
           }
@@ -223,17 +237,17 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "POST"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "POST"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -260,19 +274,19 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "GET"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
         kubernetes_manifest.request_transformer-statecirculatingsupply.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -299,17 +313,18 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "GET"
+      "konghq.com/preserve-host" = "false"
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "GET"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_index.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -320,7 +335,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
             service {
               name = kubernetes_service.circulating_supply.metadata[0].name
               port {
-                number = 443
+                number = 80
               }
             }
           }
@@ -336,17 +351,18 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "GET"
+      "konghq.com/preserve-host" = "false"
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "GET"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_index.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -357,7 +373,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
             service {
               name = kubernetes_service.circulating_supply_staging.metadata[0].name
               port {
-                number = 443
+                number = 80
               }
             }
           }
@@ -373,19 +389,19 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
     namespace = var.namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = var.ingress_class
-      "konghq.com/protocols"        = "https"
-      "konghq.com/methods"          = "GET"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", compact([
+      "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
         kubernetes_manifest.request_transformer-vmcirculatingsupply.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
-      ]))
+      ])
     }
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {

@@ -49,6 +49,7 @@ resource "kubernetes_manifest" "request_transformer-to_root" {
   }
 }
 
+
 resource "kubernetes_manifest" "request_transformer-to_index" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
@@ -76,10 +77,10 @@ resource "kubernetes_manifest" "request_transformer-statecirculatingsupply" {
     }
     "config" = {
       "http_method" = "POST"
-      "headers" = [
-        "Content-Type:application/json"
-      ]
       "add" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
         "body" = [
           "jsonrpc:2.0",
           "method:Filecoin.StateCirculatingSupply",
