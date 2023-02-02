@@ -22,6 +22,7 @@ workflows:
       steps:
         - init:
             extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
+        - run: terraform init -backend-config=../filecoin-glif-dev-apn1.hcl
         - run:  terraform workspace select  $WORKSPACE
         - plan:
             extra_args: [-var-file=tfvars/filecoin-glif-dev-apn1.tfvars]
