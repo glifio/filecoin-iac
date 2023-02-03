@@ -128,7 +128,8 @@ resource "kubernetes_manifest" "serverless_function-statecirculatingsupply" {
       "namespace" = var.namespace
     }
     "config" = {
-      "access" = [file("${path.module}/scripts/statecirculatingsupply.lua")]
+      "access" = [file("${path.module}/scripts/req_statecirculatingsupply.lua")]
+      #"body_filter" = [file("${path.module}/scripts/res_statecirculatingsupply.lua")]
     }
     "plugin" = "pre-function"
   }
