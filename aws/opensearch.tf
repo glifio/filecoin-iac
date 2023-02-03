@@ -74,3 +74,34 @@ resource "aws_route53_record" "opensearch" {
   ttl             = "60"
   records         = [aws_opensearch_domain.main.endpoint]
 }
+
+resource "aws_sns_topic" "opensearch_alerts" {
+  name = "${module.generator.prefix}-opensearch-alerts"
+}
+
+resource "aws_sns_topic_subscription" "cid-checker-team" {
+  topic_arn = aws_sns_topic.opensearch_alerts.arn
+  protocol = "email"
+  endpoint = "1658_filecoin_cid@protofire.io"
+}
+
+resource "aws_iam_role" "opensearch_alerts" {
+  name = "${module.generator.prefix}-opensearch-alerts"
+  description = "${module.generator.prefix}-opensearch-alerts"
+
+  assume_role_policy = file("${path.module}/templates/roles/opensearch_role.pol.tpl")
+
+  tags = merge(
+    {
+      "Name" = "${module.generator.prefix}-opensearch-alerts"
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_iam_role_policy" "opensearch_alerts" {
+  name = "${terraform.workspace}-opensearch-alerts"
+  role = aws_iam_role.opensearch_alerts.id
+
+  policy = file("${path.module}/templates/policies/opensearch_sns_policy.pol.tpl")
+}
