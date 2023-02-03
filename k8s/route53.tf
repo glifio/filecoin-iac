@@ -12,6 +12,16 @@ resource "aws_route53_record" "api_dev_node_glif_io" {
   }
 }
 
+resource "aws_route53_record" "wss_dev_node_glif_io" {
+  count           = local.is_dev_envs
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "test.dev.node.glif.io"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
 resource "aws_route53_record" "dev_nlb_ingress_internal" {
   count           = local.is_dev_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
@@ -308,8 +318,6 @@ resource "aws_route53_record" "wss_mainnet" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-<<<<<<< HEAD
-=======
 # Test record
 resource "aws_route53_record" "nlb_ingress_external_api_test" {
   count           = local.is_dev_envs
