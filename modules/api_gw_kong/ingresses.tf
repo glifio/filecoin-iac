@@ -278,8 +278,6 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
       "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
-        kubernetes_manifest.request_transformer-statecirculatingsupply.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.serverless_function-statecirculatingsupply.manifest.metadata.name
       ])
@@ -396,8 +394,7 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
       "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
-        kubernetes_manifest.request_transformer-vmcirculatingsupply.manifest.metadata.name,
+        kubernetes_manifest.serverless_function-vmcirculatingsupply.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
       ])
     }
@@ -415,7 +412,7 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
             service {
               name = local.upstream_service
               port {
-                number = var.upstream_port
+                number = 1234
               }
             }
           }

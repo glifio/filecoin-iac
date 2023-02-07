@@ -1,2 +1,1 @@
-local request_body = '{"jsonrpc":"2.0","method":"Filecoin.StateCirculatingSupply","id":42,"params":[[]]}'
-kong.service.request.set_raw_body(request_body)
+kong.service.request.set_method("POST")kong.service.request.set_header("Content-Type","application/json")kong.service.request.set_path("/rpc/v0")kong.service.request.set_raw_body('{"jsonrpc":"2.0","method":"Filecoin.StateCirculatingSupply","id":42,"params":[[]]}')

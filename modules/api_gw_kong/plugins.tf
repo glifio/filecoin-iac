@@ -81,12 +81,6 @@ resource "kubernetes_manifest" "request_transformer-statecirculatingsupply" {
         "headers" = [
           "Content-Type:application/json"
         ]
-        "body" = [
-          "jsonrpc:2.0",
-          "method:Filecoin.StateCirculatingSupply",
-          "id:42",
-          "params:[[]]"
-        ]
       }
     }
     "plugin" = "request-transformer"
@@ -128,10 +122,28 @@ resource "kubernetes_manifest" "serverless_function-statecirculatingsupply" {
       "namespace" = var.namespace
     }
     "config" = {
-      "access" = [file("${path.module}/scripts/req_statecirculatingsupply.lua")]
-      #"body_filter" = [file("${path.module}/scripts/res_statecirculatingsupply.lua")]
+      "access"        = [file("${path.module}/scripts/req_statecirculatingsupply.lua")]
+      "body_filter"   = [file("${path.module}/scripts/res_statecirculatingsupply.lua")]
+      "header_filter" = [file("${path.module}/scripts/clear_content-length.lua")]
     }
-    "plugin" = "pre-function"
+    "plugin" = "post-function"
+  }
+}
+
+resource "kubernetes_manifest" "serverless_function-vmcirculatingsupply" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-vmcirculatingsupply"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access"        = [file("${path.module}/scripts/req_vmcirculatingsupply.lua")]
+      "body_filter"   = [file("${path.module}/scripts/res_vmcirculatingsupply.lua")]
+      "header_filter" = [file("${path.module}/scripts/clear_content-length.lua")]
+    }
+    "plugin" = "post-function"
   }
 }
 
@@ -146,7 +158,6 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
     "config" = {
       "add" = {
         "headers" = [
-          # TODO: Replace with the secret value
           "Authorization: Bearer ${local.auth_token}"
         ]
       }
