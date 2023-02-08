@@ -5,7 +5,7 @@ module "api_gateway_kong_dev" {
   global_config = local.make_global_configuration
 
   stage_name  = "dev"
-  domain_name = "api-test.dev.node.glif.io"
+  domain_name = "wss.dev.node.glif.io"
 
   ingress_class    = "kong-external-lb"
   namespace        = "network"

@@ -322,7 +322,7 @@ resource "aws_route53_record" "wss_mainnet" {
 resource "aws_route53_record" "nlb_ingress_external_api_test" {
   count           = local.is_dev_envs
   zone_id         = data.aws_route53_zone.dev_node_glif_io.zone_id
-  name            = "api-test.dev.node.glif.io"
+  name            = "wss.dev.node.glif.io"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
