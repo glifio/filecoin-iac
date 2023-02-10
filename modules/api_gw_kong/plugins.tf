@@ -49,6 +49,7 @@ resource "kubernetes_manifest" "request_transformer-to_root" {
   }
 }
 
+
 resource "kubernetes_manifest" "request_transformer-to_index" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
@@ -76,15 +77,9 @@ resource "kubernetes_manifest" "request_transformer-statecirculatingsupply" {
     }
     "config" = {
       "http_method" = "POST"
-      "headers" = [
-        "Content-Type:application/json"
-      ]
       "add" = {
-        "body" = [
-          "jsonrpc:2.0",
-          "method:Filecoin.StateCirculatingSupply",
-          "id:42",
-          "params:[[]]"
+        "headers" = [
+          "Content-Type:application/json"
         ]
       }
     }
@@ -118,6 +113,40 @@ resource "kubernetes_manifest" "request_transformer-vmcirculatingsupply" {
   }
 }
 
+resource "kubernetes_manifest" "serverless_function-statecirculatingsupply" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-statecirculatingsupply"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access"        = [file("${path.module}/scripts/req_statecirculatingsupply.lua")]
+      "body_filter"   = [file("${path.module}/scripts/res_statecirculatingsupply.lua")]
+      "header_filter" = [file("${path.module}/scripts/clear_content-length.lua")]
+    }
+    "plugin" = "post-function"
+  }
+}
+
+resource "kubernetes_manifest" "serverless_function-vmcirculatingsupply" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-vmcirculatingsupply"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access"        = [file("${path.module}/scripts/req_vmcirculatingsupply.lua")]
+      "body_filter"   = [file("${path.module}/scripts/res_vmcirculatingsupply.lua")]
+      "header_filter" = [file("${path.module}/scripts/clear_content-length.lua")]
+    }
+    "plugin" = "post-function"
+  }
+}
+
 resource "kubernetes_manifest" "request_transformer-public_access" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
@@ -129,7 +158,6 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
     "config" = {
       "add" = {
         "headers" = [
-          # TODO: Replace with the secret value
           "Authorization: Bearer ${local.auth_token}"
         ]
       }

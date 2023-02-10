@@ -5,9 +5,14 @@ resource "helm_release" "konghq-external" {
   repository = "https://charts.konghq.com"
   chart      = "kong"
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
-  version    = "2.12.0"
+  version    = "2.13.0"
 
   values = [templatefile("${path.module}/configs/konghq/antiaffinity.yaml", { app = "${module.generator.prefix}-kong-external" })]
+
+  set {
+    name = "ingressController.image.tag"
+    value = "2.8"
+  }
 
   set {
     name  = "replicaCount"

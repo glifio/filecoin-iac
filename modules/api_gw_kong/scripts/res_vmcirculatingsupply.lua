@@ -1,0 +1,1 @@
+if kong.response.get_status()==200 then local a=kong.response.get_raw_body()if a then local b=string.sub(a,string.find(a,'"FilCirculating":"%d+"'))local c=string.sub(b,string.find(b,'%d+'))kong.response.set_raw_body(c)end end
