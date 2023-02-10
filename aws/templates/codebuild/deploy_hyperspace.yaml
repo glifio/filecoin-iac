@@ -1,0 +1,59 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
+version: 0.2
+
+env:
+  variables:
+    IMAGE_NAME: 'hyperspace'
+    IMAGE_NETWORK: 'hyperspacenet'
+    CUSTOM_TAG: 'v1.20.0-hyperspace-0201'
+    PROJECT: 'filecoin'
+    ENVIRONMENT: 'mainnet'
+    SUB_ENV: 'glif'
+    SHORT_REGION: 'apn1'
+    AWS_ACCOUNT_ID: '499623857295'
+    DOCKERUHUB_ORGANIZATION: 'glif'
+    KUBECTL_VERSION: 1.24.7
+  secrets-manager:
+    DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
+    DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
+    AWS_ACCESS_KEY_ID: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_ACCESS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_SECRET_ACCESS_KEY"
+
+phases:
+  install:
+    commands:
+      - echo Environment Variables
+      - printenv
+      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/2022-10-31/bin/linux/arm64/kubectl
+      - chmod +x ./kubectl
+      - mv kubectl /usr/bin/
+      - aws eks --region $AWS_REGION update-kubeconfig --name $PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-eks
+
+  pre_build:
+    commands:
+      - echo Build STARTED
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
+
+  build:
+    commands:
+      - echo Image built
+      - cd ../../glifio/filecoin-docker/
+      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f Dockerfile_arm .
+      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:hyperspace-arm
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:hyperspace-arm
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-lotus
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-lotus-0
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-slave-0-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-slave-0-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-slave-0-lotus
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-slave-0-lotus-0
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-slave-1-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-slave-1-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-slave-1-lotus
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-slave-1-lotus-0
+      - kubectl -n network scale --replicas 0 statefulset hyperspace-private-0-lotus
+      - kubectl -n network wait --timeout=1m --for=delete pod/hyperspace-private-0-lotus-0
+      - kubectl -n network scale --replicas 1 statefulset hyperspace-private-0-lotus
+      - kubectl -n network wait --timeout=10m --for=condition=ready pod/hyperspace-private-0-lotus-0

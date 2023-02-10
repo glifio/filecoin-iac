@@ -1,9 +1,24 @@
 variable "git_repository_name" {}
 variable "get_global_configuration" {}
 
+variable "create_build_webhook" {
+  type = bool
+  default = true
+}
+
+variable "create_deploy_webhook" {
+  type = bool
+  default = true
+}
+
 variable "is_build_only" {
   type    = bool
   default = false
+}
+
+variable "repo_docker_branch" {
+  type = string
+  default = "master"
 }
 
 variable "terraform_policy" {
