@@ -1,15 +1,5 @@
 locals {
   users = [
-#    {
-#      username = "alexey.kulik@protofire.io",
-#      aws_account = [
-#        "devops"
-#      ],
-#      eks_access = {
-#        "${local.eks_cluster_mainnet}" = "${local.devops_role.eks_group}",
-#        "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}",
-#      },
-#    },
     {
       username = "arsenii@protofire.io",
       aws_account = [
@@ -62,6 +52,16 @@ locals {
     },
     {
       username = "vitaliy.chernov@protofire.io",
+      aws_account = [
+        "developers"
+      ],
+      eks_access = {
+        "${local.eks_cluster_mainnet}" = "${local.developers_role.eks_group}",
+        "${local.eks_cluster_testnet}" = "${local.developers_role.eks_group}",
+      },
+    },
+    {
+      username = "dmitry.kotelkin@protofire.io",
       aws_account = [
         "developers"
       ],
