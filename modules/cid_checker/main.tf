@@ -5,6 +5,21 @@ resource "aws_s3_bucket" "main" {
   tags = merge(module.generator.common_tags, { Description = "Bucket to store s3-${var.bucket_name} files" })
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "main" {
+  bucket = aws_s3_bucket.main.id
+
+  # Uploaded files are big, and stale
+  # parts can stack up, hence this rule
+  # is required to keep bucket clean
+  rule {
+    id     = "abort-incomplete-miltipart"
+    status = "Enabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
+  }
+}
+
 resource "aws_iam_role" "main" {
   name        = "${terraform.workspace}-cronjob-${var.bucket_name}"
   description = "${terraform.workspace} allow cronjob-${var.bucket_name} access to s3 bucket."
