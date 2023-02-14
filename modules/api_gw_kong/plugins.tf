@@ -87,6 +87,26 @@ resource "kubernetes_manifest" "request_transformer-statecirculatingsupply" {
   }
 }
 
+resource "kubernetes_manifest" "response_transformer-content_type" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-request-transformer-content-type"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "http_method" = "POST"
+      "add" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
+      }
+    }
+    "plugin" = "response-transformer"
+  }
+}
+
 resource "kubernetes_manifest" "request_transformer-vmcirculatingsupply" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"

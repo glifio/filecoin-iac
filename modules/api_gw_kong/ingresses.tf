@@ -17,7 +17,8 @@ resource "kubernetes_ingress_v1" "post_root" {
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name
       ])
     }
   }
@@ -167,7 +168,8 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
       "konghq.com/methods"   = "POST"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name
       ])
     }
   }
@@ -241,7 +243,8 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
       "konghq.com/methods"   = "POST"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name
       ])
     }
   }
