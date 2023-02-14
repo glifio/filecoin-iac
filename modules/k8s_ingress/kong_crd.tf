@@ -106,3 +106,21 @@ resource "kubernetes_manifest" "ip_restriction" {
 }
 
 ######## END BLOCK ip-restriction PLUGIN ############
+
+resource "kubernetes_manifest" "serverless_function-methods_blacklist" {
+  count = local.enable_methods_blacklist
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "methods-blacklist-${random_string.rand.result}"
+      "namespace" = var.get_ingress_namespace
+    }
+    "config" = {
+      "body_filter"   = [templatefile("${path.module}/scripts/methods_blacklist.lua", {
+        methods = join(",", formatlist("'%s'", var.methods_blacklist))
+      })]
+    }
+    "plugin" = "pre-function"
+  }
+}

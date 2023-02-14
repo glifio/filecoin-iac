@@ -10,7 +10,9 @@ locals {
 
   get_cors              = var.is_kong_cors_enabled ? kubernetes_manifest.cors[0].manifest.metadata.name : ""
   get_whitelist_ips     = var.enable_whitelist_ip ? kubernetes_manifest.ip_restriction[0].manifest.metadata.name : ""
-  get_kong_list_plugins = local.get_cors == null && local.get_request_transformer == null ? "" : join(", ", compact([local.get_cors, local.get_whitelist_ips, local.get_request_transformer]))
+  get_methods_blacklist = var.enable_methods_blacklist ? kubernetes_manifest.serverless_function-methods_blacklist[0].manifest.metadata.name : ""
+  get_kong_list_plugins = local.get_cors == null && local.get_request_transformer == null ? "" : join(", ", compact([local.get_cors, local.get_whitelist_ips, local.get_request_transformer, local.get_methods_blacklist]))
 
   validate_whitelist_ips = var.enable_whitelist_ip ? 1 : 0
+  enable_methods_blacklist = var.enable_methods_blacklist ? 1 : 0
 }

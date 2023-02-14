@@ -100,3 +100,13 @@ variable "get_whitelist_ips" {
     "34.233.66.117"
   ]
 }
+
+variable "enable_methods_blacklist" {
+  type = bool
+  default = false
+}
+
+variable "methods_blacklist" {
+  type = list(string)
+  default = null
+}
