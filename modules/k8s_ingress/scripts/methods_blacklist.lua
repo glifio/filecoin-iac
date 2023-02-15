@@ -1,9 +1,1 @@
-local body = kong.request.get_raw_body()
-local methods = {${methods}}
-
-for i, v in ipairs(methods) do
-    if string.find(body, '"' .. v .. '"') ~= nil then
-        kong.response.exit(403, '{"error":{"message":"method \'' .. v .. '\' not allowed"}}')
-        break
-    end
-end
+local a=kong.request.get_raw_body()local b={'Filecoin.ChainNotify'}for c,d in ipairs(b)do if string.find(a,'"'..d..'"')~=nil then kong.response.exit(403,'{"error":{"message":"method \''..d..'\' not allowed"}}')break end end
