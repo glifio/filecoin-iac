@@ -557,6 +557,9 @@ module "ingress-kong_lotusgateway-2346" {
   get_rule_host                           = "wss.node.glif.io"
   type_lb_scheme                          = "external"
   is_kong_auth_header_block_public_access = false
+
+  enable_methods_blacklist = true
+  methods_blacklist        = ["Filecoin.ChainNotify"]
 }
 
 ##########################################################

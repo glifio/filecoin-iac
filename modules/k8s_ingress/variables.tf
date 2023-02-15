@@ -102,11 +102,11 @@ variable "get_whitelist_ips" {
 }
 
 variable "enable_methods_blacklist" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "methods_blacklist" {
-  type = list(string)
+  type    = list(string)
   default = null
 }

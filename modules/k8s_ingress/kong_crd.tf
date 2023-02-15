@@ -117,7 +117,7 @@ resource "kubernetes_manifest" "serverless_function-methods_blacklist" {
       "namespace" = var.get_ingress_namespace
     }
     "config" = {
-      "access"   = [templatefile("${path.module}/scripts/methods_blacklist.lua", {
+      "access" = [templatefile("${path.module}/scripts/methods_blacklist.lua", {
         methods = join(",", formatlist("'%s'", var.methods_blacklist))
       })]
     }
