@@ -67,26 +67,6 @@ resource "kubernetes_manifest" "request_transformer-to_index" {
   }
 }
 
-resource "kubernetes_manifest" "request_transformer-statecirculatingsupply" {
-  manifest = {
-    "apiVersion" = "configuration.konghq.com/v1"
-    "kind"       = "KongPlugin"
-    "metadata" = {
-      "name"      = "${local.prefix}-request-transformer-statecirculatingsupply"
-      "namespace" = var.namespace
-    }
-    "config" = {
-      "http_method" = "POST"
-      "add" = {
-        "headers" = [
-          "Content-Type:application/json"
-        ]
-      }
-    }
-    "plugin" = "request-transformer"
-  }
-}
-
 resource "kubernetes_manifest" "response_transformer-content_type" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
@@ -96,8 +76,12 @@ resource "kubernetes_manifest" "response_transformer-content_type" {
       "namespace" = var.namespace
     }
     "config" = {
-      "http_method" = "POST"
       "add" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
+      }
+      "replace" = {
         "headers" = [
           "Content-Type:application/json"
         ]
@@ -107,31 +91,6 @@ resource "kubernetes_manifest" "response_transformer-content_type" {
   }
 }
 
-resource "kubernetes_manifest" "request_transformer-vmcirculatingsupply" {
-  manifest = {
-    "apiVersion" = "configuration.konghq.com/v1"
-    "kind"       = "KongPlugin"
-    "metadata" = {
-      "name"      = "${local.prefix}-request-transformer-vmcirculatingsupply"
-      "namespace" = var.namespace
-    }
-    "config" = {
-      "http_method" = "POST"
-      "add" = {
-        "headers" = [
-          "Content-Type:application/json"
-        ]
-        "body" = [
-          "jsonrpc:2.0",
-          "method:Filecoin.StateVMCirculatingSupplyInternal",
-          "id:42",
-          "params:[[]]"
-        ]
-      }
-    }
-    "plugin" = "request-transformer"
-  }
-}
 
 resource "kubernetes_manifest" "serverless_function-statecirculatingsupply" {
   manifest = {
@@ -177,6 +136,11 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
     }
     "config" = {
       "add" = {
+        "headers" = [
+          "Authorization: Bearer ${local.auth_token}"
+        ]
+      }
+      "replace" = {
         "headers" = [
           "Authorization: Bearer ${local.auth_token}"
         ]

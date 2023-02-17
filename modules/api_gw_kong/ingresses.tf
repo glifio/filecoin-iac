@@ -66,6 +66,7 @@ resource "kubernetes_ingress_v1" "get_root" {
       http {
         path {
           path      = "/"
+          # Must be a prefix to handle static assets
           path_type = "Prefix"
           backend {
             service {
