@@ -356,3 +356,14 @@ resource "kubernetes_secret_v1" "github_ssh_gist_updater" {
     ssh = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.github_ssh_gist_updater.secret_string), "ssh", null))
   }
 }
+
+resource "kubernetes_secret_v1" "aws-atlantis" {
+  metadata {
+    name      = "aws-atlantis"
+    namespace = "default"
+  }
+  data = {
+    AWS_ACCESS_KEY_ID     = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "aws_access_key", null)
+    AWS_SECRET_ACCESS_KEY = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "aws_secret_key", null)
+  }
+}
