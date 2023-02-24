@@ -62,13 +62,13 @@ resource "aws_cloudwatch_log_metric_filter" "metric_filter" {
   log_group_name = aws_cloudwatch_log_group.main.name
 
   metric_transformation {
-    name          = "s3_${var.bucket_name}-file_updated_count"
+    name          = aws_cloudwatch_metric_alarm.main.metric_name
     namespace     = aws_lambda_function.main.function_name
     value         = "1"
     default_value = "0"
   }
 
-  name    = "s3_${var.bucket_name}-file_updated_count"
+  name    = "s3-${var.bucket_name}-file-updated-count"
   pattern = "FILE UPDATED"
 }
 
@@ -77,7 +77,7 @@ resource "aws_cloudwatch_log_metric_filter" "metric_filter" {
 resource "aws_cloudwatch_metric_alarm" "main" {
   alarm_name          = "s3 ${var.bucket_name} file was not updated"
   alarm_description   = "File s3 ${var.bucket_name} wasn't updated for 6 hours"
-  metric_name         = "s3_${var.bucket_name}_file_updated_count"
+  metric_name         = "s3-${var.bucket_name}-file-updated-count"
   namespace           = aws_lambda_function.main.function_name
   period              = "21600"
   comparison_operator = "LessThanOrEqualToThreshold"
