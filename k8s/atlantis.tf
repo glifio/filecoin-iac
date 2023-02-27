@@ -16,7 +16,7 @@ resource "helm_release" "atlantis_main" {
   }
 
   set {
-    name  = "ingress..metadata.annotations"
+    name  = "ingress.metadata.annotations"
     value = "kubernetes.io/ingress.class: kong-external-lb"
   }
 
