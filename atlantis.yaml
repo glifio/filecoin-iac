@@ -42,7 +42,7 @@ workflows:
       steps:
         - init:
             extra_args: [-backend-config=../filecoin-glif-dev-apn1.hcl]
-        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-dev-apn1.hcl}
+        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-dev-apn1.hcl
         - run:  terraform workspace select  $WORKSPACE
         - plan:
             extra_args: [-var-file=tfvars/filecoin-glif-dev-apn1.tfvars]
@@ -62,7 +62,7 @@ workflows:
       steps:
         - init:
             extra_args: [ -backend-config=../filecoin-glif-mainnet-apn1.hcl ]
-        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-mainnet-apn1.hcl}
+        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-mainnet-apn1.hcl
         - run: terraform workspace select  $WORKSPACE
         - plan:
             extra_args: [ -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars ]
