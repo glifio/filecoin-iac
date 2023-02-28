@@ -12,10 +12,10 @@ projects:
     terraform_version: v1.3.1
     workspace: filecoin-glif-dev-apn1
     workflow: aws-dev
-  - name: users_management
+  - name: users
     dir: ./users_management
     workspace: default
-    workflow: users_management
+    workflow: users
   - name: k8s
     dir: ./k8s
     terraform_version: v1.3.1
@@ -67,12 +67,11 @@ workflows:
         - plan:
             extra_args: [ -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars ]
 
-  users_management:
+  users:
     plan:
       steps:
         - init:
             extra_args: [ -backend-config=../filecoin-glif-dev-apn1.hcl ]
-        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-mainnet-apn1.hcl
-        - run: terraform workspace select  $WORKSPACE
+        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-dev-apn1.hcl
         - plan:
             extra_args: [ -var-file=tfvars/filecoin-users.tfvars  ]
