@@ -67,7 +67,7 @@ workflows:
         - plan:
             extra_args: [ -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars ]
 
-  users_management:
+  users:
     plan:
       steps:
         - init:
