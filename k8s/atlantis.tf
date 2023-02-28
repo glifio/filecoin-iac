@@ -4,6 +4,7 @@ resource "helm_release" "atlantis_main" {
   chart      = "atlantis"
   version    = "4.10.0"
 
+
   values = [
     templatefile("${path.root}/configs/atlantis/atlantis-values.yaml", {
       orgAllowlist           = "github.com/glifio/*"
