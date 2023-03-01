@@ -19,3 +19,4 @@ resource "helm_release" "atlantis_main" {
     })
   ]
 }
+
