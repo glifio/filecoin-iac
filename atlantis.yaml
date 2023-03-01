@@ -16,16 +16,18 @@ projects:
     dir: ./users_management
     workspace: default
     workflow: users
-#   - name: k8s
-#     dir: ./k8s
-#     terraform_version: v1.3.1
-#     workspace: filecoin-mainnet-apn1-glif-eks
-#     workflow: k8s
-#   - name: aws
-#     dir: ./aws
-#     terraform_version: v1.3.1
-#     workspace: filecoin-glif-mainnet-apn1
-#     workflow: aws
+  - name: k8s
+    dir: ./k8s
+    terraform_version: v1.3.1
+    workspace: filecoin-mainnet-apn1-glif-eks
+    workflow: k8s
+  - name: aws
+    dir: ./aws
+    terraform_version: v1.3.1
+    workspace: filecoin-glif-mainnet-apn1
+    workflow: aws
+
+  # dev workflow #
 
 workflows:
   k8s-dev:
@@ -47,25 +49,28 @@ workflows:
         - plan:
             extra_args: [-var-file=tfvars/filecoin-glif-dev-apn1.tfvars]
 
-#    # mainnet workflow #
-#   k8s:
-#     plan:
-#       steps:
-#         - init:
-#             extra_args: [ -backend-config=../filecoin-glif-mainnet-apn1.hcl ]
-#         - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-mainnet-apn1.hcl
-#         - run: terraform workspace select  $WORKSPACE
-#         - plan:
-#             extra_args: [ -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars ]
-#   aws:
-#     plan:
-#       steps:
-#         - init:
-#             extra_args: [ -backend-config=../filecoin-glif-mainnet-apn1.hcl ]
-#         - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-mainnet-apn1.hcl
-#         - run: terraform workspace select  $WORKSPACE
-#         - plan:
-#             extra_args: [ -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars ]
+    # mainnet workflow #
+
+  k8s:
+    plan:
+      steps:
+        - init:
+            extra_args: [ -backend-config=../filecoin-glif-mainnet-apn1.hcl ]
+        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-mainnet-apn1.hcl
+        - run: terraform workspace select  $WORKSPACE
+        - plan:
+            extra_args: [ -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars ]
+  aws:
+    plan:
+      steps:
+        - init:
+            extra_args: [ -backend-config=../filecoin-glif-mainnet-apn1.hcl ]
+        - run: /atlantis-data/bin/terraform1.3.1 init  -backend-config=../filecoin-glif-mainnet-apn1.hcl
+        - run: terraform workspace select  $WORKSPACE
+        - plan:
+            extra_args: [ -var-file=tfvars/filecoin-glif-mainnet-apn1.tfvars ]
+
+    # default workflow #
 
   users:
     plan:

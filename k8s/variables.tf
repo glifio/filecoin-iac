@@ -42,13 +42,3 @@ variable "http_endpoint_uri" {
 }
 
 variable "whitelist_ips" {}
-
-variable "atlantis_repo_allowlist" {
-  type = string
-  default = "github.com/glifio/*"
-}
-#
-#variable "create_github_repository_webhook" {
-#  type = bool
-#  default = true
-#}

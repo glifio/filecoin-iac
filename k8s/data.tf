@@ -281,7 +281,7 @@ data "aws_secretsmanager_secret_version" "github_ssh_gist_updater" {
 }
 
 data "aws_secretsmanager_secret" "atlantis" {
-  name = "credentials-atlantis"
+  name = "${module.generator.prefix}/credentials-atlantis"
 }
 
 data "aws_secretsmanager_secret_version" "atlantis" {

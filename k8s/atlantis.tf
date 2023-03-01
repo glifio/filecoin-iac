@@ -1,3 +1,4 @@
+
 resource "helm_release" "atlantis_main" {
   name       = "atlantis"
   repository = "https://runatlantis.github.io/helm-charts"
@@ -9,7 +10,7 @@ resource "helm_release" "atlantis_main" {
       orgAllowlist           = "github.com/glifio/*"
       github_user            = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "gh_user", null)
       github_token           = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "gh_token", null)
-      github_webhook_secret  = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "gh_secret", null)
+      github_webhook_secret  = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "gh_webhook_secret", null)
       YOUR_ACCESS_KEY_ID     = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "aws_access_key", null)
       YOUR_SECRET_ACCESS_KEY = lookup(jsondecode(data.aws_secretsmanager_secret_version.atlantis.secret_string), "aws_secret_key", null)
       region                 = "ap-northeast-1"
