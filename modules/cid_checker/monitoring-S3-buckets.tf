@@ -87,5 +87,6 @@ resource "aws_cloudwatch_metric_alarm" "main" {
   datapoints_to_alarm = "1"
   alarm_actions       = [aws_sns_topic.main.arn]
   ok_actions          = [aws_sns_topic.main.arn]
+  insufficient_data_actions = [aws_sns_topic.main.arn]
   evaluation_periods  = "1"
 }
