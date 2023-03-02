@@ -15,6 +15,23 @@ resource "kubernetes_manifest" "request_transformer-to_rpc_v0" {
   }
 }
 
+resource "kubernetes_manifest" "request_transformer-to_rpc_v1" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-request-transformer-to-rpc-v1"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "replace" = {
+        "uri" = local.paths.rpc_v1
+      }
+    }
+    "plugin" = "request-transformer"
+  }
+}
+
 resource "kubernetes_manifest" "request_transformer-to_diluted_supply" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
