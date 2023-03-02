@@ -10,3 +10,4 @@ variable "get_sa_namespace" {
   description = "Variables for kubernetes service account."
   type        = string
 }
+
