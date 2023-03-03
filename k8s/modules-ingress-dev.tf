@@ -51,20 +51,3 @@ module "ingress-kong_monitoring-80" {
 }
 
 #############################################################
-
-
-module "ingress-atlantis-80" {
-  count                              = local.is_dev_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/"
-  get_ingress_backend_service_name   = "atlantis"
-  get_ingress_pathType               = "Prefix"
-  as_is_ingress_backend_service_name = true // if value is false then the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 80
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "atlantis.dev.node.glif.io"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-  type_lb_scheme                     = "external"
-}

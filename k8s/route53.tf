@@ -311,7 +311,7 @@ resource "aws_route53_record" "wss_mainnet" {
 # Route53 record from atlantis to external nlb
 
 resource "aws_route53_record" "atlantis" {
-  count           = local.is_dev_envs
+  count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "atlantis.${var.route53_domain}"
   allow_overwrite = true
