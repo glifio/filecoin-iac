@@ -1,4 +1,5 @@
 resource "helm_release" "atlantis_main" {
+  count = local.is_prod_envs
   name       = "atlantis"
   repository = "https://runatlantis.github.io/helm-charts"
   chart      = "atlantis"
