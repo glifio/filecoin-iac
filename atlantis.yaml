@@ -1,6 +1,5 @@
 ---
 version: 3
-
 projects:
   - name: k8s-dev
     dir: ./k8s
