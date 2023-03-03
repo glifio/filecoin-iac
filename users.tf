@@ -89,5 +89,15 @@ locals {
         "${local.eks_cluster_mainnet}" = "${local.codebuild_wallaby_role.eks_group}"
       },
     },
+    {
+      username = "openworklabbot-atlantis",
+      aws_account = [
+        "devops"
+      ],
+      eks_access = {
+        "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}",
+        "${local.eks_cluster_mainnet}" = "${local.devops_role.eks_group}",
+      },
+    },
   ]
 }

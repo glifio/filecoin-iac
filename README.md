@@ -16,6 +16,7 @@
     - [Uptibe Robot](#uptibe-robot)
     - [Prometheus Stack](#prometheus-stack)
     - [OpenSearch](#opensearch)
+    - [Atlantis](#atlantis)
 
 ## Summary
 
@@ -237,3 +238,19 @@ After the installation, there's a few manual operations that need to be done in 
 1. Go to `Settings > Roles` and create a role with `crud` cluster permissions and `crud` and `create_indexes` index permissions.
 2. Map the role a user, as a username use role ARN of fluenbit.
 3. Check if indexes are created in `Stack Management > Indeces`.
+
+### Atlantis
+
+(Credentials for Atlantis put to Bitwarden)
+
+_workflows (project) :
+for dev environment use { k8s-dev; aws-dev; users }
+for mainnet environment use { k8s; aws }_
+
+- the plan doesn't start automatically on the new PR
+for the run plan should set the parameter {project}
+`atlantis plan -p k8s-dev`
+
+- the apply doesn't start automatically. Only after approval
+for the run apply should set the parameter {project}
+`atlantis apply -p k8s-dev `
