@@ -5,14 +5,12 @@ projects:
     dir: ./k8s
     autoplan:
       enabled: false
-    terraform_version: v1.3.1
     workspace: filecoin-dev-apn1-glif-eks
     workflow: k8s-dev
   - name: aws-dev
     dir: ./aws
     autoplan:
       enabled: false
-    terraform_version: v1.3.1
     workspace: filecoin-glif-dev-apn1
     workflow: aws-dev
   - name: users
@@ -25,14 +23,12 @@ projects:
     dir: ./k8s
     autoplan:
       enabled: false
-    terraform_version: v1.3.1
     workspace: filecoin-mainnet-apn1-glif-eks
     workflow: k8s
   - name: aws
     dir: ./aws
     autoplan:
       enabled: false
-    terraform_version: v1.3.1
     workspace: filecoin-glif-mainnet-apn1
     workflow: aws
 
