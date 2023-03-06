@@ -26,27 +26,27 @@ variable "upstream_port" {
 }
 
 variable "override_rpc_v0_service" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "override_rpc_v0_port" {
-  type = number
+  type    = number
   default = null
 }
 
 variable "override_rpc_v1_service" {
-  type = string
+  type    = string
   default = null
 }
 
 variable "override_rpc_v1_port" {
-  type = number
+  type    = number
   default = null
 }
 
 variable "override_daemon_service" {
-  type = string
+  type    = string
   default = null
 }
 
