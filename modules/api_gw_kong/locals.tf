@@ -21,7 +21,7 @@ locals {
 
   paths = {
     rpc_v0         = "/rpc/v0"
-    rpc_v1         = "/rpv/v1"
+    rpc_v1         = "/rpc/v1"
     diluted_supply = "/diluted_supply.html"
     index          = "/index.html"
   }

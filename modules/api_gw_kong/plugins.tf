@@ -7,7 +7,7 @@ resource "kubernetes_manifest" "request_transformer-to_rpc_v0" {
       "namespace" = var.namespace
     }
     "config" = {
-      "replace" = {
+      "add" = {
         "uri" = local.paths.rpc_v0
       }
     }
@@ -121,6 +121,21 @@ resource "kubernetes_manifest" "serverless_function-statecirculatingsupply" {
       "access"        = [file("${path.module}/scripts/req_statecirculatingsupply.lua")]
       "body_filter"   = [file("${path.module}/scripts/res_statecirculatingsupply.lua")]
       "header_filter" = [file("${path.module}/scripts/clear_content-length.lua")]
+    }
+    "plugin" = "post-function"
+  }
+}
+
+resource "kubernetes_manifest" "serverless_function-root" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-root"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access"        = [file("${path.module}/scripts/req_root.lua")]
     }
     "plugin" = "post-function"
   }
