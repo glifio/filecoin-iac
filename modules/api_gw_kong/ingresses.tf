@@ -46,6 +46,46 @@ resource "kubernetes_ingress_v1" "post_root" {
   }
 }
 
+# That's a mock endpoint required for many services
+# to work correctly. Returns 200 upon any request
+resource "kubernetes_ingress_v1" "options_root" {
+  metadata {
+    name      = "${local.prefix}-options-root"
+    namespace = var.namespace
+
+    annotations = {
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "OPTIONS"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.serverless_function-mock.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = var.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/"
+          path_type = "Exact"
+          backend {
+            service {
+              name = kubernetes_service.homepage.metadata[0].name
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_ingress_v1" "get_root" {
   metadata {
     name      = "${local.prefix}-get-root"
@@ -57,6 +97,10 @@ resource "kubernetes_ingress_v1" "get_root" {
       "konghq.com/preserve-host" = "false"
       "konghq.com/protocols"     = "http"
       "konghq.com/methods"       = "GET"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.cors.manifest.metadata.name
+      ])
     }
   }
 
@@ -97,7 +141,8 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
 
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_diluted_supply.manifest.metadata.name
+        kubernetes_manifest.request_transformer-to_diluted_supply.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -136,7 +181,46 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
       "konghq.com/strip-path"    = "true"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_root.manifest.metadata.name
+        kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = var.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v0"
+          path_type = "Exact"
+          backend {
+            service {
+              name = kubernetes_service.homepage.metadata[0].name
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "options_rpc_v0" {
+  metadata {
+    name      = "${local.prefix}-options-rpc-v0"
+    namespace = var.namespace
+
+    annotations = {
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "OPTIONS"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.serverless_function-mock.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -214,7 +298,47 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
       "konghq.com/strip-path"    = "true"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_root.manifest.metadata.name
+        kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = var.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v1"
+          path_type = "Exact"
+          backend {
+            service {
+              name = kubernetes_service.homepage.metadata[0].name
+              port {
+                number = 80
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "options_rpc_v1" {
+  metadata {
+    name      = "${local.prefix}-options-rpc-v1"
+    namespace = var.namespace
+
+    annotations = {
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "OPTIONS"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.serverless_function-mock.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -291,7 +415,8 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-daemon_access.manifest.metadata.name,
-        kubernetes_manifest.serverless_function-statecirculatingsupply.manifest.metadata.name
+        kubernetes_manifest.serverless_function-statecirculatingsupply.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -331,7 +456,8 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
       "konghq.com/methods"       = "GET"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_index.manifest.metadata.name
+        kubernetes_manifest.request_transformer-to_index.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -369,7 +495,8 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
       "konghq.com/methods"       = "GET"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_index.manifest.metadata.name
+        kubernetes_manifest.request_transformer-to_index.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -407,7 +534,8 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.serverless_function-vmcirculatingsupply.manifest.metadata.name,
-        kubernetes_manifest.request_transformer-daemon_access.manifest.metadata.name
+        kubernetes_manifest.request_transformer-daemon_access.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }

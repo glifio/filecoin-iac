@@ -238,3 +238,18 @@ resource "kubernetes_manifest" "cors" {
     "plugin" = "cors"
   }
 }
+
+resource "kubernetes_manifest" "serverless_function-mock" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-mock"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access" = [file("${path.module}/scripts/req_mock.lua")]
+    }
+    "plugin" = "post-function"
+  }
+}
