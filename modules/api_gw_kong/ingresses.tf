@@ -18,7 +18,8 @@ resource "kubernetes_ingress_v1" "post_root" {
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_rpc_v0.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
-        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -33,9 +34,9 @@ resource "kubernetes_ingress_v1" "post_root" {
           path_type = "Exact"
           backend {
             service {
-              name = local.upstream_service
+              name = local.rpc_v0_service
               port {
-                number = var.upstream_port
+                number = local.rpc_v0_port
               }
             }
           }
@@ -102,6 +103,7 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
   }
 
   spec {
+    ingress_class_name = var.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -170,7 +172,8 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
-        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -185,9 +188,9 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
           path_type = "Exact"
           backend {
             service {
-              name = local.upstream_service
+              name = local.rpc_v0_service
               port {
-                number = var.upstream_port
+                number = local.rpc_v0_port
               }
             }
           }
@@ -245,7 +248,8 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
-        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
   }
@@ -260,9 +264,9 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
           path_type = "Exact"
           backend {
             service {
-              name = local.upstream_service
+              name = local.rpc_v1_service
               port {
-                number = var.upstream_port
+                number = local.rpc_v1_port
               }
             }
           }
@@ -282,7 +286,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
       "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.request_transformer-daemon_access.manifest.metadata.name,
         kubernetes_manifest.serverless_function-statecirculatingsupply.manifest.metadata.name
       ])
     }
@@ -298,11 +302,11 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
           path_type = "Exact"
           backend {
             service {
-              name = local.upstream_service
+              name = local.daemon_service
               port {
                 # Method Filecoin.StateCirculatingSupply is not
                 # yet supported in Lotus Gateway
-                number = 1234
+                number = var.override_daemon_port
               }
             }
           }
@@ -399,7 +403,7 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.serverless_function-vmcirculatingsupply.manifest.metadata.name,
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name
+        kubernetes_manifest.request_transformer-daemon_access.manifest.metadata.name
       ])
     }
   }
@@ -414,9 +418,9 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
           path_type = "Exact"
           backend {
             service {
-              name = local.upstream_service
+              name = local.daemon_service
               port {
-                number = 1234
+                number = var.override_daemon_port
               }
             }
           }

@@ -24,3 +24,32 @@ variable "upstream_port" {
   type    = number
   default = 2346
 }
+
+variable "override_rpc_v0_service" {
+  type = string
+  default = null
+}
+
+variable "override_rpc_v0_port" {
+  type = number
+  default = null
+}
+
+variable "override_rpc_v1_service" {
+  type = string
+  default = null
+}
+
+variable "override_rpc_v1_port" {
+  type = number
+  default = null
+}
+
+variable "override_daemon_service" {
+  type = string
+  default = null
+}
+
+variable "override_daemon_port" {
+  default = 1234
+}

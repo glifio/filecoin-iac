@@ -23,7 +23,12 @@ module "api_gateway_kong_mainnet" {
 
   ingress_class    = "kong-external-lb"
   namespace        = "network"
-  upstream_service = "api-read-master-lotus"
+  
+  upstream_service = "api-read-v0-cache"
+  upstream_port    = 8080
+
+  override_rpc_v1_service = "api-read-v1-cache"
+  override_daemon_service   = "api-read-master-lotus"
 }
 
 module "api_gateway_kong_calibration" {

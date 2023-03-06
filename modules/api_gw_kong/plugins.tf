@@ -89,7 +89,7 @@ resource "kubernetes_manifest" "response_transformer-content_type" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${local.prefix}-request-transformer-content-type"
+      "name"      = "${local.prefix}-response-transformer-content-type"
       "namespace" = var.namespace
     }
     "config" = {
@@ -148,7 +148,7 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
     "apiVersion" = "configuration.konghq.com/v1"
     "kind"       = "KongPlugin"
     "metadata" = {
-      "name"      = "${local.prefix}-request-transformer-to-rpcv0"
+      "name"      = "${local.prefix}-request-transformer-public-access"
       "namespace" = var.namespace
     }
     "config" = {
@@ -164,5 +164,62 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
       }
     }
     "plugin" = "request-transformer"
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-daemon_access" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-request-transformer-daemon-access"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "add" = {
+        "headers" = [
+          "Authorization: Bearer ${local.daemon_token}"
+        ]
+      }
+      "replace" = {
+        "headers" = [
+          "Authorization: Bearer ${local.daemon_token}"
+        ]
+      }
+    }
+    "plugin" = "request-transformer"
+  }
+}
+
+resource "kubernetes_manifest" "cors" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-cors"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "origins" = [
+        "*"
+      ]
+      "headers" = [
+        "Authorization",
+        "Accept",
+        "Origin",
+        "DNT",
+        "X-CustomHeader",
+        "Keep-Alive",
+        "User-Agent",
+        "X-Requested-With",
+        "If-Modified-Since",
+        "Cache-Control",
+        "Content-Type",
+        "Content-Length",
+        "Content-Range",
+        "Range"
+      ]
+    }
+    "plugin" = "cors"
   }
 }
