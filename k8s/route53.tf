@@ -1,15 +1,11 @@
 resource "aws_route53_record" "api_dev_node_glif_io" {
   count           = local.is_dev_envs
   name            = "api.dev.node.glif.io"
-  type            = "A"
   allow_overwrite = true
   zone_id         = data.aws_route53_zone.selected.zone_id
-
-  alias {
-    evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.api_dev_node_glif_io[0].regional_domain_name
-    zone_id                = aws_api_gateway_domain_name.api_dev_node_glif_io[0].regional_zone_id
-  }
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
 }
 
 resource "aws_route53_record" "dev_nlb_ingress_internal" {
@@ -135,29 +131,21 @@ resource "aws_route53_record" "nlb_ingress_external_calibration" {
 resource "aws_route53_record" "api_calibration_node_glif_io" {
   count           = local.is_prod_envs
   name            = "api.calibration.node.glif.io"
-  type            = "A"
   allow_overwrite = true
   zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-
-  alias {
-    evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.api_calibration_node_glif_io[0].regional_domain_name
-    zone_id                = aws_api_gateway_domain_name.api_calibration_node_glif_io[0].regional_zone_id
-  }
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
 }
 
 resource "aws_route53_record" "api_hyperspace_node_glif_io" {
   count           = local.is_prod_envs
   name            = "api.hyperspace.node.glif.io"
-  type            = "A"
   allow_overwrite = true
   zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-
-  alias {
-    evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.api_hyperspace_node_glif_io[0].regional_domain_name
-    zone_id                = aws_api_gateway_domain_name.api_hyperspace_node_glif_io[0].regional_zone_id
-  }
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
 }
 
 resource "aws_route53_record" "nlb_ingress_external_hyperspace" {
@@ -251,15 +239,11 @@ resource "aws_route53_record" "nlb_ingress_external_wss" {
 resource "aws_route53_record" "api-internal_node_glif_io" {
   count           = local.is_prod_envs
   name            = "api.node.glif.io"
-  type            = "A"
   allow_overwrite = true
   zone_id         = data.aws_route53_zone.selected.zone_id
-
-  alias {
-    evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.node_glif_io[0].regional_domain_name
-    zone_id                = aws_api_gateway_domain_name.node_glif_io[0].regional_zone_id
-  }
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
 }
 
 resource "aws_route53_record" "mainnet_nlb_external" {
