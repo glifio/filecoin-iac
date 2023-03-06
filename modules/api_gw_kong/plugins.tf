@@ -135,7 +135,7 @@ resource "kubernetes_manifest" "serverless_function-root" {
       "namespace" = var.namespace
     }
     "config" = {
-      "access"        = [file("${path.module}/scripts/req_root.lua")]
+      "access" = [file("${path.module}/scripts/req_root.lua")]
     }
     "plugin" = "post-function"
   }
