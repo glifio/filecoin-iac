@@ -15,7 +15,7 @@ locals {
 
   domain_names = {
     homepage                   = "glif-static-website.s3-website-ap-northeast-1.amazonaws.com"
-    circulating_supply         = "circulatingsupply.s3.amazonaws.com"
+    circulating_supply         = "circulatingsupply-prod.s3.amazonaws.com"
     circulating_supply_staging = "circulatingsupply-staging.s3.amazonaws.com"
   }
 
