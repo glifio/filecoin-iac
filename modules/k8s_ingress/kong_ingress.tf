@@ -7,13 +7,13 @@ resource "kubernetes_ingress_v1" "ingress_kong" {
     namespace = var.get_ingress_namespace
 
     annotations = {
-      "kubernetes.io/ingress.class" = "kong-${var.type_lb_scheme}-lb"
       "konghq.com/plugins"          = local.get_kong_list_plugins
       "konghq.com/protocols"        = "https, http"
     }
   }
 
   spec {
+    ingress_class_name = "kong-${var.type_lb_scheme}-lb"
     rule {
       host = var.get_rule_host
       http {
