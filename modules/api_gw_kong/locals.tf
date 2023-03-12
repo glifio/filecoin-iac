@@ -23,7 +23,7 @@ locals {
     rpc_v0         = "/rpc/v0"
     rpc_v1         = "/rpc/v1"
     diluted_supply = "/diluted_supply.html"
-    index          = "/index.html"
+    index          = "/index-verified.html"
   }
 
   auth_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.current.secret_string), "jwt_token_kong_rw")
