@@ -103,7 +103,7 @@ resource "aws_api_gateway_integration" "statecirculatingsupply_fil_get" {
   integration_http_method = aws_api_gateway_method.statecirculatingsupply_fil_get.http_method
   passthrough_behavior    = "WHEN_NO_MATCH"
   type                    = "HTTP"
-  uri                     = "https://circulatingsupply-prod.s3.amazonaws.com/index.html"
+  uri                     = "https://circulatingsupply-prod.s3.amazonaws.com/index-verified.html"
   request_templates = {
     "application/json" = ""
   }
