@@ -288,3 +288,11 @@ data "aws_secretsmanager_secret" "atlantis" {
 data "aws_secretsmanager_secret_version" "atlantis" {
   secret_id = data.aws_secretsmanager_secret.atlantis.id
 }
+
+data "aws_secretsmanager_secret" "uptimerobot" {
+  name = "${module.generator.prefix}/uptimerobot"
+}
+
+data "aws_secretsmanager_secret_version" "uptimerobot" {
+  secret_id = data.aws_secretsmanager_secret.uptimerobot.id
+}
