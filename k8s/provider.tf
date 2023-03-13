@@ -27,4 +27,5 @@ provider "local" {
 }
 
 provider "uptimerobot" {
+  api_key = lookup(jsondecode(data.aws_secretsmanager_secret_version.uptimerobot.secret_string), "api_key", null)
 }
