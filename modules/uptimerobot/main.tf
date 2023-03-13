@@ -1,4 +1,5 @@
 # Create a monitor
+
 resource "uptimerobot_monitor" "main" {
   friendly_name = "wallaby.node.glif.io"
   type          = "https"
