@@ -25,3 +25,6 @@ provider "helm" {
 
 provider "local" {
 }
+
+provider "uptimerobot" {
+}
