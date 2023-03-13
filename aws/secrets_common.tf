@@ -66,3 +66,11 @@ resource "aws_secretsmanager_secret" "credentials_atlantis" {
   tags = merge({ "Name" = "${module.generator.prefix}-credentials-atlantis" },
     module.generator.common_tags)
 }
+
+resource "aws_secretsmanager_secret" "uptimerobot" {
+  name                    = "${module.generator.prefix}/uptimerobot"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-uptimerobot" },
+    module.generator.common_tags)
+}
