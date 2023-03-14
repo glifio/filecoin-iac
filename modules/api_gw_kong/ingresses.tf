@@ -299,7 +299,6 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
-        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
         kubernetes_manifest.cors.manifest.metadata.name
       ])
     }
