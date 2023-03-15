@@ -272,4 +272,24 @@ module "eks_nodegroup_mainnet_spot_group24" {
   is_spot_instance                        = true
 }
 
+module "eks_nodegroup_mainnet_spot_group26" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+  get_nodegroup_name                      = "group26" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+  is_spot_instance                        = true
+}
+
+module "eks_nodegroup_mainnet_spot_group27" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+  get_nodegroup_name                      = "group27" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+  is_spot_instance                        = true
+}
+
 ################# END BLOCK SPOT NODE-GROUP LIST #################
