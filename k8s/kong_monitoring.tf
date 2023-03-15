@@ -12,6 +12,14 @@ resource "kubernetes_manifest" "kong_monitoring_plugin_external" {
       }
     }
 
+    config = {
+      per_consumer            = true
+      status_code_metrics     = true
+      latency_metrics         = true
+      bandwidth_metrics       = true
+      upstream_health_metrics = true
+    }
+
     plugin = "prometheus"
   }
 }
