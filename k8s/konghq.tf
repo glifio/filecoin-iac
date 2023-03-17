@@ -7,7 +7,10 @@ resource "helm_release" "konghq-external" {
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
   version    = "2.13.0"
 
-  values = [templatefile("${path.module}/configs/konghq/antiaffinity.yaml", { app = "${module.generator.prefix}-kong-external" })]
+  values = [templatefile("${path.module}/configs/konghq/values.yaml", {
+    app = "${module.generator.prefix}-kong-external" 
+    http_mirror_configmap_name = kubernetes_config_map.kong_plugin-http_mirror.metadata[0].name
+  })]
 
   set {
     name  = "ingressController.image.tag"
@@ -109,7 +112,10 @@ resource "helm_release" "konghq-internal" {
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
   version    = "2.10.2"
 
-  values = [templatefile("${path.module}/configs/konghq/antiaffinity.yaml", { app = "${module.generator.prefix}-kong-internal" })]
+  values = [templatefile("${path.module}/configs/konghq/values.yaml", {
+    app = "${module.generator.prefix}-kong-internal" 
+    http_mirror_configmap_name = kubernetes_config_map.kong_plugin-http_mirror.metadata[0].name
+  })]
 
   set {
     name  = "replicaCount"

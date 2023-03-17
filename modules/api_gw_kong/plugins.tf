@@ -253,3 +253,20 @@ resource "kubernetes_manifest" "serverless_function-mock" {
     "plugin" = "post-function"
   }
 }
+
+resource "kubernetes_manifest" "http_mirror-rpc" {
+  count = var.enable_mirroring ? 1 : 0
+
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-rpc-mirror"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "mirror_to" = var.mirror_to
+    }
+    "plugin" = "http-mirror"
+  }
+}

@@ -10,6 +10,11 @@ module "api_gateway_kong_dev" {
   ingress_class    = "kong-external-lb"
   namespace        = "network"
   upstream_service = "api-read-dev-lotus"
+
+  enable_mirroring = true
+  mirror_to        = [
+    "https://kong-mirror.free.beeceptor.com"
+  ]
 }
 
 module "api_gateway_kong_mainnet" {

@@ -91,4 +91,8 @@ locals {
   internal_lb_certificates = local.internal_lb_certificate[terraform.workspace]
 
   make_internal_lb_domain_name = "https://${var.environment}-internal.${var.route53_domain}"
+
+  kong_plugins_locations = {
+    http_mirror = "./kong_plugins/http_mirror"
+  }
 }

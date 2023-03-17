@@ -32,4 +32,6 @@ locals {
   daemon_service        = var.override_daemon_service == null ? local.upstream_service : "${var.override_daemon_service}-service"
 
   daemon_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.daemon.secret_string), "jwt_token_kong_rw")
+
+  mirror_plugin = var.enable_mirroring ? kubernetes_manifest.http_mirror-rpc[0].manifest.metadata.name : ""
 }

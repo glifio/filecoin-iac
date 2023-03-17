@@ -51,5 +51,15 @@ variable "override_daemon_service" {
 }
 
 variable "override_daemon_port" {
+  type    = number
   default = 1234
+}
+
+variable "enable_mirroring" {
+  type = bool
+  default = false
+}
+
+variable "mirror_to" {
+  default = []
 }
