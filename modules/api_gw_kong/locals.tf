@@ -4,7 +4,7 @@ locals {
   env     = lookup(var.global_config, "environment", "")
   sub_env = lookup(var.global_config, "sub_environment", "")
 
-  prefix = "kong-apigw-${var.stage_name}"
+  prefix = "kong-apigw-${var.ingress_class}-${var.stage_name}"
 
   upstream_service = "${var.upstream_service}-service"
   rpc_v0_service   = var.override_rpc_v0_service == null ? local.upstream_service : "${var.override_rpc_v0_service}-service"
@@ -18,6 +18,8 @@ locals {
     circulating_supply         = "circulatingsupply-prod.s3.amazonaws.com"
     circulating_supply_staging = "circulatingsupply-staging.s3.amazonaws.com"
   }
+
+  ingress_class = "kong-${var.ingress_class}-lb"
 
   paths = {
     rpc_v0         = "/rpc/v0"

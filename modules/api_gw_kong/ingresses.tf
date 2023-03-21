@@ -26,7 +26,7 @@ resource "kubernetes_ingress_v1" "post_root" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -66,7 +66,7 @@ resource "kubernetes_ingress_v1" "options_root" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -106,7 +106,7 @@ resource "kubernetes_ingress_v1" "get_root" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -149,7 +149,7 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -189,7 +189,7 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -227,7 +227,7 @@ resource "kubernetes_ingress_v1" "options_rpc_v0" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -267,7 +267,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -307,7 +307,7 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -345,7 +345,7 @@ resource "kubernetes_ingress_v1" "options_rpc_v1" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -385,7 +385,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -424,7 +424,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -465,7 +465,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -504,7 +504,7 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {
@@ -543,7 +543,7 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
   }
 
   spec {
-    ingress_class_name = var.ingress_class
+    ingress_class_name = local.ingress_class
     rule {
       host = var.domain_name
       http {

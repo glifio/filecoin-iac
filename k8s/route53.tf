@@ -303,3 +303,25 @@ resource "aws_route53_record" "atlantis" {
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
+
+# mirror.node.glif.io
+resource "aws_route53_record" "mirror_node_glif_io" {
+  count           = local.is_prod_envs
+  name            = "mirror.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+# mirror.hyperspace.node.glif.io
+resource "aws_route53_record" "mirror_hyperspace_node_glif_io" {
+  count           = local.is_prod_envs
+  name            = "mirror.hyperspace.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}

@@ -7,7 +7,7 @@ module "api_gateway_kong_dev" {
   stage_name  = "dev"
   domain_name = "api.dev.node.glif.io"
 
-  ingress_class    = "kong-external-lb"
+  ingress_class    = "external"
   namespace        = "network"
   upstream_service = "api-read-dev-lotus"
 
@@ -26,7 +26,7 @@ module "api_gateway_kong_mainnet" {
   stage_name  = "mainnet"
   domain_name = "api.node.glif.io"
 
-  ingress_class = "kong-external-lb"
+  ingress_class = "external"
   namespace     = "network"
   upstream_service = "api-read-master-lotus"
 }
@@ -40,7 +40,7 @@ module "api_gateway_kong_calibration" {
   stage_name  = "calibration"
   domain_name = "api.calibration.node.glif.io"
 
-  ingress_class    = "kong-external-lb"
+  ingress_class    = "external"
   namespace        = "network"
   upstream_service = "calibrationapi-lotus"
 }
@@ -54,7 +54,7 @@ module "api_gateway_kong_hyperspace" {
   stage_name  = "hyperspace"
   domain_name = "api.hyperspace.node.glif.io"
 
-  ingress_class    = "kong-external-lb"
+  ingress_class    = "external"
   namespace        = "network"
   upstream_service = "hyperspace-lotus"
 }
