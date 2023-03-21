@@ -81,6 +81,15 @@ resource "aws_secretsmanager_secret" "hyperspace_mirror_lotus" {
   module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "hyperspace_mirrored_lotus" {
+  count                   = local.is_prod_envs
+  name                    = "${module.generator.prefix}-hyperspace-mirrored-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-hyperspace-mirrored-lotus" },
+  module.generator.common_tags)
+}
+
 resource "aws_secretsmanager_secret" "hyperspace_private_0_lotus" {
   count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-hyperspace-private-0-lotus"
@@ -137,6 +146,15 @@ resource "aws_secretsmanager_secret" "api_read_mirror_lotus" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-api-read-mirror-lotus" },
+  module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "api_read_mirrored_lotus" {
+  count                   = local.is_prod_envs
+  name                    = "${module.generator.prefix}-api-read-mirrored-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-api-read-mirrored-lotus" },
   module.generator.common_tags)
 }
 
