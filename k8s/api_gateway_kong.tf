@@ -58,3 +58,22 @@ module "api_gateway_kong_hyperspace" {
   namespace        = "network"
   upstream_service = "hyperspace-lotus"
 }
+
+module "api_gateway_kong_hyperspace_mirrored" {
+  count = local.is_prod_envs
+
+  source        = "../modules/api_gw_kong"
+  global_config = local.make_global_configuration
+
+  stage_name  = "hyperspace"
+  domain_name = "api.hyperspace.node.glif.io"
+
+  ingress_class    = "internal"
+  namespace        = "network"
+  upstream_service = "hyperspace-mirrored-lotus"
+
+  enable_mirroring = true
+  mirror_to        = [
+    "https://mirror.hyperspace.node.glif.io"
+  ]
+}
