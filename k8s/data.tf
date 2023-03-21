@@ -44,6 +44,16 @@ data "aws_lb" "kong_internal" {
   ]
 }
 
+data "aws_lb" "kong_mirror" {
+  tags = {
+    Name = "${module.generator.prefix}-kong-mirror"
+  }
+
+  depends_on = [
+    helm_release.konghq-mirror
+  ]
+}
+
 data "aws_route53_zone" "selected" {
   name         = var.route53_domain
   private_zone = false

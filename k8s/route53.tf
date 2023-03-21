@@ -146,6 +146,26 @@ resource "aws_route53_record" "api_hyperspace_node_glif_io" {
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
+
+  set_identifier = "hyperspace-main"
+  weighted_routing_policy {
+    weight = 3
+  }
+}
+
+resource "aws_route53_record" "api_hyperspace_node_glif_io_mirrored" {
+  count           = local.is_prod_envs
+  name            = "api.hyperspace.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_mirror.dns_name]
+
+  set_identifier = "hyperspace-mirror"
+  weighted_routing_policy {
+    weight = 1
+  }
 }
 
 resource "aws_route53_record" "nlb_ingress_external_hyperspace" {

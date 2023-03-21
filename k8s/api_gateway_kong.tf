@@ -68,7 +68,7 @@ module "api_gateway_kong_hyperspace_mirrored" {
   stage_name  = "hyperspace"
   domain_name = "api.hyperspace.node.glif.io"
 
-  ingress_class    = "internal"
+  ingress_class    = "mirror"
   namespace        = "network"
   upstream_service = "hyperspace-mirrored-lotus"
 
