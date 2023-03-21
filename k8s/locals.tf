@@ -83,9 +83,16 @@ locals {
       "api.dev.node.glif.io"
     ]
     filecoin-mainnet-apn1-glif-eks = [
+      "node.glif.io",
+      "*.node.glif.io",
+      "*.calibration.node.glif.io",
+      "filecoin.tools",
       "*.mainnet-internal.node.glif.io",
-      "*.api.node.glif.io",
-      "api.node.glif.io"
+      "*.hyperspace.node.glif.io",
+      "*.calibration.filecoin.tools",
+      "*.filecoin.tools",
+      "*.hyperspace.filecoin.tools",
+      "*.dev.node.glif.io"
     ]
   }
   internal_lb_certificates = local.internal_lb_certificate[terraform.workspace]
