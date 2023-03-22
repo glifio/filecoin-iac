@@ -48,6 +48,16 @@ resource "helm_release" "konghq-external" {
   }
 
   set {
+    name  = "proxy.externalTrafficPolicy"
+    value = "Local"
+  }
+
+  set {
+    name  = "proxy.internalTrafficPolicy"
+    value = "Local"
+  }
+
+  set {
     name  = "proxy.stream[0].containerPort"
     value = "1235"
   }
@@ -148,6 +158,16 @@ resource "helm_release" "konghq-mirror" {
   set {
     name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
     value = "nlb"
+  }
+
+  set {
+    name  = "proxy.externalTrafficPolicy"
+    value = "Local"
+  }
+
+  set {
+    name  = "proxy.internalTrafficPolicy"
+    value = "Local"
   }
 
   set {
