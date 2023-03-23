@@ -172,6 +172,29 @@ module "codebuild_multirepository_cd_hyperspace" {
   create_build_webhook     = false
   create_deploy_webhook    = false
   environment_compute_type = "BUILD_GENERAL1_LARGE"
+  project_name             = "hyperspace"
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
+
+module "codebuild_multirepository_cd_mainnet_mirror" {
+  count                    = local.is_prod_envs
+  source                   = "../modules/codebuild_multirepositories"
+  git_repository_name      = "lotus"
+  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_mainnet_mirror.yaml")
+  get_global_configuration = local.make_codebuild_global_configuration
+  privileged_mode          = true
+  is_build_concurrent      = false
+  github_cd_token_secret   = "github_cd_rersonal_token_secret"
+  specific_branch          = "v1.21.0-rc1"
+  create_build_webhook     = false
+  create_deploy_webhook    = false
+  environment_compute_type = "BUILD_GENERAL1_LARGE"
+  environment_type         = "LINUX_CONTAINER"
+  codebuild_image          = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+  project_name             = "api-read-mirror"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret

@@ -23,7 +23,7 @@ locals {
 
   git_config = [
     for project in local.get_git_configuration :
-      project.config if contains(values(lookup(project, "config", [])), var.git_repository_name)
+      project.config if contains(values(lookup(project, "config", [])), var.project_name)
   ]
 
   get_codebuildspec_file  = var.is_build_only ? "buildspec.ci.yaml" : "buildspec.yaml"
