@@ -1,0 +1,45 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
+version: 0.2
+
+env:
+  variables:
+    IMAGE_NAME: 'lotus'
+    IMAGE_NETWORK: 'lotus'
+    CUSTOM_TAG: 'v1.21.3'
+    PROJECT: 'filecoin'
+    ENVIRONMENT: 'mainnet'
+    SUB_ENV: 'glif'
+    SHORT_REGION: 'apn1'
+    AWS_ACCOUNT_ID: '499623857295'
+    DOCKERUHUB_ORGANIZATION: 'glif'
+    KUBECTL_VERSION: 1.24.7
+    ARCH: arm64
+    DOCKERFILE: Dockerfile_arm
+  secrets-manager:
+    DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
+    DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
+    AWS_ACCESS_KEY_ID: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_ACCESS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_SECRET_ACCESS_KEY"
+
+phases:
+  install:
+    commands:
+      - echo Environment Variables
+      - printenv
+      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/2022-10-31/bin/linux/${ARCH}/kubectl
+      - chmod +x ./kubectl
+      - mv kubectl /usr/bin/
+      - aws eks --region $AWS_REGION update-kubeconfig --name $PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-eks
+
+  pre_build:
+    commands:
+      - echo Build STARTED
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
+
+  build:
+    commands:
+      - echo Image built
+      - cd ../../glifio/filecoin-docker/
+      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f ${DOCKERFILE} .
+      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-mainnet-${ARCH}
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-mainnet-${ARCH}
