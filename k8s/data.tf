@@ -298,3 +298,11 @@ data "aws_secretsmanager_secret" "atlantis" {
 data "aws_secretsmanager_secret_version" "atlantis" {
   secret_id = data.aws_secretsmanager_secret.atlantis.id
 }
+
+data "aws_secretsmanager_secret" "credentials-grafana-users" {
+  name = "${module.generator.prefix}/credentials-grafana-users"
+}
+
+data "aws_secretsmanager_secret_version" "credentials-grafana-users" {
+  secret_id = data.aws_secretsmanager_secret.credentials-grafana-users.id
+}

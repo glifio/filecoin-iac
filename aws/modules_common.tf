@@ -188,7 +188,7 @@ module "codebuild_multirepository_cd_mainnet_mirror" {
   privileged_mode          = true
   is_build_concurrent      = false
   github_cd_token_secret   = "github_cd_rersonal_token_secret"
-  specific_branch          = "v1.21.0-rc1"
+  specific_branch          = "v1.21.0-rpc-mirror-p01"
   create_build_webhook     = false
   create_deploy_webhook    = false
   environment_compute_type = "BUILD_GENERAL1_LARGE"
@@ -232,7 +232,7 @@ module "codebuild_multirepository_cd_mainnet_arm64" {
   privileged_mode          = true
   is_build_concurrent      = false
   github_cd_token_secret   = "github_cd_rersonal_token_secret"
-  specific_branch          = "v1.20.3"
+  specific_branch          = "v1.21.0-rpc-p01-methods"
   create_build_webhook     = false
   create_deploy_webhook    = false
   environment_compute_type = "BUILD_GENERAL1_LARGE"

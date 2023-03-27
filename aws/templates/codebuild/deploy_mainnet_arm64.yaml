@@ -5,7 +5,7 @@ env:
   variables:
     IMAGE_NAME: 'lotus'
     IMAGE_NETWORK: 'lotus'
-    CUSTOM_TAG: 'v1.21.3'
+    CUSTOM_TAG: 'v1.21.0-rpc-p01-methods'
     PROJECT: 'filecoin'
     ENVIRONMENT: 'mainnet'
     SUB_ENV: 'glif'
@@ -40,6 +40,6 @@ phases:
     commands:
       - echo Image built
       - cd ../../glifio/filecoin-docker/
-      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f ${DOCKERFILE} .
+      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg REPOSITORY="protofire/lotus" --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f ${DOCKERFILE} .
       - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-mainnet-${ARCH}
       - docker push $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-mainnet-${ARCH}

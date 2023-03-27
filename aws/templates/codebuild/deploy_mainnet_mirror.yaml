@@ -5,7 +5,7 @@ env:
   variables:
     IMAGE_NAME: 'lotus'
     IMAGE_NETWORK: 'lotus'
-    CUSTOM_TAG: 'v1.21.0-rc1'
+    CUSTOM_TAG: 'v1.21.0-rpc-mirror-p01'
     PROJECT: 'filecoin'
     ENVIRONMENT: 'mainnet'
     SUB_ENV: 'glif'
@@ -24,10 +24,6 @@ phases:
     commands:
       - echo Environment Variables
       - printenv
-      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/2022-10-31/bin/linux/arm64/kubectl
-      - chmod +x ./kubectl
-      - mv kubectl /usr/bin/
-      - aws eks --region $AWS_REGION update-kubeconfig --name $PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-eks
 
   pre_build:
     commands:
@@ -39,5 +35,5 @@ phases:
       - echo Image built
       - cd ../../glifio/filecoin-docker/
       - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f Dockerfile .
-      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:v1.21.0-amd-canary
-      - docker push $DOCKERUHUB_ORGANIZATION/lotus:v1.21.0-amd-canary
+      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:v1.21.0-rpc-mirror-p01
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:v1.21.0-rpc-mirror-p01

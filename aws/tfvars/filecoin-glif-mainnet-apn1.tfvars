@@ -56,7 +56,7 @@ git_configuration = [
     config = {
       project_name      = "api-read-arm64",
       name              = "api-read-arm64"
-      organization_name = "filecoin-project",
+      organization_name = "protofire",
       description       = "CI/CD pipeline for a filecoin mainnet arm64 application",
       repo_name         = "lotus",
     }
