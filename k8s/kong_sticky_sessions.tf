@@ -9,8 +9,8 @@ resource "kubernetes_manifest" "kong_sticky_sessions" {
     }
 
     upstream = {
-      hash_on = "ip"
-      hash_fallback = "none"
+      hash_on = "cookie"
+      hash_on_cookie = "sticky"
       algorithm = "consistent-hashing"
     }
 
