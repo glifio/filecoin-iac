@@ -117,11 +117,35 @@ grafana:
       Kong:
         datasource: Prometheus
         gnetId: 17269
-        revision: 3
+        revision: 5
       LotusNVMEdashboard:
         datasource: Prometheus
         gnetId: 17431
         revision: 3
+      LotusProductionAPIEndpointsfilteredbymethod:
+        datasource: Prometheus
+        gnetId: 18354
+        revision: 1
+      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(CANARIES):
+        datasource: Prometheus
+        gnetId: 18363
+        revision: 1
+      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(MIRROR):
+        datasource: Prometheus
+        gnetId: 18364
+        revision: 1
+      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(PROD):
+        datasource: Prometheus
+        gnetId: 18365
+        revision: 1
+      LotusRaúl'sdashboard--NODESYNC:
+        datasource: Prometheus
+        gnetId: 18366
+        revision: 1
+
+
+
+
 
 ## Component scraping the kubelet and kubelet-hosted cAdvisor
 kubelet:
