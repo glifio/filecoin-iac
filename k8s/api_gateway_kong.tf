@@ -7,9 +7,14 @@ module "api_gateway_kong_dev" {
   stage_name  = "dev"
   domain_name = "api.dev.node.glif.io"
 
-  ingress_class    = "kong-external-lb"
+  ingress_class    = "external"
   namespace        = "network"
   upstream_service = "api-read-dev-lotus"
+
+  enable_mirroring = true
+  mirror_to        = [
+    "https://kong-mirror.free.beeceptor.com"
+  ]
 }
 
 module "api_gateway_kong_mainnet" {
@@ -21,9 +26,28 @@ module "api_gateway_kong_mainnet" {
   stage_name  = "mainnet"
   domain_name = "api.node.glif.io"
 
-  ingress_class = "kong-external-lb"
+  ingress_class = "external"
   namespace     = "network"
   upstream_service = "api-read-master-lotus"
+}
+
+module "api_gateway_kong_mainnet_mirrored" {
+  count = local.is_prod_envs
+
+  source        = "../modules/api_gw_kong"
+  global_config = local.make_global_configuration
+
+  stage_name  = "mainnet"
+  domain_name = "api.node.glif.io"
+
+  ingress_class = "mirror"
+  namespace     = "network"
+  upstream_service = "api-read-master-mirrored-lotus"
+
+  enable_mirroring = true
+  mirror_to        = [
+    "https://mirror.node.glif.io"
+  ]
 }
 
 module "api_gateway_kong_calibration" {
@@ -35,7 +59,7 @@ module "api_gateway_kong_calibration" {
   stage_name  = "calibration"
   domain_name = "api.calibration.node.glif.io"
 
-  ingress_class    = "kong-external-lb"
+  ingress_class    = "external"
   namespace        = "network"
   upstream_service = "calibrationapi-lotus"
 }
@@ -49,7 +73,26 @@ module "api_gateway_kong_hyperspace" {
   stage_name  = "hyperspace"
   domain_name = "api.hyperspace.node.glif.io"
 
-  ingress_class    = "kong-external-lb"
+  ingress_class    = "external"
   namespace        = "network"
   upstream_service = "hyperspace-lotus"
+}
+
+module "api_gateway_kong_hyperspace_mirrored" {
+  count = local.is_prod_envs
+
+  source        = "../modules/api_gw_kong"
+  global_config = local.make_global_configuration
+
+  stage_name  = "hyperspace"
+  domain_name = "api.hyperspace.node.glif.io"
+
+  ingress_class    = "mirror"
+  namespace        = "network"
+  upstream_service = "hyperspace-mirrored-lotus"
+
+  enable_mirroring = true
+  mirror_to        = [
+    "https://mirror.hyperspace.node.glif.io"
+  ]
 }

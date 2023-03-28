@@ -89,3 +89,12 @@ variable "buildspec_logic" {
   type    = string
   default = null
 }
+
+variable "environment_type" {
+  type = string
+  default = "ARM_CONTAINER"
+}
+
+variable "project_name" {
+  type = string
+}

@@ -4,7 +4,7 @@ locals {
   env     = lookup(var.global_config, "environment", "")
   sub_env = lookup(var.global_config, "sub_environment", "")
 
-  prefix = "kong-apigw-${var.stage_name}"
+  prefix = "kong-apigw-${var.ingress_class}-${var.stage_name}"
 
   upstream_service = "${var.upstream_service}-service"
   rpc_v0_service   = var.override_rpc_v0_service == null ? local.upstream_service : "${var.override_rpc_v0_service}-service"
@@ -19,6 +19,8 @@ locals {
     circulating_supply_staging = "circulatingsupply-staging.s3.amazonaws.com"
   }
 
+  ingress_class = "kong-${var.ingress_class}-lb"
+
   paths = {
     rpc_v0         = "/rpc/v0"
     rpc_v1         = "/rpc/v1"
@@ -32,4 +34,6 @@ locals {
   daemon_service        = var.override_daemon_service == null ? local.upstream_service : "${var.override_daemon_service}-service"
 
   daemon_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.daemon.secret_string), "jwt_token_kong_rw")
+
+  mirror_plugin = var.enable_mirroring ? kubernetes_manifest.http_mirror-rpc[0].manifest.metadata.name : ""
 }

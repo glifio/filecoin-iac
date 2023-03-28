@@ -15,7 +15,7 @@ resource "aws_codebuild_project" "codebuild" {
   environment {
     compute_type    = var.environment_compute_type
     image           = var.codebuild_image
-    type            = "ARM_CONTAINER"
+    type            = var.environment_type
     privileged_mode = var.privileged_mode
 
     dynamic "environment_variable" {

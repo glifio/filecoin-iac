@@ -36,6 +36,33 @@ git_configuration = [
   },
   {
     config = {
+      project_name      = "api-read-mirror",
+      name              = "api-read-mirror"
+      organization_name = "filecoin-project",
+      description       = "CI/CD pipeline for a filecoin mainnet mirror application",
+      repo_name         = "lotus",
+    }
+  },
+  {
+    config = {
+      project_name      = "api-read-amd64",
+      name              = "api-read-amd64"
+      organization_name = "filecoin-project",
+      description       = "CI/CD pipeline for a filecoin mainnet amd64 application",
+      repo_name         = "lotus",
+    }
+  },
+  {
+    config = {
+      project_name      = "api-read-arm64",
+      name              = "api-read-arm64"
+      organization_name = "filecoin-project",
+      description       = "CI/CD pipeline for a filecoin mainnet arm64 application",
+      repo_name         = "lotus",
+    }
+  },
+  {
+    config = {
       project_name      = "cid-checker",
       name              = "cid-checker"
       organization_name = "protofire",

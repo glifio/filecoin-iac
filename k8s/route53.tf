@@ -146,6 +146,26 @@ resource "aws_route53_record" "api_hyperspace_node_glif_io" {
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
+
+  set_identifier = "hyperspace-main"
+  weighted_routing_policy {
+    weight = 3
+  }
+}
+
+resource "aws_route53_record" "api_hyperspace_node_glif_io_mirrored" {
+  count           = local.is_prod_envs
+  name            = "api.hyperspace.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_mirror.dns_name]
+
+  set_identifier = "hyperspace-mirror"
+  weighted_routing_policy {
+    weight = 0
+  }
 }
 
 resource "aws_route53_record" "nlb_ingress_external_hyperspace" {
@@ -244,6 +264,26 @@ resource "aws_route53_record" "api-internal_node_glif_io" {
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
+
+  set_identifier = "mainnet-main"
+  weighted_routing_policy {
+    weight = 15
+  }
+}
+
+resource "aws_route53_record" "api-internal_node_glif_io_mirrored" {
+  count           = local.is_prod_envs
+  name            = "api.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_mirror.dns_name]
+
+  set_identifier = "mainnet-mirror"
+  weighted_routing_policy {
+    weight = 1
+  }
 }
 
 resource "aws_route53_record" "mainnet_nlb_external" {
@@ -299,6 +339,28 @@ resource "aws_route53_record" "atlantis" {
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "atlantis.${var.route53_domain}"
   allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+# mirror.node.glif.io
+resource "aws_route53_record" "mirror_node_glif_io" {
+  count           = local.is_prod_envs
+  name            = "mirror.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+# mirror.hyperspace.node.glif.io
+resource "aws_route53_record" "mirror_hyperspace_node_glif_io" {
+  count           = local.is_prod_envs
+  name            = "mirror.hyperspace.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
