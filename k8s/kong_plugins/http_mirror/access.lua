@@ -11,11 +11,8 @@ local function mirror(conf)
         real_path = "/rpc/v1"
     end
 
-    if conf.mirror_to and string.len(body) > 0 then
-        for _, value in ipairs(conf.mirror_to) do
-            http.request(value .. real_path, body)
-        end
-    end
+    kong.ctx.shared.mirror_path = real_path
+    kong.ctx.shared.mirror_body = body
 end
 
 function _M.execute(conf)
