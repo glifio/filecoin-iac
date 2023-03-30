@@ -142,6 +142,10 @@ grafana:
         datasource: Prometheus
         gnetId: 18366
         revision: 1
+      RaulMirrorDashboard:
+        datasource: Prometheus
+        gnetId: 18393
+        revision: 1
 
 
 
