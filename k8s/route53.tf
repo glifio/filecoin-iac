@@ -267,7 +267,7 @@ resource "aws_route53_record" "api-internal_node_glif_io" {
 
   set_identifier = "mainnet-main"
   weighted_routing_policy {
-    weight = 15
+    weight = 3
   }
 }
 
@@ -348,6 +348,17 @@ resource "aws_route53_record" "atlantis" {
 resource "aws_route53_record" "mirror_node_glif_io" {
   count           = local.is_prod_envs
   name            = "mirror.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+# canary.node.glif.io
+resource "aws_route53_record" "canary_node_glif_io" {
+  count           = local.is_prod_envs
+  name            = "canary.node.glif.io"
   allow_overwrite = true
   zone_id         = data.aws_route53_zone.selected.zone_id
   type            = "CNAME"

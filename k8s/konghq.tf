@@ -120,7 +120,7 @@ resource "helm_release" "konghq-mirror" {
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
   version    = "2.13.0"
 
-  values = [templatefile("${path.module}/configs/konghq/values.yaml", {
+  values = [templatefile("${path.module}/configs/konghq/mirror.yaml", {
     app = "${module.generator.prefix}-kong-mirror" 
     http_mirror_configmap_name = kubernetes_config_map.kong_plugin-http_mirror.metadata[0].name
   })]
@@ -132,7 +132,7 @@ resource "helm_release" "konghq-mirror" {
 
   set {
     name  = "replicaCount"
-    value = 1
+    value = 4
   }
 
   set {

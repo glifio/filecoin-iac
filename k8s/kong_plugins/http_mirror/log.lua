@@ -1,5 +1,4 @@
 local http = require "socket.http"
-http.TIMEOUT = 5
 
 local _M = {}
 
@@ -10,6 +9,7 @@ local function mirror(conf)
     if conf.mirror_to and string.len(body) > 0 then
         for _, value in ipairs(conf.mirror_to) do
             http.request(value .. real_path, body)
+            collectgarbage("collect")
         end
     end
 end
