@@ -46,11 +46,21 @@ data "aws_lb" "kong_internal" {
 
 data "aws_lb" "kong_mirror" {
   tags = {
-    Name = "${module.generator.prefix}-kong-mirror"
+    Name = "${module.generator.prefix}-kong-mirror-1"
   }
 
   depends_on = [
     helm_release.konghq-mirror
+  ]
+}
+
+data "aws_lb" "kong_mirror2" {
+  tags = {
+    Name = "${module.generator.prefix}-kong-mirror-2"
+  }
+
+  depends_on = [
+    helm_release.konghq-mirror2
   ]
 }
 

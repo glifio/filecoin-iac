@@ -286,6 +286,21 @@ resource "aws_route53_record" "api-internal_node_glif_io_mirrored" {
   }
 }
 
+resource "aws_route53_record" "api-internal_node_glif_io_mirrored2" {
+  count           = local.is_prod_envs
+  name            = "api.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_mirror2.dns_name]
+
+  set_identifier = "mainnet-mirror2"
+  weighted_routing_policy {
+    weight = 0
+  }
+}
+
 resource "aws_route53_record" "mainnet_nlb_external" {
   count           = local.is_prod_envs
   name            = var.route53_domain
@@ -348,6 +363,16 @@ resource "aws_route53_record" "atlantis" {
 resource "aws_route53_record" "mirror_node_glif_io" {
   count           = local.is_prod_envs
   name            = "mirror.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+resource "aws_route53_record" "mirror2_node_glif_io" {
+  count           = local.is_prod_envs
+  name            = "mirror2.node.glif.io"
   allow_overwrite = true
   zone_id         = data.aws_route53_zone.selected.zone_id
   type            = "CNAME"

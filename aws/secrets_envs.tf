@@ -149,6 +149,15 @@ resource "aws_secretsmanager_secret" "api_read_mirror_lotus" {
   module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "api_read_mirror_2_lotus" {
+  count                   = local.is_prod_envs
+  name                    = "${module.generator.prefix}-api-read-mirror-2-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-api-read-mirror-2-lotus" },
+  module.generator.common_tags)
+}
+
 resource "aws_secretsmanager_secret" "api_read_master_mirrored_lotus" {
   count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-api-read-master-mirrored-lotus"
