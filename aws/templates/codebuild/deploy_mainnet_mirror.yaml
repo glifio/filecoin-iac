@@ -13,6 +13,9 @@ env:
     AWS_ACCOUNT_ID: '499623857295'
     DOCKERUHUB_ORGANIZATION: 'glif'
     KUBECTL_VERSION: 1.24.7
+    ARCH: amd64
+    DOCKERFILE: Dockerfile_arm
+    REPO: filecoin-project/lotus
   secrets-manager:
     DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
     DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
@@ -34,6 +37,6 @@ phases:
     commands:
       - echo Image built
       - cd ../../glifio/filecoin-docker/
-      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f Dockerfile .
-      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:v1.21.0-rpc-mirror-p01
-      - docker push $DOCKERUHUB_ORGANIZATION/lotus:v1.21.0-rpc-mirror-p01
+      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg REPOSITORY=$REPO --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f Dockerfile .
+      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-mainnet-mirror-${ARCH}
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-mainnet-mirror-${ARCH}

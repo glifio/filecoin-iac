@@ -1,0 +1,18 @@
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - ${app}
+      topologyKey: topology.kubernetes.io/zone
+nodeSelector:
+  assign_to_space00_07_nodes: allow_any_pods
+
+# Refer to: https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/setting-up-custom-plugins/
+plugins:
+  configMaps:
+  - name: ${http_mirror_configmap_name}
+    pluginName: http-mirror
