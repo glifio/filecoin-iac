@@ -4,14 +4,14 @@ resource "kubernetes_manifest" "kong_sticky_sessions" {
     apiVersion = "configuration.konghq.com/v1"
     kind       = "KongIngress"
     metadata = {
-      name = "${terraform.workspace}-kong-sticky-sessions"
+      name      = "${terraform.workspace}-kong-sticky-sessions"
       namespace = kubernetes_namespace_v1.network.metadata[0].name
     }
 
     upstream = {
-      hash_on = "cookie"
+      hash_on        = "cookie"
       hash_on_cookie = "sticky"
-      algorithm = "consistent-hashing"
+      algorithm      = "consistent-hashing"
     }
 
     proxy = {

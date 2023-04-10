@@ -12,7 +12,7 @@ module "api_gateway_kong_dev" {
   upstream_service = "api-read-dev-lotus"
 
   enable_mirroring = true
-  mirror_to        = [
+  mirror_to = [
     "https://kong-mirror.free.beeceptor.com"
   ]
 }
@@ -26,8 +26,8 @@ module "api_gateway_kong_mainnet" {
   stage_name  = "mainnet"
   domain_name = "api.node.glif.io"
 
-  ingress_class = "external"
-  namespace     = "network"
+  ingress_class    = "external"
+  namespace        = "network"
   upstream_service = "api-read-master-lotus"
 }
 
@@ -40,12 +40,12 @@ module "api_gateway_kong_mainnet_mirrored" {
   stage_name  = "mainnet"
   domain_name = "api.node.glif.io"
 
-  ingress_class = "mirror"
-  namespace     = "network"
+  ingress_class    = "mirror"
+  namespace        = "network"
   upstream_service = "api-read-master-mirrored-lotus"
 
   enable_mirroring = true
-  mirror_to        = [
+  mirror_to = [
     "https://mirror.node.glif.io"
   ]
 }
@@ -59,12 +59,12 @@ module "api_gateway_kong_mainnet_mirrored2" {
   stage_name  = "mainnet"
   domain_name = "api.node.glif.io"
 
-  ingress_class = "mirror2"
-  namespace     = "network"
+  ingress_class    = "mirror2"
+  namespace        = "network"
   upstream_service = "api-read-master-mirrored-lotus"
 
   enable_mirroring = true
-  mirror_to        = [
+  mirror_to = [
     "https://mirror2.node.glif.io"
   ]
 }
@@ -111,7 +111,7 @@ module "api_gateway_kong_hyperspace_mirrored" {
   upstream_service = "hyperspace-mirrored-lotus"
 
   enable_mirroring = true
-  mirror_to        = [
+  mirror_to = [
     "https://mirror.hyperspace.node.glif.io"
   ]
 }
