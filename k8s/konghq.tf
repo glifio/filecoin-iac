@@ -8,7 +8,7 @@ resource "helm_release" "konghq-external" {
   version    = "2.13.0"
 
   values = [templatefile("${path.module}/configs/konghq/values.yaml", {
-    app = "${module.generator.prefix}-kong-external" 
+    app                        = "${module.generator.prefix}-kong-external"
     http_mirror_configmap_name = kubernetes_config_map.kong_plugin-http_mirror.metadata[0].name
   })]
 
@@ -121,7 +121,7 @@ resource "helm_release" "konghq-mirror" {
   version    = "2.13.0"
 
   values = [templatefile("${path.module}/configs/konghq/mirror.yaml", {
-    app = "${module.generator.prefix}-kong-mirror-1" 
+    app                        = "${module.generator.prefix}-kong-mirror-1"
     http_mirror_configmap_name = kubernetes_config_map.kong_plugin-http_mirror.metadata[0].name
   })]
 
@@ -234,7 +234,7 @@ resource "helm_release" "konghq-mirror2" {
   version    = "2.13.0"
 
   values = [templatefile("${path.module}/configs/konghq/mirror.yaml", {
-    app = "${module.generator.prefix}-kong-mirror-2" 
+    app                        = "${module.generator.prefix}-kong-mirror-2"
     http_mirror_configmap_name = kubernetes_config_map.kong_plugin-http_mirror.metadata[0].name
   })]
 

@@ -623,7 +623,7 @@ module "ingress-atlantis-80" {
   type_lb_scheme                     = "external"
 
   enable_whitelist_ip = true
-  get_whitelist_ips   = [
+  get_whitelist_ips = [
     "64.78.234.192/27"
   ]
 }
