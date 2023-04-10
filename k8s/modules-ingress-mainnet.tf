@@ -621,6 +621,11 @@ module "ingress-atlantis-80" {
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
   type_lb_scheme                     = "external"
+
+  enable_whitelist_ip = true
+  get_whitelist_ips   = [
+    "64.78.234.192/27"
+  ]
 }
 
 ###### Ingresses for mirror nodes ##########
