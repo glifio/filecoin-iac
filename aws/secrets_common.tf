@@ -64,7 +64,7 @@ resource "aws_secretsmanager_secret" "credentials_atlantis" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-credentials-atlantis" },
-    module.generator.common_tags)
+  module.generator.common_tags)
 }
 
 resource "aws_secretsmanager_secret" "credentials_grafana_users" {
@@ -72,5 +72,14 @@ resource "aws_secretsmanager_secret" "credentials_grafana_users" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-credentials-grafana-users" },
+  module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "api_key_cloudfront_cache_s3" {
+  count                   = local.is_prod_envs
+  name                    = "${module.generator.prefix}/api_key_cloudfront_cache_s3"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-api_key_cloudfront_cache_s3" },
     module.generator.common_tags)
 }

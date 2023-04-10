@@ -51,6 +51,7 @@ resource "aws_opensearch_domain" "main" {
   cluster_config {
     instance_type = "c5.large.search"
     warm_enabled  = false
+    instance_count = 3
 
     #    zone_awareness_config {
     #      availability_zone_count = 2
@@ -81,12 +82,12 @@ resource "aws_sns_topic" "opensearch_alerts" {
 
 resource "aws_sns_topic_subscription" "cid-checker-team" {
   topic_arn = aws_sns_topic.opensearch_alerts.arn
-  protocol = "email"
-  endpoint = "1658_filecoin_cid@protofire.io"
+  protocol  = "email"
+  endpoint  = "1658_filecoin_cid@protofire.io"
 }
 
 resource "aws_iam_role" "opensearch_alerts" {
-  name = "${module.generator.prefix}-opensearch-alerts"
+  name        = "${module.generator.prefix}-opensearch-alerts"
   description = "${module.generator.prefix}-opensearch-alerts"
 
   assume_role_policy = file("${path.module}/templates/roles/opensearch_role.pol.tpl")
