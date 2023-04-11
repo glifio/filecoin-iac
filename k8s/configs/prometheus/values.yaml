@@ -146,6 +146,18 @@ grafana:
         datasource: Prometheus
         gnetId: 18393
         revision: 1
+      LotusMaciej'sA/Btestingcomparison:
+        datasource: Prometheus
+        gnetId: 18482
+        revision: 1
+      LotusMirrornodescomparison[Maciej]:
+        datasource: Prometheus
+        gnetId: 18483
+        revision: 1
+      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(PROD)v2:
+        datasource: Prometheus
+        gnetId: 18485
+        revision: 1
 
 
 
