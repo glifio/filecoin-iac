@@ -109,6 +109,21 @@ module "codebuild_cd_cid-checker_calibration" {
   ]
 }
 
+module "codebuild_cd_cid-checker_calibration_dev" {
+  count                    = local.is_dev_envs
+  source                   = "../modules/codebuild"
+  git_repository_name      = "cid-checker"
+  get_global_configuration = local.make_codebuild_global_configuration
+  privileged_mode          = true
+  is_build_concurrent      = false
+  specific_branch          = "calibration"
+  specific_envs            = { "NETWORK" : "calibration" }
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
+
 module "codebuild_cd_cid-checker_wallaby" {
   count                    = local.is_prod_envs
   source                   = "../modules/codebuild"
