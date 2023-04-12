@@ -24,7 +24,7 @@ module "eks_nodegroup_spot_group2" {
   is_spot_instance                        = true
 }
 
- #this group is for future spot tests
+#this group is for future spot tests
 ## module "eks_nodegroup_spot_group5" {
 #   count                                   = local.is_dev_envs
 #   source                                  = "../modules/eks_nodegroup"
