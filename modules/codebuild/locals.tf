@@ -34,4 +34,6 @@ locals {
   get_build_concurrent_count  = var.is_build_concurrent ? var.concurrent_build_limit : var.concurrent_build_limit_default
 
   enable_notifications = var.enable_notifications ? 1 : 0
+
+  slack_secret_name = local.get_environment == "mainnet" ? "slack-monitoring-prod-channel" : "slack-monitoring-dev-channel"
 }
