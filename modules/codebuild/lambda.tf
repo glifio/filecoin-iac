@@ -29,8 +29,8 @@ resource "aws_lambda_function" "slack_notif" {
 
   environment {
     variables = {
-        "WEBHOOK_URL" = lookup(jsondecode(data.aws_secretsmanager_secret_version.slack_monitoring_channel[0].secret_string), "webhook_url", null)
-        "CHANNEL_NAME" = lookup(jsondecode(data.aws_secretsmanager_secret_version.slack_monitoring_channel[0].secret_string), "channel_name", null)
+      "WEBHOOK_URL"  = lookup(jsondecode(data.aws_secretsmanager_secret_version.slack_monitoring_channel[0].secret_string), "webhook_url", null)
+      "CHANNEL_NAME" = lookup(jsondecode(data.aws_secretsmanager_secret_version.slack_monitoring_channel[0].secret_string), "channel_name", null)
     }
   }
 }
