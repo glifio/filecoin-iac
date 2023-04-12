@@ -10,6 +10,8 @@ module "codebuild_cd-filecoin-fluent-bit" {
   source                   = "../modules/codebuild"
   git_repository_name      = "filecoin-external-snapshotter"
   get_global_configuration = local.make_codebuild_global_configuration
+  enable_notifications = false
+  
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret
   ]
