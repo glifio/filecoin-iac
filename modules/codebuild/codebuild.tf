@@ -50,3 +50,22 @@ resource "aws_codebuild_source_credential" "token" {
   server_type = "GITHUB"
   token       = local.github_token
 }
+
+resource "aws_codestarnotifications_notification_rule" "notification_rule" {
+  count = local.enable_notifications
+
+  detail_type = "BASIC"
+  event_type_ids = [
+    "codebuild-project-build-state-failed",
+    "codebuild-project-build-state-succeeded",
+    "codebuild-project-build-state-in-progress",
+    "codebuild-project-build-state-stopped"
+  ]
+
+  name     = "${aws_codebuild_project.codebuild.name}-notif"
+  resource = aws_codebuild_project.codebuild.arn
+
+  target {
+    address = aws_sns_topic.notif[0].arn
+  }
+}
