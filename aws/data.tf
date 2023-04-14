@@ -79,8 +79,3 @@ data "aws_ebs_snapshot" "space00_4" {
     values = [4]
   }
 }
-
-data "aws_secretsmanager_secret_version" "cloudfront_cache_s3_key" {
-  count     = local.is_prod_envs
-  secret_id = aws_secretsmanager_secret.api_key_cloudfront_cache_s3[0].id
-}
