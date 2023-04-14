@@ -20,6 +20,7 @@ resource "aws_lambda_function" "default" {
       API_KEY_HYPERSPACE  = jsondecode(data.aws_secretsmanager_secret_version.default.secret_string)["api_key_hyperspace"]
       API_KEY_CALIBRATION = jsondecode(data.aws_secretsmanager_secret_version.default.secret_string)["api_key_calibration"]
       API_KEY_MAINNET     = jsondecode(data.aws_secretsmanager_secret_version.default.secret_string)["api_key_mainnet"]
+      BUCKET_NAME         = var.bucket_name
     }
   }
 }

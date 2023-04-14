@@ -86,7 +86,7 @@ exports.handler = async function(event, context) {
     response,
     `${event.network}.json`,
     'public-read',
-    'cloudfront-cache-s3',
+    process.env['BUCKET_NAME'],
     {},
     'application/json'
   )
