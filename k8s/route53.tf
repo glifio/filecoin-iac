@@ -164,7 +164,7 @@ resource "aws_route53_record" "api_hyperspace_node_glif_io_mirrored" {
 
   set_identifier = "hyperspace-mirror"
   weighted_routing_policy {
-    weight = 1
+    weight = 0
   }
 }
 
@@ -282,7 +282,7 @@ resource "aws_route53_record" "api-internal_node_glif_io_mirrored" {
 
   set_identifier = "mainnet-mirror"
   weighted_routing_policy {
-    weight = 1
+    weight = 0
   }
 }
 
@@ -297,7 +297,7 @@ resource "aws_route53_record" "api-internal_node_glif_io_mirrored2" {
 
   set_identifier = "mainnet-mirror2"
   weighted_routing_policy {
-    weight = 1
+    weight = 0
   }
 }
 
