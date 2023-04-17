@@ -1,0 +1,46 @@
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - ${app}
+      topologyKey: topology.kubernetes.io/zone
+nodeSelector:
+  assign_to_space00_07_nodes: allow_any_pods
+
+# Refer to: https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/setting-up-custom-plugins/
+plugins:
+  configMaps:
+  - name: ${http_mirror_configmap_name}
+    pluginName: http-mirror
+
+ingressController:
+  image:
+    tag: "2.8"
+  installCRDs: false
+  ingressClassAnnotations:
+    ingressclass.kubernetes.io/is-default-class: true
+
+proxy:
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Local
+  tls:
+    overrideServiceTargetPort: 8000
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Name=${app}"
+    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: ELBSecurityPolicy-TLS13-1-2-2021-06
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: 443
+    prometheus.io/port: 10254
+    prometheus.io/scrape: true
+  stream:
+    - containerPort: 1235
+      servicePort: 1235
+      protocol: TCP
+
+
