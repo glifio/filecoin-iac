@@ -64,7 +64,7 @@ resource "aws_secretsmanager_secret" "credentials_atlantis" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-credentials-atlantis" },
-    module.generator.common_tags)
+  module.generator.common_tags)
 }
 
 resource "aws_secretsmanager_secret" "credentials_grafana_users" {
@@ -72,5 +72,14 @@ resource "aws_secretsmanager_secret" "credentials_grafana_users" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-credentials-grafana-users" },
-    module.generator.common_tags)
+  module.generator.common_tags)
+}
+
+resource "aws_secretsmanager_secret" "slack_monitoring_channel" {
+  name = "${module.generator.prefix}/slack-monitoring-channel"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-slack-monitoring-channel" },
+    module.generator.common_tags
+  )
 }

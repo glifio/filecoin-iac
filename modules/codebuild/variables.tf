@@ -36,7 +36,7 @@ variable "codebuild_image" {
   default = "aws/codebuild/standard:6.0"
 }
 
-variable "notifications_enabled" {
+variable "enable_notifications" {
   description = "Enable codebuild notifications via SNS"
   default     = true
 }
@@ -56,6 +56,6 @@ variable "specific_branch" {
 }
 
 variable "specific_envs" {
-  type    = map
+  type    = map(any)
   default = {}
 }
