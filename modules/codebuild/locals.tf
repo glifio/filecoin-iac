@@ -27,9 +27,11 @@ locals {
   is_build_only          = var.is_build_only ? 1 : 0
   is_deploy_only         = !var.is_build_only ? 1 : 0
 
-  codebuild_name              = "${module.generator.prefix}-${local.git_config[0].project_name}-codebuild-${random_string.uid.result}"
+  codebuild_name              = "${local.get_environment}-${local.git_config[0].project_name}-${local.selected_branch}"
   make_codebuild_current_name = var.is_build_only ? "${local.codebuild_name}-build" : "${local.codebuild_name}-deploy"
   make_codebuild_description  = var.is_build_only ? "${local.git_config[0].description}-build" : "${local.git_config[0].description}-deploy"
   github_token                = lookup(jsondecode(data.aws_secretsmanager_secret_version.git_credentials.secret_string), "github_token", null)
   get_build_concurrent_count  = var.is_build_concurrent ? var.concurrent_build_limit : var.concurrent_build_limit_default
+
+  enable_notifications = var.enable_notifications ? 1 : 0
 }
