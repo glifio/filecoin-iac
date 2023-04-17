@@ -126,19 +126,19 @@ grafana:
         datasource: Prometheus
         gnetId: 18354
         revision: 1
-      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(CANARIES):
+      LotusRaulsdashboardCANARIES:
         datasource: Prometheus
         gnetId: 18363
         revision: 1
-      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(MIRROR):
+      LotusRaulsdashboardMIRROR:
         datasource: Prometheus
         gnetId: 18364
         revision: 1
-      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(PROD):
+      LotusRaulsdashboardPROD:
         datasource: Prometheus
         gnetId: 18365
         revision: 1
-      LotusRaúl'sdashboard--NODESYNC:
+      LotusRaulsdashboardNODESYNC:
         datasource: Prometheus
         gnetId: 18366
         revision: 1
@@ -146,15 +146,15 @@ grafana:
         datasource: Prometheus
         gnetId: 18393
         revision: 1
-      LotusMaciej'sA/Btestingcomparison:
+      LotusMaciejsABtestingcomparison:
         datasource: Prometheus
         gnetId: 18482
         revision: 1
-      LotusMirrornodescomparison[Maciej]:
+      LotusMirrornodescomparisonMaciej:
         datasource: Prometheus
         gnetId: 18483
         revision: 1
-      LotusRaúl'sdashboard(grouped by op, filtered by nodes)(PROD)v2:
+      LotusRaulsdashboardPRODv2:
         datasource: Prometheus
         gnetId: 18485
         revision: 1
