@@ -6,7 +6,7 @@ For example switch traffic from space06 to api-read-master
 
 make sure that your context is correct 
 
-```` kubectl config use-context arn:aws:eks:ap-northeast-1:499623857295:cluster/filecoin-mainnet-apn1-glif-eks````
+```` kubectl config use-context arn:aws:eks:<<region>>:<<account_id>>:cluster/filecoin-dev-apn1-glif-eks````
 
  - ````kubectl -n network get ingress````
 
