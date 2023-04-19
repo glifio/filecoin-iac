@@ -199,6 +199,7 @@ createServiceRoleBinding: false
 6. select **Makefile** which file include variables NODE,ENV,NAMESPACE for quickly deploy lotus config
 
 ![Screenshot 2023-04-18 at 14.57.21.png](doc%2FScreenshot%202023-04-18%20at%2014.57.21.png)
+
 7. for next deploy make sure correct configuration
 ````
 make diff 
