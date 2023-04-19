@@ -160,7 +160,7 @@ terraform apply -var-file=tfvars/filecoin-glif-dev-apn1.tfvars
 2. make sure that your config context is correct
 
 ````
-kubectl config use-context arn:aws:eks:ap-northeast-1:499623857295:cluster/filecoin-dev-apn1-glif-eks
+kubectl config use-context arn:aws:eks:<<region>>:<<account_id>>:cluster/filecoin-dev-apn1-glif-eks
 ````
 3. cd **values/dev/network/**
 4. create your configuration values.yaml file
@@ -339,7 +339,7 @@ Delete nodegroup
 2. make sure that your config context is correct
 
 ````
-kubectl config use-context arn:aws:eks:ap-northeast-1:499623857295:cluster/filecoin-dev-apn1-glif-eks
+kubectl config use-context arn:aws:eks:<<region>>:<<account_id>>:cluster/filecoin-dev-apn1-glif-eks
 ````
 3. ```make diff```
 4. ````make nodeDelete```` / ````make nodeDeleteFull```` - If pod uses ebs volume
