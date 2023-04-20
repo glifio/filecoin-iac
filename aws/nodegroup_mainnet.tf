@@ -205,16 +205,16 @@ module "eks_nodegroup_ondemand_group28" {
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
 
-module "eks_nodegroup_ondemand_group29" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  ami_type                                = "AL2_ARM_64"
-  get_instance_type                       = "r6gd.4xlarge"
-  user_data_script                        = "nvme-spot.sh"
-  get_nodegroup_name                      = "group29" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-}
+#module "eks_nodegroup_ondemand_group29" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  ami_type                                = "AL2_ARM_64"
+#  get_instance_type                       = "r6gd.4xlarge"
+#  user_data_script                        = "nvme-spot.sh"
+#  get_nodegroup_name                      = "group29" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#}
 
 module "eks_nodegroup_ondemand_group34" {
   count                                   = local.is_prod_envs
@@ -295,56 +295,56 @@ module "eks_nodegroup_mainnet_spot_group23" {
   is_spot_instance                        = true
 }
 
-module "eks_nodegroup_mainnet_spot_group24" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "group24" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  is_spot_instance                        = true
-}
+#module "eks_nodegroup_mainnet_spot_group24" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+#  get_nodegroup_name                      = "group24" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  is_spot_instance                        = true
+#}
 
-module "eks_nodegroup_mainnet_spot_group26" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "group26" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  is_spot_instance                        = true
-}
-
-module "eks_nodegroup_mainnet_spot_group27" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "group27" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  is_spot_instance                        = true
-}
+#module "eks_nodegroup_mainnet_spot_group26" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+#  get_nodegroup_name                      = "group26" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  is_spot_instance                        = true
+#}
+#
+#module "eks_nodegroup_mainnet_spot_group27" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+#  get_nodegroup_name                      = "group27" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  is_spot_instance                        = true
+#}
 
 # Use this node for mirrors
-module "eks_nodegroup_mainnet_spot_group30" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "group30" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  is_spot_instance                        = true
-}
-
-module "eks_nodegroup_mainnet_spot_group35" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "group35" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  is_spot_instance                        = true
-}
+#module "eks_nodegroup_mainnet_spot_group30" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+#  get_nodegroup_name                      = "group30" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  is_spot_instance                        = true
+#}
+#
+#module "eks_nodegroup_mainnet_spot_group35" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+#  get_nodegroup_name                      = "group35" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  is_spot_instance                        = true
+#}
 
 # Use these nodes for canary releases
 module "eks_nodegroup_mainnet_spot_group31" {
@@ -357,24 +357,24 @@ module "eks_nodegroup_mainnet_spot_group31" {
   is_spot_instance                        = true
 }
 
-module "eks_nodegroup_mainnet_spot_group32" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "group32" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  is_spot_instance                        = true
-}
-
-module "eks_nodegroup_mainnet_spot_group33" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "group33" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  is_spot_instance                        = true
-}
+#module "eks_nodegroup_mainnet_spot_group32" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+#  get_nodegroup_name                      = "group32" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  is_spot_instance                        = true
+#}
+#
+#module "eks_nodegroup_mainnet_spot_group33" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+#  get_nodegroup_name                      = "group33" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  is_spot_instance                        = true
+#}
 
 ################# END BLOCK SPOT NODE-GROUP LIST #################
