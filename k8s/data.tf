@@ -252,6 +252,16 @@ data "aws_secretsmanager_secret_version" "space07_mainnet_lotus" {
   secret_id = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].id
 }
 
+data "aws_secretsmanager_secret" "fvm_archive_lotus" {
+  count = local.is_prod_envs
+  name  = "${module.generator.prefix}-fvm-archive-lotus"
+}
+
+data "aws_secretsmanager_secret_version" "fvm_archive_lotus" {
+  count     = local.is_prod_envs
+  secret_id = data.aws_secretsmanager_secret.fvm_archive_lotus[0].id
+}
+
 data "aws_secretsmanager_secret" "space06_cache_mainnet_lotus" {
   count = local.is_prod_envs
   name  = "${module.generator.prefix}-space06-cache"

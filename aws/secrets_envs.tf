@@ -230,6 +230,15 @@ resource "aws_secretsmanager_secret" "space07_cache" {
   module.generator.common_tags)
 }
 
+resource "aws_secretsmanager_secret" "fvm_archive" {
+  count                   = local.is_prod_envs
+  name                    = "${module.generator.prefix}-fvm-archive-lotus"
+  recovery_window_in_days = 30
+
+  tags = merge({ "Name" = "${module.generator.prefix}-fvm-archive-lotus" },
+  module.generator.common_tags)
+}
+
 resource "aws_secretsmanager_secret" "cid_checker" {
   count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-cid-checker"
