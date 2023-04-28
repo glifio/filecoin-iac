@@ -382,6 +382,18 @@ module "ingress-kong_space07-1234" {
   type_lb_scheme                   = "external"
 }
 
+module "ingress-kong_fvm-archive-1234" {
+  count                            = local.is_prod_envs
+  source                           = "../modules/k8s_ingress"
+  get_global_configuration         = local.make_global_configuration
+  get_ingress_http_path            = "/fvm-archive/lotus/(.*)"
+  get_ingress_backend_service_name = "fvm-archive-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_port = 1234
+  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+  get_rule_host                    = "node.glif.io"
+  type_lb_scheme                   = "external"
+}
+
 module "ingress-kong_space06-cache-8080" {
   count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
