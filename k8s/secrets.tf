@@ -470,6 +470,18 @@ resource "kubernetes_secret_v1" "space07_mainnet_lotus_secret" {
   }
 }
 
+resource "kubernetes_secret_v1" "fvm_archive_lotus" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "fvm-archive-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.fvm_archive_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.fvm_archive_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
 resource "kubernetes_secret_v1" "space06_cache_lotus_secret" {
   count = local.is_prod_envs
   metadata {
