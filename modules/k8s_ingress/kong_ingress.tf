@@ -7,8 +7,8 @@ resource "kubernetes_ingress_v1" "ingress_kong" {
     namespace = var.get_ingress_namespace
 
     annotations = {
-      "konghq.com/plugins"          = local.get_kong_list_plugins
-      "konghq.com/protocols"        = "https, http"
+      "konghq.com/plugins"   = local.get_kong_list_plugins
+      "konghq.com/protocols" = "https, http"
     }
   }
 
