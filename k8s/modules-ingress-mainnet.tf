@@ -392,6 +392,7 @@ module "ingress-kong_fvm-archive-1234" {
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                    = "node.glif.io"
   type_lb_scheme                   = "external"
+  return_json                      = true
 }
 
 module "ingress-kong_space06-cache-8080" {
