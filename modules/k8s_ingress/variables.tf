@@ -100,3 +100,8 @@ variable "get_whitelist_ips" {
     "34.233.66.117"
   ]
 }
+
+variable "return_json" {
+  type    = bool
+  default = false
+}

@@ -106,3 +106,29 @@ resource "kubernetes_manifest" "ip_restriction" {
 }
 
 ######## END BLOCK ip-restriction PLUGIN ############
+
+resource "kubernetes_manifest" "response_transformer-content_type" {
+  count = local.create_return_json_plugin
+
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "response-transformer-content-type-${random_string.rand.result}"
+      "namespace" = var.get_ingress_namespace
+    }
+    "config" = {
+      "add" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
+      }
+      "replace" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
+      }
+    }
+    "plugin" = "response-transformer"
+  }
+}
