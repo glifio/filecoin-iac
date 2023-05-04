@@ -79,3 +79,10 @@ resource "aws_iam_role_policy_attachment" "attach_ebs" {
   policy_arn = aws_iam_policy.attach_ebs[0].arn
   role       = aws_iam_role.eks_nodegroup.name
 }
+
+#resource "null_resource" "populate_data" {
+#  provisioner "local-exec" {
+#  command = "python3 ${path.module}/create_jwt.py >  ${path.module}/jwt_token.json "
+# }
+#}
+

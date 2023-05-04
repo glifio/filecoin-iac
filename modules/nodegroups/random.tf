@@ -4,3 +4,11 @@ resource "random_string" "nodegroup_name_postfix" {
   upper   = false
   special = false
 }
+
+resource "random_string" "rand" {
+  length  = 5
+  lower   = true
+  numeric = true
+  special = false
+  upper   = false
+}

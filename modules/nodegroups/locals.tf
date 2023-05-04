@@ -37,12 +37,32 @@ locals {
   jwt_token_kong_rw   =  lookup(jsondecode(var.exist_secret[0].secret_string), "jwt_token_kong_rw", null)
 
   secret_string = { "private_key" : "${local.private_key}", "jwt_token" : "${local.jwt_token}", "jwt_token_kong_rw" : "${local.jwt_token_kong_rw}"}
-
   # create new secret
 
   new_private_key         =  lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "private_key", null)
   new_jwt_token           =  lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "jwt_token", null)
 
   new_secret_string = { "private_key" : "${local.new_private_key}", "jwt_token" : "${local.new_jwt_token}"}
+
+
+### kong locals ###
+
+  get_request_transformer = var.is_kong_auth_header_enabled && var.is_kong_transformer_header_enabled ? local.auth_header_replace_url : local.replace_url_only
+  auth_header_replace_url = var.is_kong_auth_header_enabled && var.is_kong_transformer_header_enabled ? kubernetes_manifest.request_transformer_auth_header_replace_url[0].manifest.metadata.name : local.replace_url_only
+  replace_url_only        = var.is_kong_transformer_header_enabled && var.is_kong_auth_header_enabled == false ? kubernetes_manifest.request_transformer_replace_url_only.0.manifest.metadata.name : ""
+
+  get_cors              = var.is_kong_cors_enabled ? kubernetes_manifest.cors[0].manifest.metadata.name : ""
+  get_whitelist_ips     = var.enable_whitelist_ip ? kubernetes_manifest.ip_restriction[0].manifest.metadata.name : ""
+  get_kong_list_plugins = local.get_cors == null && local.get_request_transformer == null ? "" : join(", ", compact([local.get_cors, local.get_whitelist_ips, local.get_request_transformer]))
+
+  validate_whitelist_ips = var.enable_whitelist_ip ? 1 : 0
+
+
+
+
+
+
+
+
 
 }
