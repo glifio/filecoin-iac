@@ -12,12 +12,12 @@ resource "kubernetes_manifest" "request_transformer_auth_header_replace_url" {
 	"kind"       = "KongPlugin"
 	"metadata" = {
 	  "name"      = "request-transformer-header-${random_string.rand.result}"
-	  "namespace" = var.get_ingress_namespace
+	  "namespace" = var.get_namespace
 	}
 	"config" = {
 	  "add" = {
 		"headers" = [
-		  var.is_kong_auth_header_block_public_access ? "Authorization: false" : "Authorization: Bearer ${lookup(jsondecode(data.aws_secretsmanager_secret_version.current[0].secret_string), "jwt_token_kong_rw", null)}"
+		  var.is_kong_auth_header_block_public_access ? "Authorization: false" : "Authorization: Bearer  ${lookup(jsondecode(data.aws_secretsmanager_secret_version.current[0].secret_string), "jwt_token_kong_rw", null)}"
 		]
 	  }
 	  "replace" = {
@@ -36,7 +36,7 @@ resource "kubernetes_manifest" "request_transformer_replace_url_only" {
 	"kind"       = "KongPlugin"
 	"metadata" = {
 	  "name"      = "request-transformer-header-${random_string.rand.result}"
-	  "namespace" = var.get_ingress_namespace
+	  "namespace" = var.get_namespace
 	}
 	"config" = {
 	  "replace" = {
@@ -59,7 +59,7 @@ resource "kubernetes_manifest" "cors" {
 	"kind"       = "KongPlugin"
 	"metadata" = {
 	  "name"      = "cors-test-${random_string.rand.result}"
-	  "namespace" = var.get_ingress_namespace
+	  "namespace" = var.get_namespace
 	}
 	"config" = {
 	  "origins" = [
@@ -96,7 +96,7 @@ resource "kubernetes_manifest" "ip_restriction" {
 	"kind"       = "KongPlugin"
 	"metadata" = {
 	  "name"      = "ip-whitelist-${random_string.rand.result}"
-	  "namespace" = var.get_ingress_namespace
+	  "namespace" = var.get_namespace
 	}
 	"config" = {
 	  "allow" = var.get_whitelist_ips

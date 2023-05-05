@@ -65,7 +65,7 @@ variable "ebs_tenant" {
   description = "Tenant tag value to search EBS volumes by"
 }
 
-variable "namespace_secret" {}
+variable "get_namespace" {}
 
 variable "exist_secret" {
   default = null
@@ -86,9 +86,9 @@ variable "get_rule_host" {
   type = string
 }
 
-variable "get_ingress_namespace" {
-  type = string
-}
+#variable "get_ingress_namespace" {
+#  type = string
+#}
 
 variable "get_jwt_header_wr_token_name" {
   type    = string
@@ -119,11 +119,11 @@ variable "type_lb_scheme" {
   type = string
 }
 
-variable "as_is_ingress_backend_service_name" {
-  type        = bool
-  description = "If the parameter is true, then '-service' string will be added in the end of the line. The logic is useful when we deploy an app"
-  default     = false
-}
+#variable "as_is_ingress_backend_service_name" {
+#  type        = bool
+#  description = "If the parameter is true, then '-service' string will be added in the end of the line. The logic is useful when we deploy an app"
+#  default     = false
+#}
 
 variable "get_ingress_pathType" {
   type    = string
@@ -169,6 +169,26 @@ variable "get_whitelist_ips" {
     "138.197.150.151",
     "34.233.66.117"
   ]
+}
+
+###------- route53 variables -----###
+
+variable "zone_id" {}
+
+variable "allow_overwrite" {
+  type = bool
+  default = true
+}
+variable "type" {
+  default = "CNAME"
+}
+variable "ttl" {
+  type = number
+  default = "60"
+}
+variable "records" {
+  type = list
+  default = []
 }
 
 

@@ -4,7 +4,7 @@
 resource "kubernetes_ingress_v1" "ingress_kong" {
   metadata {
 	name      = "kong-${var.get_nodegroup_name}-lotus-service-${var.get_ingress_backend_service_port}-${random_string.rand.result}"
-	namespace = var.get_ingress_namespace
+	namespace = var.get_namespace
 
 	annotations = {
 	  "konghq.com/plugins"          = local.get_kong_list_plugins

@@ -18,7 +18,7 @@ resource "kubernetes_secret_v1" "main" {
   depends_on = [aws_secretsmanager_secret_version.main]
   metadata {
     name      = "${var.get_nodegroup_name}-lotus-secret"
-    namespace = var.namespace_secret
+    namespace = var.get_namespace
   }
   data = {
     "private_key" = lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "private_key", null)

@@ -36,14 +36,14 @@ locals {
   jwt_token           =  lookup(jsondecode(var.exist_secret[0].secret_string), "jwt_token", null)
   jwt_token_kong_rw   =  lookup(jsondecode(var.exist_secret[0].secret_string), "jwt_token_kong_rw", null)
 
-  secret_string = { "private_key" : "${local.private_key}", "jwt_token" : "${local.jwt_token}", "jwt_token_kong_rw" : "${local.jwt_token_kong_rw}"}
+  secret_string = { "private_key" : "${local.private_key}", "jwt_token" : "${local.jwt_token}", "jwt_token_kong_rw": "${local.jwt_token_kong_rw}"}
   # create new secret
+#
+#  new_private_key         =  lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "private_key", null)
+#  new_jwt_token           =  lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "jwt_token", null)
 
-  new_private_key         =  lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "private_key", null)
-  new_jwt_token           =  lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "jwt_token", null)
-
-  new_secret_string = { "private_key" : "${local.new_private_key}", "jwt_token" : "${local.new_jwt_token}"}
-
+#  new_secret_string = { "private_key" : "${local.new_private_key}", "jwt_token" : "${local.new_jwt_token}"}
+  new_secret_string = { "private_key":"{\"Type\":\"jwt-hmac-secret\",\"PrivateKey\":\"oo\"}", "jwt_token" : "kk" }
 
 ### kong locals ###
 
@@ -56,13 +56,5 @@ locals {
   get_kong_list_plugins = local.get_cors == null && local.get_request_transformer == null ? "" : join(", ", compact([local.get_cors, local.get_whitelist_ips, local.get_request_transformer]))
 
   validate_whitelist_ips = var.enable_whitelist_ip ? 1 : 0
-
-
-
-
-
-
-
-
 
 }

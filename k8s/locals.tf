@@ -7,6 +7,13 @@ locals {
     route53_domain  = var.route53_domain
   }
 
+  make_eks_nodegroups_global_configuration = {
+    cluster_name = data.aws_eks_cluster.k8s_cluster.name
+    vpc_id       = data.aws_vpc.current.id
+    cidr_blocks  = data.aws_vpc.current.cidr_block
+    subnet_ids   = data.aws_subnets.public.ids
+  }
+
   oidc_URL = replace(data.aws_eks_cluster.k8s_cluster.identity[0].oidc[0].issuer, "https://", "")
 
   # https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
