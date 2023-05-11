@@ -5,7 +5,7 @@ locals {
   }
 
   development = local.dev_count_map[terraform.workspace]
-  production  = abs(local.prod_count_map[terraform.workspace] - 1)
+  production  = abs(local.dev_count_map[terraform.workspace] - 1)
 
   application_key    = jsondecode(data.aws_secretsmanager_secret_version.ovh_cloud_credentials[0].secret_string)["application_key"]
   application_secret = jsondecode(data.aws_secretsmanager_secret_version.ovh_cloud_credentials[0].secret_string)["application_secret"]
