@@ -27,3 +27,9 @@ variable "profile" {
   default     = "filecoin"
   description = "AWS credentials profile name"
 }
+
+variable "ovh_region" {
+  type = string
+  default = "VIN1"
+  description = "OVH region to deploy the infrastructure into"
+}
