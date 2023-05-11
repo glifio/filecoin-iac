@@ -249,3 +249,14 @@ resource "aws_secretsmanager_secret" "cid_checker" {
 }
 
 ################# END BLOCK MAINNET ENV SECRETS LIST #################
+
+resource "aws_secretsmanager_secret" "ovh_cloud_credentials" {
+  count = local.is_prod_envs
+
+  name = "${module.generator.prefix}/ovh-cloud-credentials"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-ovh-cloud-credentials" },
+    module.generator.common_tags
+  )
+}
