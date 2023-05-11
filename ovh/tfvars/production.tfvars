@@ -1,0 +1,5 @@
+project         = "filecoin"
+environment     = "mainnet"
+region          = "ap-northeast-1"
+sub_environment = "glif"
+profile         = "filecoin"
