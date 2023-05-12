@@ -4,8 +4,8 @@ module "ingress_spacenet_daemon" {
   name   = "spacenet-daemon"
   source = "../modules/ovh_ingress"
 
-  http_host = "spacenet.node.glif.io"
-  http_path = "/lotus/(.*)"
+  http_host = "api.spacenet.node.glif.io"
+  http_path = "/(.*)"
 
   service_name = "spacenet-lotus-service"
   service_port = 1234
