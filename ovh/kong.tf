@@ -1,5 +1,5 @@
 resource "helm_release" "kong" {
-  name       = "kong"
+  name       = "default"
   repository = "https://charts.konghq.com"
   chart      = "kong"
   namespace  = kubernetes_namespace_v1.kong.metadata[0].name
