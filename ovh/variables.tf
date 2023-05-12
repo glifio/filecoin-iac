@@ -29,7 +29,7 @@ variable "profile" {
 }
 
 variable "ovh_region" {
-  type = string
-  default = "VIN1"
+  type        = string
+  default     = "US-EAST-VA-1"
   description = "OVH region to deploy the infrastructure into"
 }
