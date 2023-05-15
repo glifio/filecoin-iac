@@ -12,4 +12,20 @@ locals {
   consumer_key       = jsondecode(data.aws_secretsmanager_secret_version.ovh_cloud_credentials.secret_string)["consumer_key"]
   service_name       = jsondecode(data.aws_secretsmanager_secret_version.ovh_cloud_credentials.secret_string)["service_name"]
   endpoint           = jsondecode(data.aws_secretsmanager_secret_version.ovh_cloud_credentials.secret_string)["endpoint"]
+
+  monitoring = {
+    slack = {
+      api_url = jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string)["slack_api_url"]
+      channel = jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string)["slack_configs_0_channel"]
+    }
+
+    domain_name    = "ovh-monitoring.node.glif.io"
+    admin_password = jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string)["admin_password"]
+  }
+
+  external_dns = {
+    name           = "external-dns"
+    default_region = var.region
+    namespace      = "default"
+  }
 }
