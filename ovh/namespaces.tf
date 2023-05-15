@@ -15,3 +15,12 @@ resource "kubernetes_namespace_v1" "kong" {
     name = "kong"
   }
 }
+
+resource "kubernetes_namespace_v1" "monitoring" {
+  metadata {
+    annotations = {
+      "name" = "monitoring"
+    }
+    name = "monitoring"
+  }
+}
