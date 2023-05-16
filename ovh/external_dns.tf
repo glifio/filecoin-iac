@@ -77,7 +77,7 @@ resource "kubernetes_service_account" "external_dns" {
 
 resource "kubernetes_cluster_role" "external_dns" {
   metadata {
-    name      = "${local.external_dns.name}-role"
+    name = "${local.external_dns.name}-role"
     labels = {
       "app.kubernetes.io/name" = "${local.external_dns.name}-role"
     }
@@ -92,7 +92,7 @@ resource "kubernetes_cluster_role" "external_dns" {
 
 resource "kubernetes_cluster_role_binding" "external_dns" {
   metadata {
-    name      = "${local.external_dns.name}-role-binding"
+    name = "${local.external_dns.name}-role-binding"
     labels = {
       "app.kubernetes.io/name" = "${local.external_dns.name}-role-binding"
     }
