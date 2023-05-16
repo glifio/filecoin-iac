@@ -30,4 +30,5 @@ module "ingress_monitoring" {
 
   enable_path_transformer = false
   enable_public_access    = false
+  enable_return_json      = false
 }
