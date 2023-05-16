@@ -133,7 +133,6 @@ prometheusOperator:
     patch:
       nodeSelector:
         nodepool: monitoring
-
   createCustomResource: true
   cleanupCustomResource: false
 
@@ -154,29 +153,26 @@ prometheus:
           resources:
             requests:
               storage: 100Gi
-
-  additionalServiceMonitors:
-    - name: spacenet
-      selector:
-        matchLabels:
-          nodepool: spacenet
-      namespaceSelector:
-        matchNames:
-          - network
-      endpoints:
-        - interval: 30s
-          path: /debug/metrics
-          port: tcp-api
-          scheme: http
-
   additionalPodMonitors:
-    - name: kong
+    - name: default-kong
       namespaceSelector:
         matchNames:
           - kong
       selector:
         matchLabels:
-          nodepool: kong
+          app: default-kong
+      podMetricsEndpoints:
+        - interval: 30s
+          targetPort: 8100
+          scheme: http
+          path: /metrics
+    - name: spacenet
+      namespaceSelector:
+        matchNames:
+          - network
+      selector:
+        matchLabels:
+          release: spacenet
       podMetricsEndpoints:
         - interval: 30s
           targetPort: 8100
