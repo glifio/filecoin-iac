@@ -10,6 +10,7 @@ variable "http_host" {
 
 variable "http_path" {
   type        = string
+  default     = "/(.*)"
   description = "HTTP path to match"
 }
 
