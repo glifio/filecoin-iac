@@ -28,5 +28,5 @@ locals {
   enabled_plugins = compact(local.available_plugins)
   plugins_string  = join(", ", local.enabled_plugins)
 
-  auth_token = jsondecode(data.aws_secretsmanager_secret_version.default[0].secret_string)[var.auth_token_attribute]
+  auth_token = var.enable_public_access ? jsondecode(data.aws_secretsmanager_secret_version.default[0].secret_string)[var.auth_token_attribute] : ""
 }
