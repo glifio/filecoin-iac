@@ -4,13 +4,20 @@ resource "kubernetes_ingress_v1" "default" {
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/plugins"   = local.plugins_string
-      "konghq.com/protocols" = "https, http"
+      "konghq.com/plugins"             = local.plugins_string
+      "konghq.com/protocols"           = "https, http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
     }
   }
 
   spec {
     ingress_class_name = var.incress_class
+
+    tls {
+      hosts       = [var.http_host]
+      secret_name = "${var.name}-ssl"
+    }
+
     rule {
       host = var.http_host
       http {
