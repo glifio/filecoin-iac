@@ -9,8 +9,6 @@ ingressController:
     ingressclass.kubernetes.io/is-default-class: true
 
 proxy:
-  tls:
-    overrideServiceTargetPort: 8000
   externalTrafficPolicy: Local
   internalTrafficPolicy: Local
   stream:
