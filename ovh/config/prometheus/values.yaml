@@ -152,7 +152,7 @@ prometheus:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 100Gi
+              storage: ${pvc_size}
   additionalPodMonitors:
     - name: default-kong
       namespaceSelector:

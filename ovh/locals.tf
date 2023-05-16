@@ -21,6 +21,8 @@ locals {
 
     domain_name    = "ovh-monitoring.node.glif.io"
     admin_password = jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string)["admin_password"]
+    
+    pvc_size = "100Gi"
   }
 
   external_dns = {
