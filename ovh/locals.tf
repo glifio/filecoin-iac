@@ -28,4 +28,9 @@ locals {
     default_region = var.region
     namespace      = "default"
   }
+
+  cert_manager = {
+    name      = "letsencrypt"
+    namespace = "default"
+  }
 }
