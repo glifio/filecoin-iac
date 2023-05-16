@@ -8,7 +8,8 @@ resource "helm_release" "monitoring" {
   values = [templatefile("${path.module}/config/prometheus/values.yaml", {
     slack_channel = local.monitoring.slack.channel,
     slack_api_url = local.monitoring.slack.api_url,
-    domain_name   = local.monitoring.domain_name
+    domain_name   = local.monitoring.domain_name,
+    pvc_size      = local.monitoring.pvc_size
   })]
 
   set {
