@@ -1,0 +1,175 @@
+commonLabels:
+  environment: monitoring
+
+alertmanager:
+  alertmanagerSpec:
+    nodeSelector:
+      nodepool: monitoring
+
+  config:
+    global:
+      resolve_timeout: 5m
+      slack_api_url: ${slack_api_url}
+    templates: ["*.tmpl"]
+    route:
+      group_by: ['job']
+      group_wait: 30s
+      group_interval: 15m
+      repeat_interval: 12h
+      receiver: "slack-notification"
+      routes:
+        - match:
+            alertname: Watchdog
+          receiver: 'null'
+        - match:
+            alertname: InfoInhibitor
+          receiver: 'null'
+    receivers:
+      - name: "slack-notification"
+        slack_configs:
+          - send_resolved: true
+            title: '{{ template "custom_title" . }}'
+            text: '{{ template "custom_slack_message" . }}'
+            channel: ${slack_channel}
+      - name: "null"
+
+  templateFiles:
+    notificationsSlack.tmpl: |
+      {{ define "slack.default.username" }}Alert-dev{{ end }}
+      {{ define "__single_message_title" }}{{ range .Alerts.Firing }}{{ .Labels.alertname }} @ {{ .Annotations.summary }}{{ end }}{{ range .Alerts.Resolved }}{{ .Labels.alertname }} @ {{ .Annotations.summary }}{{ end }}{{ end }}
+      {{ define "custom_title" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if or (and (eq (len .Alerts.Firing) 1) (eq (len .Alerts.Resolved) 0)) (and (eq (len .Alerts.Firing) 0) (eq (len .Alerts.Resolved) 1)) }}{{ template "__single_message_title" . }}{{ end }}{{ end }}
+      {{ define "custom_slack_message" }}
+                {{ range .Alerts -}}
+                *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+                *Description:* {{ .Annotations.description }}
+                *Details:*
+                  {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                  {{ end }}
+                {{ end }}
+      {{ end }}
+
+grafana:
+  nodeSelector:
+    nodepool: monitoring
+  grafana.ini:
+    unified_alerting:
+      enabled: false
+    server:
+      root_url: https://${domain_name}
+  notifiers:
+    notifiers.yaml:
+      notifiers:
+        - name: "notification-channel-1"
+          type: "slack"
+          uid: "slacknotifier"
+          org_id: 1
+          is_default: true
+          send_reminder: true
+          frequency: "1h"
+          disable_resolve_message: false
+          settings:
+            url: ${slack_api_url}
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'custom'
+          orgId: 1
+          folder: 'lotus'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/custom
+  dashboards:
+    custom:
+      LotusAPIEndpoints:
+        datasource: Prometheus
+        gnetId: 13251
+        revision: 8
+      LotusNodeHealth:
+        datasource: Prometheus
+        gnetId: 13250
+        revision: 7
+      LotusPubSubdashboard:
+        datasource: Prometheus
+        gnetId: 13249
+        revision: 2
+      LotusVolumes:
+        datasource: Prometheus
+        gnetId: 17092
+        revision: 7
+      Kong:
+        datasource: Prometheus
+        gnetId: 17269
+        revision: 5
+      LotusNVMEdashboard:
+        datasource: Prometheus
+        gnetId: 17431
+        revision: 3
+      LotusRaulsdashboardNODESYNC:
+        datasource: Prometheus
+        gnetId: 18366
+        revision: 1
+
+## Component scraping the kubelet and kubelet-hosted cAdvisor
+kubelet:
+  serviceMonitor:
+    resource: true
+
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+prometheusOperator:
+  nodeSelector:
+    nodepool: monitoring
+  admissionWebhooks:
+    patch:
+      nodeSelector:
+        nodepool: monitoring
+
+  createCustomResource: true
+  cleanupCustomResource: false
+
+prometheus:
+  prometheusSpec:
+    nodeSelector:
+      nodepool: monitoring
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    retention: 120d
+
+  additionalServiceMonitors:
+    - name: spacenet
+      selector:
+        matchLabels:
+          nodepool: spacenet
+      namespaceSelector:
+        matchNames:
+          - network
+      endpoints:
+        - interval: 30s
+          path: /debug/metrics
+          port: tcp-api
+          scheme: http
+
+  additionalPodMonitors:
+    - name: kong
+      namespaceSelector:
+        matchNames:
+          - kong
+      selector:
+        matchLabels:
+          nodepool: kong
+      podMetricsEndpoints:
+        - interval: 30s
+          targetPort: 8100
+          scheme: http
+          path: /metrics
