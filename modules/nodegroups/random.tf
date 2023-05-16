@@ -5,10 +5,10 @@ resource "random_string" "nodegroup_name_postfix" {
   special = false
 }
 
-resource "random_string" "rand" {
-  length  = 5
-  lower   = true
-  numeric = true
-  special = false
-  upper   = false
-}
+#resource "random_string" "rand" {
+#  length  = 5
+#  lower   = true
+#  numeric = true
+#  special = false
+#  upper   = false
+#}

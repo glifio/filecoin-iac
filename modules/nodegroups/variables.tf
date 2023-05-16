@@ -1,7 +1,7 @@
 variable "get_global_configuration" {}
 variable "get_eks_nodegroups_global_configuration" {}
 variable "get_instance_type" {
-  type    = string
+  type = string
 }
 variable "is_spot_instance" {
   type    = bool
@@ -72,73 +72,15 @@ variable "exist_secret" {
 }
 
 variable "create_new_secret" {
-  type = bool
+  type    = bool
   default = false
 }
 
-# -------------------- kong variables------------------- #
-
-variable "get_ingress_backend_service_port" {
-  type = number
-}
-
-variable "get_rule_host" {
-  type = string
-}
-
-#variable "get_ingress_namespace" {
-#  type = string
-#}
-
-variable "get_jwt_header_wr_token_name" {
-  type    = string
-  default = "jwt_token_kong_rw"
-}
-
-variable "kong_plugin_replace_url" {
-  type    = string
-  default = "/$(uri_captures[1])"
-}
-
-variable "is_kong_auth_header_enabled" {
-  type    = bool
-  default = true
-}
-
-variable "is_kong_transformer_header_enabled" {
-  type    = bool
-  default = true
-}
-
-variable "is_kong_cors_enabled" {
-  type    = bool
-  default = true
-}
 
 variable "type_lb_scheme" {
   type = string
 }
 
-#variable "as_is_ingress_backend_service_name" {
-#  type        = bool
-#  description = "If the parameter is true, then '-service' string will be added in the end of the line. The logic is useful when we deploy an app"
-#  default     = false
-#}
-
-variable "get_ingress_pathType" {
-  type    = string
-  default = "Exact"
-}
-
-variable "enable_whitelist_ip" {
-  type    = bool
-  default = false
-}
-
-variable "is_kong_auth_header_block_public_access" {
-  type    = bool
-  default = true
-}
 
 variable "get_whitelist_ips" {
   default = [
@@ -176,19 +118,145 @@ variable "get_whitelist_ips" {
 variable "zone_id" {}
 
 variable "allow_overwrite" {
-  type = bool
+  type    = bool
   default = true
 }
 variable "type" {
   default = "CNAME"
 }
 variable "ttl" {
-  type = number
+  type    = number
   default = "60"
 }
 variable "records" {
-  type = list
+  type    = list(any)
   default = []
 }
 
+## Variables for kong ##
 
+
+variable "http_host" {
+  type        = string
+  description = "HTTP host to match"
+}
+
+variable "http_path" {
+  type        = string
+  description = "HTTP path to match"
+}
+
+variable "http_path_type" {
+  type        = string
+  default     = "Exact"
+  description = "HTTP path comparison type"
+}
+
+
+variable "service_port" {
+  type        = number
+  description = "Backend service port"
+}
+
+
+variable "enable_path_transformer" {
+  type        = bool
+  default     = true
+  description = "If true, transform path as specified in replace_path_rule"
+}
+
+variable "enable_switch_transformer" {
+  type = bool
+  default = false
+  description = "If true, switch the path as specified in any switch_path"
+}
+
+variable "switch_to_token" {
+  default = null
+}
+
+variable "switch_to_service" {
+  default = null
+}
+
+variable "replace_path_rule" {
+  type        = string
+  default     = "/$(uri_captures[1])"
+  description = "Regular expression to transform the path"
+}
+
+variable "enable_public_access" {
+  type        = bool
+  default     = false
+  description = "If true, add Authorization header"
+}
+
+#variable "secret_name" {
+#  type        = string
+#  default     = null
+#  description = "Secret name to get authorization token from"
+#}
+
+variable "enable_cors" {
+  type        = bool
+  default     = true
+  description = "If true, enable CORS policy"
+}
+
+variable "enable_return_json" {
+  type        = bool
+  default     = true
+  description = "If true, add Content-Type: application/json header to response"
+}
+
+variable "auth_token_attribute" {
+  type        = string
+  default     = "jwt_token_kong_rw"
+  description = "Attribute of secret to exteact auth token from"
+}
+
+variable "create_ingress_kong_ipfs" {
+  type    = bool
+  default = true
+}
+
+variable "service_port_ipfs" {
+  type = string
+}
+
+variable "http_path_ipfs" {
+  type        = string
+  description = "HTTP path to match"
+}
+
+
+
+
+#
+#variable "as_is_ingress_backend_service_name" {
+#  type        = bool
+#  description = "If the parameter is true, then '-service' string will be added in the end of the line. The logic is useful when we deploy an app"
+#  default     = false
+#}
+#
+#variable "get_ingress_http_path" {
+#  type = string
+#}
+#
+#
+#
+#variable "http_host_ipfs" {}
+#
+#
+#
+#variable "switch_to_another_ingress" {
+#  type    = bool
+#  default = true
+#}
+#
+#variable "switch_to_token" {
+#  default = null
+#}
+#variable "switch_to_service" {
+#  default = null
+#}
