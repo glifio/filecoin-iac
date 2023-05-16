@@ -83,3 +83,9 @@ variable "auth_token_attribute" {
   default     = "jwt_token_kong_rw"
   description = "Attribute of secret to exteact auth token from"
 }
+
+variable "certificate_issuer" {
+  type        = string
+  default     = "letsencrypt-issuer"
+  description = "Certificate Manager issuer name"
+}
