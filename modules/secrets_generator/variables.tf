@@ -25,3 +25,9 @@ variable "namespace" {
   default     = "network"
   description = "Namespace of the Kubernetes secret"
 }
+
+variable "from_secret" {
+  type        = string
+  default     = ""
+  description = "Secret to copy secret_string from"
+}

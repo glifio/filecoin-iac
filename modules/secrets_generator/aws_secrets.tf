@@ -10,7 +10,7 @@ resource "aws_secretsmanager_secret" "default" {
 
 resource "aws_secretsmanager_secret_version" "default" {
   secret_id     = aws_secretsmanager_secret.default.id
-  secret_string = jsonencode(data.external.secret.result)
+  secret_string = local.secret_string
 
   lifecycle {
     ignore_changes = [
