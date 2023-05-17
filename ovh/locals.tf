@@ -21,7 +21,7 @@ locals {
 
     domain_name    = "ovh-monitoring.node.glif.io"
     admin_password = jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string)["admin_password"]
-    
+
     pvc_size = "100Gi"
   }
 
@@ -34,5 +34,12 @@ locals {
   cert_manager = {
     name      = "letsencrypt"
     namespace = "default"
+  }
+
+  generator_config = {
+    project         = var.project
+    region          = var.region
+    environment     = var.environment
+    sub_environment = var.sub_environment
   }
 }
