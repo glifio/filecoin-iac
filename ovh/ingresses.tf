@@ -1,18 +1,18 @@
-module "ingress_spacenet_daemon" {
+module "ingress_spacenet_gateway" {
   count = local.production
 
-  name   = "spacenet-daemon"
+  name   = "spacenet-gateway"
   source = "../modules/ovh_ingress"
 
   http_host      = "api.spacenet.node.glif.io"
   http_path      = "/"
   http_path_type = "Prefix"
 
-  service_name = "spacenet-lotus-service"
-  service_port = 1234
+  service_name = "spacenet-public-lotus-service"
+  service_port = 2346
 
   enable_public_access = true
-  secret_name          = "filecoin-mainnet-apn1-glif-spacenet"
+  secret_name          = "${module.generator.prefix}-spacenet-public"
 }
 
 module "ingress_monitoring" {
