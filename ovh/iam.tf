@@ -2,10 +2,9 @@ resource "aws_iam_user" "external_dns" {
   name = local.external_dns.name
   path = "/system/"
 
-  tags = merge(
-    { "Name" = "${module.generator.prefix}-${local.external_dns.name}" },
-    module.generator.common_tags
-  )
+  tags = merge(module.generator.common_tags, {
+    "Name" = "${module.generator.prefix}-${local.external_dns.name}"
+  })
 }
 
 resource "aws_iam_access_key" "external_dns" {
