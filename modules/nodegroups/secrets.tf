@@ -12,9 +12,9 @@ resource "aws_secretsmanager_secret_version" "main" {
   secret_id     = aws_secretsmanager_secret.main.id
   secret_string = jsonencode(local.secret_string)
 
-#  lifecycle {
-#    ignore_changes = [secret_string]
-#  }
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
 }
 
 

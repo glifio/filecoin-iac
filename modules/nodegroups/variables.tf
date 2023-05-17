@@ -13,7 +13,7 @@ variable "get_nodegroup_name" {
   default = null
 }
 
-variable "assign_to_space00_07_nodes" {
+variable "assign_to_archive_node" {
   type    = bool
   default = false
 }
@@ -166,17 +166,9 @@ variable "enable_path_transformer" {
 }
 
 variable "enable_switch_transformer" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "If true, switch the path as specified in any switch_path"
-}
-
-variable "switch_to_token" {
-  default = null
-}
-
-variable "switch_to_service" {
-  default = null
 }
 
 variable "replace_path_rule" {
@@ -190,12 +182,6 @@ variable "enable_public_access" {
   default     = false
   description = "If true, add Authorization header"
 }
-
-#variable "secret_name" {
-#  type        = string
-#  default     = null
-#  description = "Secret name to get authorization token from"
-#}
 
 variable "enable_cors" {
   type        = bool
@@ -228,35 +214,3 @@ variable "http_path_ipfs" {
   type        = string
   description = "HTTP path to match"
 }
-
-
-
-
-#
-#variable "as_is_ingress_backend_service_name" {
-#  type        = bool
-#  description = "If the parameter is true, then '-service' string will be added in the end of the line. The logic is useful when we deploy an app"
-#  default     = false
-#}
-#
-#variable "get_ingress_http_path" {
-#  type = string
-#}
-#
-#
-#
-#variable "http_host_ipfs" {}
-#
-#
-#
-#variable "switch_to_another_ingress" {
-#  type    = bool
-#  default = true
-#}
-#
-#variable "switch_to_token" {
-#  default = null
-#}
-#variable "switch_to_service" {
-#  default = null
-#}
