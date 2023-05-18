@@ -1,4 +1,17 @@
 prometheus:
+  additionalServiceMonitors:
+    - name: lotus-service
+      selector:
+        matchLabels:
+          app: lotus-node-app
+      namespaceSelector:
+        matchNames:
+          - network
+      endpoints:
+        - interval: 30s
+          path: /debug/metrics
+          port: tcp-api
+          scheme: http
   additionalPodMonitors:
     - name: default-kong
       namespaceSelector:
@@ -7,18 +20,6 @@ prometheus:
       selector:
         matchLabels:
           app: default-kong
-      podMetricsEndpoints:
-        - interval: 30s
-          targetPort: 8100
-          scheme: http
-          path: /metrics
-    - name: spacenet
-      namespaceSelector:
-        matchNames:
-          - network
-      selector:
-        matchLabels:
-          release: spacenet
       podMetricsEndpoints:
         - interval: 30s
           targetPort: 8100
