@@ -1,17 +1,19 @@
-resource "kubernetes_ingress_v1" "post_root" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-post_root" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-post-root"
     namespace = var.namespace
 
     annotations = {
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
       # Due to network load balancer (NLB) decrypting SSL traffic
       # before it comes to ingress controller, the only
       # usable protocol here is http. Using https here
       # will cause 426 status code stating that the traffic
       # has to be upgraded to TLS 1.2 which will never happen
       # unless NLB stops decrypting traffic
-      "konghq.com/protocols"     = "http"
+      "konghq.com/protocols"     = "http, https"
       "konghq.com/methods"       = "POST"
       "konghq.com/preserve-host" = "false"
 
@@ -28,6 +30,12 @@ resource "kubernetes_ingress_v1" "post_root" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -50,14 +58,16 @@ resource "kubernetes_ingress_v1" "post_root" {
 
 # That's a mock endpoint required for many services
 # to work correctly. Returns 200 upon any request
-resource "kubernetes_ingress_v1" "options_root" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-options_root" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-options-root"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "OPTIONS"
 
       "konghq.com/plugins" = join(", ", [
@@ -69,6 +79,12 @@ resource "kubernetes_ingress_v1" "options_root" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -89,17 +105,19 @@ resource "kubernetes_ingress_v1" "options_root" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_root" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_root" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-root"
     namespace = var.namespace
 
     annotations = {
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
       # If this annotation is not present, the request
       # will be looping over the host name infinitely
       "konghq.com/preserve-host" = "false"
-      "konghq.com/protocols"     = "http"
+      "konghq.com/protocols"     = "http, https"
       "konghq.com/methods"       = "GET"
 
       "konghq.com/plugins" = join(", ", [
@@ -110,6 +128,12 @@ resource "kubernetes_ingress_v1" "get_root" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -133,15 +157,17 @@ resource "kubernetes_ingress_v1" "get_root" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_diluted_supply" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_diluted_supply" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-dilutedsupply"
     namespace = var.namespace
 
     annotations = {
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
       "konghq.com/preserve-host" = "false"
-      "konghq.com/protocols"     = "http"
+      "konghq.com/protocols"     = "http, https"
       "konghq.com/methods"       = "GET"
 
 
@@ -154,6 +180,12 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -174,14 +206,16 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_rpc_v0" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_rpc_v0" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-rpc-v0"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols"     = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols"     = "http, https"
       "konghq.com/methods"       = "GET"
       "konghq.com/preserve-host" = "false"
       "konghq.com/strip-path"    = "true"
@@ -195,6 +229,12 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -215,14 +255,16 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
   }
 }
 
-resource "kubernetes_ingress_v1" "options_rpc_v0" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-options_rpc_v0" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-options-rpc-v0"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "OPTIONS"
 
       "konghq.com/plugins" = join(", ", [
@@ -234,6 +276,12 @@ resource "kubernetes_ingress_v1" "options_rpc_v0" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -254,14 +302,16 @@ resource "kubernetes_ingress_v1" "options_rpc_v0" {
   }
 }
 
-resource "kubernetes_ingress_v1" "post_rpc_v0" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-post_rpc_v0" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-post-rpc-v0"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "POST"
 
       "konghq.com/plugins" = join(", ", compact([
@@ -275,6 +325,12 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -295,14 +351,16 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_rpc_v1" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_rpc_v1" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-rpc-v1"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols"     = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols"     = "http, https"
       "konghq.com/methods"       = "GET"
       "konghq.com/preserve-host" = "false"
       "konghq.com/strip-path"    = "true"
@@ -316,6 +374,12 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -336,14 +400,16 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
   }
 }
 
-resource "kubernetes_ingress_v1" "options_rpc_v1" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-options_rpc_v1" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-options-rpc-v1"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "OPTIONS"
 
       "konghq.com/plugins" = join(", ", [
@@ -355,6 +421,12 @@ resource "kubernetes_ingress_v1" "options_rpc_v1" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -375,14 +447,16 @@ resource "kubernetes_ingress_v1" "options_rpc_v1" {
   }
 }
 
-resource "kubernetes_ingress_v1" "post_rpc_v1" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-post_rpc_v1" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-post-rpc-v1"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "POST"
 
       "konghq.com/plugins" = join(", ", compact([
@@ -396,6 +470,12 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -416,14 +496,16 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_circulating_supply" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_circulating_supply" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-circulating-supply"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
@@ -436,6 +518,12 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -458,15 +546,17 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_circulating_supply_fil" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-circulating-supply-fil"
     namespace = var.namespace
 
     annotations = {
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
       "konghq.com/preserve-host" = "false"
-      "konghq.com/protocols"     = "http"
+      "konghq.com/protocols"     = "http, https"
       "konghq.com/methods"       = "GET"
 
       "konghq.com/plugins" = join(", ", [
@@ -478,6 +568,12 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -498,15 +594,17 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_circulating_supply_fil_v2" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-circulating-supply-fil-v2"
     namespace = var.namespace
 
     annotations = {
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
       "konghq.com/preserve-host" = "false"
-      "konghq.com/protocols"     = "http"
+      "konghq.com/protocols"     = "http, https"
       "konghq.com/methods"       = "GET"
 
       "konghq.com/plugins" = join(", ", [
@@ -518,6 +616,12 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {
@@ -538,14 +642,16 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
   }
 }
 
-resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
-  count = local.basic_ingress_count
+resource "kubernetes_ingress_v1" "ssl-get_vm_circulating_supply" {
+  count = local.ssl_ingress_count
   metadata {
     name      = "${local.prefix}-get-vm-circulating-supply"
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
+      "cert-manager.io/cluster-issuer" = var.certificate_issuer
+
+      "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
@@ -558,6 +664,12 @@ resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
 
   spec {
     ingress_class_name = local.ingress_class
+
+    tls {
+      hosts       = [var.domain_name]
+      secret_name = "${var.domain_name}-ssl"
+    }
+
     rule {
       host = var.domain_name
       http {

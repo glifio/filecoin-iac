@@ -6,7 +6,8 @@ locals {
 
   prefix = "kong-apigw-${var.ingress_class}-${var.stage_name}"
 
-  upstream_service = "${var.upstream_service}-service"
+  upstream_name    = var.affix_upstream_service ? "${var.upstream_service}-lotus" : var.upstream_service
+  upstream_service = "${local.upstream_name}-service"
   rpc_v0_service   = var.override_rpc_v0_service == null ? local.upstream_service : "${var.override_rpc_v0_service}-service"
   rpc_v1_service   = var.override_rpc_v1_service == null ? local.upstream_service : "${var.override_rpc_v1_service}-service"
 
@@ -19,7 +20,7 @@ locals {
     circulating_supply_staging = "circulatingsupply-staging.s3.amazonaws.com"
   }
 
-  ingress_class = "kong-${var.ingress_class}-lb"
+  ingress_class = var.affix_ingress_class ? "kong-${var.ingress_class}-lb" : var.ingress_class
 
   paths = {
     rpc_v0         = "/rpc/v0"
@@ -36,4 +37,8 @@ locals {
   daemon_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.daemon.secret_string), "jwt_token_kong_rw")
 
   mirror_plugin = var.enable_mirroring ? kubernetes_manifest.http_mirror-rpc[0].manifest.metadata.name : ""
+
+  ssl_ingress_condition = length(var.certificate_issuer) > 0
+  ssl_ingress_count     = local.ssl_ingress_condition ? 1 : 0
+  basic_ingress_count   = abs(local.ssl_ingress_count - 1)
 }
