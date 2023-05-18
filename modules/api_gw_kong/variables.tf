@@ -56,10 +56,28 @@ variable "override_daemon_port" {
 }
 
 variable "enable_mirroring" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "mirror_to" {
   default = []
+}
+
+variable "certificate_issuer" {
+  type        = string
+  default     = ""
+  description = "If provided, use certificate issuer for ssl"
+}
+
+variable "affix_ingress_class" {
+  type        = bool
+  default     = true
+  description = "If true, ingress class name is kong-name-lb"
+}
+
+variable "affix_upstream_service" {
+  type        = bool
+  default     = false
+  description = "If true, add -lotus at the end of upstream service name"
 }
