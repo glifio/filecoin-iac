@@ -8,7 +8,7 @@ grafana:
       LotusNodeHealth:
         datasource: Prometheus
         gnetId: 13250
-        revision: 7
+        revision: 8
       LotusPubSubdashboard:
         datasource: Prometheus
         gnetId: 13249
