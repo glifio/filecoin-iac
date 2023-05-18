@@ -1,0 +1,27 @@
+grafana:
+  dashboards:
+    custom:
+      LotusAPIEndpoints:
+        datasource: Prometheus
+        gnetId: 13251
+        revision: 8
+      LotusNodeHealth:
+        datasource: Prometheus
+        gnetId: 13250
+        revision: 7
+      LotusPubSubdashboard:
+        datasource: Prometheus
+        gnetId: 13249
+        revision: 2
+      LotusVolumes:
+        datasource: Prometheus
+        gnetId: 17092
+        revision: 7
+      Kong:
+        datasource: Prometheus
+        gnetId: 17269
+        revision: 5
+      LotusRaulsdashboardNODESYNC:
+        datasource: Prometheus
+        gnetId: 18366
+        revision: 1
