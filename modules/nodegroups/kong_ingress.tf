@@ -11,7 +11,6 @@ resource "kubernetes_ingress_v1" "ingress_kong" {
       "konghq.com/protocols" = "https, http"
     }
   }
-
   spec {
     ingress_class_name = "kong-${var.type_lb_scheme}-lb"
     rule {
