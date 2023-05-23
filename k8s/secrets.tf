@@ -548,3 +548,13 @@ resource "kubernetes_secret_v1" "github_ssh_gist_updater" {
     ssh = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.github_ssh_gist_updater.secret_string), "ssh", null))
   }
 }
+
+resource "kubernetes_secret_v1" "gcp_credentials" {
+  metadata {
+    name      = "gcp-credentials"
+    namespace = "network"
+  }
+  data = {
+    "credentials.json" = jsondecode(data.aws_secretsmanager_secret_version.gcp_credentials.secret_string)["credentials"]
+  }
+}

@@ -326,3 +326,11 @@ data "aws_secretsmanager_secret" "credentials-grafana-users" {
 data "aws_secretsmanager_secret_version" "credentials-grafana-users" {
   secret_id = data.aws_secretsmanager_secret.credentials-grafana-users.id
 }
+
+data "aws_secretsmanager_secret" "gcp_credentials" {
+  name = "${module.generator.prefix}/gcp-credentials"
+}
+
+data "aws_secretsmanager_secret_version" "gcp_credentials" {
+  secret_id = data.aws_secretsmanager_secret.gcp_credentials.id
+}

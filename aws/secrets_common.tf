@@ -83,3 +83,12 @@ resource "aws_secretsmanager_secret" "slack_monitoring_channel" {
     module.generator.common_tags
   )
 }
+
+resource "aws_secretsmanager_secret" "gcp_credentials" {
+  name = "${module.generator.prefix}/gcp-credentials"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-gcp-credentials" },
+    module.generator.common_tags
+  )
+}
