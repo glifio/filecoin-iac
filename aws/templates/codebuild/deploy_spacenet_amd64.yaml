@@ -1,0 +1,41 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_NAME: 'lotus'
+    IMAGE_NETWORK: 'spacenet'
+    CUSTOM_TAG: 'spacenet'
+    PROJECT: 'filecoin'
+    ENVIRONMENT: 'mainnet'
+    SUB_ENV: 'glif'
+    SHORT_REGION: 'apn1'
+    AWS_ACCOUNT_ID: '499623857295'
+    DOCKERUHUB_ORGANIZATION: 'glif'
+    KUBECTL_VERSION: 1.24.7
+    ARCH: amd64
+    DOCKERFILE: Dockerfile
+    REPO: consensus-shipyard/lotus
+  secrets-manager:
+    DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
+    DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
+    AWS_ACCESS_KEY_ID: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_ACCESS_KEY_ID"
+    AWS_SECRET_ACCESS_KEY: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_SECRET_ACCESS_KEY"
+
+phases:
+  install:
+    commands:
+      - echo Environment Variables
+      - printenv
+
+  pre_build:
+    commands:
+      - echo Build STARTED
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
+
+  build:
+    commands:
+      - echo Image built
+      - cd ../../glifio/filecoin-docker/
+      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg REPOSITORY=$REPO --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f ${DOCKERFILE} .
+      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:dev-spacenet-${ARCH}
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:dev-spacenet-${ARCH}
