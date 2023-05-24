@@ -70,4 +70,13 @@ git_configuration = [
       repo_name         = "filecoin-CID-checker",
     }
   },
+  {
+    config = {
+      project_name      = "spacenet-amd64",
+      name              = "spacenet-amd64"
+      organization_name = "consensus-shipyard",
+      description       = "CI/CD pipeline for a filecoin spacenet amd64 application",
+      repo_name         = "lotus",
+    }
+  }
 ]
