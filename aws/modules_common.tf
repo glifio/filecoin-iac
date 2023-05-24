@@ -243,3 +243,26 @@ module "codebuild_multirepository_cd_mainnet_arm64" {
     aws_secretsmanager_secret.github_cd_token_secret
   ]
 }
+
+module "codebuild_spacenet" {
+  count                    = local.is_prod_envs
+  source                   = "../modules/codebuild_multirepositories"
+  git_repository_name      = "lotus"
+  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_spacenet_amd64.yaml")
+  get_global_configuration = local.make_codebuild_global_configuration
+  privileged_mode          = true
+  is_build_concurrent      = false
+  github_cd_token_secret   = "github_cd_rersonal_token_secret"
+  specific_branch          = "spacenet"
+  create_build_webhook     = false
+  create_deploy_webhook    = false
+  environment_compute_type = "BUILD_GENERAL1_LARGE"
+  environment_type         = "LINUX_CONTAINER"
+  codebuild_image          = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+  project_name             = "spacenet-amd64"
+  repo_docker_branch       = "ntwk/spacenet"
+
+  depends_on = [
+    aws_secretsmanager_secret.github_cd_token_secret
+  ]
+}
