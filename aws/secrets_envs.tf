@@ -260,3 +260,14 @@ resource "aws_secretsmanager_secret" "ovh_cloud_credentials" {
     module.generator.common_tags
   )
 }
+
+resource "aws_secretsmanager_secret" "coinfirm" {
+  count = local.is_prod_envs
+
+  name = "${module.generator.prefix}-coinfirm-lotus"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-coinfirm" },
+    module.generator.common_tags
+  )
+}
