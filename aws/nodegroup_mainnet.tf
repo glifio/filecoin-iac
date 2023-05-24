@@ -240,10 +240,31 @@ module "eks_nodegroup_ondemand_fvm_archive" {
   ebs_tenant                              = "fvm-archive"
   assign_to_space00_07_nodes              = true
 }
+
+module "eks_nodegroup_ondemand_confirm_0" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.4xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "coinfirm-0" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+}
 ################# END BLOCK ONDEMAND NODE-GROUP LIST #################
 
 
 ################# START BLOCK SPOT NODE-GROUP LIST #################
+
+module "eks_nodegroup_ondemand_confirm_1" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+  get_nodegroup_name                      = "coinfirm-1" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+  is_spot_instance                        = true
+}
 
 #prod-api-i3-4x8x-spot-b-1-19-Node
 module "eks_nodegroup_mainnet_spot_group8" {

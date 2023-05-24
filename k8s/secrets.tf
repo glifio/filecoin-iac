@@ -548,3 +548,25 @@ resource "kubernetes_secret_v1" "github_ssh_gist_updater" {
     ssh = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.github_ssh_gist_updater.secret_string), "ssh", null))
   }
 }
+
+resource "kubernetes_secret_v1" "coinfirm" {
+  metadata {
+    name      = "coinfirm-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["private_key"]
+    token      = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["jwt_token"]
+  }
+}
+
+resource "kubernetes_secret_v1" "coinfirm_1" {
+  metadata {
+    name      = "coinfirm-1-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["private_key"]
+    token      = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["jwt_token"]
+  }
+}
