@@ -705,5 +705,5 @@ module "ingress-kong_coinfirm" {
   get_rule_host                    = "node.glif.io"
   type_lb_scheme                   = "external"
 
-  return_json                      = true
+  return_json = true
 }

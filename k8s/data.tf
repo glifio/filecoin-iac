@@ -329,10 +329,10 @@ data "aws_secretsmanager_secret_version" "credentials-grafana-users" {
 
 data "aws_secretsmanager_secret" "coinfirm" {
   count = local.is_prod_envs
-  name = "${module.generator.prefix}-coinfirm-lotus"
+  name  = "${module.generator.prefix}-coinfirm-lotus"
 }
 
 data "aws_secretsmanager_secret_version" "coinfirm" {
-  count = local.is_prod_envs
+  count     = local.is_prod_envs
   secret_id = data.aws_secretsmanager_secret.coinfirm[0].id
 }

@@ -49,8 +49,8 @@ resource "aws_opensearch_domain" "main" {
   }
 
   cluster_config {
-    instance_type = "c5.large.search"
-    warm_enabled  = false
+    instance_type  = "c5.large.search"
+    warm_enabled   = false
     instance_count = local.opensearch_instance_count
 
     #    zone_awareness_config {

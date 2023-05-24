@@ -7,6 +7,6 @@ module "uptimerobot_cache" {
   }
 
   global_config = local.make_global_configuration
-  bucket_name = "uptimerobot-cache-prod"
+  bucket_name   = "uptimerobot-cache-prod"
 }
 
