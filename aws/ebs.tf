@@ -3,9 +3,9 @@ resource "aws_ebs_volume" "space00_1" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size = 11264
-  type = "gp3"
-  iops = 3000
+  size       = 11264
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -22,9 +22,9 @@ resource "aws_ebs_volume" "space00_2" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size = 11264
-  type = "gp3"
-  iops = 3000
+  size       = 11264
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -41,9 +41,9 @@ resource "aws_ebs_volume" "space00_3" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size = 11264
-  type = "gp3"
-  iops = 3000
+  size       = 11264
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -60,9 +60,9 @@ resource "aws_ebs_volume" "space00_4" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size = 11264
-  type = "gp3"
-  iops = 3000
+  size       = 11264
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -81,9 +81,9 @@ resource "aws_ebs_volume" "space07_1" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_1[0].id
 
-  size = 12288
-  type = "gp3"
-  iops = 3000
+  size       = 12288
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -102,9 +102,9 @@ resource "aws_ebs_volume" "space07_2" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_2[0].id
 
-  size = 12288
-  type = "gp3"
-  iops = 3000
+  size       = 12288
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -123,9 +123,9 @@ resource "aws_ebs_volume" "space07_3" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_3[0].id
 
-  size = 12288
-  type = "gp3"
-  iops = 3000
+  size       = 12288
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -144,9 +144,9 @@ resource "aws_ebs_volume" "space07_4" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size = 12288
-  type = "gp3"
-  iops = 3000
+  size       = 12288
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -165,9 +165,9 @@ resource "aws_ebs_volume" "fvm_archive_1" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size = 1024
-  type = "gp3"
-  iops = 3000
+  size       = 1024
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -186,9 +186,9 @@ resource "aws_ebs_volume" "fvm_archive_2" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size = 1024
-  type = "gp3"
-  iops = 3000
+  size       = 1024
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -207,9 +207,9 @@ resource "aws_ebs_volume" "fvm_archive_3" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size = 1024
-  type = "gp3"
-  iops = 3000
+  size       = 1024
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
@@ -228,9 +228,9 @@ resource "aws_ebs_volume" "fvm_archive_4" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size = 1024
-  type = "gp3"
-  iops = 3000
+  size       = 1024
+  type       = "gp3"
+  iops       = 3000
   throughput = 167
 
   tags = merge(
