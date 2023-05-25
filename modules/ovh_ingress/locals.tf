@@ -1,32 +1,82 @@
 locals {
-  path_transformer_condition = var.enable_path_transformer && !var.enable_public_access
-  path_transformer_count     = local.path_transformer_condition ? 1 : 0
-  path_transformer_name      = local.path_transformer_condition ? kubernetes_manifest.request_transformer-path_transformer[0].manifest.metadata.name : ""
+  # Create request transformer that transforms the path
+  path_transformer_condition      = var.enable_path_transformer && !var.enable_access_control
+  path_transformer_count          = local.path_transformer_condition ? 1 : 0
+  path_transformer_available_name = "${var.name}-path-transformer"
+  path_transformer_enabled_name   = !local.path_transformer_condition ? "" : local.path_transformer_available_name
 
-  public_access_condition = !var.enable_path_transformer && var.enable_public_access
-  public_access_count     = local.public_access_condition ? 1 : 0
-  public_access_name      = local.public_access_condition ? kubernetes_manifest.request_transformer-public_access[0].manifest.metadata.name : ""
+  # Create request transformer that adds Authorization header with a valid JWT token
+  public_access_add_condition      = !var.enable_path_transformer && var.enable_access_control && var.access_control_public && !var.access_control_replace
+  public_access_add_count          = local.public_access_add_condition ? 1 : 0
+  public_access_add_available_name = "${var.name}-public-access-add"
+  public_access_add_enabled_name   = !local.public_access_add_condition ? "" : local.public_access_add_available_name
 
-  combined_transformer_condition = var.enable_path_transformer && var.enable_public_access
-  combined_transformer_count     = local.combined_transformer_condition ? 1 : 0
-  combined_transformer_name      = local.combined_transformer_condition ? kubernetes_manifest.request_transformer-combined_transformer[0].manifest.metadata.name : ""
+  # Create request transformer that adds or replaces Authorization header with a valid JWT token
+  public_access_replace_condition      = !var.enable_path_transformer && var.enable_access_control && var.access_control_public && var.access_control_replace
+  public_access_replace_count          = local.public_access_replace_condition ? 1 : 0
+  public_access_replace_available_name = "${var.name}-public-access-replace"
+  public_access_replace_enabled_name   = !local.public_access_replace_condition ? "" : local.public_access_replace_available_name
 
-  cors_count = var.enable_cors ? 1 : 0
-  cors_name  = var.enable_cors ? kubernetes_manifest.cors[0].manifest.metadata.name : ""
+  # Create request transformer that adds Authorization header with an ivalid JWT token
+  private_access_add_condition      = !var.enable_path_transformer && var.enable_access_control && !var.access_control_public && !var.access_control_replace
+  private_access_add_count          = local.private_access_add_condition ? 1 : 0
+  private_access_add_available_name = "${var.name}-private-access-add"
+  private_access_add_enabled_name   = !local.private_access_add_condition ? "" : local.private_access_add_available_name
 
-  return_json_count = var.enable_return_json ? 1 : 0
-  return_json_name  = var.enable_return_json ? kubernetes_manifest.response_transformer-return_json[0].manifest.metadata.name : ""
+  # Create request transformer that adds or replaces Authorization header with an ivalid JWT token
+  private_access_replace_condition      = !var.enable_path_transformer && var.enable_access_control && !var.access_control_public && var.access_control_replace
+  private_access_replace_count          = local.private_access_replace_condition ? 1 : 0
+  private_access_replace_available_name = "${var.name}-private-access-replace"
+  private_access_replace_enabled_name   = !local.private_access_replace_condition ? "" : local.private_access_replace_available_name
+
+  # Create request transformer that adds Authorization header with a valid JWT token and transforms the path
+  path_transformer_public_access_add_condition      = var.enable_path_transformer && var.enable_access_control && var.access_control_public && !var.access_control_replace
+  path_transformer_public_access_add_count          = local.path_transformer_public_access_add_condition ? 1 : 0
+  path_transformer_public_access_add_available_name = "${var.name}-path-transformer-public-access-add"
+  path_transformer_public_access_add_enabled_name   = !local.path_transformer_public_access_add_condition ? "" : local.path_transformer_public_access_add_available_name
+
+  # Create request transformer that adds or replaces Authorization header with a valid JWT token and transforms the path
+  path_transformer_public_access_replace_condition      = var.enable_path_transformer && var.enable_access_control && var.access_control_public && var.access_control_replace
+  path_transformer_public_access_replace_count          = local.path_transformer_public_access_replace_condition ? 1 : 0
+  path_transformer_public_access_replace_available_name = "${var.name}-path-transformer-public-access-replace"
+  path_transformer_public_access_replace_enabled_name   = !local.path_transformer_public_access_replace_condition ? "" : local.path_transformer_public_access_replace_available_name
+
+  # Create request transformer that adds Authorization header with an ivalid JWT token and transforms the path
+  path_transformer_private_access_add_condition      = var.enable_path_transformer && var.enable_access_control && !var.access_control_public && !var.access_control_replace
+  path_transformer_private_access_add_count          = local.path_transformer_private_access_add_condition ? 1 : 0
+  path_transformer_private_access_add_available_name = "${var.name}-path-transformer-private-access-add"
+  path_transformer_private_access_add_enabled_name   = !local.path_transformer_private_access_add_condition ? "" : local.path_transformer_private_access_add_available_name
+
+  # Create request transformer that adds or replaces Authorization header with an ivalid JWT token and transforms the path
+  path_transformer_private_access_replace_condition      = var.enable_path_transformer && var.enable_access_control && !var.access_control_public && var.access_control_replace
+  path_transformer_private_access_replace_count          = local.path_transformer_private_access_replace_condition ? 1 : 0
+  path_transformer_private_access_replace_available_name = "${var.name}-path-transformer-private-access-replace"
+  path_transformer_private_access_replace_enabled_name   = !local.path_transformer_private_access_replace_condition ? "" : local.path_transformer_private_access_replace_available_name
+
+  cors_count          = var.enable_cors ? 1 : 0
+  cors_available_name = "${var.name}-cors"
+  cors_enabled_name   = !var.enable_cors ? "" : local.cors_available_name
+
+  return_json_count          = var.enable_return_json ? 1 : 0
+  return_json_available_name = "${var.name}-return-json"
+  return_json_enabled_name   = !var.enable_return_json ? "" : local.return_json_available_name
 
   available_plugins = [
-    local.public_access_name,
-    local.path_transformer_name,
-    local.combined_transformer_name,
-    local.cors_name,
-    local.return_json_name,
+    local.path_transformer_enabled_name,
+    local.public_access_add_enabled_name,
+    local.public_access_replace_enabled_name,
+    local.private_access_add_enabled_name,
+    local.private_access_replace_enabled_name,
+    local.path_transformer_public_access_add_enabled_name,
+    local.path_transformer_public_access_replace_enabled_name,
+    local.path_transformer_private_access_add_enabled_name,
+    local.path_transformer_private_access_replace_enabled_name,
+    local.cors_enabled_name,
+    local.return_json_enabled_name
   ]
 
   enabled_plugins = compact(local.available_plugins)
   plugins_string  = join(", ", local.enabled_plugins)
 
-  auth_token = var.enable_public_access ? jsondecode(data.aws_secretsmanager_secret_version.default[0].secret_string)[var.auth_token_attribute] : ""
+  auth_token = var.enable_access_control && var.access_control_public ? jsondecode(data.aws_secretsmanager_secret_version.default[0].secret_string)[var.auth_token_attribute] : ""
 }
