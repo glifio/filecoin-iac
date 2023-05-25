@@ -12,6 +12,6 @@ module "ingress_monitoring" {
   service_port = 80
 
   enable_path_transformer = false
-  enable_public_access    = false
+  enable_access_control   = false
   enable_return_json      = false
 }

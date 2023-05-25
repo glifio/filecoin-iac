@@ -96,6 +96,12 @@ variable "auth_token_attribute" {
   description = "Attribute of secret to exteact auth token from"
 }
 
+variable "enable_letsencrypt" {
+  type        = bool
+  default     = true
+  description = "Enable issuing certificate for the ingress through Letsencrypt"
+}
+
 variable "certificate_issuer" {
   type        = string
   default     = "letsencrypt-issuer"
