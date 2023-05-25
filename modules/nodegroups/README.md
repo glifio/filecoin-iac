@@ -8,42 +8,34 @@ This module provides the most crucial parts of the infrastructure eks_nodegroup,
 ## Module's example
 
 ````
-module "eks_nodegroup_api-read-group10" {
-  count                                   = local.is_dev_envs
+module "eks_nodegroup_ondemand_${name}" {
+  count                                   = local.is_prod_envs
   source                                  = "../modules/nodegroups"
-  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
-  get_nodegroup_name                      = "api-read-group10" # don't need to type ondemand/spot in the name, it will be added automatically.
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.4xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "${name}" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
   get_namespace                           = kubernetes_namespace_v1.network.metadata[0].name
-  get_desired_size                        = 1
-  assign_to_archive_node                  = true
-  exist_secret                            = data.aws_secretsmanager_secret_version.api_read_dev_lotus
-  is_spot_instance                        = true
 
   # create ingress for http #
-  http_host                               = "test.dev.node.glif.io"
-  http_path                               = "/api-read-group10/lotus/(.*)"
-  service_port                            = 1234
-  type_lb_scheme                          = "external"
-
+  http_host            = "node.glif.io"
+  http_path            = "/${name}/(.*)"
+  service_port         = 1234
+  type_lb_scheme       = "external"
+  enable_public_access = true        
+  false_auth           = true        # if value `true` kong plugin should be use "Authorization: auth_token 
 
   # create ingress for ipfs  #
-  create_ingress_kong_ipfs              = true
-  http_path_ipfs                        = "/api-read-group10/ipfs/4001/(.*)"
-  service_port_ipfs                     = 4001
+  create_ingress_kong_ipfs = false
+  #  http_path_ipfs                        = "/${name}/ipfs/4001/(.*)"
+  #  service_port_ipfs                     = 4001
 
-  # create route53 #
-  zone_id = data.aws_route53_zone.selected.zone_id
-  records = [data.aws_lb.kong_external.dns_name]
+  # create secret #
+   from_secret = "filecoin-mainnet-aps1-glif-calibration"  # should be use from secret 
+
 }
-## TODO ##
-switch to another ingress, switch to any jwt_token_kong_rw 
-    
-#   enable_public_access              = true
-##   enable_path_transformer          = false
-##   switch_to_token                  = data.aws_secretsmanager_secret_version.api_read_dev_lotus
-##   switch_to_service                = "api-read-dev-lotus-service"
 
 ````
 

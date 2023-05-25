@@ -1,32 +1,41 @@
-
 resource "aws_secretsmanager_secret" "main" {
+  count = var.create_aws_secret ? 1 : 0
 
-  name                    = "${module.generator.prefix}-${var.get_nodegroup_name}"
-  recovery_window_in_days = 30
+  name = local.aws_secret_name
+  recovery_window_in_days = 0
 
-  tags = merge({ "Name" = "${module.generator.prefix}-${var.get_nodegroup_name}" },
-  module.generator.common_tags)
+  tags = merge(module.generator.common_tags, {
+	"Name" = local.aws_secret_name
+  })
 }
 
 resource "aws_secretsmanager_secret_version" "main" {
-  secret_id     = aws_secretsmanager_secret.main.id
-  secret_string = jsonencode(local.secret_string)
+  count = var.create_aws_secret ? 1 : 0
+
+  secret_id     = aws_secretsmanager_secret.main[0].id
+  secret_string = local.secret_string
 
   lifecycle {
-    ignore_changes = [secret_string]
+	ignore_changes = [
+	  secret_string
+	]
   }
 }
 
 
 resource "kubernetes_secret_v1" "main" {
-  depends_on = [aws_secretsmanager_secret_version.main]
+  count = var.create_k8s_secret ? 1 : 0
+
   metadata {
-    name      = "${var.get_nodegroup_name}-lotus-secret"
-    namespace = var.get_namespace
+	name      = local.k8s_secret_name
+	namespace = var.get_namespace
   }
+
   data = {
-    "privatekey" = lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "private_key", null)
-    "token"      = lookup(jsondecode(aws_secretsmanager_secret_version.main.secret_string), "jwt_token", null)
+	privatekey = jsondecode(aws_secretsmanager_secret_version.main[0].secret_string)["private_key"]
+	token      = jsondecode(aws_secretsmanager_secret_version.main[0].secret_string)["jwt_token"]
   }
 }
+
+
 

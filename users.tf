@@ -99,5 +99,14 @@ locals {
         "${local.eks_cluster_mainnet}" = "${local.devops_role.eks_group}",
       },
     },
+    {
+      username = "test",
+      aws_account = [
+        "devops"
+      ],
+      eks_access = {
+        "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}"
+      },
+    },
   ]
 }

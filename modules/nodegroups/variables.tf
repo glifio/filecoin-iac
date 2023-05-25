@@ -25,12 +25,12 @@ variable "public_key" {
 
 variable "get_desired_size" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "get_max_size" {
   type    = number
-  default = 3
+  default = 2
 }
 
 variable "get_min_size" {
@@ -78,60 +78,47 @@ variable "create_new_secret" {
 
 
 variable "type_lb_scheme" {
-  type = string
+  type    = string
+  default = null
 }
 
-
-variable "get_whitelist_ips" {
-  default = [
-    "212.58.119.174",
-    "91.149.128.236",
-    "216.144.250.150",
-    "69.162.124.224/28",
-    "63.143.42.240/28",
-    "216.245.221.80/28",
-    "46.137.190.132",
-    "122.248.234.23",
-    "188.226.183.141",
-    "178.62.52.237",
-    "54.79.28.129",
-    "54.94.142.218",
-    "104.131.107.63",
-    "54.67.10.127",
-    "54.64.67.106",
-    "159.203.30.41",
-    "46.101.250.135",
-    "18.221.56.27",
-    "52.60.129.180",
-    "159.89.8.111",
-    "146.185.143.14",
-    "139.59.173.249",
-    "165.227.83.148",
-    "128.199.195.156",
-    "138.197.150.151",
-    "34.233.66.117"
-  ]
-}
-
-###------- route53 variables -----###
-
-variable "zone_id" {}
-
-variable "allow_overwrite" {
+variable "false_auth" {
   type    = bool
-  default = true
+  default = false
 }
-variable "type" {
-  default = "CNAME"
-}
-variable "ttl" {
-  type    = number
-  default = "60"
-}
-variable "records" {
-  type    = list(any)
-  default = []
-}
+
+#variable "get_whitelist_ips" {
+#  default = [
+#    "212.58.119.174",
+#    "91.149.128.236",
+#    "216.144.250.150",
+#    "69.162.124.224/28",
+#    "63.143.42.240/28",
+#    "216.245.221.80/28",
+#    "46.137.190.132",
+#    "122.248.234.23",
+#    "188.226.183.141",
+#    "178.62.52.237",
+#    "54.79.28.129",
+#    "54.94.142.218",
+#    "104.131.107.63",
+#    "54.67.10.127",
+#    "54.64.67.106",
+#    "159.203.30.41",
+#    "46.101.250.135",
+#    "18.221.56.27",
+#    "52.60.129.180",
+#    "159.89.8.111",
+#    "146.185.143.14",
+#    "139.59.173.249",
+#    "165.227.83.148",
+#    "128.199.195.156",
+#    "138.197.150.151",
+#    "34.233.66.117"
+#  ]
+#}
+
+
 
 ## Variables for kong ##
 
@@ -139,11 +126,13 @@ variable "records" {
 variable "http_host" {
   type        = string
   description = "HTTP host to match"
+  default     = null
 }
 
 variable "http_path" {
   type        = string
   description = "HTTP path to match"
+  default     = null
 }
 
 variable "http_path_type" {
@@ -156,6 +145,7 @@ variable "http_path_type" {
 variable "service_port" {
   type        = number
   description = "Backend service port"
+  default     = null
 }
 
 
@@ -201,16 +191,71 @@ variable "auth_token_attribute" {
   description = "Attribute of secret to exteact auth token from"
 }
 
+variable "create_secret" {
+  type    = bool
+  default = true
+}
+
+variable "create_ingress_kong" {
+  type    = bool
+  default = true
+}
+
 variable "create_ingress_kong_ipfs" {
   type    = bool
   default = true
 }
 
 variable "service_port_ipfs" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "http_path_ipfs" {
   type        = string
   description = "HTTP path to match"
+  default     = null
+}
+
+variable "prevent_destroy" {
+  type = bool
+  default = true
+}
+
+
+##check for new vars secret ##
+
+#variable "generator_config" {
+#  type        = map(any)
+#  description = "Configuration for the prefix generator"
+#}
+
+variable "name" {
+  type        = string
+  description = "Secret name"
+  default = ""
+}
+
+variable "create_k8s_secret" {
+  type        = bool
+  default     = true
+  description = "Create secret in Kubernetes"
+}
+
+variable "create_aws_secret" {
+  type        = bool
+  default     = true
+  description = "Create secret in AWS"
+}
+
+variable "k8s_secret_postfix" {
+  type        = string
+  default     = "-lotus-secret"
+  description = "Postfix of the Kubernetes secret"
+}
+
+variable "from_secret" {
+  type        = string
+  default     = ""
+  description = "Secret to copy secret_string from"
 }

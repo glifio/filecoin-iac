@@ -2,6 +2,7 @@
 ## https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/guide/service/annotations/ annotations
 
 resource "kubernetes_ingress_v1" "ingress_kong" {
+  count = var.create_ingress_kong ? 1 : 0
   metadata {
     name      = "kong-${var.get_nodegroup_name}-lotus-service-${var.service_port}"
     namespace = var.get_namespace
@@ -21,7 +22,7 @@ resource "kubernetes_ingress_v1" "ingress_kong" {
           path_type = var.http_path_type
           backend {
             service {
-              name =  "${var.get_nodegroup_name}-lotus-service"
+              name = "${var.get_nodegroup_name}-lotus-service"
               port {
                 number = var.service_port
               }

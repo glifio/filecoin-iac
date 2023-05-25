@@ -9,7 +9,7 @@ locals {
   get_vpc_cidr_block = lookup(var.get_eks_nodegroups_global_configuration, "cidr_blocks", "")
   get_subnet_ids     = lookup(var.get_eks_nodegroups_global_configuration, "subnet_ids", "")
 
-  get_subnet_id = local.get_subnet_ids[2]
+  get_subnet_id = local.get_subnet_ids[0]
   #The idea is joingin a region with AZ symbol as a,b etc. Finally I should get smth like us-east-2a.
   make_az_nodegroup = join("", [local.get_region, var.availability_zone_postfix])
 
@@ -27,15 +27,6 @@ locals {
       "assign_to_archive_node" = var.assign_to_archive_node == true ? "allow_only_critical_pods" : "allow_any_pods"
     }
   )
-
-  # use exist secrets for example 'api-read-dev'
-
-  private_key       = var.exist_secret != null ? lookup(jsondecode(var.exist_secret[0].secret_string), "private_key", null) : data.external.secret_generator.result.private_key
-  jwt_token         = var.exist_secret != null ? lookup(jsondecode(var.exist_secret[0].secret_string), "jwt_token", null) : data.external.secret_generator.result.jwt_token
-  jwt_token_kong_rw = var.exist_secret != null ? lookup(jsondecode(var.exist_secret[0].secret_string), "jwt_token_kong_rw", null) : data.external.secret_generator.result.jwt_token_kong_rw
-
-  secret_string = { "private_key" : "${local.private_key}", "jwt_token" : "${local.jwt_token}", "jwt_token_kong_rw" : "${local.jwt_token_kong_rw}" }
-
 
   ### kong locals ###
 
@@ -68,6 +59,21 @@ locals {
   enabled_plugins = compact(local.available_plugins)
   plugins_string  = join(", ", local.enabled_plugins)
 
+  # secrets locals #
 
-  auth_token = var.exist_secret != null ? jsondecode(var.exist_secret[0].secret_string)[var.auth_token_attribute] : data.external.secret_generator.result.jwt_token_kong_rw
-}
+    aws_secret_count = var.create_aws_secret ? 1 : 0
+    k8s_secret_count = var.create_k8s_secret ? 1 : 0
+
+    aws_secret_name = "${module.generator.prefix}-${var.get_nodegroup_name}"
+    k8s_secret_name = "${var.get_nodegroup_name}${var.k8s_secret_postfix}"
+
+
+    from_secret_condition = length(var.from_secret) > 0
+    from_secret_count     = local.from_secret_condition ? 1 : 0
+    from_secret_name      = var.from_secret
+
+    # If importing from another secret, get secret_string from there. Otherwise, generate a new one
+    secret_string = local.from_secret_condition ? data.aws_secretsmanager_secret_version.from[0].secret_string : jsonencode(data.external.secret.result)
+
+   auth_token = local.from_secret_condition ? jsondecode(data.aws_secretsmanager_secret_version.from[0].secret_string)[var.auth_token_attribute] : jsonencode(data.external.secret.result.jwt_token_kong_rw)
+  }
