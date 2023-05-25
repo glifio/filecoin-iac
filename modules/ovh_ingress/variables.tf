@@ -54,10 +54,22 @@ variable "replace_path_rule" {
   description = "Regular expression to transform the path"
 }
 
-variable "enable_public_access" {
+variable "enable_access_control" {
   type        = bool
   default     = false
-  description = "If true, add Authorization header"
+  description = "Enable Authorization header add/replace"
+}
+
+variable "access_control_public" {
+  type        = bool
+  default     = false
+  description = "If true, add/replace Authorization header with a valid JWT token. Otherwise, with the invalid one."
+}
+
+variable "access_control_replace" {
+  type        = bool
+  default     = false
+  description = "If true, replace Authorization header on top of adding it if it's not present."
 }
 
 variable "secret_name" {

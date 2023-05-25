@@ -1,26 +1,3 @@
-resource "kubernetes_manifest" "request_transformer-public_access" {
-  count = local.public_access_count
-
-  manifest = {
-    apiVersion = "configuration.konghq.com/v1"
-    kind       = "KongPlugin"
-    metadata = {
-      name      = "${var.name}-public-access"
-      namespace = var.namespace
-    }
-
-    plugin = "request-transformer"
-
-    config = {
-      add = {
-        headers = [
-          "Authorization: Bearer ${local.auth_token}"
-        ]
-      }
-    }
-  }
-}
-
 resource "kubernetes_manifest" "request_transformer-path_transformer" {
   count = local.path_transformer_count
 
@@ -28,7 +5,7 @@ resource "kubernetes_manifest" "request_transformer-path_transformer" {
     apiVersion = "configuration.konghq.com/v1"
     kind       = "KongPlugin"
     metadata = {
-      name      = "${var.name}-path-transformer"
+      name      = local.path_transformer_available_name
       namespace = var.namespace
     }
 
@@ -42,14 +19,14 @@ resource "kubernetes_manifest" "request_transformer-path_transformer" {
   }
 }
 
-resource "kubernetes_manifest" "request_transformer-combined_transformer" {
-  count = local.combined_transformer_count
+resource "kubernetes_manifest" "request_transformer-public_access_add" {
+  count = local.public_access_add_count
 
   manifest = {
     apiVersion = "configuration.konghq.com/v1"
     kind       = "KongPlugin"
     metadata = {
-      name      = "${var.name}-combined-transformer"
+      name      = local.public_access_add_available_name
       namespace = var.namespace
     }
 
@@ -58,11 +35,196 @@ resource "kubernetes_manifest" "request_transformer-combined_transformer" {
     config = {
       add = {
         headers = [
-          "Authorization: Bearer ${local.auth_token}"
+          "Authorization: ${local.auth_token}"
         ]
       }
+    }
+  }
+}
 
+resource "kubernetes_manifest" "request_transformer-public_access_replace" {
+  count = local.public_access_replace_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.public_access_replace_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "request-transformer"
+
+    config = {
+      add = {
+        headers = [
+          "Authorization: ${local.auth_token}"
+        ]
+      }
       replace = {
+        headers = [
+          "Authorization: ${local.auth_token}"
+        ]
+      }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-private_access_add" {
+  count = local.private_access_add_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.private_access_add_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "request-transformer"
+
+    config = {
+      add = {
+        headers = [
+          "Authorization: false"
+        ]
+      }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-private_access_replace" {
+  count = local.private_access_replace_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.private_access_replace_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "request-transformer"
+
+    config = {
+      add = {
+        headers = [
+          "Authorization: false"
+        ]
+      }
+      replace = {
+        headers = [
+          "Authorization: false"
+        ]
+      }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-path_transformer_public_access_add" {
+  count = local.path_transformer_public_access_add_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.path_transformer_public_access_add_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "request-transformer"
+
+    config = {
+      add = {
+        headers = [
+          "Authorization: ${local.auth_token}"
+        ]
+      }
+      replace = {
+        uri = var.replace_path_rule
+      }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-path_transformer_public_access_replace" {
+  count = local.path_transformer_public_access_replace_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.path_transformer_public_access_replace_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "request-transformer"
+
+    config = {
+      add = {
+        headers = [
+          "Authorization: ${local.auth_token}"
+        ]
+      }
+      replace = {
+        headers = [
+          "Authorization: ${local.auth_token}"
+        ]
+        uri = var.replace_path_rule
+      }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-path_transformer_private_access_add" {
+  count = local.path_transformer_private_access_add_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.path_transformer_private_access_add_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "request-transformer"
+
+    config = {
+      add = {
+        headers = [
+          "Authorization: false"
+        ]
+      }
+      replace = {
+        uri = var.replace_path_rule
+      }
+    }
+  }
+}
+
+resource "kubernetes_manifest" "request_transformer-path_transformer_private_access_replace" {
+  count = local.path_transformer_private_access_replace_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.path_transformer_private_access_replace_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "request-transformer"
+
+    config = {
+      add = {
+        headers = [
+          "Authorization: false"
+        ]
+      }
+      replace = {
+        headers = [
+          "Authorization: false"
+        ]
         uri = var.replace_path_rule
       }
     }
@@ -76,7 +238,7 @@ resource "kubernetes_manifest" "cors" {
     apiVersion = "configuration.konghq.com/v1"
     kind       = "KongPlugin"
     metadata = {
-      name      = "${var.name}-cors"
+      name      = local.cors_available_name
       namespace = var.namespace
     }
 
@@ -114,7 +276,7 @@ resource "kubernetes_manifest" "response_transformer-return_json" {
     apiVersion = "configuration.konghq.com/v1"
     kind       = "KongPlugin"
     metadata = {
-      name      = "${var.name}-return-json"
+      name      = local.return_json_available_name
       namespace = var.namespace
     }
 
