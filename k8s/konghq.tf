@@ -112,7 +112,7 @@ resource "helm_release" "konghq-external" {
     value = "true"
   }
 }
-#
+
 #resource "helm_release" "konghq-mirror" {
 #  name       = "${module.generator.prefix}-kong-mirror-1"
 #  repository = "https://charts.konghq.com"
