@@ -35,7 +35,7 @@ resource "kubernetes_manifest" "request_transformer-public_access_add" {
     config = {
       add = {
         headers = [
-          "Authorization: ${local.auth_token}"
+          "Authorization: Bearer ${local.auth_token}"
         ]
       }
     }
@@ -58,12 +58,12 @@ resource "kubernetes_manifest" "request_transformer-public_access_replace" {
     config = {
       add = {
         headers = [
-          "Authorization: ${local.auth_token}"
+          "Authorization: Bearer ${local.auth_token}"
         ]
       }
       replace = {
         headers = [
-          "Authorization: ${local.auth_token}"
+          "Authorization: Bearer ${local.auth_token}"
         ]
       }
     }
@@ -137,7 +137,7 @@ resource "kubernetes_manifest" "request_transformer-path_transformer_public_acce
     config = {
       add = {
         headers = [
-          "Authorization: ${local.auth_token}"
+          "Authorization: Bearer ${local.auth_token}"
         ]
       }
       replace = {
@@ -163,12 +163,12 @@ resource "kubernetes_manifest" "request_transformer-path_transformer_public_acce
     config = {
       add = {
         headers = [
-          "Authorization: ${local.auth_token}"
+          "Authorization: Bearer ${local.auth_token}"
         ]
       }
       replace = {
         headers = [
-          "Authorization: ${local.auth_token}"
+          "Authorization: Bearer ${local.auth_token}"
         ]
         uri = var.replace_path_rule
       }
