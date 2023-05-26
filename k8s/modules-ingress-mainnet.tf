@@ -709,3 +709,48 @@ module "ingress-kong_coinfirm" {
 }
 
 
+module "ingress_private_mainnet_fallback" {
+  name   = "private-mainnet-fallback"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host      = "private.node.glif.io"
+  http_path      = "/mainnet/(.*)"
+
+  service_name = "api-read-master-lotus-service"
+  service_port = 1234
+  incress_class = "kong-external-lb"
+  secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
+
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_letsencrypt      = false
+  enable_return_json      = true
+}
+
+#module "ingress_private_calibration_fallback" {
+#  name   = "private-calibration-fallback"
+#  source = "../modules/ovh_ingress"
+#
+#  namespace = "network"
+#
+#  http_host      = "private.node.glif.io"
+#  http_path      = "/calibration/(.*)"
+#
+#  service_name = "api-read-master-lotus-service"
+#  service_port = 1234
+#  incress_class = "kong-external-lb"
+#  secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
+#
+#  enable_path_transformer = true
+#  enable_access_control   = true
+#  access_control_public   = true
+#  access_control_replace  = true
+#  enable_letsencrypt      = false
+#  enable_return_json      = true
+#}
+
+
