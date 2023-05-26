@@ -33,7 +33,7 @@ module "eks_nodegroup_ondemand_${name}" {
   #  service_port_ipfs                     = 4001
 
   # create secret #
-   from_secret = "filecoin-mainnet-aps1-glif-calibration"  # should be use from secret 
+   from_secret = "filecoin-mainnet-aps1-glif-calibration"  # should be use secret from exist
 
 }
 

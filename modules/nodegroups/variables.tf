@@ -218,7 +218,7 @@ variable "http_path_ipfs" {
 }
 
 variable "prevent_destroy" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -233,7 +233,7 @@ variable "prevent_destroy" {
 variable "name" {
   type        = string
   description = "Secret name"
-  default = ""
+  default     = ""
 }
 
 variable "create_k8s_secret" {
