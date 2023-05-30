@@ -644,13 +644,13 @@ module "ingress_private_calibration_fallback" {
 
   namespace = "network"
 
-  http_host = "private.node.glif.io"
-  http_path = "/calibration/(.*)"
+  http_host      = "private.node.glif.io"
+  http_path      = "/calibration/(.*)"
 
-  service_name  = "api-read-master-lotus-service"
-  service_port  = 1234
+  service_name = "calibrationapi-lotus-service"
+  service_port = 1234
   incress_class = "kong-external-lb"
-  secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
+  secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
 
   enable_path_transformer = true
   enable_access_control   = true
@@ -659,5 +659,3 @@ module "ingress_private_calibration_fallback" {
   enable_letsencrypt      = false
   enable_return_json      = true
 }
-
-
