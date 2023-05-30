@@ -1,14 +1,4 @@
 ################# START BLOCK DEV ENV SECRETS LIST #################
-
-resource "aws_secretsmanager_secret" "calibrationapi-archive-lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-calibrationapi-archive-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-calibrationapi-archive-lotus" },
-  module.generator.common_tags)
-}
-
 resource "aws_secretsmanager_secret" "calibrationapi-archive-node-lotus" {
   count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-calibrationapi-archive-node-lotus"
@@ -36,30 +26,12 @@ resource "aws_secretsmanager_secret" "api_read_cache_dev" {
   module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "calibrationapi_lotus" {
+resource "aws_secretsmanager_secret" "calibrationapi_0_lotus" {
   count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-calibrationapi-lotus"
+  name                    = "${module.generator.prefix}-calibrationapi-0-lotus"
   recovery_window_in_days = 30
 
-  tags = merge({ "Name" = "${module.generator.prefix}-calibrationapi-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-calibrationapi-jwt-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-calibrationapi-jwt-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "wallaby_archive_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-wallaby-archive-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-wallaby-archive-lotus" },
+  tags = merge({ "Name" = "${module.generator.prefix}-calibrationapi-0-lotus" },
   module.generator.common_tags)
 }
 
@@ -72,39 +44,12 @@ resource "aws_secretsmanager_secret" "hyperspace_lotus" {
   module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "hyperspace_mirror_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-hyperspace-mirror-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-hyperspace-mirror-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "hyperspace_mirrored_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-hyperspace-mirrored-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-hyperspace-mirrored-lotus" },
-  module.generator.common_tags)
-}
-
 resource "aws_secretsmanager_secret" "hyperspace_private_0_lotus" {
   count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-hyperspace-private-0-lotus"
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-hyperspace-private-0-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "wallaby_archive_private_0_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-wallaby-archive-private-0-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-wallaby-archive-private-0-lotus" },
   module.generator.common_tags)
 }
 
@@ -137,42 +82,6 @@ resource "aws_secretsmanager_secret" "api_read_master_lotus" {
   recovery_window_in_days = 30
 
   tags = merge({ "Name" = "${module.generator.prefix}-api-read-master-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "api_read_mirror_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-api-read-mirror-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-api-read-mirror-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "api_read_mirror_2_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-api-read-mirror-2-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-api-read-mirror-2-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "api_read_master_mirrored_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-api-read-master-mirrored-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-api-read-master-mirrored-lotus" },
-  module.generator.common_tags)
-}
-
-resource "aws_secretsmanager_secret" "api_read_master_canary_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-api-read-master-canary-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-api-read-master-canary-lotus" },
   module.generator.common_tags)
 }
 
