@@ -482,7 +482,7 @@ module "ingress-kong_calibrationapi-ingress-lotus-1" {
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/calibrationapi/lotus/(.*)"
-  get_ingress_backend_service_name        = "calibrationapi-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_name        = "calibrationapi-0-lotus" // the "-service" string will be added automatically
   get_ingress_backend_service_port        = 1234
   get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                           = "mainnet-internal.node.glif.io"
@@ -552,24 +552,12 @@ module "ingress-kong_mainnet_monitoring-80" {
 
 ############calibration.node.glif.io##########################
 
-#module "ingress-kong_calibrationapi-archive" {
-#  count                            = local.is_dev_envs
-#  source                           = "../modules/k8s_ingress"
-#  get_global_configuration         = local.make_global_configuration
-#  get_ingress_http_path            = "/archive/lotus/(.*)"
-#  get_ingress_backend_service_name = "calibrationapi-archive-lotus" // the "-service" string will be added automatically
-#  get_ingress_backend_service_port = 1234
-#  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-#  get_rule_host                    = "calibration.node.glif.io"
-#  type_lb_scheme                   = "external"
-#}
-
 module "ingress-kong_api-read-dev-lotus-2346" {
   count                                   = local.is_prod_envs
   source                                  = "../modules/k8s_ingress"
   get_global_configuration                = local.make_global_configuration
   get_ingress_http_path                   = "/apigw/lotus/(.*)"
-  get_ingress_backend_service_name        = "calibrationapi-lotus" // the "-service" string will be added automatically
+  get_ingress_backend_service_name        = "calibrationapi-0-lotus" // the "-service" string will be added automatically
   get_ingress_backend_service_port        = 2346
   get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                           = "wss.calibration.node.glif.io"
@@ -587,33 +575,6 @@ module "ingress-kong_calibrationapi-node-archive" {
   get_ingress_backend_service_port = 1234
   get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
   get_rule_host                    = "calibration.node.glif.io"
-  type_lb_scheme                   = "external"
-}
-
-
-module "ingress-kong_calibrationapi-ipfs-service-4001" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/calibrationapi/ipfs/4001/(.*)"
-  get_ingress_backend_service_name = "calibrationapi-ipfs" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 4001
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "calibration.node.glif.io"
-  is_kong_auth_header_enabled      = false
-  type_lb_scheme                   = "external"
-}
-
-module "ingress-kong_calibrationapi-ipfs-service-8080" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/calibrationapi/ipfs/8080/(.*)"
-  get_ingress_backend_service_name = "calibrationapi-ipfs" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 8080
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "calibration.node.glif.io"
-  is_kong_auth_header_enabled      = false
   type_lb_scheme                   = "external"
 }
 
@@ -641,59 +602,6 @@ module "ingress-atlantis-80" {
   ]
 }
 
-####### Ingresses for mirror nodes ##########
-#module "ingress-kong_hyperspace-mirror" {
-#  count                                   = local.is_prod_envs
-#  source                                  = "../modules/k8s_ingress"
-#  get_global_configuration                = local.make_global_configuration
-#  get_ingress_http_path                   = "/(.*)"
-#  get_ingress_backend_service_name        = "hyperspace-mirror-lotus" // the "-service" string will be added automatically
-#  get_ingress_backend_service_port        = 2346
-#  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-#  get_rule_host                           = "mirror.hyperspace.node.glif.io"
-#  type_lb_scheme                          = "external"
-#  is_kong_auth_header_block_public_access = false
-#}
-
-#module "ingress-kong_api-read-mirror" {
-#  count                                   = local.is_prod_envs
-#  source                                  = "../modules/k8s_ingress"
-#  get_global_configuration                = local.make_global_configuration
-#  get_ingress_http_path                   = "/(.*)"
-#  get_ingress_backend_service_name        = "api-read-mirror-lotus" // the "-service" string will be added automatically
-#  get_ingress_backend_service_port        = 2346
-#  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-#  get_rule_host                           = "mirror.node.glif.io"
-#  type_lb_scheme                          = "external"
-#  is_kong_auth_header_block_public_access = false
-#}
-#
-#module "ingress-kong_api-read-mirror2" {
-#  count                                   = local.is_prod_envs
-#  source                                  = "../modules/k8s_ingress"
-#  get_global_configuration                = local.make_global_configuration
-#  get_ingress_http_path                   = "/(.*)"
-#  get_ingress_backend_service_name        = "api-read-mirror-2-lotus" // the "-service" string will be added automatically
-#  get_ingress_backend_service_port        = 2346
-#  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-#  get_rule_host                           = "mirror2.node.glif.io"
-#  type_lb_scheme                          = "external"
-#  is_kong_auth_header_block_public_access = false
-#}
-
-module "ingress-kong_api-read-canary" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/k8s_ingress"
-  get_global_configuration                = local.make_global_configuration
-  get_ingress_http_path                   = "/(.*)"
-  get_ingress_backend_service_name        = "api-read-master-canary-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port        = 2346
-  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                           = "canary.node.glif.io"
-  type_lb_scheme                          = "external"
-  is_kong_auth_header_block_public_access = false
-}
-
 module "ingress-kong_coinfirm" {
   count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
@@ -708,18 +616,17 @@ module "ingress-kong_coinfirm" {
   return_json = true
 }
 
-
 module "ingress_private_mainnet_fallback" {
   name   = "private-mainnet-fallback"
   source = "../modules/ovh_ingress"
 
   namespace = "network"
 
-  http_host      = "private.node.glif.io"
-  http_path      = "/mainnet/(.*)"
+  http_host = "private.node.glif.io"
+  http_path = "/mainnet/(.*)"
 
-  service_name = "api-read-master-lotus-service"
-  service_port = 1234
+  service_name  = "api-read-master-lotus-service"
+  service_port  = 1234
   incress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
@@ -737,11 +644,11 @@ module "ingress_private_calibration_fallback" {
 
   namespace = "network"
 
-  http_host      = "private.node.glif.io"
-  http_path      = "/calibration/(.*)"
+  http_host = "private.node.glif.io"
+  http_path = "/calibration/(.*)"
 
-  service_name = "api-read-master-lotus-service"
-  service_port = 1234
+  service_name  = "api-read-master-lotus-service"
+  service_port  = 1234
   incress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 

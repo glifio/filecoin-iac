@@ -44,26 +44,6 @@ data "aws_lb" "kong_internal" {
   ]
 }
 
-#data "aws_lb" "kong_mirror" {
-#  tags = {
-#    Name = "${module.generator.prefix}-kong-mirror-1"
-#  }
-#
-#  depends_on = [
-#    helm_release.konghq-mirror
-#  ]
-#}
-#
-#data "aws_lb" "kong_mirror2" {
-#  tags = {
-#    Name = "${module.generator.prefix}-kong-mirror-2"
-#  }
-#
-#  depends_on = [
-#    helm_release.konghq-mirror2
-#  ]
-#}
-
 data "aws_route53_zone" "selected" {
   name         = var.route53_domain
   private_zone = false
@@ -84,16 +64,6 @@ data "aws_route53_zone" "filecoin_tools" {
   private_zone = false
 }
 
-data "aws_secretsmanager_secret" "calibrationapi_archive_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-calibrationapi-archive-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "calibrationapi_archive_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_lotus[0].id
-}
-
 data "aws_secretsmanager_secret" "calibrationapi_archive_node_lotus" {
   count = local.is_prod_envs
   name  = "${module.generator.prefix}-calibrationapi-archive-node-lotus"
@@ -102,26 +72,6 @@ data "aws_secretsmanager_secret" "calibrationapi_archive_node_lotus" {
 data "aws_secretsmanager_secret_version" "calibrationapi_archive_node_lotus" {
   count     = local.is_prod_envs
   secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_node_lotus[0].id
-}
-
-data "aws_secretsmanager_secret" "wallaby_archive_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-wallaby-archive-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "wallaby_archive_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.wallaby_archive_lotus[0].id
-}
-
-data "aws_secretsmanager_secret" "wallaby_archive_private_0_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-wallaby-archive-private-0-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "wallaby_archive_private_0_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.wallaby_archive_private_0_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "hyperspace_lotus" {
@@ -144,14 +94,14 @@ data "aws_secretsmanager_secret_version" "hyperspace_private_0_lotus" {
   secret_id = data.aws_secretsmanager_secret.hyperspace_private_0_lotus[0].id
 }
 
-data "aws_secretsmanager_secret" "calibrationapi_lotus" {
+data "aws_secretsmanager_secret" "calibrationapi_0_lotus" {
   count = local.is_prod_envs
-  name  = "${module.generator.prefix}-calibrationapi-lotus"
+  name  = "${module.generator.prefix}-calibrationapi-0-lotus"
 }
 
-data "aws_secretsmanager_secret_version" "calibrationapi_lotus" {
+data "aws_secretsmanager_secret_version" "calibrationapi_0_lotus" {
   count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.calibrationapi_lotus[0].id
+  secret_id = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "api_read_dev_lotus" {
@@ -172,16 +122,6 @@ data "aws_secretsmanager_secret" "api_read_cache_dev" {
 data "aws_secretsmanager_secret_version" "api_read_cache_dev" {
   count     = local.is_dev_envs
   secret_id = data.aws_secretsmanager_secret.api_read_cache_dev[0].id
-}
-
-data "aws_secretsmanager_secret" "calibrationapi_jwt_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-calibrationapi-jwt-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "calibrationapi_jwt_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.calibrationapi_jwt_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "monitoring" {
