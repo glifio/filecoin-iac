@@ -7,6 +7,7 @@ module "calibrationapi_chain_snapshot" {
   namespace = kubernetes_namespace_v1.network.metadata[0].name
   git_repo  = "git@gist.github.com:95da15b014ffc3b5a170485001f46abd.git"
   schedule  = "0 0 * * *"
+  is_suspended = true
 }
 
 module "calibrationapi_archive_node_snapshot" {
