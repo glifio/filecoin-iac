@@ -114,121 +114,6 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresource
   is_kong_transformer_header_enabled = false
 }
 
-############ Cid Checker Hyperspace ##########################
-module "ingress-kong_cid-checker-hyperspace" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/"
-  get_ingress_pathType               = "Prefix"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-frontend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 80
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
-module "ingress-kong_cid-checker-hyperspace-api" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/api/(.*)"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-backend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 3000
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
-module "ingress-kong_cid-checker-hyperspace-docs" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/docs"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-backend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 3000
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
-module "ingress-kong_cid-checker-hyperspace-docs-subresources" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/docs/(.*)"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-backend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 3000
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
-module "ingress-kong_cid-checker-alternative-domain-hyperspace" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/"
-  get_ingress_pathType               = "Prefix"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-frontend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 80
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
-module "ingress-kong_cid-checker-alternative-domain-hyperspace-api" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/api/(.*)"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-backend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 3000
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
-module "ingress-kong_cid-checker-alternative-domain-hyperspace-docs" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/docs"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-backend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 3000
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
-module "ingress-kong_cid-checker-alternative-domain-hyperspace-docs-subresources" {
-  count                              = local.is_prod_envs
-  source                             = "../modules/k8s_ingress"
-  get_global_configuration           = local.make_global_configuration
-  get_ingress_http_path              = "/docs/(.*)"
-  get_ingress_backend_service_name   = "cid-checker-hyperspace-backend" // the "-service" string will be added automatically
-  get_ingress_backend_service_port   = 3000
-  get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.hyperspace.filecoin.tools"
-  type_lb_scheme                     = "external"
-  is_kong_auth_header_enabled        = false
-  is_kong_transformer_header_enabled = false
-}
-
 ############CID Checker#######################################
 module "ingress-kong_cid-checker-mainnet" {
   count                              = local.is_prod_envs
@@ -490,44 +375,6 @@ module "ingress-kong_calibrationapi-ingress-lotus-1" {
   is_kong_auth_header_block_public_access = false
 }
 
-module "ingress-kong_hyperspace" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/k8s_ingress"
-  get_global_configuration                = local.make_global_configuration
-  get_ingress_http_path                   = "/hyperspace/lotus/(.*)"
-  get_ingress_backend_service_name        = "hyperspace-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port        = 1234
-  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                           = "mainnet-internal.node.glif.io"
-  type_lb_scheme                          = "internal"
-  is_kong_auth_header_block_public_access = false
-}
-
-module "ingress-kong_wss-hyperspace-lotus-2346" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/k8s_ingress"
-  get_global_configuration                = local.make_global_configuration
-  get_ingress_http_path                   = "/apigw/lotus/(.*)"
-  get_ingress_backend_service_name        = "hyperspace-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port        = 2346
-  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                           = "wss.hyperspace.node.glif.io"
-  type_lb_scheme                          = "external"
-  is_kong_auth_header_block_public_access = false
-}
-
-module "ingress-kong_hyperspace-archive-lotus-2346" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/archive/lotus/(.*)"
-  get_ingress_backend_service_name = "hyperspace-private-0-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 1234
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "hyperspace.node.glif.io"
-  type_lb_scheme                   = "external"
-}
-
 #TODO: think about sharing snapshots for apiread-nodes in the test env
 
 #############common service external##########################
@@ -644,11 +491,11 @@ module "ingress_private_calibration_fallback" {
 
   namespace = "network"
 
-  http_host      = "private.node.glif.io"
-  http_path      = "/calibration/(.*)"
+  http_host = "private.node.glif.io"
+  http_path = "/calibration/(.*)"
 
-  service_name = "calibrationapi-lotus-service"
-  service_port = 1234
+  service_name  = "calibrationapi-lotus-service"
+  service_port  = 1234
   incress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
 

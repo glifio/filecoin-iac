@@ -74,26 +74,6 @@ data "aws_secretsmanager_secret_version" "calibrationapi_archive_node_lotus" {
   secret_id = data.aws_secretsmanager_secret.calibrationapi_archive_node_lotus[0].id
 }
 
-data "aws_secretsmanager_secret" "hyperspace_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-hyperspace-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "hyperspace_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.hyperspace_lotus[0].id
-}
-
-data "aws_secretsmanager_secret" "hyperspace_private_0_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-hyperspace-private-0-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "hyperspace_private_0_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.hyperspace_private_0_lotus[0].id
-}
-
 data "aws_secretsmanager_secret" "calibrationapi_0_lotus" {
   count = local.is_prod_envs
   name  = "${module.generator.prefix}-calibrationapi-0-lotus"

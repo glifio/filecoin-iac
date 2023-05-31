@@ -82,17 +82,3 @@ module "api_gateway_kong_calibration" {
   namespace        = "network"
   upstream_service = "calibrationapi-0-lotus"
 }
-
-module "api_gateway_kong_hyperspace" {
-  count = local.is_prod_envs
-
-  source        = "../modules/api_gw_kong"
-  global_config = local.make_global_configuration
-
-  stage_name  = "hyperspace"
-  domain_name = "api.hyperspace.node.glif.io"
-
-  ingress_class    = "external"
-  namespace        = "network"
-  upstream_service = "hyperspace-lotus"
-}
