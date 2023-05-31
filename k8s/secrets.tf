@@ -10,67 +10,6 @@ resource "kubernetes_secret_v1" "lotus_archive_node_tmp_secret" {
   }
 }
 
-resource "kubernetes_secret_v1" "lotus_hyperspace_node_secret" {
-  count = local.is_prod_envs
-  metadata {
-    name      = "hyperspace-lotus-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    nodeid     = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "bootstrap_node_id", null)
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "jwt_token", null)
-  }
-}
-
-resource "kubernetes_secret_v1" "lotus_hyperspace_slave_0_node_secret" {
-  count = local.is_prod_envs
-  metadata {
-    name      = "hyperspace-slave-0-lotus-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "jwt_token", null)
-  }
-}
-
-resource "kubernetes_secret_v1" "lotus_hyperspace_slave_1_node_secret" {
-  count = local.is_prod_envs
-  metadata {
-    name      = "hyperspace-slave-1-lotus-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "jwt_token", null)
-  }
-}
-
-resource "kubernetes_secret_v1" "lotus_hyperspace_slave_2_node_secret" {
-  count = local.is_prod_envs
-  metadata {
-    name      = "hyperspace-slave-2-lotus-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_lotus[0].secret_string), "jwt_token", null)
-  }
-}
-
-resource "kubernetes_secret_v1" "hyperspace_private_0_lotus" {
-  count = local.is_prod_envs
-  metadata {
-    name      = "hyperspace-private-0-lotus-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_private_0_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.hyperspace_private_0_lotus[0].secret_string), "jwt_token", null)
-  }
-}
-
 resource "kubernetes_secret_v1" "calibrationapi_0_lotus_secret" {
   count = local.is_prod_envs
   metadata {

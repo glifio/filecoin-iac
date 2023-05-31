@@ -28,28 +28,3 @@ resource "kubernetes_manifest" "kong_tcp_ingress" {
     }
   }
 }
-
-resource "kubernetes_manifest" "kong_tcp_ingress_wallaby" {
-  count = local.is_prod_envs
-  manifest = {
-    apiVersion = "configuration.konghq.com/v1beta1"
-    kind       = "TCPIngress"
-
-    metadata = {
-      name      = "${terraform.workspace}-wallaby-1235"
-      namespace = kubernetes_namespace_v1.network.metadata[0].name
-      annotations = {
-        "kubernetes.io/ingress.class" : "kong-external-lb"
-      }
-    }
-    spec = {
-      rules = [{
-        port = 1235
-        backend = {
-          serviceName = "wallaby-archive-lotus-service"
-          servicePort = 1235
-        }
-      }]
-    }
-  }
-}
