@@ -23,7 +23,7 @@ module "eks_nodegroup_ondemand_api_read_dev_db" {
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 
   custom_labels = {
-    app = "api-read-dev"
+    app     = "api-read-dev"
     purpose = "db"
   }
 }
