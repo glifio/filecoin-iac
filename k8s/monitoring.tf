@@ -39,4 +39,6 @@ resource "helm_release" "monitoring" {
     name  = "grafana.adminPassword"
     value = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "admin_password", null)
   }
+
+  max_history = 2
 }
