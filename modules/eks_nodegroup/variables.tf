@@ -1,7 +1,7 @@
 variable "get_global_configuration" {}
 variable "get_eks_nodegroups_global_configuration" {}
 variable "get_instance_type" {
-  type    = string
+  type = string
 }
 variable "is_spot_instance" {
   type    = bool
@@ -66,7 +66,7 @@ variable "ebs_tenant" {
 }
 
 variable "custom_labels" {
-  type = map
-  default = {}
+  type        = map(any)
+  default     = {}
   description = "Custom labels for the Kubernetes node"
 }
