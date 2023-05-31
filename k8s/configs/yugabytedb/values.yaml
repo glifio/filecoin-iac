@@ -1,0 +1,12 @@
+storage:
+  master:
+    storageClass: "ebs-sc-gp2"
+    size: 100Gi
+  tserver:
+    storageClass: "ebs-sc-gp2"
+    size: 100Gi
+
+replicas:
+  master: 1
+  tserver: 1
+  totalMasters: 1
