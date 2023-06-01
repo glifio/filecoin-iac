@@ -22,6 +22,18 @@ resource "kubernetes_secret_v1" "calibrationapi_0_lotus_secret" {
   }
 }
 
+resource "kubernetes_secret_v1" "calibrationapi_1_lotus_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "calibrationapi-1-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.calibrationapi_0_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.calibrationapi_0_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
 resource "kubernetes_secret_v1" "api_read_dev_lotus_secret" {
   count = local.is_dev_envs
   metadata {
