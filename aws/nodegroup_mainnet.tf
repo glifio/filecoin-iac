@@ -115,18 +115,18 @@ module "eks_nodegroup_ondemand_group29" {
   assign_to_space00_07_nodes              = true
 }
 
-#module "eks_nodegroup_ondemand_fvm_archive" {
-#  count                                   = local.is_prod_envs
-#  source                                  = "../modules/eks_nodegroup"
-#  ami_type                                = "AL2_ARM_64"
-#  get_instance_type                       = "r6g.12xlarge"
-#  get_nodegroup_name                      = "fvm-archive" # don't need to type ondemand/spot in the name, it will be added automatically.
-#  get_global_configuration                = local.make_global_configuration
-#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-#  use_existing_ebs                        = true
-#  ebs_tenant                              = "fvm-archive"
-#  assign_to_space00_07_nodes              = true
-#}
+module "eks_nodegroup_ondemand_fvm_archive" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6g.12xlarge"
+  get_nodegroup_name                      = "fvm-archive" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+  use_existing_ebs                        = true
+  ebs_tenant                              = "fvm-archive"
+  assign_to_space00_07_nodes              = true
+}
 
 module "eks_nodegroup_ondemand_confirm_0" {
   count                                   = local.is_prod_envs
