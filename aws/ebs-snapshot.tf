@@ -19,6 +19,8 @@ resource "aws_iam_role_policy" "dlm" {
 }
 
 resource "aws_dlm_lifecycle_policy" "space00" {
+  count = local.is_prod_envs
+
   description        = "Make snapshots of space00 LVM volumes"
   execution_role_arn = aws_iam_role.dlm.arn
   state              = "ENABLED"
@@ -53,6 +55,8 @@ resource "aws_dlm_lifecycle_policy" "space00" {
 }
 
 resource "aws_dlm_lifecycle_policy" "fvm-archive" {
+  count = local.is_prod_envs
+
   description        = "Make snapshots of fvm-archive LVM volumes"
   execution_role_arn = aws_iam_role.dlm.arn
   state              = "ENABLED"
