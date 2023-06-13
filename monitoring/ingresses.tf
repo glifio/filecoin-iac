@@ -4,6 +4,8 @@ module "ingress_monitoring" {
 
   namespace = "monitoring"
 
+  incress_class = local.ingress_class
+
   http_host      = aws_route53_record.monitoring.name
   http_path      = "/"
   http_path_type = "Prefix"
