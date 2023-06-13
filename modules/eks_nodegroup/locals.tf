@@ -25,7 +25,8 @@ locals {
       "nodeGroupName"              = local.get_nodegroup_postfix
       "environment"                = local.get_environment
       "assign_to_space00_07_nodes" = var.assign_to_space00_07_nodes == true ? "allow_only_critical_pods" : "allow_any_pods"
-    }
+    },
+    var.custom_labels
   )
 
 

@@ -272,6 +272,7 @@ resource "kubernetes_secret_v1" "github_ssh_gist_updater" {
 }
 
 resource "kubernetes_secret_v1" "coinfirm" {
+  count = local.is_prod_envs
   metadata {
     name      = "coinfirm-lotus-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
@@ -283,6 +284,7 @@ resource "kubernetes_secret_v1" "coinfirm" {
 }
 
 resource "kubernetes_secret_v1" "coinfirm_1" {
+  count = local.is_prod_envs
   metadata {
     name      = "coinfirm-1-lotus-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name

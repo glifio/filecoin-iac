@@ -64,3 +64,9 @@ variable "ebs_tenant" {
   default     = null
   description = "Tenant tag value to search EBS volumes by"
 }
+
+variable "custom_labels" {
+  type        = map(any)
+  default     = {}
+  description = "Custom labels for the Kubernetes node"
+}
