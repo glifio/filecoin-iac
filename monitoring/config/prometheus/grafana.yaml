@@ -1,0 +1,31 @@
+grafana:
+  grafana.ini:
+    unified_alerting:
+      enabled: false
+    server:
+      root_url: https://${domain_name}
+  notifiers:
+    notifiers.yaml:
+      notifiers:
+        - name: "notification-channel-1"
+          type: "slack"
+          uid: "slacknotifier"
+          org_id: 1
+          is_default: true
+          send_reminder: true
+          frequency: "1h"
+          disable_resolve_message: false
+          settings:
+            url: ${slack_api_url}
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'custom'
+          orgId: 1
+          folder: 'lotus'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/custom
