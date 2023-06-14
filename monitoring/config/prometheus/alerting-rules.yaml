@@ -1,0 +1,45 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: 'Duration for Block Validation on the pod more than 30s'
+    folder: lotus
+    interval: 60s
+    rules:
+      - uid: prometheus
+        title: 'Duration for Block Validation in ms'
+        condition: A
+        data:
+          - refId: A
+            datasourceUid: '-100'
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 30000
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - A
+                      - '5m'
+                      - 'now'
+                  reducer:
+                    type: avg
+                  type: query
+              datasource:
+                type: prometheus
+                uid: prometheus
+              expression: "rate(lotus_block_validation_ms_sum[5m])/rate(lotus_block_validation_ms_count[5m]) OR rate(visor_block_validation_ms_sum[5m])/rate(visor_block_validation_ms_count[5m])"
+              intervalMs: ""
+              maxDataPoints: ""
+              refId: A
+              type: math
+        dashboardUid: LotusNodeHealth
+        panelId: 13250
+        noDataState: Alerting
+        for: 60s
+        annotations:
+          summary: Duration for Block Validation in ms
+        labels:
+          severity: critical

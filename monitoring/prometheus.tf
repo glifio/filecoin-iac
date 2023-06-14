@@ -3,7 +3,7 @@ resource "helm_release" "monitoring" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   namespace  = "monitoring"
-  version    = "36.6.2"
+  version    = "46.8.0"
 
   values = [
     file("${path.module}/config/prometheus/general.yaml"),
