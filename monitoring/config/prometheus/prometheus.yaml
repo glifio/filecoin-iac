@@ -7,7 +7,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: csi-cinder-high-speed
+          storageClassName: ebs-sc-gp2
           accessModes:
             - ReadWriteOnce
           resources:
