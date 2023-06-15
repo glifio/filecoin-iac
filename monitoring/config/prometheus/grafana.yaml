@@ -1,7 +1,98 @@
 grafana:
   grafana.ini:
+    alerting:
+      rules.yaml:
+        apiVersion: 1
+        groups:
+          - orgId: 1
+            name: lotus
+            folder: lotus
+            interval: 1m
+            rules:
+              - uid: f6ecfa4e-f5fe-42ac-bcf3-d33a919a79c3
+                title: Duration for Block Validation on the pod more than 30s
+                condition: C
+                data:
+                  - refId: A
+                    relativeTimeRange:
+                      from: 600
+                      to: 0
+                    datasourceUid: prometheus
+                    model:
+                      editorMode: builder
+                      expr: rate(lotus_block_validation_ms_sum[5m])/rate(lotus_block_validation_ms_count[5m]) OR rate(visor_block_validation_ms_sum[5m])/rate(visor_block_validation_ms_count[5m])
+                      hide: false
+                      intervalMs: 1000
+                      legendFormat: __auto
+                      maxDataPoints: 43200
+                      range: true
+                      refId: A
+                  - refId: B
+                    relativeTimeRange:
+                      from: 600
+                      to: 0
+                    datasourceUid: __expr__
+                    model:
+                      conditions:
+                        - evaluator:
+                            params: [ ]
+                            type: gt
+                          operator:
+                            type: and
+                          query:
+                            params:
+                              - B
+                          reducer:
+                            params: [ ]
+                            type: last
+                          type: query
+                      datasource:
+                        type: __expr__
+                        uid: __expr__
+                      expression: A
+                      hide: false
+                      intervalMs: 1000
+                      maxDataPoints: 43200
+                      reducer: last
+                      refId: B
+                      type: reduce
+                  - refId: C
+                    relativeTimeRange:
+                      from: 600
+                      to: 0
+                    datasourceUid: __expr__
+                    model:
+                      conditions:
+                        - evaluator:
+                            params:
+                              - 30000
+                            type: gt
+                          operator:
+                            type: and
+                          query:
+                            params:
+                              - C
+                          reducer:
+                            params: [ ]
+                            type: last
+                          type: query
+                      datasource:
+                        type: __expr__
+                        uid: __expr__
+                      expression: B
+                      hide: false
+                      intervalMs: 1000
+                      maxDataPoints: 43200
+                      refId: C
+                      type: threshold
+                noDataState: NoData
+                execErrState: Error
+                for: 5m
+                annotations:
+                  description: Duration for Block Validation on the pod more than 30s
+                isPaused: false
     unified_alerting:
-      enabled: false
+      enabled: true
     server:
       root_url: https://${domain_name}
   notifiers:
