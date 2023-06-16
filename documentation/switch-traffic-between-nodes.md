@@ -1,70 +1,97 @@
-## Steps to switch traffic from  unavailable nodes to another node
+## Steps to switch traffic from one node to another
 
-- [Edit ingress](#edit-ingress)
-- [Edit kong plugin](#edit-kongplugin)
-- [Restore state](#restore-state)
 
-For example switch traffic from space06 to api-read-master
+## Summary
+Let’s assume we want to switch traffic from node **A** to node **B**. To do that, we must do the following:
+1. [Edit the ingress rule]() of node A so the traffic flows to the service of node B.
+2. [Edit the plugins]() enabled for the node A ingress so they apply the JWT authorization token of the node B for the incoming requests. That’s needed so the node B will not throw 401 Unauthorized status code on your requests signed with the node A authorization token because of the token mismatch.
+So, let’s do that step by step based on the following example.
 
-### Edit ingress
 
-1. Needs to change service in ingress object
 
-make sure that your context is correct 
+## Inputs
+All the operations will be performed on the resources of the node A, so you only need to know the following about node B:
+- <span style="color:black">bar-service</span> – that’s the service name of the node B.
+- <span style="color:black">bar-token</span> – that’s the read-write authorization token. You can find it in the AWS Secrets Manager.
 
-```` kubectl config use-context arn:aws:eks:ap-northeast-1:499623857295:cluster/filecoin-mainnet-apn1-glif-eks````
+So, let’s describe the resources of node A that we’ll be working with
 
- - ````kubectl -n network get ingress````
+### Ingress
+The ingress will look something like the following. Take note of the following thing:
+- <span style="color:black">foo-ingress</span> – that’s the name of the ingress.
+- <span style="color:black">request-transformer-header-foo</span> – that’s the KongPlugin resource that’s responsible for authorization.
+- <span style="color:black">foo-service</span> – that’s the service that the ingress is pointing to.
 
- - ```kubectl -n network edit ingress kong-space06-lotus-1234-6mosn```
+![ingress.png](png/ingress.png)
 
- - change service from *space06-lotus-service* to *api-read-master-lotus-service*
+### KongPlugin
 
-   ![Screenshot 2023-04-19 at 12.54.05.png](png%2FScreenshot%202023-04-19%20at%2012.54.05.png)
-2.  Needs to copy *request-transformer-header* from the konghq.com/plugins:annotations
-    this plugin replaces the token and allows to use token for space06
+![kongplugin.png](png/kongplugin.png)
 
-![Screenshot 2023-04-19 at 12.54.23.png](png%2FScreenshot%202023-04-19%20at%2012.54.23.png)
-### Edit kong plugin
+## Switch the traffic
+To actually switch the traffic, do the following steps:
+1. <span style="color:black">Change the service field</span> of the node A ingress so it <span style="color:black">points to the bar-service</span>, like the following:
 
-3. Add token to kong plugin
+````shell
+    kubectl -n network edit ingress foo-ingress
+````
 
-```` kubectl -n network edit kongplugin request-transformer-header-6mosn ````
+````yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: cors, request-transformer-header-foo
+    konghq.com/protocols: https, http
+  name: foo-ingress
+  namespace: network
+spec:
+  ingressClassName: kong-external-lb
+  rules:
+  - host: node.glif.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: bar-service
+            port:
+              number: 1234
+        path: /foo/lotus/(.*)
+        pathType: Exact
+````
 
-![Screenshot 2023-04-19 at 13.10.39.png](doc%2FScreenshot%202023-04-19%20at%2013.10.39.png)![Screenshot 2023-04-19 at 13.10.39.png](png%2FScreenshot%202023-04-19%20at%2013.10.39.png)
-4. Where take a token for kong plugin 
+2. Edit the <span style="color:black">request-transformer-header-foo</span> KongPlugin so it adds and replaces the Authorization header of incoming requests to the <span style="color:black">Bearer bar-token</span>, like the following:
 
-- Go to AWS account  --> Secret Manager 
-- Select secret *api-read-master* / or any node where traffic is switched
-- copy jwt_token_kong_rw               // if you don't know how create jwt_token_kong_rw please check the file add-new-nodes [Create custom JWT token](#sreate-custom-jwt-token)
+````shell
 
-![Screenshot 2023-04-19 at 13.17.09.png](png%2FScreenshot%202023-04-19%20at%2013.17.09.png)
-5. make sure that your node is available
-```
-curl -X POST 'https://node.glif.io/space06/lotus/rpc/v0'   --data-raw '{"jsonrpc": "2.0", "method": "Filecoin.ChainHead","params": [],"id": 5}'     -H 'content-type: application/json'
+    kubectl -n network edit kongplugin request-transformer-header-foo
+````
 
- ```
-or postman 
-
-![Screenshot 2023-04-19 at 13.40.17.png](png%2FScreenshot%202023-04-19%20at%2013.40.17.png)
-### Restore state
-
-6. return to  kong plugin 
-
-``````kubectl -n network edit kongplugin request-transformer-header-6mosn``````
-
-7. delete token like a screenshot
-
-![Screenshot 2023-04-21 at 11.43.59.png](png%2FScreenshot%202023-04-21%20at%2011.43.59.png)
-
-8. return to ingress
-
-``````kubectl -n network edit ingress kong-space06-lotus-1234-6mosn``````
-
-9. Switch to service for space06
-
-10. Check traffic with token for space06 'jwt-token-kond-rw'
+````yaml
+apiVersion: configuration.konghq.com/v1
+config:
+  add:
+    headers:
+    - 'Authorization: Bearer bar-token’
+  replace:
+    uri: /$(uri_captures[1])
+    headers:
+    - 'Authorization: Bearer bar-token’
+kind: KongPlugin
+metadata:
+  name: request-transformer-header-foo
+  namespace: network
+plugin: request-transformer
 
 ````
-  curl -X POST 'https://node.glif.io/space06/lotus/rpc/v0'   --data-raw '{"jsonrpc": "2.0", "method": "Filecoin.ChainHead","params": [],"id": 5}'     -H 'content-type: application/json'  -H 'Authorization: Bearer token'
+
+3. And that’s it! If everything has been done correctly, the requests you send to node A will actually flow to node B and will be signed by the correct authorization token.
+
+The requests example:
+
+````shell
+curl -X POST 'https://node.glif.io/${NODE A}/lotus/rpc/v0' -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "Filecoin.Version", "params": [], "id": 1}` -H "Authorization: Bearer bar-token"
 ````
+
+![connect-ingress-postman](png/connect-ingress-postman.png)
+

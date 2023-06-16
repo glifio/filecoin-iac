@@ -6,6 +6,7 @@ locals {
     sub_environment = var.sub_environment
   }
 
+  #
   make_eks_nodegroups_global_configuration = {
     cluster_name = aws_eks_cluster.main.name
     vpc_id       = aws_vpc.main.id
