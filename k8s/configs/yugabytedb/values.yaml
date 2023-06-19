@@ -7,6 +7,12 @@ storage:
     size: 100Gi
 
 replicas:
-  master: 1
-  tserver: 1
+  master: 2
+  tserver: 2
   totalMasters: 1
+
+gflags:
+  tserver:
+    db_block_cache_size_percentage: 40
+    global_memstore_size_mb_max: 1024
+    memstore_arena_size_kb: 64
