@@ -165,7 +165,7 @@ resource "aws_ebs_volume" "fvm_archive_1" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size       = 1024
+  size       = 2048
   type       = "gp3"
   iops       = 3000
   throughput = 167
@@ -186,7 +186,7 @@ resource "aws_ebs_volume" "fvm_archive_2" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size       = 1024
+  size       = 2048
   type       = "gp3"
   iops       = 3000
   throughput = 167
@@ -207,7 +207,7 @@ resource "aws_ebs_volume" "fvm_archive_3" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size       = 1024
+  size       = 2048
   type       = "gp3"
   iops       = 3000
   throughput = 167
@@ -228,7 +228,7 @@ resource "aws_ebs_volume" "fvm_archive_4" {
 
   #snapshot_id = data.aws_ebs_snapshot.space00_4[0].id
 
-  size       = 1024
+  size       = 2048
   type       = "gp3"
   iops       = 3000
   throughput = 167
