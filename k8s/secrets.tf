@@ -272,6 +272,7 @@ resource "kubernetes_secret_v1" "github_ssh_gist_updater" {
 }
 
 resource "kubernetes_secret_v1" "coinfirm" {
+  count = local.is_prod_envs
   metadata {
     name      = "coinfirm-lotus-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
@@ -283,6 +284,7 @@ resource "kubernetes_secret_v1" "coinfirm" {
 }
 
 resource "kubernetes_secret_v1" "coinfirm_1" {
+  count = local.is_prod_envs
   metadata {
     name      = "coinfirm-1-lotus-secret"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
@@ -291,4 +293,28 @@ resource "kubernetes_secret_v1" "coinfirm_1" {
     privatekey = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["private_key"]
     token      = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["jwt_token"]
   }
+}
+
+module "blockscout-0-lotus-secret" {
+  count = local.is_prod_envs
+
+  source = "../modules/secrets_generator"
+
+  name = "blockscout-0-lotus"
+
+  generator_config = local.make_global_configuration
+}
+
+module "blockscout-1-lotus-secret" {
+  count = local.is_prod_envs
+
+  source = "../modules/secrets_generator"
+
+  name = "blockscout-1-lotus"
+
+  from_secret = module.blockscout-0-lotus-secret[0].aws_secret_name
+
+  generator_config = local.make_global_configuration
+
+  depends_on = [ module.blockscout-0-lotus-secret ]
 }
