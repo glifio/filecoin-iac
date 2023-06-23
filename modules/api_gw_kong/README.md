@@ -43,19 +43,18 @@ upstream_service = "hyperspace-lotus"
 
 
 
-### GET /root
+### POST /root
 
 #### What happens there goes like the following:
-- Kong receives a `GET` request for URL https://api.node.glif.io/.
+- Kong receives a `POST` request for URL https://api.node.glif.io/.
 - Kong looks for an ingress with:
   - http_host = `api.node.glif.io`
   - http_path = `/`
-  - "konghq.com/methods" = `"GET"`
+  - "konghq.com/methods" = `"POST"`
 - On the access phase of the request processing Kong executes the [req_root.lua](scripts/req_root.lua) script. That implies the following:
-  - Change the method to `POST`
   - Change the path to `/rpc/v1`
   - Add the Content-Type: `application/json` header
-- Kong sends the altered request to the upstream service [static page](https://api.node.glif.io/).
+- Kong sends the altered request to the upstream service (lotus gateway).
 
 
 ### GET /statecirculatingsupply
@@ -78,9 +77,9 @@ The simplified execution process looks something like this:
   - Add the request body: `{"jsonrpc":"2.0","method":"Filecoin.StateCirculatingSupply","id":42,"params":[[]]}`
 - Kong sends the altered request to the upstream service (lotus daemon).
 - Kong receives a response from the upstream service (lotus daemon).This is a massive JSON
-   - On the `headers_filter` phase of the request processing Kong deletes the Content-Length header from the response use [clear_content_lenght.lua](scripts/clear_content-length.lua) script.\
+   - On the `headers_filter` phase of the request processing Kong deletes the Content-Length header from the response using the [clear_content_lenght.lua](scripts/clear_content-length.lua) script.\
 That’s important because we’re going to change the response text later and consequently the Content-Length header of the original response will become invalid.
-   - On the `body_filter` phase of the request, processing Kong extracts the number from the result field of the original response using a [res_statecirculatingsupply.lua](scripts/res_statecirculatingsupply.lua) script and sets the response body to this number.\
+   - On the `body_filter` phase of the request processing, Kong extracts the number from the result field of the original response using the [res_statecirculatingsupply.lua](scripts/res_statecirculatingsupply.lua) script and sets the response body to this number.\
 Kong sends the altered response downstream.
 
 
@@ -97,7 +96,7 @@ flowchart LR
     
 ````
 #### What happens there goes like the following:
-- Kong receives a `GET` request for URL https://api.node.glif.io/statecirculatingsupply.
+- Kong receives a `GET` request for URL https://api.node.glif.io/vmcirculatingsupply.
 - Kong looks for an ingress with:
   - http_host = `api.node.glif.io`
   - http_path = `/vmcirculatingsupply`
@@ -109,9 +108,9 @@ flowchart LR
   - Add the request body: `{"jsonrpc":"2.0","method":"Filecoin.StateVMCirculatingSupplyInternal","id":42,"params":[[]]}`
 - Kong sends the altered request to the upstream service (lotus daemon).
 - Kong receives a response from the upstream service (lotus daemon).This is a massive JSON
-  - On the `headers_filter` phase of the request processing Kong deletes the Content-Length header from the response use [clear_content_lenght.lua](scripts/clear_content-length.lua) script.\
+  - On the `headers_filter` phase of the request processing Kong deletes the Content-Length header from the response using tge [clear_content_lenght.lua](scripts/clear_content-length.lua) script.\
     That’s important because we’re going to change the response text later and consequently the Content-Length header of the original response will become invalid.
-  - On the `body_filter` phase of the request, processing Kong extracts the number from the result field of the original response using a [res_vmcirculatingsupply.lua](scripts/res_vmcirculatingsupply.lua) script and sets the response body to this number.\
+  - On the `body_filter` phase of the request processing Kong extracts the number from the FilCirculating field of the original response using the [res_vmcirculatingsupply.lua](scripts/res_vmcirculatingsupply.lua) script and sets the response body to this number.\
     Kong sends the altered response downstream.
 
 
