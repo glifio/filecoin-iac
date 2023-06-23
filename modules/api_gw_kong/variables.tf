@@ -1,13 +1,16 @@
 variable "stage_name" {
   type = string
+  description = "If provided, use for the naming ingress."
 }
 
 variable "domain_name" {
   type = string
+  description = "List of s3 buckets names."
 }
 
 variable "ingress_class" {
   type = string
+  description = "Ingress class name."
 }
 
 variable "global_config" {}
@@ -18,11 +21,13 @@ variable "namespace" {
 
 variable "upstream_service" {
   type = string
+  description = "Backend service name."
 }
 
 variable "upstream_port" {
   type    = number
   default = 2346
+  description = "Backend service port."
 }
 
 variable "override_rpc_v0_service" {
@@ -67,7 +72,7 @@ variable "mirror_to" {
 variable "certificate_issuer" {
   type        = string
   default     = ""
-  description = "If provided, use certificate issuer for ssl"
+  description = "If provided, use the certificate issuer for SSL"
 }
 
 variable "affix_ingress_class" {
