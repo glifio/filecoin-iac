@@ -14,7 +14,7 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
     config = {
       add = {
         headers = [
-          var.false_auth ? "Authorization: false" : "Authorization: Bearer ${local.auth_token}"
+          var.use_auth_token ? "Authorization: false" : "Authorization: Bearer ${local.auth_token}"
         ]
       }
     }
@@ -58,7 +58,7 @@ resource "kubernetes_manifest" "request_transformer-combined_transformer" {
     config = {
       add = {
         headers = [
-          var.false_auth ? "Authorization: false" : "Authorization: Bearer ${local.auth_token}"
+          var.use_auth_token ? "Authorization: false" : "Authorization: Bearer ${local.auth_token}"
         ]
       }
       replace = {

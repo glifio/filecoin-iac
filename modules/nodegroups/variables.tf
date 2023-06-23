@@ -195,10 +195,10 @@ variable "auth_token_attribute" {
   description = "Attribute of secret to auth token from."
 }
 
-variable "false_auth" {
+variable "use_auth_token" {
   type = bool
-  default = true
-  description = "If true, kong plugin using to section with token the `Authorization: false`"
+  default = false
+  description = "If true, kong plugin using JWT token the `Authorization: Bearer auth_token`"
 }
 variable "create_secret" {
   type    = bool
