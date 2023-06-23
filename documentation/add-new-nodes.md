@@ -201,4 +201,4 @@ module "ingress_example" {
 
 
 ## Deploying the lotus helm chart
-Refer to the filecoin-chart documentation.
+Refer to the [filecoin-chart](https://github.com/glifio/filecoin-chart/README.md) documentation.

@@ -61,7 +61,14 @@ upstream_service = "hyperspace-lotus"
 The simplified execution process looks something like this:
 
 
-![get-circulatingsupply](scripts/png/get-circulatingsupply.png)
+````mermaid
+flowchart LR
+    A["👨‍💼" \n User] -->|GET /statecirculatingsupply| B(\n\n Kong Gateway\n\n\n)
+    B --> | POST /rpc/v0 with body | C(\n\n Lotus daemon\n\n\n)
+    C --> | Returns a chunky JSON | B 
+    B --> | Returns a result | A 
+    
+````
 
 
 #### What happens there goes like the following:
@@ -92,7 +99,7 @@ flowchart LR
     A["👨‍💼" \n User] -->|GET /vmcirculatingsupply| B(\n\n Kong Gateway\n\n\n)
     B --> | POST /rpc/v0 with body | C(\n\n Lotus daemon\n\n\n)
     C --> | Returns a massive JSON | B 
-    B --> | Returns a result | A 
+    B --> | Returns a FilCirculating | A 
     
 ````
 #### What happens there goes like the following:
@@ -190,17 +197,17 @@ flowchart LR
 | <a name="input_affix_upstream_service"></a> [affix\_upstream\_service](#input\_affix\_upstream\_service) | If true, add -lotus at the end of upstream service name | `bool` | `false` | no |
 | <a name="input_certificate_issuer"></a> [certificate\_issuer](#input\_certificate\_issuer) | If provided, use the certificate issuer for SSL | `string` | `""` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | List of s3 buckets names. | `string` | n/a | yes |
-| <a name="input_enable_mirroring"></a> [enable\_mirroring](#input\_enable\_mirroring) | n/a | `bool` | `false` | no |
+| <a name="input_enable_mirroring"></a> [enable\_mirroring](#input\_enable\_mirroring) | If true, mirror incoming requests to endpoints specified in mirror\_to | `bool` | `false` | no |
 | <a name="input_global_config"></a> [global\_config](#input\_global\_config) | n/a | `any` | n/a | yes |
 | <a name="input_ingress_class"></a> [ingress\_class](#input\_ingress\_class) | Ingress class name. | `string` | n/a | yes |
-| <a name="input_mirror_to"></a> [mirror\_to](#input\_mirror\_to) | n/a | `list` | `[]` | no |
-| <a name="input_namespace"></a> [namespace](#input\_namespace) | n/a | `string` | n/a | yes |
-| <a name="input_override_daemon_port"></a> [override\_daemon\_port](#input\_override\_daemon\_port) | n/a | `number` | `1234` | no |
-| <a name="input_override_daemon_service"></a> [override\_daemon\_service](#input\_override\_daemon\_service) | n/a | `string` | `null` | no |
-| <a name="input_override_rpc_v0_port"></a> [override\_rpc\_v0\_port](#input\_override\_rpc\_v0\_port) | n/a | `number` | `null` | no |
-| <a name="input_override_rpc_v0_service"></a> [override\_rpc\_v0\_service](#input\_override\_rpc\_v0\_service) | n/a | `string` | `null` | no |
-| <a name="input_override_rpc_v1_port"></a> [override\_rpc\_v1\_port](#input\_override\_rpc\_v1\_port) | n/a | `number` | `null` | no |
-| <a name="input_override_rpc_v1_service"></a> [override\_rpc\_v1\_service](#input\_override\_rpc\_v1\_service) | n/a | `string` | `null` | no |
+| <a name="input_mirror_to"></a> [mirror\_to](#input\_mirror\_to) | An array of endpoints to mirror incoming requests to | `list` | `[]` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | The Kubernetes namespace to deploy the ingresses in | `string` | n/a | yes |
+| <a name="input_override_daemon_port"></a> [override\_daemon\_port](#input\_override\_daemon\_port) | Override the upstream port for the ingresses that lead to daemon | `number` | `1234` | no |
+| <a name="input_override_daemon_service"></a> [override\_daemon\_service](#input\_override\_daemon\_service) | Override the upstream service for the ingresses that lead to daemon | `string` | `null` | no |
+| <a name="input_override_rpc_v0_port"></a> [override\_rpc\_v0\_port](#input\_override\_rpc\_v0\_port) | Override the upstream port for the /rpc/v0 path | `number` | `null` | no |
+| <a name="input_override_rpc_v0_service"></a> [override\_rpc\_v0\_service](#input\_override\_rpc\_v0\_service) | Override the upstream service for the /rpc/v0 path | `string` | `null` | no |
+| <a name="input_override_rpc_v1_port"></a> [override\_rpc\_v1\_port](#input\_override\_rpc\_v1\_port) | Override the upstream port for the /rpc/v1 path | `number` | `null` | no |
+| <a name="input_override_rpc_v1_service"></a> [override\_rpc\_v1\_service](#input\_override\_rpc\_v1\_service) | Override the upstream service for the /rpc/v1 path | `string` | `null` | no |
 | <a name="input_stage_name"></a> [stage\_name](#input\_stage\_name) | If provided, use for the naming ingress. | `string` | n/a | yes |
 | <a name="input_upstream_port"></a> [upstream\_port](#input\_upstream\_port) | Backend service port. | `number` | `2346` | no |
 | <a name="input_upstream_service"></a> [upstream\_service](#input\_upstream\_service) | Backend service name. | `string` | n/a | yes |

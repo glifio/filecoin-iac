@@ -3,8 +3,8 @@
 
 ### General information
 
-- [filecoin-project/lotus](https://github.com/filecoin-project/lotus)  general lotus's repo
-- [protofire/lotus](https://github.com/protofire/lotus) fork for our team
+- [filecoin-project/lotus](https://github.com/filecoin-project/lotus) - the official Lotus repository
+- [protofire/lotus](https://github.com/protofire/lotus) - our fork of that repository
 
 
 ## Algorithm
@@ -33,33 +33,29 @@ flowchart TD
 
 ````
 
-1. Get the method name, for example: `ChainGetTipSet`
-2. Go to [protofire/lotus](https://github.com/protofire/lotus) choose the `./api` directory\
-   ##### Adding method to v1 (unstable) version:
- - Go to the file `api_full.go` find method and make a copy, it'll look like: ```ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read```\
- We have to add methods have a read permissions only  by a smart-contract. 
- - Copy the method from `api_full.go` to the file `api_gateway.go` to  the section `type Gateway interface`.\
-for example: ```ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)```
-   #### Adding method to v0 (stable) version:
- - Go to the file `v0api/full.go` find method and make a copy.
- - Copy the method from `full.go` to the file `gateway.go` to  the section`type Gateway interface`.
-3. Choose the `./gateway` directory\
- - Go to the file `node.go` copy the method from `api/api_full.go` to the section `type TargetAPI interface`.
-   #### If it filecoin method:
- - Go to the file `proxy_fil.go`
- - Add the new method, smth like this schema:
+1. Let's assume you want to add the `Filecoin.ChainGetTipSet` method to Lotus Gateway.
+2. Clone the [protofire/lotus](https://github.com/protofire/lotus) repository and go to the `api` directory.
+   ##### Add the method to the v1 (unstable) version of Lotus Gateway API:
+ - Open the `api_full.go` file, find the method there (will look like this: ```ChainGetTipSet(context.Context, types.TipSetKey) (*types.TipSet, error) //perm:read```) and copy it to the clipboard.\
+ Make sure that this is a read method (marked as ```//perm:read```). 
+ - Paste the method you've copied in the previous step to the `type Gateway interface` section of the`api_gateway.go` file.
+   #### Add the method to the v0 (stable) version of Lotus Gateway API:
+ - Open the `v0api/full.go` file, find the method there and copy it to the clipboard.
+ - Paste the method you've copied in the previous step to the `type Gateway interface` section of the`gateway.go` file.
+3. Open the `./gateway` directory.
+ - Open the `node.go` file and copy the method from `api/api_full.go` to the `type TargetAPI interface` section.
+   #### If it's a filecoin method:
+ - Open the file `proxy_fil.go`
+ - Add the method implementation that looks something like this:
 ```
-func (gw *Node) ${COPIED_METHOD} {
+func (gw *Node) ${METHOD_DEFINITION} {
 	if err := gw.limit(ctx, chainRateLimitTokens); err != nil {
-		return ${RETURN_TYPE}
+		return ${RETURN_VALUES}
 	}
-	return gw.target.${JUST METHOD NAME} (Method Argument Abbreviations)
+	return gw.target.${METHOD_NAME} (Method Argument Abbreviations)
 }
 ```
-more details about ${RETURN_TYPE} arguments.\
-You could check it in the last argument of the copied method.\
-Copied method: ```ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error)```\
-TipSetKey handler: ```(*types.TipSet, error)```
+The acceptable ${RETURN_VALUES} can vary depending on the returning type so check with the table below for better results.\
 
 | Return type   | Example                                                | Return statement                      |
 |---------------|--------------------------------------------------------|---------------------------------------|
@@ -70,7 +66,7 @@ TipSetKey handler: ```(*types.TipSet, error)```
 | Custom        | `abi.ChainEpoch`                                       | `return *new(abi.ChainEpoch), err`    |
 | types.BigInt  | `types.BigInt`                                          |  `return types.BigInt{}, err`         |
 
- Please check that your new method matches the schema, by example:
+In case of the ChainGetTipSet method the implementation will look like this:
 
 ````
 func (gw *Node) ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types.TipSet, error) {
@@ -81,25 +77,25 @@ func (gw *Node) ChainGetTipSet(ctx context.Context, tsk types.TipSetKey) (*types
 }
 ````
 
-   #### If it Eth method:
+   #### If it's an Eth method:
 
- - Go to the file `proxy_eth.go`
- - Add new method the same way as for the filecoin.
+ - Open the `proxy_eth.go` file.
+ - Add new method the same way as you add a Filecoin method.
 
-4. install dependencies on your local machine to compile code with new methods
-  #### Dependencies
-- ca-certificates
-- build-essential 
-- clang
-- ocl-icd-opencl-dev
-- ocl-icd-libopencl1
-- jq
-- libhwloc-dev
+4. Install the software dependencies so you can regenerate dependent files in the next steps.
+```shell
+sudo apt-get install -y ca-certificates build-essential clang ocl-icd-opencl-dev ocl-icd-libopencl1 jq libhwloc-dev
+```
 
-5. Run the command to compilition, use Makefile
+5. Install the FFI dependencies.
 
 ````shell
 make deps
 ````
 
+6. Regenerate the dependent files.
+```shell
+make gen
+```
 
+7. That's it! Push the changed source code to Git and recompile the Lotus Gateway.

@@ -11,26 +11,26 @@ So, let’s do that step by step based on the following example.
 
 ## Inputs
 All the operations will be performed on the resources of the node A, so you only need to know the following about node B:
-- <span style="color:black">bar-service</span> – that’s the service name of the node B.
-- <span style="color:black">bar-token</span> – that’s the read-write authorization token. You can find it in the AWS Secrets Manager.
+- **bar-service** – that’s the service name of the node B.
+- **bar-token** – that’s the read-write authorization token. You can find it in the AWS Secrets Manager.
 
 So, let’s describe the resources of node A that we’ll be working with
 
 ### Ingress
 The ingress will look something like the following. Take note of the following thing:
-- <span style="color:black">foo-ingress</span> – that’s the name of the ingress.
-- <span style="color:black">request-transformer-header-foo</span> – that’s the KongPlugin resource that’s responsible for authorization.
-- <span style="color:black">foo-service</span> – that’s the service that the ingress is pointing to.
+- **foo-ingress** – that’s the name of the ingress.
+- **request-transformer-header-foo** – that’s the KongPlugin resource that’s responsible for authorization.
+- **foo-service** – that’s the service that the ingress is pointing to.
 
-![ingress.png](png/ingress.png)
+<img src="png/ingress.png" width="700px" />
 
 ### KongPlugin
 
-![kongplugin.png](png/kongplugin.png)
+<img src="png/kongplugin.png" width="475px" />
 
 ## Switch the traffic
 To actually switch the traffic, do the following steps:
-1. <span style="color:black">Change the service field</span> of the node A ingress so it <span style="color:black">points to the bar-service</span>, like the following:
+1. **Change the service field** of the node A ingress so it **points to the bar-service**, like the following:
 
 ````shell
     kubectl -n network edit ingress foo-ingress
@@ -60,7 +60,7 @@ spec:
         pathType: Exact
 ````
 
-2. Edit the <span style="color:black">request-transformer-header-foo</span> KongPlugin so it adds and replaces the Authorization header of incoming requests to the <span style="color:black">Bearer bar-token</span>, like the following:
+2. Edit the **request-transformer-header-foo** KongPlugin so it adds and replaces the Authorization header of incoming requests to the **Bearer bar-token**, like the following:
 
 ````shell
 
