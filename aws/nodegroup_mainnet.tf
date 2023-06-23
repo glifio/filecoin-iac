@@ -149,6 +149,17 @@ module "eks_nodegroup_ondemand_calibnet_0" {
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 }
+
+module "eks_nodegroup_ondemand_blockscout_0" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  ami_type                                = "AL2_ARM_64"
+  get_instance_type                       = "r6gd.4xlarge"
+  user_data_script                        = "nvme-spot.sh"
+  get_nodegroup_name                      = "blockscout-0" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+}
 ################# END BLOCK ONDEMAND NODE-GROUP LIST #################
 
 
@@ -159,6 +170,16 @@ module "eks_nodegroup_spot_calibnet_1" {
   source                                  = "../modules/eks_nodegroup"
   get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
   get_nodegroup_name                      = "calibnet-1" # don't need to type ondemand/spot in the name, it will be added automatically.
+  get_global_configuration                = local.make_global_configuration
+  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+  is_spot_instance                        = true
+}
+
+module "eks_nodegroup_spot_blockscout_1" {
+  count                                   = local.is_prod_envs
+  source                                  = "../modules/eks_nodegroup"
+  get_instance_type                       = "m5d.8xlarge,r5ad.8xlarge"
+  get_nodegroup_name                      = "blockscout-1" # don't need to type ondemand/spot in the name, it will be added automatically.
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
   is_spot_instance                        = true
