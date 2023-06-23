@@ -88,13 +88,8 @@ variable "get_namespace" {
 
 variable "type_lb_scheme" {
   type    = string
-  default = null
-  description = "If providedingress_class_name"
-}
-
-variable "false_auth" {
-  type    = bool
-  default = false
+  default = "external"
+  description = "If external, ingress has to go on external LB."
 }
 
 variable "get_whitelist_ips" {
@@ -134,26 +129,26 @@ variable "get_whitelist_ips" {
 
 variable "http_host" {
   type        = string
-  description = "HTTP host to match"
+  description = "HTTP host to match."
   default     = null
 }
 
 variable "http_path" {
   type        = string
-  description = "HTTP path to match"
+  description = "HTTP path to match."
   default     = null
 }
 
 variable "http_path_type" {
   type        = string
   default     = "Exact"
-  description = "HTTP path comparison type"
+  description = "HTTP path comparison type."
 }
 
 
 variable "service_port" {
   type        = number
-  description = "Backend service port"
+  description = "Backend service port."
   default     = null
 }
 
@@ -161,45 +156,50 @@ variable "service_port" {
 variable "enable_path_transformer" {
   type        = bool
   default     = true
-  description = "If true, transform path as specified in replace_path_rule"
+  description = "If true, transform path as specified in replace_path_rule."
 }
 
 variable "enable_switch_transformer" {
   type        = bool
   default     = false
-  description = "If true, switch the path as specified in any switch_path"
+  description = "If true, switch the path as specified in any switch_path."
 }
 
 variable "replace_path_rule" {
   type        = string
   default     = "/$(uri_captures[1])"
-  description = "Regular expression to transform the path"
+  description = "Regular expression to transform the path."
 }
 
 variable "enable_public_access" {
   type        = bool
   default     = false
-  description = "If true, add Authorization header"
+  description = "If true, add Authorization header."
 }
 
 variable "enable_cors" {
   type        = bool
   default     = true
-  description = "If true, enable CORS policy"
+  description = "If true, enable CORS policy."
 }
 
 variable "enable_return_json" {
   type        = bool
   default     = true
-  description = "If true, add Content-Type: application/json header to response"
+  description = "If true, add Content-Type: application/json header to response."
 }
 
 variable "auth_token_attribute" {
   type        = string
   default     = "jwt_token_kong_rw"
-  description = "Attribute of secret to exteact auth token from"
+  description = "Attribute of secret to auth token from."
 }
 
+variable "false_auth" {
+  type = bool
+  default = true
+  description = "If true, kong plugin using to section with token the `Authorization: false`"
+}
 variable "create_secret" {
   type    = bool
   default = true
@@ -208,55 +208,53 @@ variable "create_secret" {
 variable "create_ingress_kong" {
   type    = bool
   default = true
+  description = "If true, creating ingress."
 }
 
 variable "create_ingress_kong_ipfs" {
   type    = bool
   default = true
+  description = "If true, creating ingress for ipfs."
 }
 
 variable "service_port_ipfs" {
   type    = string
   default = null
+  description = "If provided , ingress for ipfs should be use service port for ipfs."
 }
 
 variable "http_path_ipfs" {
   type        = string
-  description = "HTTP path to match"
   default     = null
-}
-
-variable "prevent_destroy" {
-  type    = bool
-  default = true
+  description = "HTTP path to match."
 }
 
 variable "name" {
   type        = string
-  description = "Secret name"
   default     = ""
+  description = "Secret name."
 }
 
 variable "create_k8s_secret" {
   type        = bool
   default     = true
-  description = "Create secret in Kubernetes"
+  description = "Create secret in Kubernetes."
 }
 
 variable "create_aws_secret" {
   type        = bool
   default     = true
-  description = "Create secret in AWS"
+  description = "Create secret in AWS."
 }
 
 variable "k8s_secret_postfix" {
   type        = string
   default     = "-lotus-secret"
-  description = "Postfix of the Kubernetes secret"
+  description = "Postfix of the Kubernetes secret."
 }
 
 variable "from_secret" {
   type        = string
   default     = ""
-  description = "Secret to copy secret_string from"
+  description = "Secret to copy secret_string from."
 }
