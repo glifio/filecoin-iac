@@ -16,7 +16,7 @@ variable "create_k8s_secret" {
 
 variable "k8s_secret_postfix" {
   type        = string
-  default     = "-lotus-secret"
+  default     = "-secret"
   description = "Postfix of the Kubernetes secret"
 }
 
