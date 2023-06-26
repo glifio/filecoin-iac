@@ -1,73 +1,87 @@
 variable "stage_name" {
-  type = string
+  type        = string
+  description = "If provided, use for the naming ingress."
 }
 
 variable "domain_name" {
-  type = string
+  type        = string
+  description = "List of s3 buckets names."
 }
 
 variable "ingress_class" {
-  type = string
+  type        = string
+  description = "Ingress class name."
 }
 
 variable "global_config" {}
 
 variable "namespace" {
-  type = string
+  type        = string
+  description = "The Kubernetes namespace to deploy the ingresses in"
 }
 
 variable "upstream_service" {
-  type = string
+  type        = string
+  description = "Backend service name."
 }
 
 variable "upstream_port" {
-  type    = number
-  default = 2346
+  type        = number
+  default     = 2346
+  description = "Backend service port."
 }
 
 variable "override_rpc_v0_service" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "Override the upstream service for the /rpc/v0 path"
 }
 
 variable "override_rpc_v0_port" {
-  type    = number
-  default = null
+  type        = number
+  default     = null
+  description = "Override the upstream port for the /rpc/v0 path"
 }
 
 variable "override_rpc_v1_service" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "Override the upstream service for the /rpc/v1 path"
 }
 
 variable "override_rpc_v1_port" {
-  type    = number
-  default = null
+  type        = number
+  default     = null
+  description = "Override the upstream port for the /rpc/v1 path"
 }
 
 variable "override_daemon_service" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "Override the upstream service for the ingresses that lead to daemon"
 }
 
 variable "override_daemon_port" {
-  type    = number
-  default = 1234
+  type        = number
+  default     = 1234
+  description = "Override the upstream port for the ingresses that lead to daemon"
 }
 
 variable "enable_mirroring" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
+  description = "If true, mirror incoming requests to endpoints specified in mirror_to"
 }
 
 variable "mirror_to" {
-  default = []
+  default     = []
+  description = "An array of endpoints to mirror incoming requests to"
 }
 
 variable "certificate_issuer" {
   type        = string
   default     = ""
-  description = "If provided, use certificate issuer for ssl"
+  description = "If provided, use the certificate issuer for SSL"
 }
 
 variable "affix_ingress_class" {
