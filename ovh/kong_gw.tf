@@ -9,8 +9,7 @@ module "api_gateway_kong_spacenet" {
   affix_ingress_class = false
 
   namespace              = "network"
-  upstream_service       = "spacenet-public"
-  affix_upstream_service = true
+  upstream_service       = "spacenet-public-lotus"
 
   certificate_issuer = "letsencrypt-issuer"
 }
