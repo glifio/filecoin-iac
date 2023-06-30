@@ -294,3 +294,13 @@ resource "kubernetes_secret_v1" "coinfirm_1" {
     token      = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["jwt_token"]
   }
 }
+
+module "api-read-dev-worker-secret" {
+  count = local.is_dev_envs
+  
+  source = "../modules/secrets_generator"
+
+  name = "api-read-dev-worker"
+
+  generator_config = local.make_global_configuration
+}

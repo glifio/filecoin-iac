@@ -8,6 +8,16 @@ resource "aws_route53_record" "api_dev_node_glif_io" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
+resource "aws_route53_record" "cluster_dev_node_glif_io" {
+  count           = local.is_dev_envs
+  name            = "cluster.dev.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
 # CID CHECKER Calibration
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" {
   count           = local.is_prod_envs
