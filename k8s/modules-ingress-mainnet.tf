@@ -442,6 +442,7 @@ module "ingress-atlantis-80" {
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
   type_lb_scheme                     = "external"
+  aws_secret_name                    = "filecoin-mainnet-apn1-glif/credentials-atlantis"
 
   enable_whitelist_ip = true
   get_whitelist_ips = [
@@ -464,6 +465,7 @@ module "ingress-kong_coinfirm" {
 }
 
 module "ingress_private_mainnet_fallback" {
+  count = local.is_prod_envs
   name   = "private-mainnet-fallback"
   source = "../modules/ovh_ingress"
 
@@ -486,6 +488,7 @@ module "ingress_private_mainnet_fallback" {
 }
 
 module "ingress_private_calibration_fallback" {
+  count = local.is_prod_envs
   name   = "private-calibration-fallback"
   source = "../modules/ovh_ingress"
 
@@ -508,6 +511,7 @@ module "ingress_private_calibration_fallback" {
 }
 
 module "ingress_blockscout" {
+  count = local.is_prod_envs
   name   = "blockscout"
   source = "../modules/ovh_ingress"
 

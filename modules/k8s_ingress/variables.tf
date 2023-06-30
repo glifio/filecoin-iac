@@ -105,3 +105,7 @@ variable "return_json" {
   type    = bool
   default = false
 }
+
+variable "aws_secret_name" {
+  default = ""
+}
