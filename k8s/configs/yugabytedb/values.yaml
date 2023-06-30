@@ -8,7 +8,7 @@ storage:
 
 replicas:
   master: 2
-  tserver: 2
+  tserver: 3
   totalMasters: 1
 
 gflags:

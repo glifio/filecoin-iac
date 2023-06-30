@@ -489,8 +489,6 @@ module "ingress_private_mainnet_fallback" {
 module "ingress_private_calibration_fallback" {
   count = local.is_prod_envs
 
-  count = local.is_prod_envs
-
   name   = "private-calibration-fallback"
   source = "../modules/ovh_ingress"
 

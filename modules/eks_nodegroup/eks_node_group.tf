@@ -29,12 +29,6 @@ resource "aws_eks_node_group" "nodegroup" {
     aws_iam_role_policy_attachment.eks_nodegroup_AmazonEC2ContainerRegistryReadOnly,
   ]
 
-  lifecycle {
-    ignore_changes = [
-      scaling_config[0].desired_size,
-    ]
-  }
-
   labels = local.make_custom_k8s_labels
 
   tags = merge(
