@@ -1,0 +1,39 @@
+commonLabels:
+  environment: monitoring
+
+alertmanager:
+  alertmanagerSpec:
+    nodeSelector:
+      nodepool: monitoring
+
+grafana:
+  nodeSelector:
+    nodepool: monitoring
+
+kubelet:
+  serviceMonitor:
+    resource: true
+
+kubeControllerManager:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+prometheusOperator:
+  nodeSelector:
+    nodepool: monitoring
+  admissionWebhooks:
+    patch:
+      nodeSelector:
+        nodepool: monitoring
+  createCustomResource: true
+  cleanupCustomResource: false
+
+prometheus:
+  prometheusSpec:
+    nodeSelector:
+      nodepool: monitoring

@@ -1,0 +1,27 @@
+alertmanager:
+  config:
+    global:
+      resolve_timeout: 5m
+      slack_api_url: ${slack_api_url}
+    templates: ["*.tmpl"]
+    route:
+      group_by: ['job']
+      group_wait: 30s
+      group_interval: 15m
+      repeat_interval: 12h
+      receiver: "slack-notification"
+      routes:
+        - match:
+            alertname: Watchdog
+          receiver: 'null'
+        - match:
+            alertname: InfoInhibitor
+          receiver: 'null'
+    receivers:
+      - name: "slack-notification"
+        slack_configs:
+          - send_resolved: true
+            title: '{{ template "custom_title" . }}'
+            text: '{{ template "custom_slack_message" . }}'
+            channel: ${slack_channel}
+      - name: "null"

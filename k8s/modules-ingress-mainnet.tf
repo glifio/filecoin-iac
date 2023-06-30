@@ -464,6 +464,8 @@ module "ingress-kong_coinfirm" {
 }
 
 module "ingress_private_mainnet_fallback" {
+  count = local.is_prod_envs
+  
   name   = "private-mainnet-fallback"
   source = "../modules/ovh_ingress"
 
@@ -486,6 +488,8 @@ module "ingress_private_mainnet_fallback" {
 }
 
 module "ingress_private_calibration_fallback" {
+  count = local.is_prod_envs
+
   name   = "private-calibration-fallback"
   source = "../modules/ovh_ingress"
 

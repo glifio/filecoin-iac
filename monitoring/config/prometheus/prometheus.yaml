@@ -1,0 +1,15 @@
+prometheus:
+  prometheusSpec:
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    retention: 120d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: ebs-sc-gp2
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: ${pvc_size}

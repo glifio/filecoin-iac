@@ -34,16 +34,6 @@ data "aws_lb" "kong_external" {
   ]
 }
 
-data "aws_lb" "kong_internal" {
-  tags = {
-    Name = "${module.generator.prefix}-kong-internal"
-  }
-
-  depends_on = [
-    helm_release.konghq-internal
-  ]
-}
-
 data "aws_route53_zone" "selected" {
   name         = var.route53_domain
   private_zone = false

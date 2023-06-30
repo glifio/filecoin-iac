@@ -1,0 +1,63 @@
+grafana:
+  dashboards:
+    custom:
+      LotusAPIEndpoints:
+        datasource: Prometheus
+        gnetId: 13251
+        revision: 8
+      LotusNodeHealth:
+        datasource: Prometheus
+        gnetId: 13250
+        revision: 7
+      LotusPubSubdashboard:
+        datasource: Prometheus
+        gnetId: 13249
+        revision: 2
+      LotusVolumes:
+        datasource: Prometheus
+        gnetId: 17092
+        revision: 7
+      Kong:
+        datasource: Prometheus
+        gnetId: 17269
+        revision: 5
+      LotusNVMEdashboard:
+        datasource: Prometheus
+        gnetId: 17431
+        revision: 3
+      LotusProductionAPIEndpointsfilteredbymethod:
+        datasource: Prometheus
+        gnetId: 18354
+        revision: 1
+      LotusRaulsdashboardCANARIES:
+        datasource: Prometheus
+        gnetId: 18363
+        revision: 1
+      LotusRaulsdashboardMIRROR:
+        datasource: Prometheus
+        gnetId: 18364
+        revision: 1
+      LotusRaulsdashboardPROD:
+        datasource: Prometheus
+        gnetId: 18365
+        revision: 1
+      LotusRaulsdashboardNODESYNC:
+        datasource: Prometheus
+        gnetId: 18366
+        revision: 1
+      RaulMirrorDashboard:
+        datasource: Prometheus
+        gnetId: 18393
+        revision: 1
+      LotusMaciejsABtestingcomparison:
+        datasource: Prometheus
+        gnetId: 18482
+        revision: 1
+      LotusMirrornodescomparisonMaciej:
+        datasource: Prometheus
+        gnetId: 18483
+        revision: 1
+      LotusRaulsdashboardPRODv2:
+        datasource: Prometheus
+        gnetId: 18485
+        revision: 1
