@@ -14,16 +14,12 @@ provider "ovh" {
 
 provider "helm" {
   kubernetes {
-    host                   = ovh_cloud_project_kube.default.kubeconfig_attributes[0].host
-    client_certificate     = base64decode(ovh_cloud_project_kube.default.kubeconfig_attributes[0].client_certificate)
-    cluster_ca_certificate = base64decode(ovh_cloud_project_kube.default.kubeconfig_attributes[0].cluster_ca_certificate)
-    client_key             = base64decode(ovh_cloud_project_kube.default.kubeconfig_attributes[0].client_key)
+    config_path    = "~/.kube/config"
+    config_context = "kubernetes-admin@filecoin-mainnet-apn1-glif-ipc-node-hosting"
   }
 }
 
 provider "kubernetes" {
-  host                   = ovh_cloud_project_kube.default.kubeconfig_attributes[0].host
-  client_certificate     = base64decode(ovh_cloud_project_kube.default.kubeconfig_attributes[0].client_certificate)
-  cluster_ca_certificate = base64decode(ovh_cloud_project_kube.default.kubeconfig_attributes[0].cluster_ca_certificate)
-  client_key             = base64decode(ovh_cloud_project_kube.default.kubeconfig_attributes[0].client_key)
+  config_path    = "~/.kube/config"
+  config_context = "kubernetes-admin@filecoin-mainnet-apn1-glif-ipc-node-hosting"
 }
