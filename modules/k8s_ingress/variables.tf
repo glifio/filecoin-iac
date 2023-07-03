@@ -107,5 +107,5 @@ variable "return_json" {
 }
 
 variable "aws_secret_name" {
-  default = ""
+  default = null
 }
