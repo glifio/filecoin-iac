@@ -262,12 +262,13 @@ resource "kubernetes_secret_v1" "cid_checker_calibration_secret" {
 }
 
 resource "kubernetes_secret_v1" "github_ssh_gist_updater" {
+  count = local.is_prod_envs
   metadata {
     name      = "github-ssh-gist-updater"
     namespace = kubernetes_namespace_v1.network.metadata[0].name
   }
   data = {
-    ssh = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.github_ssh_gist_updater.secret_string), "ssh", null))
+    ssh = base64decode(lookup(jsondecode(data.aws_secretsmanager_secret_version.github_ssh_gist_updater[0].secret_string), "ssh", null))
   }
 }
 
