@@ -52,6 +52,7 @@ resource "aws_secretsmanager_secret" "codebuild_wallaby_user" {
 }
 
 resource "aws_secretsmanager_secret" "github_ssh_gist_updater" {
+  count = local.is_prod_envs
   name                    = "${module.generator.prefix}/github_ssh_gist_updater"
   recovery_window_in_days = 30
 
