@@ -518,15 +518,15 @@ module "ingress_blockscout" {
   namespace = "network"
 
   http_host = "blockscout.node.glif.io"
-  http_path = "/"
-  http_path_type = "Prefix"
+  http_path = "/(.*)"
+  http_path_type = "Exact"
 
   service_name  = "blockscout-0-lotus-service"
-  service_port  = 1234
+  service_port  = 2346
   incress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
 
   enable_access_control   = true
-  access_control_public   = true
+  access_control_public   = false
   enable_letsencrypt      = false
 }

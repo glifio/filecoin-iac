@@ -17,6 +17,7 @@ resource "helm_release" "monitoring" {
   chart      = "kube-prometheus-stack"
   namespace  = kubernetes_namespace_v1.monitoring.metadata[0].name
   version    = "36.6.2"
+  max_history = 2
 
   values = [
     templatefile("${path.module}/configs/prometheus/values.yaml", {
