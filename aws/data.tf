@@ -79,3 +79,67 @@ data "aws_ebs_snapshot" "space00_4" {
     values = [4]
   }
 }
+
+data "aws_ebs_snapshot" "fvm_archive_1" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["fvm-archive"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [1]
+  }
+}
+
+data "aws_ebs_snapshot" "fvm_archive_2" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["fvm-archive"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [2]
+  }
+}
+
+data "aws_ebs_snapshot" "fvm_archive_3" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["fvm-archive"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [3]
+  }
+}
+
+data "aws_ebs_snapshot" "fvm_archive_4" {
+  count = local.is_prod_envs
+
+  most_recent = true
+
+  filter {
+    name   = "tag:Tenant"
+    values = ["fvm-archive"]
+  }
+
+  filter {
+    name   = "tag:PartNumber"
+    values = [4]
+  }
+}

@@ -241,3 +241,87 @@ resource "aws_ebs_volume" "fvm_archive_4" {
     module.generator.common_tags
   )
 }
+
+resource "aws_ebs_volume" "coinfirm_1_1" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  snapshot_id = data.aws_ebs_snapshot.fvm_archive_1[0].id
+
+  size       = 2048
+  type       = "gp3"
+  iops       = 3000
+  throughput = 167
+
+  tags = merge(
+    {
+      "Tenant"     = "coinfirm-1",
+      "PartNumber" = 1
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_ebs_volume" "coinfirm_1_2" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  snapshot_id = data.aws_ebs_snapshot.fvm_archive_2[0].id
+
+  size       = 2048
+  type       = "gp3"
+  iops       = 3000
+  throughput = 167
+
+  tags = merge(
+    {
+      "Tenant"     = "coinfirm-1",
+      "PartNumber" = 2
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_ebs_volume" "coinfirm_1_3" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  snapshot_id = data.aws_ebs_snapshot.fvm_archive_3[0].id
+
+  size       = 2048
+  type       = "gp3"
+  iops       = 3000
+  throughput = 167
+
+  tags = merge(
+    {
+      "Tenant"     = "coinfirm-1",
+      "PartNumber" = 3
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_ebs_volume" "coinfirm_1_4" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  snapshot_id = data.aws_ebs_snapshot.fvm_archive_4[0].id
+
+  size       = 2048
+  type       = "gp3"
+  iops       = 3000
+  throughput = 167
+
+  tags = merge(
+    {
+      "Tenant"     = "coinfirm-1",
+      "PartNumber" = 4
+    },
+    module.generator.common_tags
+  )
+}
