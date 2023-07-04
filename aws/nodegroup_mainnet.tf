@@ -185,18 +185,18 @@ module "eks_nodegroup_spot_calibnet_1" {
 #  is_spot_instance                        = true
 #}
 
-module "eks_nodegroup_ondemand_confirm_1" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/eks_nodegroup"
-  ami_type                                = "AL2_ARM_64"
-  get_instance_type                       = "r6g.12xlarge"
-  get_nodegroup_name                      = "coinfirm-1" # don't need to type ondemand/spot in the name, it will be added automatically.
-  get_global_configuration                = local.make_global_configuration
-  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
-  use_existing_ebs                        = true	
-  ebs_tenant                              = "coinfirm-1"	
-  assign_to_space00_07_nodes              = true
-}
+#module "eks_nodegroup_ondemand_confirm_1" {
+#  count                                   = local.is_prod_envs
+#  source                                  = "../modules/eks_nodegroup"
+#  ami_type                                = "AL2_ARM_64"
+#  get_instance_type                       = "r6g.12xlarge"
+#  get_nodegroup_name                      = "coinfirm-1" # don't need to type ondemand/spot in the name, it will be added automatically.
+#  get_global_configuration                = local.make_global_configuration
+#  get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
+#  use_existing_ebs                        = true	
+#  ebs_tenant                              = "coinfirm-1"	
+#  assign_to_space00_07_nodes              = true
+#}
 
 #prod-api-i3-4x8x-spot-b-1-19-Node
 module "eks_nodegroup_mainnet_spot_group8" {
