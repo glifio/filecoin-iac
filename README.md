@@ -1,5 +1,31 @@
-# Filecoin IaC
-- [Filecoin IaC](#filecoin-iac)
+
+<p align="center">
+  <a href="https://api.node.glif.io/" title="Glif Node Hosting">
+    <img src="./documentation/png/glif-protofire-logo.png" alt="Glif-Protofire-logo" width="244" />
+  </a>
+</p>
+
+<h1 align="center">filecoin-iac</h1>
+
+<p align="center">
+	<a href="https://filecoinproject.slack.com/archives/C023K7D9GAX">
+		<img src="https://img.shields.io/badge/Contact_Us-AA_AA?style=for-the-badge&logo=slack&logoColor=white" />
+	</a>
+	<a href="https://status.node.glif.io/">
+		<img src="https://img.shields.io/badge/UptimeRobot-_AA?style=for-the-badge&logo=circle&labelColor=85fc6a&color=85fc6a" />
+	</a>
+	<a href="https://api.node.glif.io/">
+		<img src="https://img.shields.io/badge/Endpoint-_AA?style=for-the-badge&logo=network&color=orange" />
+	</a>
+	<a href="https://discord.gg/5qsJjsP3Re">
+		<img src="https://img.shields.io/badge/Join_Us-_AA?style=for-the-badge&logo=discord&logoColor=white&color=af10f3" />
+	</a>
+	<br />
+</p>
+
+Glif Infrastructure as Code are managed by <a href="https://protofire.io">Protofire</a>.
+
+
   - [Summary](#summary)
   - [Installation](#installation)
   - [Structure](#structure)
@@ -243,14 +269,17 @@ After the installation, there's a few manual operations that need to be done in 
 
 (Credentials for Atlantis put to Bitwarden)
 
-_workflows (project) :
-for dev environment use { k8s-dev; aws-dev; users }
-for mainnet environment use { k8s; aws }_
+workflows `project` :\
+for dev environment  `k8s-dev`; `aws-dev`; `users`\
+for mainnet environment `k8s`; `aws` 
 
-- the plan doesn't start automatically on the new PR
-for the run plan should set the parameter {project}
-`atlantis plan -p k8s-dev`
+- the `plan` doesn't start automatically on the new PR  for the run plan should set the parameter {project}
+```shell
+  atlantis plan -p k8s-dev
+```
 
-- the apply doesn't start automatically. Only after approval
+- the `apply` doesn't start automatically. Only after approval
 for the run apply should set the parameter {project}
-`atlantis apply -p k8s-dev `
+```shell
+atlantis apply -p k8s-dev
+```
