@@ -5,9 +5,11 @@ The process of creating a new node consists of the following steps:
 - [Creating an EKS node group](#creating-an-eks-node-group)
 - [Creating a secret](#creating_a_secret) in AWS (optional, more on that later) and importing it to Kubernetes
 - (Optional) [Creating an ingress](#creating-an-ingress)
+- [Common terraform commands](#common-terraform-commands)
 
 
-### Common terraform commands: 
+
+## Common terraform commands: 
 Depending on the environment (dev or mainnet)
 
  - Initialize the module:\
@@ -54,8 +56,8 @@ To create a new EKS node group, follow these steps:
 ```shell
    cd aws
 ```
-3. Initialize the module.
-4. Select the appropriate workspace.
+3. Initialize the module please follow the [Common terraform commands](#common-terraform-commands)
+4. Select the appropriate workspace please follow the [Common terraform commands](#common-terraform-commands)
 5. Depending on the environment (dev or mainnet), open either the `nodegroup_dev.tf` or the `nodegroup_mainnet.tf` file.
 6. Add a new instance of the eks_nodegroup module. Refer to the [configuration options](../modules/eks_nodegroup/README.md).
 
@@ -98,8 +100,8 @@ To create a new secret, follow these steps:
 ```shell
    cd k8s
 ```
-3. Initialize the module.
-4. Select the appropriate workspace.
+3. Initialize the module please follow the [Common terraform commands](#common-terraform-commands)
+4. Select the appropriate workspace please follow the [Common terraform commands](#common-terraform-commands)
 5. Open the `secrets.tf` file.
 Add a new instance of the secrets_generator module. Refer to the [configuration options](../modules/secrets_generator/README.md).
 
@@ -141,8 +143,8 @@ It supports only HTTP(S) connections, so to create a WSS ingress use the ovh_ing
 To create a new Kong Gateway instance, follow these steps:
 1. Clone the [filecoin-iac](https://github.com/glifio/filecoin-iac) repository and open it in your text editor of choice.
 2. Go to the `k8s` folder.
-3. Initialize the module.
-4. Select the appropriate terraform workspace.
+3. Initialize the module please follow the [Common terraform commands](#common-terraform-commands)
+4. Select the appropriate terraform workspace please follow the [Common terraform commands](#common-terraform-commands)
 5. Open the `api_gateway_kong.tf` file.
 6. Add a new instance of the api_gw_kong module. Refer to the [configuration options](../modules/api_gw_kong/README.md).
 
@@ -170,8 +172,8 @@ The ovh_ingress module is a flexible way to create ingresses in both EKS and OVH
 To create a new ingress using this module, follow these steps:
 1. Clone the [filecoin-iac](https://github.com/glifio/filecoin-iac) and open it in your text editor of choice.
 2. Go to the `k8s` folder.
-3. Initialize the module.
-4. Select the appropriate workspace.
+3. Initialize the module please follow the [Common terraform commands](#common-terraform-commands)
+4. Select the appropriate workspace please follow the [Common terraform commands](#common-terraform-commands)
 5. Depending on the selected environment, open either the `modules-ingress-dev.tf` of the `modules-ingress-mainnet.tf` file.
 6. Add a new instance of the ovh_ingress module. Refer to the [configuration options](../modules/ovh_ingress/README.md).
 
