@@ -2,7 +2,7 @@ resource "ovh_cloud_project_kube_nodepool" "spacenet" {
   service_name = local.service_name
   kube_id      = ovh_cloud_project_kube.default.id
   name         = "spacenet"
-  flavor_name  = "c2-60"
+  flavor_name  = "c2-15"
 
   min_nodes = 1
   max_nodes = 2
