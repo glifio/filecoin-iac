@@ -143,3 +143,7 @@ data "aws_ebs_snapshot" "fvm_archive_4" {
     values = [4]
   }
 }
+
+data "aws_secretsmanager_secret_version" "budget_alarm_slack" {
+  secret_id = aws_secretsmanager_secret.budget_alarm_slack.id
+}
