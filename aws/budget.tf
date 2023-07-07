@@ -36,7 +36,6 @@ resource "aws_budgets_budget" "main" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = ["1679_dev@protofire.io"]
-
   }
 
   notification {
