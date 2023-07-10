@@ -84,3 +84,16 @@ resource "aws_secretsmanager_secret" "slack_monitoring_channel" {
     module.generator.common_tags
   )
 }
+
+resource "aws_secretsmanager_secret" "budget_alarm_slack" {
+  count = local.is_prod_envs
+  name = "${module.generator.prefix}-budget-alarm-slack"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-budget-alarm-slack" },
+    module.generator.common_tags
+  )
+}
+
+
+
