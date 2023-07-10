@@ -1,6 +1,6 @@
 resource "aws_budgets_budget" "main" {
-  count             = local.enable_env_budgets
-  name              = "${module.generator.prefix_account}_costs_budget"
+  count             = local.is_prod_envs
+  name              = "filecoin-dev_costs_budget"
   budget_type       = "COST"
   limit_amount      = "24500"
   limit_unit        = "USD"
@@ -28,6 +28,7 @@ resource "aws_budgets_budget" "main" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = ["1679_dev@protofire.io"]
+    subscriber_sns_topic_arns  = [aws_sns_topic.budgets_alarm_topic[0].arn]
   }
 
   notification {
@@ -36,7 +37,7 @@ resource "aws_budgets_budget" "main" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = ["1679_dev@protofire.io"]
-
+    subscriber_sns_topic_arns  = [aws_sns_topic.budgets_alarm_topic[0].arn]
   }
 
   notification {
@@ -45,6 +46,7 @@ resource "aws_budgets_budget" "main" {
     threshold_type             = "PERCENTAGE"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = ["1679_dev@protofire.io"]
+    subscriber_sns_topic_arns  = [aws_sns_topic.budgets_alarm_topic[0].arn]
   }
 }
 
