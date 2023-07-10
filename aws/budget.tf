@@ -53,7 +53,7 @@ resource "aws_budgets_budget" "daily_budget" {
   count             = local.is_prod_envs
   name              = "daily-budget"
   budget_type       = "COST"
-  limit_amount      = "1200"
+  limit_amount      = "1000"
   limit_unit        = "USD"
   time_period_end   = "2032-07-05_00:00"
   time_period_start = "2023-07-05_00:00"
