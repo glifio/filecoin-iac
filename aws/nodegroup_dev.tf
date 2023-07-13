@@ -22,7 +22,7 @@ module "eks_nodegroup_ondemand_api_read_dev_db" {
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
 
-  get_max_size     = 3
+  get_max_size     = 5
   get_desired_size = 3
 
   custom_labels = {
@@ -57,7 +57,7 @@ module "eks_nodegroup_spot_api_read_dev_workers" {
 
   is_spot_instance = true
 
-  get_max_size     = 2
+  get_max_size     = 5
   get_desired_size = 2
 
   custom_labels = {

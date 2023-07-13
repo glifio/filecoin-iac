@@ -14,8 +14,8 @@ locals {
   }
 
   enable_env_budget = {
-    "filecoin-glif-dev-apn1"     = 1
-    "filecoin-glif-mainnet-apn1" = 0
+    "filecoin-glif-dev-apn1"     = 0
+    "filecoin-glif-mainnet-apn1" = 1
   }
   enable_env_budgets = local.enable_env_budget[terraform.workspace]
 
