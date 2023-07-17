@@ -4,7 +4,7 @@ locals {
   env     = lookup(var.global_config, "environment", "")
   sub_env = lookup(var.global_config, "sub_environment", "")
 
-  prefix = "kong-apigw-${var.ingress_class}-${var.stage_name}"
+  prefix = "${var.stage_name}"
 
   upstream_name    = var.affix_upstream_service ? "${var.upstream_service}-lotus" : var.upstream_service
   upstream_service = "${local.upstream_name}-service"
