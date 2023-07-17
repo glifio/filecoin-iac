@@ -1,11 +1,11 @@
 resource "aws_security_group" "eks_nogroup_sg" {
-  name        = "${module.generator.prefix}-${local.join_nodegrpup_name_capacity_type}-sg"
-  description = "${module.generator.prefix} ${local.join_nodegrpup_name_capacity_type} security group"
-  vpc_id      = local.get_vpc_id
+  name        = "${module.generator.prefix}-${local.nodegroup_name_capacitated}-sg"
+  description = "${module.generator.prefix} ${local.nodegroup_name_capacitated} security group"
+  vpc_id      = local.vpc_id
 
   tags = merge(
     {
-      "Name"                                                 = "${module.generator.prefix}-${local.join_nodegrpup_name_capacity_type}-sg",
+      "Name"                                                 = "${module.generator.prefix}-${local.nodegroup_name_capacitated}-sg",
       "kubernetes.io/cluster/${module.generator.prefix}-eks" = "owned"
     },
     module.generator.common_tags
@@ -18,7 +18,7 @@ resource "aws_security_group_rule" "eks_sgr_ingress_itself" {
   from_port         = 0
   to_port           = 0
   protocol          = -1
-  cidr_blocks       = [local.get_vpc_cidr_block]
+  cidr_blocks       = [local.cidr_block]
   security_group_id = aws_security_group.eks_nogroup_sg.id
 }
 
@@ -69,6 +69,6 @@ resource "aws_security_group_rule" "eks_sgr_egress_nodes" {
   from_port         = 1025
   to_port           = 65535
   protocol          = "tcp"
-  cidr_blocks       = [local.get_vpc_cidr_block]
+  cidr_blocks       = [local.cidr_block]
   security_group_id = aws_security_group.eks_nogroup_sg.id
 }

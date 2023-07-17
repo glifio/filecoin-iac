@@ -1,6 +1,6 @@
 resource "aws_launch_template" "lt_spot" {
   count                   = var.is_spot_instance ? 1 : 0
-  name                    = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot-lt"
+  name                    = "${module.generator.prefix}-${local.nodegroup_name}-spot-lt"
   disable_api_termination = false
   ebs_optimized           = true
   key_name                = aws_key_pair.eks_node.key_name
@@ -20,7 +20,7 @@ resource "aws_launch_template" "lt_spot" {
 
   #  # we need to specify AZ, basause we have statefulsets and VPC.
   placement {
-    availability_zone = local.make_az_nodegroup
+    availability_zone = local.nodegroup_az
   }
 
   metadata_options {
@@ -44,9 +44,9 @@ resource "aws_launch_template" "lt_spot" {
 
     tags = merge(
       {
-        "Name"          = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot",
+        "Name"          = "${module.generator.prefix}-${local.nodegroup_name}-spot",
         "Type"          = "spot",
-        "nodeGroupName" = local.get_nodegroup_postfix
+        "nodeGroupName" = local.nodegroup_name
       },
       module.generator.common_tags
     )
@@ -57,9 +57,9 @@ resource "aws_launch_template" "lt_spot" {
 
     tags = merge(
       {
-        "Name"          = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot",
+        "Name"          = "${module.generator.prefix}-${local.nodegroup_name}-spot",
         "Type"          = "spot",
-        "nodeGroupName" = local.get_nodegroup_postfix
+        "nodeGroupName" = local.nodegroup_name
       },
       module.generator.common_tags
     )
@@ -70,9 +70,9 @@ resource "aws_launch_template" "lt_spot" {
 
     tags = merge(
       {
-        "Name"          = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot",
+        "Name"          = "${module.generator.prefix}-${local.nodegroup_name}-spot",
         "Type"          = "spot",
-        "nodeGroupName" = local.get_nodegroup_postfix,
+        "nodeGroupName" = local.nodegroup_name,
       },
       module.generator.common_tags
 
@@ -82,9 +82,9 @@ resource "aws_launch_template" "lt_spot" {
 
   tags = merge(
     {
-      "Name"          = "${module.generator.prefix}-${local.get_nodegroup_postfix}-spot-lt"
+      "Name"          = "${module.generator.prefix}-${local.nodegroup_name}-spot-lt"
       "Type"          = "spot"
-      "nodeGroupName" = local.get_nodegroup_postfix
+      "nodeGroupName" = local.nodegroup_name
     },
     module.generator.common_tags
   )
