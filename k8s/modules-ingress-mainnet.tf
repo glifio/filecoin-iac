@@ -522,7 +522,7 @@ module "ingress_blockscout" {
   http_path_type = "Exact"
 
   service_name  = "blockscout-0-lotus-service"
-  service_port  = 2346
+  service_port  = 1234
   incress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
 
