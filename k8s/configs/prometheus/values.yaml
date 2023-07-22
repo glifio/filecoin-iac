@@ -105,7 +105,7 @@ grafana:
       LotusNodeHealth:
         datasource: Prometheus
         gnetId: 13250
-        revision: 7
+        revision: 9
       LotusPubSubdashboard:
         datasource: Prometheus
         gnetId: 13249
@@ -121,7 +121,7 @@ grafana:
       LotusNVMEdashboard:
         datasource: Prometheus
         gnetId: 17431
-        revision: 3
+        revision: 4
       LotusProductionAPIEndpointsfilteredbymethod:
         datasource: Prometheus
         gnetId: 18354
