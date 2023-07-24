@@ -129,7 +129,7 @@ resource "aws_route53_record" "api-internal_node_glif_io" {
 
   set_identifier = "mainnet-main"
   weighted_routing_policy {
-    weight = 3
+    weight = 2
   }
 }
 
