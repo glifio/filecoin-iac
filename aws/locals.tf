@@ -47,7 +47,7 @@ locals {
     git_configuration = var.git_configuration
   }
 
-  opensearch_instance_count = var.environment == "mainnet" ? 3 : 1
+  opensearch_instance_count = var.environment == "mainnet" ? 1 : 1
 
   make_aws_opensearch_domain = "${module.generator.prefix_region}-os"
 }

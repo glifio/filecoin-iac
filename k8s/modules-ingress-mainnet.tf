@@ -497,7 +497,7 @@ module "ingress_private_calibration_fallback" {
   http_host = "private.node.glif.io"
   http_path = "/calibration/(.*)"
 
-  service_name  = "calibrationapi-lotus-service"
+  service_name  = "calibrationapi-0-lotus-service"
   service_port  = 1234
   incress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name

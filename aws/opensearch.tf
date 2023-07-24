@@ -49,7 +49,7 @@ resource "aws_opensearch_domain" "main" {
   }
 
   cluster_config {
-    instance_type  = "c5.large.search"
+    instance_type  = "c6g.large.search"
     warm_enabled   = false
     instance_count = local.opensearch_instance_count
 
