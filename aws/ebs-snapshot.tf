@@ -29,7 +29,7 @@ resource "aws_dlm_lifecycle_policy" "space00" {
     resource_types = ["VOLUME"]
 
     schedule {
-      name = "1 week of daily snapshots"
+      name = "3 days of daily snapshots"
 
       create_rule {
         interval      = 24
@@ -38,7 +38,7 @@ resource "aws_dlm_lifecycle_policy" "space00" {
       }
 
       retain_rule {
-        count = 7
+        count = 3
       }
 
       tags_to_add = {
@@ -65,7 +65,7 @@ resource "aws_dlm_lifecycle_policy" "fvm-archive" {
     resource_types = ["VOLUME"]
 
     schedule {
-      name = "1 week of daily snapshots"
+      name = "3 days of daily snapshots"
 
       create_rule {
         interval      = 24
@@ -74,7 +74,7 @@ resource "aws_dlm_lifecycle_policy" "fvm-archive" {
       }
 
       retain_rule {
-        count = 7
+        count = 3
       }
 
       tags_to_add = {

@@ -176,7 +176,7 @@ resource "aws_ebs_volume" "fvm_archive_1" {
   size       = 2048
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 125
 
   tags = merge(
     {
@@ -198,7 +198,7 @@ resource "aws_ebs_volume" "fvm_archive_2" {
   size       = 2048
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 125
 
   tags = merge(
     {
@@ -220,7 +220,7 @@ resource "aws_ebs_volume" "fvm_archive_3" {
   size       = 2048
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 125
 
   tags = merge(
     {
@@ -242,7 +242,7 @@ resource "aws_ebs_volume" "fvm_archive_4" {
   size       = 2048
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 125
 
   tags = merge(
     {

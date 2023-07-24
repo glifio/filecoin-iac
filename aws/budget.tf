@@ -5,7 +5,7 @@ resource "aws_budgets_budget" "main" {
   limit_amount      = "24500"
   limit_unit        = "USD"
   time_period_start = "2022-06-01_00:00"
-  time_period_end   = "2032-06-01_00:00"
+  time_period_end   = "2032-06-30_23:59"
   time_unit         = "MONTHLY"
 
   cost_types {
@@ -18,7 +18,7 @@ resource "aws_budgets_budget" "main" {
     include_support            = true
     include_tax                = true
     include_upfront            = true
-    use_amortized              = false
+    use_amortized              = true
     use_blended                = false
   }
 
