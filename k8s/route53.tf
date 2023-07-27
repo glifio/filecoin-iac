@@ -199,3 +199,21 @@ resource "aws_route53_record" "atlantis" {
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
+
+
+# for check pulse api-read-master #
+
+resource "aws_route53_record" "strictly_mainnet_node_glif_io" {
+  count           = local.is_prod_envs
+  name            = "strictly"
+  type            = "A"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
+
+
+  alias {
+    evaluate_target_health = true
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}

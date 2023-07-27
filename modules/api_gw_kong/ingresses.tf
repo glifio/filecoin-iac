@@ -263,7 +263,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
     annotations = {
       "konghq.com/protocols" = "http"
       "konghq.com/methods"   = "POST"
-
+      "konghq.com/preserve-host" = var.preserve_host
       "konghq.com/plugins" = join(", ", compact([
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
@@ -384,7 +384,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
     annotations = {
       "konghq.com/protocols" = "http"
       "konghq.com/methods"   = "POST"
-
+      "konghq.com/preserve-host" = var.preserve_host
       "konghq.com/plugins" = join(", ", compact([
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,

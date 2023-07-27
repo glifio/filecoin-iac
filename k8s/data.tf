@@ -24,6 +24,8 @@ data "aws_subnets" "public" {
   }
 }
 
+# data external load balancer
+
 data "aws_lb" "kong_external" {
   tags = {
     Name = "${module.generator.prefix}-kong-external"
@@ -34,6 +36,9 @@ data "aws_lb" "kong_external" {
   ]
 }
 
+
+# data internal load balancer
+
 data "aws_lb" "kong_internal" {
   tags = {
     Name = "${module.generator.prefix}-kong-internal"
@@ -41,6 +46,19 @@ data "aws_lb" "kong_internal" {
 
   depends_on = [
     helm_release.konghq-internal
+  ]
+}
+
+
+# data chainstack load balancer
+
+data "aws_lb" "kong_chainstack" {
+  tags = {
+    Name = "${module.generator.prefix}-chainstack"
+  }
+
+  depends_on = [
+    helm_release.konghq-chainstack
   ]
 }
 

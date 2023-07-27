@@ -82,3 +82,26 @@ module "api_gateway_kong_calibration" {
   namespace        = "network"
   upstream_service = "calibrationapi-0-lotus"
 }
+
+
+# ingress for reserve chainstack external name
+
+
+module "api_gateway_kong_chainstack" {
+  count = local.is_prod_envs
+
+  source        = "../modules/api_gw_kong"
+  global_config = local.make_global_configuration
+
+  stage_name  = "chainstack"
+  domain_name = "api.node.glif.io"
+
+  ingress_class    = "chainstack"
+  namespace        = "network"
+  upstream_service = "api-read-master-lotus"
+  override_rpc_v0_service = "chainstack"
+  override_rpc_v0_port = 80
+  override_rpc_v1_service = "chainstack"
+  override_rpc_v1_port = 80
+  preserve_host = "false"
+}
