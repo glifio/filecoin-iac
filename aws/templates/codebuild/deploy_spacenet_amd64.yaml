@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    IMAGE_NAME: 'lotus'
+    IMAGE_NAME: 'spacenet'
     IMAGE_NETWORK: 'spacenet'
     CUSTOM_TAG: 'spacenet'
     PROJECT: 'filecoin'
@@ -36,6 +36,5 @@ phases:
     commands:
       - echo Image built
       - cd ../../glifio/filecoin-docker/
-      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg REPOSITORY=$REPO --build-arg BRANCH=$CUSTOM_TAG -t $IMAGE_NAME:latest -f ${DOCKERFILE} .
-      - docker tag $IMAGE_NAME:latest $DOCKERUHUB_ORGANIZATION/lotus:dev-spacenet-${ARCH}
-      - docker push $DOCKERUHUB_ORGANIZATION/lotus:dev-spacenet-${ARCH}
+      - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg REPOSITORY=$REPO --build-arg BRANCH=$CUSTOM_TAG -t $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-${IMAGE_NAME}-${ARCH}-f ${DOCKERFILE} .
+      - docker push $DOCKERUHUB_ORGANIZATION/lotus:${CUSTOM_TAG}-${IMAGE_NAME}-${ARCH}
