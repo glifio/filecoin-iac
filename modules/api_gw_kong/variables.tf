@@ -95,3 +95,8 @@ variable "affix_upstream_service" {
   default     = false
   description = "If true, add -lotus at the end of upstream service name"
 }
+
+variable "preserve_host" {
+  type = bool
+  default = true
+}

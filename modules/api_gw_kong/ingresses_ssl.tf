@@ -313,7 +313,7 @@ resource "kubernetes_ingress_v1" "ssl-post_rpc_v0" {
 
       "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "POST"
-
+      "konghq.com/preserve-host" = var.preserve_host
       "konghq.com/plugins" = join(", ", compact([
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
@@ -458,7 +458,7 @@ resource "kubernetes_ingress_v1" "ssl-post_rpc_v1" {
 
       "konghq.com/protocols" = "http, https"
       "konghq.com/methods"   = "POST"
-
+      "konghq.com/preserve-host" = var.preserve_host
       "konghq.com/plugins" = join(", ", compact([
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
