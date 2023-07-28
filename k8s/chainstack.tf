@@ -1,15 +1,4 @@
 
-#resource "aws_route53_record" "chainstack" {
-#  count           = local.is_dev_envs
-#  zone_id         = data.aws_route53_zone.selected.zone_id
-#  name            = "chainstack.${var.route53_domain}"
-#  allow_overwrite = true
-#  type            = "CNAME"
-#  ttl             = "60"
-#  records         = [data.aws_lb.kong_external.dns_name]
-#}
-
-
 # lambda function  resources #
 
 resource "aws_iam_role" "role_for_lambda" {
@@ -142,10 +131,10 @@ resource "kubernetes_service" "chainstack" {
   }
 }
 
-#resource "aws_route53_health_check" "health_check_healthy_mainnet" {
-#
-#  type                            = "CLOUDWATCH_METRIC"
-#  cloudwatch_alarm_name           = "Health check for mainnet statusCode = 200"
-#  cloudwatch_alarm_region         = var.region
-#  insufficient_data_health_status = "Healthy"
-#}
+resource "aws_route53_health_check" "health_check_healthy_mainnet" {
+
+  type                            = "CLOUDWATCH_METRIC"
+  cloudwatch_alarm_name           = "Health check for mainnet statusCode = 200"
+  cloudwatch_alarm_region         = var.region
+  insufficient_data_health_status = "Healthy"
+}

@@ -123,15 +123,42 @@ resource "aws_route53_record" "api-internal_node_glif_io" {
   name            = "api.node.glif.io"
   allow_overwrite = true
   zone_id         = data.aws_route53_zone.selected.zone_id
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
+  type            = "A"
+
+  alias {
+    evaluate_target_health = true
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
 
   set_identifier = "mainnet-main"
   weighted_routing_policy {
     weight = 2
   }
+  health_check_id = aws_route53_health_check.health_check_healthy_mainnet.id
 }
+
+# fallback traffic to chainstack #
+
+resource "aws_route53_record" "api-internal_node_glif_io_secondary" {
+  count           = local.is_prod_envs
+  name            = "api.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "A"
+
+    alias {
+  	evaluate_target_health = false
+  	name                   = data.aws_lb.kong_chainstack.dns_name
+  	zone_id                = data.aws_lb.kong_chainstack.zone_id
+    }
+
+    weighted_routing_policy {
+  	weight = 0
+    }
+    set_identifier = "secondary"
+}
+
 
 resource "aws_route53_record" "mainnet_nlb_external" {
   count           = local.is_prod_envs
@@ -201,7 +228,7 @@ resource "aws_route53_record" "atlantis" {
 }
 
 
-# for check pulse api-read-master #
+# for checking pulse api-read-master #
 
 resource "aws_route53_record" "strictly_mainnet_node_glif_io" {
   count           = local.is_prod_envs
