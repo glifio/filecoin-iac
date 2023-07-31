@@ -15,22 +15,13 @@ env:
     KUBECTL_VERSION: 1.24.7
     ARCH: amd64
     DOCKERFILE: Dockerfile
-    REPO: filecoin-project/lotus
+    REPO: protofire/lotus
   secrets-manager:
     DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
     DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
     AWS_ACCESS_KEY_ID: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_ACCESS_KEY_ID"
     AWS_SECRET_ACCESS_KEY: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_SECRET_ACCESS_KEY"
 
-phases:
-  install:
-    commands:
-      - echo Environment Variables
-      - printenv
-      - curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/2022-10-31/bin/linux/${ARCH}/kubectl
-      - chmod +x ./kubectl
-      - mv kubectl /usr/bin/
-      - aws eks --region $AWS_REGION update-kubeconfig --name $PROJECT-$ENVIRONMENT-$SHORT_REGION-$SUB_ENV-eks
 
   pre_build:
     commands:

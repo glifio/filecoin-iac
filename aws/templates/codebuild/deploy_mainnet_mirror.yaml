@@ -14,7 +14,7 @@ env:
     DOCKERUHUB_ORGANIZATION: 'glif'
     KUBECTL_VERSION: 1.24.7
     ARCH: amd64
-    DOCKERFILE: Dockerfile_arm
+    DOCKERFILE: Dockerfile
     REPO: filecoin-project/lotus
   secrets-manager:
     DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
