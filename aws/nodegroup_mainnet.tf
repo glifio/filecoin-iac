@@ -111,18 +111,18 @@ module "eks_nodegroup_ondemand_group19" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 }
 
-module "eks_nodegroup_ondemand_group28" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "group28"
-  instance_type = "r6gd.4xlarge"
-  ami_type      = "AL2_ARM_64"
-  user_data     = "nvme-spot.sh"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
+#module "eks_nodegroup_ondemand_group28" {
+#  count  = local.is_prod_envs
+#  source = "../modules/eks_nodegroup"
+#
+#  name          = "group28"
+#  instance_type = "r6gd.4xlarge"
+#  ami_type      = "AL2_ARM_64"
+#  user_data     = "nvme-spot.sh"
+#
+#  global_config    = local.make_global_configuration
+#  nodegroup_config = local.make_eks_nodegroups_global_configuration
+#}
 
 module "eks_nodegroup_ondemand_group29" {
   count  = local.is_prod_envs
@@ -197,18 +197,18 @@ module "eks_nodegroup_ondemand_blockscout_0" {
 
 ################# START BLOCK SPOT NODE-GROUP LIST #################
 
-#module "eks_nodegroup_spot_calibnet_1" {
-#  count  = local.is_prod_envs
-#  source = "../modules/eks_nodegroup"
-#
-#  name             = "calibnet-1"
-#  instance_type    = "c6g.4xlarge"
-#  ami_type         = "AL2_ARM_64"
-#  is_spot_instance = true
-#
-#  global_config    = local.make_global_configuration
-#  nodegroup_config = local.make_eks_nodegroups_global_configuration
-#}
+module "eks_nodegroup_spot_calibnet_1" {
+  count  = local.is_prod_envs
+  source = "../modules/eks_nodegroup"
+
+  name             = "calibnet-1"
+  instance_type    = "c6g.4xlarge"
+  ami_type         = "AL2_ARM_64"
+  is_spot_instance = true
+
+  global_config    = local.make_global_configuration
+  nodegroup_config = local.make_eks_nodegroups_global_configuration
+}
 
 #prod-api-i3-4x8x-spot-b-1-19-Node
 module "eks_nodegroup_mainnet_spot_group8" {
