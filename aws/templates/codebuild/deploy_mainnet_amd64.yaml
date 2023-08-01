@@ -13,7 +13,7 @@ env:
     AWS_ACCOUNT_ID: '499623857295'
     DOCKERUHUB_ORGANIZATION: 'glif'
     KUBECTL_VERSION: 1.24.7
-    ARCH: arm64
+    ARCH: amd64
     DOCKERFILE: Dockerfile
     REPO: protofire/lotus
   secrets-manager:
