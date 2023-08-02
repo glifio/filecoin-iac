@@ -55,9 +55,9 @@ Environment variables that are used for building:
 |------------|----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | IMAGE_NETWORK | Makefile command to build lotus  | lotus – for mainnet;<br/>calibnet – for calibnet;<br/>spacenet – for spacenet.                                                                                   |
 | REPO     | GitHub repository to build that contains lotus source code | filecoin-project/lotus – for mainnet/calibnet original releases<br/> protofire/lotus – for releases modified by Protofire<br/> consensus-shipyard – for spacenet releases  |
-| CUSTOM_TAG    | Tag or branch to build from                          | In most cases that would be a tag, but for modified releases that will be a branch with the -custom postfix.                                                               |
+| SOURCE_BRANCH    | Tag or branch to build from                          | In most cases that would be a tag, but for modified releases that will be a branch with the -custom postfix.                                                               |
 
-Tagging has the following convention: `${CUSTOM_TAG}-${IMAGE_NAME}-${ARCH}`, where:
+Tagging has the following convention: `${SOURCE_BRANCH}-${IMAGE_NAME}-${ARCH}`, where:
 - `IMAGE_NAME` is the image network name (mainnet, calibnet, spacenet)
 - ARCH is the CPU architecture which the image is built for (arm64, amd64).
 Keep in mind that spacenet can only be built for amd64 architecture. That’s because it’s hosted on OVH which only supports amd64-based instances.
