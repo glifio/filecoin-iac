@@ -96,12 +96,12 @@ module "api_gateway_kong_chainstack" {
   stage_name  = "chainstack"
   domain_name = "api.node.glif.io"
 
-  ingress_class    = "chainstack"
-  namespace        = "network"
-  upstream_service = "api-read-master-lotus"
+  ingress_class           = "chainstack"
+  namespace               = "network"
+  upstream_service        = "api-read-master-lotus"
   override_rpc_v0_service = "chainstack"
-  override_rpc_v0_port = 80
+  override_rpc_v0_port    = 80
   override_rpc_v1_service = "chainstack"
-  override_rpc_v1_port = 80
-  preserve_host = "false"
+  override_rpc_v1_port    = 80
+  preserve_host           = "false"
 }

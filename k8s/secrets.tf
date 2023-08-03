@@ -317,5 +317,5 @@ module "blockscout-1-lotus-secret" {
 
   generator_config = local.make_global_configuration
 
-  depends_on = [ module.blockscout-0-lotus-secret ]
+  depends_on = [module.blockscout-0-lotus-secret]
 }
