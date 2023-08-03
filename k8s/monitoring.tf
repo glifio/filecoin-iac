@@ -29,7 +29,6 @@ resource "helm_release" "monitoring" {
       get_grafana_notifiers_url    = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "slack_api_url", null)
       get_prometheus_storage_class = kubernetes_storage_class_v1.ebs_csi_driver_gp2.metadata[0].name
       get_kong_ingress_external    = helm_release.konghq-external.name
-      get_kong_ingress_internal    = helm_release.konghq-internal.name
       get_grafana_notif_url        = local.is_dev_envs == 1 ? "monitoring.dev.node.glif.io" : "monitoring.node.glif.io"
       get_pvc_size                 = local.is_dev_envs == 1 ? "100Gi" : "265Gi"
       users                        = jsondecode(data.aws_secretsmanager_secret_version.credentials-grafana-users.secret_string)

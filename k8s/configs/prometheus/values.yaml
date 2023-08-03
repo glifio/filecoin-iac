@@ -245,15 +245,3 @@ prometheus:
           targetPort: 8100
           scheme: http
           path: /metrics
-    - name: kong-internal-ingress
-      namespaceSelector:
-        matchNames:
-          - kong
-      selector:
-        matchLabels:
-          app.kubernetes.io/instance: ${get_kong_ingress_internal}
-      podMetricsEndpoints:
-        - interval: 30s
-          targetPort: 8100
-          scheme: http
-          path: /metrics

@@ -8,16 +8,6 @@ resource "aws_route53_record" "api_dev_node_glif_io" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-resource "aws_route53_record" "dev_nlb_ingress_internal" {
-  count           = local.is_dev_envs
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "${var.environment}-internal.${var.route53_domain}"
-  allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_internal.dns_name]
-}
-
 # CID CHECKER Calibration
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" {
   count           = local.is_prod_envs
@@ -173,16 +163,6 @@ resource "aws_route53_record" "mainnet_nlb_external" {
     zone_id                = "Z31USIVHYNEOWT"
   }
 
-}
-
-resource "aws_route53_record" "mainnet_nlb_ingress_internal" {
-  count           = local.is_prod_envs
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "${var.environment}-internal.${var.route53_domain}"
-  allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_internal.dns_name]
 }
 
 resource "aws_route53_record" "monitoring_mainnet" {
