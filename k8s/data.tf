@@ -242,11 +242,11 @@ data "aws_secretsmanager_secret_version" "cid_checker_calibration" {
 
 data "aws_secretsmanager_secret" "github_ssh_gist_updater" {
   count = local.is_prod_envs
-  name = "${module.generator.prefix}/github_ssh_gist_updater"
+  name  = "${module.generator.prefix}/github_ssh_gist_updater"
 }
 
 data "aws_secretsmanager_secret_version" "github_ssh_gist_updater" {
-  count = local.is_prod_envs
+  count     = local.is_prod_envs
   secret_id = data.aws_secretsmanager_secret.github_ssh_gist_updater[0].id
 }
 

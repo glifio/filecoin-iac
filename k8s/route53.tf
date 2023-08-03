@@ -147,16 +147,16 @@ resource "aws_route53_record" "api-internal_node_glif_io_secondary" {
   zone_id         = data.aws_route53_zone.selected.zone_id
   type            = "A"
 
-    alias {
-  	evaluate_target_health = false
-  	name                   = data.aws_lb.kong_chainstack.dns_name
-  	zone_id                = data.aws_lb.kong_chainstack.zone_id
-    }
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_chainstack.dns_name
+    zone_id                = data.aws_lb.kong_chainstack.zone_id
+  }
 
-    weighted_routing_policy {
-  	weight = 0
-    }
-    set_identifier = "secondary"
+  weighted_routing_policy {
+    weight = 0
+  }
+  set_identifier = "secondary"
 }
 
 

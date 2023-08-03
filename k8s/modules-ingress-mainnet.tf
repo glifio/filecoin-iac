@@ -230,18 +230,18 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-docs-subresources" {
 }
 
 #############node.glif.io##########################
-
-module "ingress-kong_space00-1234" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/space00/lotus/(.*)"
-  get_ingress_backend_service_name = "space00-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 1234
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
-  type_lb_scheme                   = "external"
-}
+#
+#module "ingress-kong_space00-1234" {
+#  count                            = local.is_prod_envs
+#  source                           = "../modules/k8s_ingress"
+#  get_global_configuration         = local.make_global_configuration
+#  get_ingress_http_path            = "/space00/lotus/(.*)"
+#  get_ingress_backend_service_name = "space00-lotus" // the "-service" string will be added automatically
+#  get_ingress_backend_service_port = 1234
+#  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+#  get_rule_host                    = "node.glif.io"
+#  type_lb_scheme                   = "external"
+#}
 
 module "ingress-kong_space06-1234" {
   count                            = local.is_prod_envs
@@ -255,17 +255,17 @@ module "ingress-kong_space06-1234" {
   type_lb_scheme                   = "external"
 }
 
-module "ingress-kong_space07-1234" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/space07/lotus/(.*)"
-  get_ingress_backend_service_name = "space07-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 1234
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
-  type_lb_scheme                   = "external"
-}
+#module "ingress-kong_space07-1234" {
+#  count                            = local.is_prod_envs
+#  source                           = "../modules/k8s_ingress"
+#  get_global_configuration         = local.make_global_configuration
+#  get_ingress_http_path            = "/space07/lotus/(.*)"
+#  get_ingress_backend_service_name = "space07-lotus" // the "-service" string will be added automatically
+#  get_ingress_backend_service_port = 1234
+#  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
+#  get_rule_host                    = "node.glif.io"
+#  type_lb_scheme                   = "external"
+#}
 
 module "ingress-kong_fvm-archive-1234" {
   count                            = local.is_prod_envs
@@ -304,31 +304,6 @@ module "ingress-kong_space07-cache-8080" {
   type_lb_scheme                   = "external"
 }
 
-module "ingress-kong_space00-ipfs-service-4001" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/space00/ipfs/4001/(.*)"
-  get_ingress_backend_service_name = "space00-ipfs" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 4001
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
-  is_kong_auth_header_enabled      = false
-  type_lb_scheme                   = "external"
-}
-
-module "ingress-kong_space00-ipfs-service-8080" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/space00/ipfs/8080/(.*)"
-  get_ingress_backend_service_name = "space00-ipfs" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 8080
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
-  is_kong_auth_header_enabled      = false
-  type_lb_scheme                   = "external"
-}
 
 module "ingress-kong_lotusgateway-2346" {
   count                                   = local.is_prod_envs
@@ -465,7 +440,7 @@ module "ingress-kong_coinfirm" {
 }
 
 module "ingress_private_mainnet_fallback" {
-  count = local.is_prod_envs
+  count  = local.is_prod_envs
   name   = "private-mainnet-fallback"
   source = "../modules/ovh_ingress"
 
@@ -488,7 +463,7 @@ module "ingress_private_mainnet_fallback" {
 }
 
 module "ingress_private_calibration_fallback" {
-  count = local.is_prod_envs
+  count  = local.is_prod_envs
   name   = "private-calibration-fallback"
   source = "../modules/ovh_ingress"
 
@@ -511,14 +486,14 @@ module "ingress_private_calibration_fallback" {
 }
 
 module "ingress_blockscout" {
-  count = local.is_prod_envs
+  count  = local.is_prod_envs
   name   = "blockscout"
   source = "../modules/ovh_ingress"
 
   namespace = "network"
 
-  http_host = "blockscout.node.glif.io"
-  http_path = "/(.*)"
+  http_host      = "blockscout.node.glif.io"
+  http_path      = "/(.*)"
   http_path_type = "Exact"
 
   service_name  = "blockscout-0-lotus-service"
@@ -526,7 +501,51 @@ module "ingress_blockscout" {
   incress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
 
-  enable_access_control   = true
-  access_control_public   = false
-  enable_letsencrypt      = false
+  enable_access_control = true
+  access_control_public = false
+  enable_letsencrypt    = false
+}
+
+
+module "ingress_space00_1234" {
+  count  = local.is_prod_envs
+  name   = "ingress-space00-1234"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host      = "node.glif.io"
+  http_path      = "/space00/lotus/(.*)"
+  http_path_type = "Exact"
+
+  service_name  = "space00-lotus-service"
+  service_port  = 1234
+  incress_class = "kong-external-lb"
+  secret_name   = data.aws_secretsmanager_secret.space00_mainnet_lotus[0].name
+
+  enable_access_control  = true
+  access_control_replace = true
+  access_control_public  = true
+  enable_letsencrypt     = false
+}
+
+
+module "ingress_space07_1234" {
+  count  = local.is_prod_envs
+  name   = "ingress-space07-1234"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host      = "node.glif.io"
+  http_path      = "/space07/lotus/(.*)"
+  http_path_type = "Exact"
+
+  service_name  = "space07-lotus-service"
+  service_port  = 1234
+  incress_class = "kong-external-lb"
+  secret_name   = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
+
+  enable_access_control = true
+  enable_letsencrypt    = false
 }

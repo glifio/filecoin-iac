@@ -31,17 +31,17 @@ resource "aws_lambda_function" "check_health_code" {
 # cloudwatch metric/alarm resources #
 
 resource "aws_cloudwatch_log_metric_filter" "metric_filter" {
-  count          = local.is_prod_envs
+  count = local.is_prod_envs
 
   metric_transformation {
-	name          = "Health_check_for_mainnet_status_code_200"
-	namespace     = "check_health_code"
-	value         = "1"
-	default_value = "0"
+    name          = "Health_check_for_mainnet_status_code_200"
+    namespace     = "check_health_code"
+    value         = "1"
+    default_value = "0"
   }
 
-  name    = "Health_check_for_mainnet_status_code_200"
-  pattern = "{ $.statusCode =\"200\"}"
+  name           = "Health_check_for_mainnet_status_code_200"
+  pattern        = "{ $.statusCode =\"200\"}"
   log_group_name = "/aws/lambda/${aws_lambda_function.check_health_code.function_name}"
 }
 
@@ -107,27 +107,27 @@ module "ingress_strictly_mainnet_node_glif_io" {
 resource "kubernetes_service" "chainstack" {
   count = local.is_prod_envs
   metadata {
-	name      = "chainstack-service"
-	namespace = "network"
+    name      = "chainstack-service"
+    namespace = "network"
 
-	annotations = {
-	  "konghq.com/host-header" = "filecoin-mainnet.chainstacklabs.com"
-	}
+    annotations = {
+      "konghq.com/host-header" = "filecoin-mainnet.chainstacklabs.com"
+    }
   }
 
   spec {
-	port {
-	  name     = "http"
-	  protocol = "TCP"
-	  port     = 80
-	}
-	port {
-	  name     = "https"
-	  protocol = "TCP"
-	  port     = 443
-	}
-	type          = "ExternalName"
-	external_name = "filecoin-mainnet.chainstacklabs.com"
+    port {
+      name     = "http"
+      protocol = "TCP"
+      port     = 80
+    }
+    port {
+      name     = "https"
+      protocol = "TCP"
+      port     = 443
+    }
+    type          = "ExternalName"
+    external_name = "filecoin-mainnet.chainstacklabs.com"
   }
 }
 

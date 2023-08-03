@@ -12,11 +12,11 @@
 #   for me it was onetime task:
 # Docu: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims
 resource "helm_release" "monitoring" {
-  name       = "monitoring"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
-  namespace  = kubernetes_namespace_v1.monitoring.metadata[0].name
-  version    = "36.6.2"
+  name        = "monitoring"
+  repository  = "https://prometheus-community.github.io/helm-charts"
+  chart       = "kube-prometheus-stack"
+  namespace   = kubernetes_namespace_v1.monitoring.metadata[0].name
+  version     = "36.6.2"
   max_history = 2
 
   values = [
