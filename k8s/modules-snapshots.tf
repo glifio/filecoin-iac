@@ -18,6 +18,7 @@ module "calibrationapi_archive_node_snapshot" {
   creator_cron  = "0 0 * * SAT"
   deleter_cron  = "0 2 * * SAT"
   snaps_to_keep = 2
+  is_suspended  = true
 }
 
 ### End block: Snapshot for dev ###
