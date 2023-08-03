@@ -59,6 +59,7 @@ resource "kubernetes_cron_job_v1" "snap_creator" {
     failed_jobs_history_limit     = 1
     schedule                      = var.creator_cron
     successful_jobs_history_limit = 1
+    suspend                       = var.is_suspended
     job_template {
       metadata {}
       spec {
@@ -68,7 +69,7 @@ resource "kubernetes_cron_job_v1" "snap_creator" {
             service_account_name = kubernetes_service_account_v1.this.metadata[0].name
             restart_policy       = "Never"
             node_selector = {
-              "kubernetes.io/arch" = "amd64"
+              "kubernetes.io/arch"         = "amd64"
               "assign_to_space00_07_nodes" = "allow_any_pods"
             }
             container {
@@ -104,6 +105,7 @@ resource "kubernetes_cron_job_v1" "snap_deleter" {
     failed_jobs_history_limit     = 1
     schedule                      = var.deleter_cron
     successful_jobs_history_limit = 1
+    suspend                       = var.is_suspended
     job_template {
       metadata {}
       spec {
