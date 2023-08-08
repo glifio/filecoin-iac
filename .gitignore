@@ -59,6 +59,9 @@ Thumbs.db
 # terraform debug logs
 **/terraform.txt
 
+# terraform plan
+**/tfplan
+
 #lambdas
 */aws/lambda/*.zip
 *.zip
