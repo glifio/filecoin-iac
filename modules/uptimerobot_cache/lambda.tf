@@ -11,7 +11,7 @@ resource "aws_lambda_function" "default" {
   filename         = data.archive_file.default.output_path
   source_code_hash = data.archive_file.default.output_base64sha256
 
-  runtime = "nodejs12.x"
+  runtime = "nodejs16.x"
   handler = "index.handler"
   timeout = 300
 
