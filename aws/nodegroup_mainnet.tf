@@ -215,8 +215,8 @@ module "eks_nodegroup_mainnet_spot_group8" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
 
-  name             = "group8"
-  instance_type    = "m5d.8xlarge,r5ad.8xlarge"
+  name             = "api-read-slave-1"
+  instance_type    = "r5ad.4xlarge"
   is_spot_instance = true
 
   global_config    = local.make_global_configuration
