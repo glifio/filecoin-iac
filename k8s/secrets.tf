@@ -301,7 +301,7 @@ module "api-read-dev-worker-secret" {
   
   source = "../modules/secrets_generator"
 
-  name = "api-read-dev-worker"
+  name = "api-read-dev-worker-lotus-secret"
 
   generator_config = local.make_global_configuration
 }

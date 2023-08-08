@@ -1,13 +1,8 @@
 storage:
-  master:
-    storageClass: "ebs-sc-gp2"
-    size: 100Gi
-  tserver:
-    storageClass: "ebs-sc-gp2"
-    size: 100Gi
+  ephemeral: true
 
 replicas:
-  master: 2
+  master: 3
   tserver: 3
   totalMasters: 1
 
@@ -16,3 +11,27 @@ gflags:
     db_block_cache_size_percentage: 40
     global_memstore_size_mb_max: 1024
     memstore_arena_size_kb: 64
+
+master:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - "yb-master"
+        topologyKey: kubernetes.io/hostname
+
+tserver:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - "yb-tserver"
+        topologyKey: kubernetes.io/hostname
