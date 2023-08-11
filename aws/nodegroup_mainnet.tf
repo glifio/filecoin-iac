@@ -73,7 +73,7 @@ module "eks_nodegroup_ondemand_group17" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
 
-  name          = "group17"
+  name          = "api-read-slave-3"
   instance_type = "r6gd.4xlarge"
   ami_type      = "AL2_ARM_64"
   user_data     = "nvme-spot.sh"
@@ -128,7 +128,7 @@ module "eks_nodegroup_ondemand_group29" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
 
-  name          = "group29"
+  name          = "space06"
   instance_type = "r6gd.4xlarge"
   ami_type      = "AL2_ARM_64"
   user_data     = "nvme-spot.sh"
