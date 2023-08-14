@@ -7,6 +7,7 @@ resource "kubernetes_secret_v1" "lotus_archive_node_tmp_secret" {
   data = {
     privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.calibrationapi_archive_node_lotus[0].secret_string), "private_key", null)
     token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.calibrationapi_archive_node_lotus[0].secret_string), "jwt_token", null)
+    nodeid     = lookup(jsondecode(data.aws_secretsmanager_secret_version.calibrationapi_archive_node_lotus[0].secret_string), "bootstrap_node_id", null)
   }
 }
 
@@ -189,6 +190,7 @@ resource "kubernetes_secret_v1" "space07_mainnet_lotus_secret" {
   data = {
     privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.space07_mainnet_lotus[0].secret_string), "private_key", null)
     token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.space07_mainnet_lotus[0].secret_string), "jwt_token", null)
+    nodeid     = lookup(jsondecode(data.aws_secretsmanager_secret_version.space07_mainnet_lotus[0].secret_string), "bootstrap_node_id", null)
   }
 }
 
