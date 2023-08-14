@@ -28,3 +28,55 @@ resource "kubernetes_manifest" "kong_tcp_ingress" {
     }
   }
 }
+
+
+resource "kubernetes_manifest" "kong_tcp_ingress_space07" {
+  count = local.is_prod_envs
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1beta1"
+    kind       = "TCPIngress"
+
+    metadata = {
+      name      = "${terraform.workspace}-space07-1236"
+      namespace = kubernetes_namespace_v1.network.metadata[0].name
+      annotations = {
+        "kubernetes.io/ingress.class" : "kong-external-lb"
+      }
+    }
+    spec = {
+      rules = [{
+        port = 1236
+        backend = {
+          serviceName = "space07-lotus-service"
+          servicePort = 1236
+        }
+      }]
+    }
+  }
+}
+
+
+resource "kubernetes_manifest" "kong_tcp_ingress_calibration_archive" {
+  count = local.is_prod_envs
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1beta1"
+    kind       = "TCPIngress"
+
+    metadata = {
+      name      = "${terraform.workspace}-calibration-archive-1237"
+      namespace = kubernetes_namespace_v1.network.metadata[0].name
+      annotations = {
+        "kubernetes.io/ingress.class" : "kong-external-lb"
+      }
+    }
+    spec = {
+      rules = [{
+        port = 1237
+        backend = {
+          serviceName = "calibrationapi-archive-node-lotus-service"
+          servicePort = 1237
+        }
+      }]
+    }
+  }
+}
