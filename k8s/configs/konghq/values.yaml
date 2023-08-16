@@ -17,3 +17,15 @@ plugins:
   configMaps:
   - name: ${http_mirror_configmap_name}
     pluginName: http-mirror
+
+proxy:
+  stream:
+    - protocol: TCP
+      servicePort: 1235
+      containerPort: 1235
+    - protocol: TCP
+      servicePort: 1236
+      containerPort: 1236
+    - protocol: TCP
+      servicePort: 1237
+      containerPort: 1237

@@ -58,21 +58,6 @@ resource "helm_release" "konghq-external" {
   }
 
   set {
-    name  = "proxy.stream[0].containerPort"
-    value = "1235"
-  }
-
-  set {
-    name  = "proxy.stream[0].servicePort"
-    value = "1235"
-  }
-
-  set {
-    name  = "proxy.stream[0].protocol"
-    value = "TCP"
-  }
-
-  set {
     name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-backend-protocol"
     value = "https"
   }
