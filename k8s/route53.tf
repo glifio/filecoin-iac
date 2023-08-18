@@ -135,7 +135,7 @@ resource "aws_route53_record" "api-internal_node_glif_io" {
   weighted_routing_policy {
     weight = 2
   }
-  health_check_id = aws_route53_health_check.health_check_healthy_mainnet.id
+  health_check_id = aws_route53_health_check.health_check_healthy_mainnet[0].id
 }
 
 # fallback traffic to chainstack #

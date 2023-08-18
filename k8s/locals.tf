@@ -36,7 +36,7 @@ locals {
   is_dev_envs = local.is_dev_env[terraform.workspace]
 
   monitoring_nodegroup = {
-    filecoin-dev-apn1-glif-eks     = "group1"
+    filecoin-dev-apn1-glif-eks     = "monitoring"
     filecoin-mainnet-apn1-glif-eks = "group13"
   }
   monitoring_nodegroups = local.monitoring_nodegroup[terraform.workspace]
