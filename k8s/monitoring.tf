@@ -16,7 +16,7 @@ resource "helm_release" "monitoring" {
   repository  = "https://prometheus-community.github.io/helm-charts"
   chart       = "kube-prometheus-stack"
   namespace   = kubernetes_namespace_v1.monitoring.metadata[0].name
-  version     = "36.6.2"
+  version     = "46.8.0"
   max_history = 2
 
   values = [
@@ -38,6 +38,11 @@ resource "helm_release" "monitoring" {
 
   set {
     name  = "grafana.adminPassword"
+    value = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "admin_password", null)
+  }
+
+  set {
+    name  = "grafana.user"
     value = lookup(jsondecode(data.aws_secretsmanager_secret_version.monitoring.secret_string), "admin_password", null)
   }
 }
