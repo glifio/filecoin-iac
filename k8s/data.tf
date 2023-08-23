@@ -276,3 +276,11 @@ data "aws_secretsmanager_secret_version" "coinfirm" {
   count     = local.is_prod_envs
   secret_id = data.aws_secretsmanager_secret.coinfirm[0].id
 }
+
+data "aws_secretsmanager_secret" "monitoring_google_oauth" {
+  name = "${module.generator.prefix}-monitoring-google-oauth"
+}
+
+data "aws_secretsmanager_secret_version" "monitoring_google_oauth" {
+  secret_id = data.aws_secretsmanager_secret.monitoring_google_oauth.id
+}
