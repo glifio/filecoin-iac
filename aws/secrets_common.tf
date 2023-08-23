@@ -95,5 +95,11 @@ resource "aws_secretsmanager_secret" "budget_alarm_slack" {
   )
 }
 
+resource "aws_secretsmanager_secret" "monitoring_google_oauth" {
+  name = "${module.generator.prefix}-monitoring-google-oauth"
 
-
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-monitoring-google-oauth" },
+    module.generator.common_tags
+  )
+}

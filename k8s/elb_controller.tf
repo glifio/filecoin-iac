@@ -94,7 +94,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "image.tag"
-    value = "v2.4.2"
+    value = "v2.5.1"
   }
 
   set {

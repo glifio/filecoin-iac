@@ -16,7 +16,7 @@ resource "helm_release" "monitoring" {
   repository  = "https://prometheus-community.github.io/helm-charts"
   chart       = "kube-prometheus-stack"
   namespace   = kubernetes_namespace_v1.monitoring.metadata[0].name
-  version     = "36.6.2"
+  version     = "46.8.0"
   max_history = 2
 
   values = [
@@ -32,7 +32,8 @@ resource "helm_release" "monitoring" {
       get_kong_ingress_internal    = helm_release.konghq-internal.name
       get_grafana_notif_url        = local.is_dev_envs == 1 ? "monitoring.dev.node.glif.io" : "monitoring.node.glif.io"
       get_pvc_size                 = local.is_dev_envs == 1 ? "100Gi" : "265Gi"
-      users                        = jsondecode(data.aws_secretsmanager_secret_version.credentials-grafana-users.secret_string)
+      google_oauth_client_id       = jsondecode(data.aws_secretsmanager_secret_version.monitoring_google_oauth.secret_string)["client_id"]
+      google_oauth_client_secret   = jsondecode(data.aws_secretsmanager_secret_version.monitoring_google_oauth.secret_string)["client_secret"]
     })
   ]
 
