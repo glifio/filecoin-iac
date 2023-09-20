@@ -67,15 +67,6 @@ resource "aws_secretsmanager_secret" "api_read_master_lotus" {
   module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "space00_lotus" {
-  count                   = local.is_prod_envs
-  name                    = "${module.generator.prefix}-space00-lotus"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-space00-lotus" },
-  module.generator.common_tags)
-}
-
 resource "aws_secretsmanager_secret" "space06_lotus" {
   count                   = local.is_prod_envs
   name                    = "${module.generator.prefix}-space06-lotus"
