@@ -1,4 +1,4 @@
-# Setup for the p2p port on the space00 pod
+# Setup for the p2p port on the space07 pod
 # Example of config creation https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/using-tcpingress/
 # Upstream creation is done via helm chart values - proxy.stream[0].containerPort, proxy.stream[0].servicePort,
 #   proxy.stream[0].protocol
