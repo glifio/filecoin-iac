@@ -18,10 +18,10 @@ resource "aws_iam_role_policy" "dlm" {
   policy = file("${path.module}/templates/policies/dlm_policy.pol.tpl")
 }
 
-resource "aws_dlm_lifecycle_policy" "space00" {
+resource "aws_dlm_lifecycle_policy" "space07" {
   count = local.is_prod_envs
 
-  description        = "Make snapshots of space00 LVM volumes"
+  description        = "Make snapshots of space07 LVM volumes"
   execution_role_arn = aws_iam_role.dlm.arn
   state              = "ENABLED"
 
@@ -49,7 +49,7 @@ resource "aws_dlm_lifecycle_policy" "space00" {
     }
 
     target_tags = {
-      Tenant = "space00"
+      Tenant = "space07"
     }
   }
 }
