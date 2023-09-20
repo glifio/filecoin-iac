@@ -462,28 +462,6 @@ module "ingress_private_calibration_fallback" {
   enable_return_json      = true
 }
 
-module "ingress_blockscout" {
-  count  = local.is_prod_envs
-  name   = "blockscout"
-  source = "../modules/ovh_ingress"
-
-  namespace = "network"
-
-  http_host      = "blockscout.node.glif.io"
-  http_path      = "/(.*)"
-  http_path_type = "Exact"
-
-  service_name  = "blockscout-0-lotus-service"
-  service_port  = 1234
-  incress_class = "kong-external-lb"
-  secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
-
-  enable_access_control = true
-  access_control_public = false
-  enable_letsencrypt    = false
-}
-
-
 module "ingress_space00_1234" {
   count  = local.is_prod_envs
   name   = "ingress-space00-1234"

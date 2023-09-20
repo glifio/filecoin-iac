@@ -205,16 +205,6 @@ resource "aws_route53_record" "wss_mainnet" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-resource "aws_route53_record" "blockscout" {
-  count           = local.is_prod_envs
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "blockscout.${var.route53_domain}"
-  allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
-}
-
 # Route53 record from atlantis to external nlb
 
 resource "aws_route53_record" "atlantis" {
