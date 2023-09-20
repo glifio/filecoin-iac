@@ -37,19 +37,6 @@ data "aws_lb" "kong_external" {
 }
 
 
-# data internal load balancer
-
-data "aws_lb" "kong_internal" {
-  tags = {
-    Name = "${module.generator.prefix}-kong-internal"
-  }
-
-  depends_on = [
-    helm_release.konghq-internal
-  ]
-}
-
-
 # data chainstack load balancer
 
 data "aws_lb" "kong_chainstack" {

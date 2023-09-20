@@ -5,13 +5,3 @@ resource "aws_acm_certificate" "external_lb" {
 
   tags = module.generator.common_tags
 }
-
-
-
-resource "aws_acm_certificate" "internal_lb" {
-  domain_name               = var.route53_domain
-  subject_alternative_names = local.internal_lb_certificates
-  validation_method         = "DNS"
-
-  tags = module.generator.common_tags
-}
