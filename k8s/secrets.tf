@@ -297,27 +297,3 @@ resource "kubernetes_secret_v1" "coinfirm_1" {
     token      = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["jwt_token"]
   }
 }
-
-module "blockscout-0-lotus-secret" {
-  count = local.is_prod_envs
-
-  source = "../modules/secrets_generator"
-
-  name = "blockscout-0-lotus"
-
-  generator_config = local.make_global_configuration
-}
-
-module "blockscout-1-lotus-secret" {
-  count = local.is_prod_envs
-
-  source = "../modules/secrets_generator"
-
-  name = "blockscout-1-lotus"
-
-  from_secret = module.blockscout-0-lotus-secret[0].aws_secret_name
-
-  generator_config = local.make_global_configuration
-
-  depends_on = [module.blockscout-0-lotus-secret]
-}
