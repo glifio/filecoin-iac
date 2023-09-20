@@ -4,10 +4,10 @@ resource "ovh_cloud_project_kube_nodepool" "spacenet" {
   name         = "spacenet"
   flavor_name  = "c2-15"
 
-  min_nodes = 1
+  min_nodes = 0
   max_nodes = 2
 
-  desired_nodes = 2
+  desired_nodes = 0
 }
 
 resource "ovh_cloud_project_kube_nodepool" "kong" {
@@ -16,10 +16,10 @@ resource "ovh_cloud_project_kube_nodepool" "kong" {
   name         = "kong"
   flavor_name  = "b2-7"
 
-  min_nodes = 1
+  min_nodes = 0
   max_nodes = 2
 
-  desired_nodes = 1
+  desired_nodes = 0
 }
 
 resource "ovh_cloud_project_kube_nodepool" "monitoring" {
@@ -28,8 +28,8 @@ resource "ovh_cloud_project_kube_nodepool" "monitoring" {
   name         = "monitoring"
   flavor_name  = "b2-15"
 
-  min_nodes = 1
+  min_nodes = 0
   max_nodes = 2
 
-  desired_nodes = 1
+  desired_nodes = 0
 }
