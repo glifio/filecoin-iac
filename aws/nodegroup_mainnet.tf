@@ -99,7 +99,7 @@ module "eks_nodegroup_ondemand_group19" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
 
-  name          = "group19"
+  name          = "space07"
   instance_type = "r6g.8xlarge"
   ami_type      = "AL2_ARM_64"
   is_critical   = true
