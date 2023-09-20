@@ -46,7 +46,7 @@ module "eks_nodegroup_archive" {
   get_global_configuration                = local.make_global_configuration
   get_eks_nodegroups_global_configuration = local.make_eks_nodegroups_global_configuration
   use_existing_ebs                        = true
-  ebs_tenant                              = "space00"
+  ebs_tenant                              = "space07"
   assign_to_space00_07_nodes              = true
 }
 ````

@@ -180,13 +180,10 @@ Here's a short list of domain names that are pointing to API Gateways.
 | cid.filecoin.tools | `/api/(.*)` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
 | cid.filecoin.tools | `/docs` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
 | cid.filecoin.tools | `/docs/(.*)` | Exact | external | default | `cid-checker-mainnet-backend:3000` |
-| node.glif.io | `/space00/lotus/(.*)` | Exact | external | network | `space00-lotus:1234` | 
 | node.glif.io | `/space06/lotus/(.*)` | Exact | external | network | `space06-lotus:1234` | 
 | node.glif.io | `/space07/lotus/(.*)` | Exact | external | network | `space07-lotus:1234` | 
 | node.glif.io | `/space06/cache/(.*)` | Exact | external | network | `space06-cache:8080` | 
-| node.glif.io | `/space07/cache/(.*)` | Exact | external | network | `space07-cache:8080` | 
-| node.glif.io | `/space00/ipfs/(.*)` | Exact | external | network | `space00-ipfs:4001` | 
-| node.glif.io | `/space00/ipfs/(.*)` | Exact | external | network | `space00-ipfs:8080` | 
+| node.glif.io | `/space07/cache/(.*)` | Exact | external | network | `space07-cache:8080` |
 | wss.node.glif.io | `/apigw/lotus/(.*)` | Exact | external | network | `api-read-master-lotus:2346` | 
 | mainnet-internal.node.glif.io | `/api-read/cache/(.*)` | Exact | internal | network | `api-read-v0-cache:8080` | 
 | monitoring.node.glif.io | `/` | Prefix | external | monitoring | `monitoring-grafana:80` | 
@@ -197,7 +194,7 @@ The current policies for the snapshots are listed here: [dev](k8s/modules_aws_sn
 
 Snapshotting targets are as follows:
 - `calibration-archive` - create a snapshot once a week, keep the last one only.
-- `space00` - create a snapshot once a day, keep the last 7 snapshots.
+- `space07` - create a snapshot once a day, keep the last 3 snapshots.
 
 
 
@@ -231,7 +228,6 @@ Summary on the uptime is available here:
 | https://filecoin.tools | – | `{ "jsonrpc": "2.0", "method": "Filecoin.ChainHead", "params": [], "id": 5 }` |
 | https://cid.filecoin.tools | – | `{ "jsonrpc": "2.0", "method": "Filecoin.ChainHead", "params": [], "id": 5 }` |
 | https://monitoring.dev.node.glif.io | – | `{ "jsonrpc": "2.0", "method": "Filecoin.ChainHead", "params": [], "id": 5 }` |
-| https://node.glif.io/space00/lotus/rpc/v0 | `POST` | `{ "jsonrpc": "2.0", "method": "Filecoin.ChainHead", "params": [], "id": 5 }` |
 | https://node.glif.io/space06/lotus/rpc/v0 | `POST` | `{ "jsonrpc": "2.0", "method": "Filecoin.ChainHead", "params": [], "id": 5 }` |
 | https://node.glif.io/space07/lotus/rpc/v0 | `POST` | `{ "jsonrpc": "2.0    ", "method": "Filecoin.ChainHead", "params": [], "id": 5 }` |
 | https://monitoring.node.glif.io | – | `{ "jsonrpc": "2.0", "method": "Filecoin.ChainHead", "params": [], "id": 5 }` |
@@ -246,9 +242,6 @@ To update a custom dashboard update `revision` number of the dashboard in [value
 There are a total of 5 custom dashboards:
 1. `lotus/Kubernetes Persistent Volumes`:
    - Volume Space Usage in percentage
-   - Volume stats for `vol-ipfs-space00-lotus-0`
-   - Volume stats for `vol-lotus-io2-space00-lotus-0`
-   - Volume stats for `vol-lotus-io2-space07-lotus-0`
 2. `lotus/Lotus API Endpoints` – contains information on methods usage, timeouts, etc.
 3. `lotus/Lotus NGINX Ingress` – deprecated.
 4. `lotus/Lotus Node Health` – contains information on node health, including:
