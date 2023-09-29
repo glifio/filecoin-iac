@@ -40,22 +40,6 @@ module "eks_nodegroup_ondemand_group13" {
 
 }
 
-module "eks_nodegroup_ondemand_group15" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "group15"
-  instance_type = "r6g.8xlarge"
-  ami_type      = "AL2_ARM_64"
-  is_critical   = true
-
-  use_existing_ebs = true
-  ebs_tenant       = "space00"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
 module "eks_nodegroup_ondemand_group16" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"

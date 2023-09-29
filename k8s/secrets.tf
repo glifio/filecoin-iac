@@ -142,20 +142,6 @@ resource "kubernetes_secret_v1" "api_read_slave_10_mainnet_lotus_secret" {
   }
 }
 
-resource "kubernetes_secret_v1" "space00_mainnet_lotus_secret" {
-  count = local.is_prod_envs
-  metadata {
-    name      = "space00-lotus-secret"
-    namespace = kubernetes_namespace_v1.network.metadata[0].name
-  }
-  data = {
-    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.space00_mainnet_lotus[0].secret_string), "private_key", null)
-    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.space00_mainnet_lotus[0].secret_string), "jwt_token", null)
-    nodeid     = lookup(jsondecode(data.aws_secretsmanager_secret_version.space00_mainnet_lotus[0].secret_string), "bootstrap_node_id", null)
-
-  }
-}
-
 
 resource "kubernetes_secret_v1" "space06_mainnet_lotus_secret" {
   count = local.is_prod_envs

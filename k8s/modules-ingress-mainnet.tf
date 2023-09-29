@@ -433,29 +433,6 @@ module "ingress_private_calibration_fallback" {
   enable_return_json      = true
 }
 
-module "ingress_space00_1234" {
-  count  = local.is_prod_envs
-  name   = "ingress-space00-1234"
-  source = "../modules/ovh_ingress"
-
-  namespace = "network"
-
-  http_host      = "node.glif.io"
-  http_path      = "/space00/lotus/(.*)"
-  http_path_type = "Exact"
-
-  service_name  = "space00-lotus-service"
-  service_port  = 1234
-  incress_class = "kong-external-lb"
-  secret_name   = data.aws_secretsmanager_secret.space00_mainnet_lotus[0].name
-
-  enable_access_control  = true
-  access_control_replace = true
-  access_control_public  = true
-  enable_letsencrypt     = false
-}
-
-
 module "ingress_space07_1234" {
   count  = local.is_prod_envs
   name   = "ingress-space07-1234"
