@@ -214,7 +214,7 @@ module "eks_nodegroup_mainnet_spot_group10" {
   source = "../modules/eks_nodegroup"
 
   name             = "group10"
-  instance_type    = "r6gd.4xlarge"
+  instance_type    = "r6gd.8xlarge"
   ami_type         = "AL2_ARM_64"
   is_spot_instance = true
 
