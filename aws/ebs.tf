@@ -83,10 +83,12 @@ resource "aws_ebs_volume" "fvm_archive_1" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 2048
+  size       = 2304
   type       = "gp3"
   iops       = 3000
   throughput = 125
+
+  snapshot_id = "snap-01dab0f9e3f71f76b"
 
   tags = merge(
     {
@@ -103,10 +105,12 @@ resource "aws_ebs_volume" "fvm_archive_2" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 2048
+  size       = 2304
   type       = "gp3"
   iops       = 3000
   throughput = 125
+
+  snapshot_id = "snap-05436ba43515c93b4"
 
   tags = merge(
     {
@@ -123,10 +127,12 @@ resource "aws_ebs_volume" "fvm_archive_3" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 2048
+  size       = 2304
   type       = "gp3"
   iops       = 3000
   throughput = 125
+
+  snapshot_id = "snap-0c704cb019bd938a4"
 
   tags = merge(
     {
@@ -143,10 +149,12 @@ resource "aws_ebs_volume" "fvm_archive_4" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 2048
+  size       = 2304
   type       = "gp3"
   iops       = 3000
   throughput = 125
+
+  snapshot_id = "snap-0d70e1b27c01a53c7"
 
   tags = merge(
     {
