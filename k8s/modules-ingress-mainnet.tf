@@ -242,7 +242,7 @@ module "ingress_space06" {
   http_path = "/space06/lotus/(.*)"
 
   service_name = "api-read-master-lotus-service"
-  service_port  = 1234
+  service_port = 1234
 
   incress_class = "kong-external-lb"
 
@@ -398,7 +398,7 @@ module "ingress_coinfirm" {
   http_path = "/coinfirm/lotus/(.*)"
 
   service_name = "fvm-archive-lotus-service"
-  service_port  = 1234
+  service_port = 1234
 
   incress_class = "kong-external-lb"
 
