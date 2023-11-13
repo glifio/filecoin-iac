@@ -94,6 +94,18 @@ resource "kubernetes_secret_v1" "api_read_slave_0_mainnet_lotus_secret" {
   }
 }
 
+resource "kubernetes_secret_v1" "api_read_cid_checker_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "api-read-cid-checker-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
 resource "kubernetes_secret_v1" "api_read_slave_1_mainnet_lotus_secret" {
   count = local.is_prod_envs
   metadata {
