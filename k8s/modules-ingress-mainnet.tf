@@ -230,17 +230,30 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-docs-subresources" {
 }
 
 #############node.glif.io##########################
+module "ingress_space06" {
+  count = local.is_prod_envs
 
-module "ingress-kong_space06-1234" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/space06/lotus/(.*)"
-  get_ingress_backend_service_name = "space06-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 1234
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
-  type_lb_scheme                   = "external"
+  name   = "space06-forwarding"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host = "node.glif.io"
+  http_path = "/space06/lotus/(.*)"
+
+  service_name = "api-read-master-lotus-service"
+  service_port  = 1234
+
+  incress_class = "kong-external-lb"
+
+  secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
+
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_letsencrypt      = false
+  enable_return_json      = true
 }
 
 
@@ -373,18 +386,30 @@ module "ingress-atlantis-80" {
   ]
 }
 
-module "ingress-kong_coinfirm" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/coinfirm/lotus/(.*)"
-  get_ingress_backend_service_name = "fvm-archive-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 1234
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
-  type_lb_scheme                   = "external"
+module "ingress_coinfirm" {
+  count = local.is_prod_envs
 
-  return_json = true
+  name   = "coinfirm-forwarding"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host = "node.glif.io"
+  http_path = "/coinfirm/lotus/(.*)"
+
+  service_name = "fvm-archive-lotus-service"
+  service_port  = 1234
+
+  incress_class = "kong-external-lb"
+
+  secret_name = data.aws_secretsmanager_secret.fvm_archive_lotus[0].name
+
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_letsencrypt      = false
+  enable_return_json      = true
 }
 
 module "ingress_private_mainnet_fallback" {
