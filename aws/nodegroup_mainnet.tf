@@ -138,25 +138,12 @@ module "eks_nodegroup_ondemand_fvm_archive" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 }
 
-module "eks_nodegroup_ondemand_confirm_0" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "coinfirm-0"
-  instance_type = "r6gd.4xlarge"
-  ami_type      = "AL2_ARM_64"
-  user_data     = "nvme-spot.sh"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
 module "eks_nodegroup_ondemand_calibnet_0" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
 
   name          = "calibnet-0"
-  instance_type = "c6g.4xlarge"
+  instance_type = "r6gd.xlarge"
   ami_type      = "AL2_ARM_64"
   user_data     = "nvme-spot.sh"
 
@@ -173,7 +160,7 @@ module "eks_nodegroup_spot_calibnet_1" {
   source = "../modules/eks_nodegroup"
 
   name             = "calibnet-1"
-  instance_type    = "c6g.4xlarge"
+  instance_type    = "r6gd.xlarge"
   ami_type         = "AL2_ARM_64"
   is_spot_instance = true
 
