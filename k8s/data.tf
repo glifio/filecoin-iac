@@ -137,26 +137,6 @@ data "aws_secretsmanager_secret_version" "api_read_master_mainnet_lotus" {
   secret_id = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].id
 }
 
-data "aws_secretsmanager_secret" "space06_mainnet_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-space06-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "space06_mainnet_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.space06_mainnet_lotus[0].id
-}
-
-data "aws_secretsmanager_secret" "space06_1_mainnet_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-space06-1-lotus"
-}
-
-data "aws_secretsmanager_secret_version" "space06_1_mainnet_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.space06_1_mainnet_lotus[0].id
-}
-
 data "aws_secretsmanager_secret" "space07_mainnet_lotus" {
   count = local.is_prod_envs
   name  = "${module.generator.prefix}-space07-lotus"
@@ -175,16 +155,6 @@ data "aws_secretsmanager_secret" "fvm_archive_lotus" {
 data "aws_secretsmanager_secret_version" "fvm_archive_lotus" {
   count     = local.is_prod_envs
   secret_id = data.aws_secretsmanager_secret.fvm_archive_lotus[0].id
-}
-
-data "aws_secretsmanager_secret" "space06_cache_mainnet_lotus" {
-  count = local.is_prod_envs
-  name  = "${module.generator.prefix}-space06-cache"
-}
-
-data "aws_secretsmanager_secret_version" "space06_cache_mainnet_lotus" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.space06_cache_mainnet_lotus[0].id
 }
 
 data "aws_secretsmanager_secret" "space07_cache_mainnet_lotus" {

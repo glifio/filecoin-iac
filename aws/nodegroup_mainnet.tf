@@ -108,33 +108,6 @@ module "eks_nodegroup_ondemand_group19" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 }
 
-#module "eks_nodegroup_ondemand_group28" {
-#  count  = local.is_prod_envs
-#  source = "../modules/eks_nodegroup"
-#
-#  name          = "group28"
-#  instance_type = "r6gd.4xlarge"
-#  ami_type      = "AL2_ARM_64"
-#  user_data     = "nvme-spot.sh"
-#
-#  global_config    = local.make_global_configuration
-#  nodegroup_config = local.make_eks_nodegroups_global_configuration
-#}
-
-module "eks_nodegroup_ondemand_group29" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "space06"
-  instance_type = "r6gd.8xlarge"
-  ami_type      = "AL2_ARM_64"
-  user_data     = "nvme-spot.sh"
-  is_critical   = true
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
 module "eks_nodegroup_ondemand_fvm_archive" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
@@ -200,20 +173,6 @@ module "eks_nodegroup_mainnet_spot_group9" {
   source = "../modules/eks_nodegroup"
 
   name             = "group9"
-  instance_type    = "r6gd.4xlarge"
-  ami_type         = "AL2_ARM_64"
-  is_spot_instance = true
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
-#prod-space06-1-i3-2x4x-spot-a-1-19-Node
-module "eks_nodegroup_mainnet_spot_group10" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name             = "group10"
   instance_type    = "r6gd.4xlarge"
   ami_type         = "AL2_ARM_64"
   is_spot_instance = true
