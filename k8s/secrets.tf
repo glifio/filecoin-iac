@@ -94,6 +94,57 @@ resource "kubernetes_secret_v1" "api_read_slave_0_mainnet_lotus_secret" {
   }
 }
 
+
+resource "kubernetes_secret_v1" "api_read_slave_21_mainnet_lotus_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "api-read-slave-21-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
+resource "kubernetes_secret_v1" "api_read_slave_22_mainnet_lotus_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "api-read-slave-22-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
+resource "kubernetes_secret_v1" "api_read_slave_23_mainnet_lotus_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "api-read-slave-23-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
+resource "kubernetes_secret_v1" "api_read_slave_24_mainnet_lotus_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "api-read-slave-24-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.api_read_master_mainnet_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
+
+
 resource "kubernetes_secret_v1" "api_read_cid_checker_secret" {
   count = local.is_prod_envs
   metadata {
