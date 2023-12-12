@@ -267,17 +267,15 @@ module "ingress_fvm_archive" {
   http_host = "node.glif.io"
   http_path = "/fvm-archive/lotus/(.*)"
 
-  service_name = "fvm-archive-lotus-service"
-  service_port = 1234
-
+  service_name  = "api-read-master-lotus-service"
+  service_port  = 1234
   incress_class = "kong-external-lb"
-
-  secret_name = data.aws_secretsmanager_secret.fvm_archive_lotus[0].name
+  secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
   enable_path_transformer = true
   enable_access_control   = true
-  access_control_public   = false
-  access_control_replace  = false
+  access_control_public   = true
+  access_control_replace  = true
   enable_letsencrypt      = false
   enable_return_json      = true
 }
@@ -397,12 +395,10 @@ module "ingress_coinfirm" {
   http_host = "node.glif.io"
   http_path = "/coinfirm/lotus/(.*)"
 
-  service_name = "fvm-archive-lotus-service"
-  service_port = 1234
-
+  service_name  = "api-read-master-lotus-service"
+  service_port  = 1234
   incress_class = "kong-external-lb"
-
-  secret_name = data.aws_secretsmanager_secret.fvm_archive_lotus[0].name
+  secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
   enable_path_transformer = true
   enable_access_control   = true
@@ -469,11 +465,15 @@ module "ingress_space07_1234" {
   http_path      = "/space07/lotus/(.*)"
   http_path_type = "Exact"
 
-  service_name  = "space07-lotus-service"
+  service_name  = "api-read-master-lotus-service"
   service_port  = 1234
   incress_class = "kong-external-lb"
-  secret_name   = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
+  secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
-  enable_access_control = true
-  enable_letsencrypt    = false
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_letsencrypt      = false
+  enable_return_json      = true
 }
