@@ -5,8 +5,8 @@ resource "aws_ebs_volume" "space07_1" {
 
   size       = 12288
   type       = "gp3"
-  iops       = 6000
-  throughput = 334
+  iops       = 3000
+  throughput = 167
 
   tags = merge(
     {
@@ -25,8 +25,8 @@ resource "aws_ebs_volume" "space07_2" {
 
   size       = 12288
   type       = "gp3"
-  iops       = 6000
-  throughput = 334
+  iops       = 3000
+  throughput = 167
 
   tags = merge(
     {
@@ -45,8 +45,8 @@ resource "aws_ebs_volume" "space07_3" {
 
   size       = 12288
   type       = "gp3"
-  iops       = 6000
-  throughput = 334
+  iops       = 3000
+  throughput = 167
 
   tags = merge(
     {
@@ -65,8 +65,8 @@ resource "aws_ebs_volume" "space07_4" {
 
   size       = 12288
   type       = "gp3"
-  iops       = 6000
-  throughput = 334
+  iops       = 3000
+  throughput = 167
 
   tags = merge(
     {
@@ -85,8 +85,8 @@ resource "aws_ebs_volume" "fvm_archive_1" {
 
   size       = 2560
   type       = "gp3"
-  iops       = 6000
-  throughput = 250
+  iops       = 3000
+  throughput = 125
 
   snapshot_id = "snap-01dab0f9e3f71f76b"
 
@@ -107,8 +107,8 @@ resource "aws_ebs_volume" "fvm_archive_2" {
 
   size       = 2560
   type       = "gp3"
-  iops       = 6000
-  throughput = 250
+  iops       = 3000
+  throughput = 125
 
   snapshot_id = "snap-05436ba43515c93b4"
 
@@ -129,8 +129,8 @@ resource "aws_ebs_volume" "fvm_archive_3" {
 
   size       = 2560
   type       = "gp3"
-  iops       = 6000
-  throughput = 250
+  iops       = 3000
+  throughput = 125
 
   snapshot_id = "snap-0c704cb019bd938a4"
 
@@ -151,8 +151,8 @@ resource "aws_ebs_volume" "fvm_archive_4" {
 
   size       = 2560
   type       = "gp3"
-  iops       = 6000
-  throughput = 250
+  iops       = 3000
+  throughput = 125
 
   snapshot_id = "snap-0d70e1b27c01a53c7"
 
