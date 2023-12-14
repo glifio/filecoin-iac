@@ -141,65 +141,6 @@ module "eks_nodegroup_ondemand_calibnet_0" {
 
 ################# START BLOCK SPOT NODE-GROUP LIST #################
 
-#prod-api-i3-4x8x-spot-b-1-19-Node
-module "eks_nodegroup_mainnet_spot_group21" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name             = "api-read-slave-21"
-  instance_type    = "r6gd.4xlarge"
-  ami_type         = "AL2_ARM_64"
-  is_spot_instance = true
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
-#prod-api-i3-4x8x-spot-b-1-19-Node
-module "eks_nodegroup_mainnet_spot_group22" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name             = "api-read-slave-22"
-  instance_type    = "r6gd.4xlarge"
-  ami_type         = "AL2_ARM_64"
-  is_spot_instance = true
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
-#prod-api-i3-4x8x-spot-b-1-19-Node
-module "eks_nodegroup_mainnet_spot_group23" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name             = "api-read-slave-23"
-  instance_type    = "r6gd.4xlarge"
-  ami_type         = "AL2_ARM_64"
-  is_spot_instance = true
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
-#prod-api-i3-4x8x-spot-b-1-19-Node
-module "eks_nodegroup_mainnet_spot_group24" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name             = "api-read-slave-24"
-  instance_type    = "r6gd.4xlarge"
-  ami_type         = "AL2_ARM_64"
-  is_spot_instance = true
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
-
-
-
 module "eks_nodegroup_spot_calibnet_1" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
