@@ -231,3 +231,13 @@ data "aws_secretsmanager_secret" "monitoring_google_oauth" {
 data "aws_secretsmanager_secret_version" "monitoring_google_oauth" {
   secret_id = data.aws_secretsmanager_secret.monitoring_google_oauth.id
 }
+
+data "aws_secretsmanager_secret" "auth" {
+  count = local.is_prod_envs
+  name  = "${module.generator.prefix}-auth"
+}
+
+data "aws_secretsmanager_secret_version" "auth" {
+  count     = local.is_prod_envs
+  secret_id = data.aws_secretsmanager_secret.auth[0].id
+}

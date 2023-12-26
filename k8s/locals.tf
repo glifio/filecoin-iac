@@ -78,4 +78,10 @@ locals {
   kong_plugins_locations = {
     http_mirror = "./kong_plugins/http_mirror"
   }
+
+  auth = {
+    username = jsondecode(data.aws_secretsmanager_secret_version.auth[0].secret_string)["username"]
+    password = jsondecode(data.aws_secretsmanager_secret_version.auth[0].secret_string)["password"]
+    db_name  = jsondecode(data.aws_secretsmanager_secret_version.auth[0].secret_string)["dbName"]
+  }
 }
