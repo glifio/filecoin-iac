@@ -81,6 +81,6 @@ data "aws_ebs_snapshot" "fvm_archive_4" {
 }
 
 data "aws_secretsmanager_secret_version" "budget_alarm_slack" {
-  count = local.is_prod_envs
+  count     = local.is_prod_envs
   secret_id = aws_secretsmanager_secret.budget_alarm_slack[0].id
 }
