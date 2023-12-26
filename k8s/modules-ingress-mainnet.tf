@@ -477,3 +477,24 @@ module "ingress_space07_1234" {
   enable_access_control = true
   enable_letsencrypt    = false
 }
+
+module "ingress_auth" {
+  count  = local.is_prod_envs
+  name   = "ingress-auth"
+  source = "../modules/ovh_ingress"
+
+  namespace = "default"
+
+  http_host      = "auth.node.glif.io"
+  http_path      = "/"
+  http_path_type = "Prefix"
+
+  service_name  = "glif-auth-app-svc"
+  service_port  = 3000
+  incress_class = "kong-external-lb"
+
+  enable_path_transformer = false
+  enable_access_control   = false
+  enable_letsencrypt      = false
+  enable_return_json      = false
+}
