@@ -259,3 +259,17 @@ resource "kubernetes_secret_v1" "coinfirm_1" {
     token      = jsondecode(data.aws_secretsmanager_secret_version.coinfirm[0].secret_string)["jwt_token"]
   }
 }
+
+resource "kubernetes_secret_v1" "auth" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "auth-secret"
+    namespace = "default"
+  }
+  data = {
+    username = local.auth.username
+    password = local.auth.password
+    dbName   = local.auth.db_name
+    connstr  = "postgres://${local.auth.username}:${local.auth.password}@glif-auth-db-svc.default:5432/${local.auth.db_name}?schema=public"
+  }
+}
