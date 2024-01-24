@@ -107,6 +107,7 @@ grafana:
             path: /var/lib/grafana/dashboards/custom
   dashboards:
     custom:
+      # Dashboards of our team
       LotusAPIEndpoints:
         datasource: Prometheus
         gnetId: 13251
@@ -119,54 +120,52 @@ grafana:
         datasource: Prometheus
         gnetId: 13249
         revision: 2
-      LotusVolumes:
-        datasource: Prometheus
-        gnetId: 17092
-        revision: 7
       Kong:
         datasource: Prometheus
         gnetId: 17269
         revision: 5
-      LotusNVMEdashboard:
+      lotusDiskUsageStats:
         datasource: Prometheus
-        gnetId: 17431
-        revision: 4
-      LotusProductionAPIEndpointsfilteredbymethod:
+        gnetId: 20349
+        revision: 1
+      # Dashboards of the lotus team
+      productionApiEndpointsFilteredByMethod:
         datasource: Prometheus
         gnetId: 18354
         revision: 1
-      LotusRaulsdashboardCANARIES:
-        datasource: Prometheus
-        gnetId: 18363
-        revision: 1
-      LotusRaulsdashboardMIRROR:
-        datasource: Prometheus
-        gnetId: 18364
-        revision: 1
-      LotusRaulsdashboardPROD:
-        datasource: Prometheus
-        gnetId: 18365
-        revision: 1
-      LotusRaulsdashboardNODESYNC:
-        datasource: Prometheus
-        gnetId: 18366
-        revision: 1
-      RaulMirrorDashboard:
-        datasource: Prometheus
-        gnetId: 18393
-        revision: 1
-      LotusMaciejsABtestingcomparison:
+      maciejsAbTesting:
         datasource: Prometheus
         gnetId: 18482
         revision: 1
-      LotusMirrornodescomparisonMaciej:
+      maciejsMirrorNodesComparison:
         datasource: Prometheus
         gnetId: 18483
         revision: 1
-      LotusRaulsdashboardPRODv2:
+      raulsMirrorNode:
+        datasource: Prometheus
+        gnetId: 18393
+        revision: 1
+      raulsMirror:
+        datasource: Prometheus
+        gnetId: 18364
+        revision: 1
+      raulsCanaries:
+        datasource: Prometheus
+        gnetId: 18363
+        revision: 1
+      raulsProd:
+        datasource: Prometheus
+        gnetId: 18365
+        revision: 1
+      raulsProdV2:
         datasource: Prometheus
         gnetId: 18485
         revision: 1
+      raulsNodeSync:
+        datasource: Prometheus
+        gnetId: 18366
+        revision: 1
+      
 
 
 
@@ -254,3 +253,6 @@ prometheus:
           targetPort: 8100
           scheme: http
           path: /metrics
+
+# Optimize resource names
+cleanPrometheusOperatorObjectNames: true
