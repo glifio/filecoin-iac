@@ -154,19 +154,6 @@ module "eks_nodegroup_spot_calibnet_1" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 }
 
-#prod-api-i3-4x8x-spot-b-1-19-Node
-module "eks_nodegroup_mainnet_spot_group8" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name             = "api-read-slave-1"
-  instance_type    = "r5ad.4xlarge"
-  is_spot_instance = true
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
 ##prod-api-i3-4x8x-spot-c-1-19-Node
 module "eks_nodegroup_mainnet_spot_group9" {
   count  = local.is_prod_envs
