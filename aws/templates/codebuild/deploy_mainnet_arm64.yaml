@@ -5,7 +5,7 @@ env:
   variables:
     IMAGE_NAME: 'mainnet'
     IMAGE_NETWORK: 'lotus'
-    SOURCE_BRANCH: 'v1.21.0-rpc-p01-methods'
+    SOURCE_BRANCH: 'v1.25.1-gw-go-state-types'
     PROJECT: 'filecoin'
     ENVIRONMENT: 'mainnet'
     SUB_ENV: 'glif'
