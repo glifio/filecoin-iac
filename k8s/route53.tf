@@ -139,8 +139,8 @@ resource "aws_route53_record" "api-internal_node_glif_io_secondary" {
 
   alias {
     evaluate_target_health = false
-    name                   = data.aws_lb.kong_chainstack.dns_name
-    zone_id                = data.aws_lb.kong_chainstack.zone_id
+    name                   = data.aws_lb.kong_chainstack[0].dns_name
+    zone_id                = data.aws_lb.kong_chainstack[0].zone_id
   }
 
   weighted_routing_policy {

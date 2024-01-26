@@ -40,6 +40,8 @@ data "aws_lb" "kong_external" {
 # data chainstack load balancer
 
 data "aws_lb" "kong_chainstack" {
+  count = local.is_prod_envs
+  
   tags = {
     Name = "${module.generator.prefix}-chainstack"
   }
@@ -238,11 +240,9 @@ data "aws_secretsmanager_secret_version" "monitoring_google_oauth" {
 }
 
 data "aws_secretsmanager_secret" "auth" {
-  count = local.is_prod_envs
   name  = "${module.generator.prefix}-auth"
 }
 
 data "aws_secretsmanager_secret_version" "auth" {
-  count     = local.is_prod_envs
-  secret_id = data.aws_secretsmanager_secret.auth[0].id
+  secret_id = data.aws_secretsmanager_secret.auth.id
 }

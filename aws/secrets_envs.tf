@@ -126,14 +126,3 @@ resource "aws_secretsmanager_secret" "coinfirm" {
     module.generator.common_tags
   )
 }
-
-resource "aws_secretsmanager_secret" "auth" {
-  count = local.is_prod_envs
-
-  name = "${module.generator.prefix}-auth"
-
-  tags = merge(
-    { "Name" = "${module.generator.prefix}-auth" },
-    module.generator.common_tags
-  )
-}

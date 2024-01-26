@@ -77,8 +77,8 @@ locals {
   }
 
   auth = {
-    username = jsondecode(data.aws_secretsmanager_secret_version.auth[0].secret_string)["username"]
-    password = jsondecode(data.aws_secretsmanager_secret_version.auth[0].secret_string)["password"]
-    db_name  = jsondecode(data.aws_secretsmanager_secret_version.auth[0].secret_string)["dbName"]
+    username = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["username"]
+    password = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["password"]
+    db_name  = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["dbName"]
   }
 }
