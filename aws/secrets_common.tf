@@ -103,3 +103,12 @@ resource "aws_secretsmanager_secret" "monitoring_google_oauth" {
     module.generator.common_tags
   )
 }
+
+resource "aws_secretsmanager_secret" "auth" {
+  name = "${module.generator.prefix}-auth"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-auth" },
+    module.generator.common_tags
+  )
+}
