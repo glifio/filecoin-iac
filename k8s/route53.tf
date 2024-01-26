@@ -224,3 +224,17 @@ resource "aws_route53_record" "auth" {
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
+
+resource "aws_route53_record" "api_chain_love" {
+  count           = local.is_prod_envs
+  zone_id         = data.aws_route53_zone.api_chain_love.zone_id
+  name            = "api.chain.love"
+  allow_overwrite = true
+  type            = "A"
+  
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
