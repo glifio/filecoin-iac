@@ -20,4 +20,31 @@ module "ingress-kong_monitoring-80" {
   type_lb_scheme                     = "external"
 }
 
+module "ingress_api_read_dev" {
+  count = local.is_dev_envs
+
+  name   = "wss-read-dev"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host      = "wss.dev.node.glif.io"
+  http_path      = "/"
+  http_path_type = "Prefix"
+
+  service_name = "api-read-dev-lotus-service"
+  service_port = 2346
+
+  incress_class = "kong-external-lb"
+
+  secret_name = data.aws_secretsmanager_secret.api_read_dev_lotus[0].name
+
+  enable_path_transformer = false
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_letsencrypt      = false
+  enable_return_json      = true
+}
+
 #############################################################
