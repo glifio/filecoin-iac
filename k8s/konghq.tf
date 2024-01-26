@@ -100,6 +100,8 @@ resource "helm_release" "konghq-external" {
 
 
 resource "helm_release" "konghq-chainstack" {
+  count = local.is_prod_envs
+  
   name       = "${module.generator.prefix}-chainstack"
   repository = "https://charts.konghq.com"
   chart      = "kong"
