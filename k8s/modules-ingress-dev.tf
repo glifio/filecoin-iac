@@ -45,6 +45,7 @@ module "ingress_api_read_dev" {
   access_control_replace  = true
   enable_letsencrypt      = false
   enable_return_json      = true
+  enable_limit_reqs_wo_header = true
 }
 
 #############################################################

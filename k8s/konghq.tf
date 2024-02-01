@@ -19,7 +19,7 @@ resource "helm_release" "konghq-external" {
 
   set {
     name  = "replicaCount"
-    value = 4
+    value = 1
   }
 
   set {
@@ -45,6 +45,11 @@ resource "helm_release" "konghq-external" {
   set {
     name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
     value = "nlb"
+  }
+
+  set {
+    name  = "proxy.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme"
+    value = "internet-facing"
   }
 
   set {

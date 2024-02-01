@@ -297,3 +297,23 @@ resource "kubernetes_manifest" "response_transformer-return_json" {
     }
   }
 }
+
+resource "kubernetes_manifest" "rate_limiting" {
+  count = local.limit_reqs_wo_header_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.limit_reqs_wo_header_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "rate-limiting"
+
+    config = {
+      policy = "local"
+      minute = 100
+    }
+  }
+}
