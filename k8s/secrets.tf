@@ -261,7 +261,6 @@ resource "kubernetes_secret_v1" "coinfirm_1" {
 }
 
 resource "kubernetes_secret_v1" "auth" {
-  count = local.is_prod_envs
   metadata {
     name      = "auth-secret"
     namespace = "default"

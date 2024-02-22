@@ -39,13 +39,38 @@ module "ingress_api_read_dev" {
 
   secret_name = data.aws_secretsmanager_secret.api_read_dev_lotus[0].name
 
-  enable_path_transformer = false
-  enable_access_control   = true
-  access_control_public   = true
-  access_control_replace  = true
-  enable_letsencrypt      = false
-  enable_return_json      = true
+  enable_path_transformer     = false
+  enable_access_control       = true
+  access_control_public       = true
+  access_control_replace      = true
+  enable_letsencrypt          = false
+  enable_return_json          = true
   enable_limit_reqs_wo_header = true
+  enable_ext_token_auth       = true
+}
+
+module "ingress_auth_dev" {
+  count = local.is_dev_envs
+
+  name   = "auth-dev"
+  source = "../modules/ovh_ingress"
+
+  namespace = "default"
+
+  http_host      = "auth.dev.node.glif.io"
+  http_path      = "/"
+  http_path_type = "Prefix"
+
+  service_name = "glif-auth-app-svc"
+  service_port = 3000
+
+  incress_class = "kong-external-lb"
+
+  enable_path_transformer = false
+  enable_access_control   = false
+  enable_letsencrypt      = false
+  enable_return_json      = false
+  enable_cors             = false
 }
 
 #############################################################

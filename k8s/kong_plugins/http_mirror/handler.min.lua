@@ -1,0 +1,1 @@
+local a=require"kong.plugins.http-mirror.access"local b=require"kong.plugins.http-mirror.log"local c={VERSION="0.0.1",PRIORITY=1500}function c:access(d)a.execute(d)end;function c:log(d)b.execute(d)end;return c

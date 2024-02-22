@@ -226,7 +226,6 @@ resource "aws_route53_record" "strictly_mainnet_node_glif_io" {
 }
 
 resource "aws_route53_record" "auth" {
-  count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "auth.${var.route53_domain}"
   allow_overwrite = true

@@ -109,13 +109,19 @@ variable "certificate_issuer" {
 }
 
 variable "enable_limit_reqs_wo_header" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Enable rate-limiting for requests without Authorization header"
 }
 
 variable "enable_ext_token_auth" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Enable external token authorization for requests with Authorization header"
+}
+
+variable "ext_token_auth_url" {
+  type        = string
+  default     = "http://glif-auth-app-svc.default:3000/api/auth"
+  description = "URL of the external Auth service that Kong will send request data to"
 }

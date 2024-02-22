@@ -1,0 +1,1 @@
+local a=require"kong.plugins.external-auth.access"local b={VERSION="0.0.1",PRIORITY=1000001}function b:access(c)a.execute(c)end;return b

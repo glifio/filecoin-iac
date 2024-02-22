@@ -317,3 +317,22 @@ resource "kubernetes_manifest" "rate_limiting" {
     }
   }
 }
+
+resource "kubernetes_manifest" "auth" {
+  count = local.ext_token_auth_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.ext_token_auth_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "external-auth"
+
+    config = {
+      auth_endpoint = "${var.ext_token_auth_url}"
+    }
+  }
+}
