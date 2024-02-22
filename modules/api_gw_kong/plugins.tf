@@ -270,3 +270,42 @@ resource "kubernetes_manifest" "http_mirror-rpc" {
     "plugin" = "http-mirror"
   }
 }
+
+resource "kubernetes_manifest" "rate_limiting" {
+  count = var.enable_limit_reqs_wo_header ? 1 : 0
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = "${local.prefix}-rate-limit"
+      namespace = var.namespace
+    }
+
+    plugin = "rate-limiting"
+
+    config = {
+      policy = "local"
+      minute = 100
+    }
+  }
+}
+
+resource "kubernetes_manifest" "auth" {
+  count = var.enable_ext_token_auth ? 1 : 0
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = "${local.prefix}-auth"
+      namespace = var.namespace
+    }
+
+    plugin = "external-auth"
+
+    config = {
+      auth_endpoint = "${var.ext_token_auth_url}"
+    }
+  }
+}

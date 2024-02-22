@@ -21,7 +21,60 @@ resource "kubernetes_ingress_v1" "post_root" {
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
         kubernetes_manifest.cors.manifest.metadata.name,
-        local.mirror_plugin
+        local.mirror_plugin,
+        local.limit_reqs_wo_header_plugin
+      ]))
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/"
+          path_type = "Exact"
+          backend {
+            service {
+              name = local.rpc_v0_service
+              port {
+                number = local.rpc_v0_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "post_root_auth" {
+  count = local.basic_ingress_condition && var.enable_ext_token_auth ? 1 : 0
+  metadata {
+    name      = "${local.prefix}-post-root-auth"
+    namespace = var.namespace
+
+    annotations = {
+      # Due to network load balancer (NLB) decrypting SSL traffic
+      # before it comes to ingress controller, the only
+      # usable protocol here is http. Using https here
+      # will cause 426 status code stating that the traffic
+      # has to be upgraded to TLS 1.2 which will never happen
+      # unless NLB stops decrypting traffic
+      "konghq.com/protocols"             = "http"
+      "konghq.com/methods"               = "POST"
+      "konghq.com/preserve-host"         = "false"
+      "konghq.com/headers.Authorization" = "~*"
+
+
+      "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.serverless_function-root.manifest.metadata.name,
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name,
+        local.mirror_plugin,
+        kubernetes_manifest.auth[0].manifest.metadata.name
       ]))
     }
   }
@@ -261,14 +314,59 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
-      "konghq.com/methods"   = "POST"
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "POST"
       "konghq.com/preserve-host" = var.preserve_host
       "konghq.com/plugins" = join(", ", compact([
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
         kubernetes_manifest.cors.manifest.metadata.name,
-        local.mirror_plugin
+        local.mirror_plugin,
+        local.limit_reqs_wo_header_plugin
+      ]))
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v0"
+          path_type = "Exact"
+          backend {
+            service {
+              name = local.rpc_v0_service
+              port {
+                number = local.rpc_v0_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "post_rpc_v0_auth" {
+  count = local.basic_ingress_condition && var.enable_ext_token_auth ? 1 : 0
+  metadata {
+    name      = "${local.prefix}-post-rpc-v0-auth"
+    namespace = var.namespace
+
+    annotations = {
+      "konghq.com/protocols"             = "http"
+      "konghq.com/methods"               = "POST"
+      "konghq.com/preserve-host"         = var.preserve_host
+      "konghq.com/headers.Authorization" = "~*"
+
+      "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name,
+        local.mirror_plugin,
+        kubernetes_manifest.auth[0].manifest.metadata.name
       ]))
     }
   }
@@ -382,14 +480,59 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
     namespace = var.namespace
 
     annotations = {
-      "konghq.com/protocols" = "http"
-      "konghq.com/methods"   = "POST"
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "POST"
       "konghq.com/preserve-host" = var.preserve_host
       "konghq.com/plugins" = join(", ", compact([
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
         kubernetes_manifest.cors.manifest.metadata.name,
-        local.mirror_plugin
+        local.mirror_plugin,
+        local.limit_reqs_wo_header_plugin
+      ]))
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v1"
+          path_type = "Exact"
+          backend {
+            service {
+              name = local.rpc_v1_service
+              port {
+                number = local.rpc_v1_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
+  count = local.basic_ingress_count
+  metadata {
+    name      = "${local.prefix}-post-rpc-v1-auth"
+    namespace = var.namespace
+
+    annotations = {
+      "konghq.com/protocols"             = "http"
+      "konghq.com/methods"               = "POST"
+      "konghq.com/preserve-host"         = var.preserve_host
+      "konghq.com/headers.Authorization" = "~*"
+
+      "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
+        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name,
+        local.mirror_plugin,
+        kubernetes_manifest.auth[0].manifest.metadata.name
       ]))
     }
   }
