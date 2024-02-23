@@ -516,7 +516,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
 }
 
 resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
-  count = local.basic_ingress_count
+  count = local.basic_ingress_condition && var.enable_ext_token_auth ? 1 : 0
   metadata {
     name      = "${local.prefix}-post-rpc-v1-auth"
     namespace = var.namespace

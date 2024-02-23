@@ -32,7 +32,7 @@ resource "helm_release" "konghq-external" {
 
   set {
     name  = "replicaCount"
-    value = 1
+    value = 4
   }
 
   set {
@@ -65,7 +65,7 @@ resource "helm_release" "konghq-chainstack" {
 
   set {
     name  = "replicaCount"
-    value = 1
+    value = 4
   }
 
   set {
