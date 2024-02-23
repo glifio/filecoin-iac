@@ -30,7 +30,7 @@ module "eks_nodegroup_ondemand_group13" {
   count  = local.is_prod_envs
   source = "../modules/eks_nodegroup"
 
-  name          = "group13"
+  name          = "calibration-archive"
   instance_type = "r6gd.xlarge"
   ami_type      = "AL2_ARM_64"
   user_data     = "nvme-spot.sh"
