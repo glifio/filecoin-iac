@@ -1,0 +1,47 @@
+ingressController:
+  installCRDs: false
+  ingressClassAnnotations:
+    "ingressclass.kubernetes.io/is-default-class": "true"
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - "${name}"
+      topologyKey: topology.kubernetes.io/zone
+nodeSelector:
+  assign_to_space00_07_nodes: allow_any_pods
+
+plugins:
+  configMaps:
+%{ for plugin in plugins ~}
+  - { name: "${plugin.cm_name}", pluginName: "${plugin.name}" }
+%{ endfor ~}
+
+proxy:
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Local
+  tls:
+    overrideServiceTargetPort: "8000"
+  annotations:
+    # AWS Load Balancer Controller annotations
+    "service.beta.kubernetes.io/aws-load-balancer-type": "nlb"
+    "service.beta.kubernetes.io/aws-load-balancer-scheme": "internet-facing"
+    "service.beta.kubernetes.io/aws-load-balancer-backend-protocol": "https"
+    "service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags": "Name=${name}"
+    "service.beta.kubernetes.io/aws-load-balancer-target-group-attributes": "proxy_protocol_v2.enabled=false"
+    "service.beta.kubernetes.io/aws-load-balancer-ssl-cert": "${crt_arn}"
+    "service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy": "ELBSecurityPolicy-TLS13-1-2-2021-06"
+    "service.beta.kubernetes.io/aws-load-balancer-ssl-ports": "443"
+    # Prometheus annotations
+    "prometheus.io/port": "10254"
+    "prometheus.io/scrape": "true"
+  # Bootstrap ports forwarding
+  stream:
+%{ for port in bootstrap_ports ~}
+  - { protocol: "TCP", servicePort: ${port}, containerPort: ${port} }
+%{ endfor ~}

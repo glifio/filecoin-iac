@@ -72,10 +72,6 @@ locals {
   }
   external_lb_certificates = local.external_lb_certificate[terraform.workspace]
 
-  kong_plugins_locations = {
-    http_mirror = "./kong_plugins/http_mirror"
-  }
-
   auth = {
     username = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["username"]
     password = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["password"]

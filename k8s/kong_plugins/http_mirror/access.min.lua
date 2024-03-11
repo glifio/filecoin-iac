@@ -1,0 +1,1 @@
+local a=require"socket.http"local b={}local function c(d)local e=kong.request.get_path()local f=kong.request.get_raw_body()local g=e;if e=="/"then g="/rpc/v1"end;kong.ctx.shared.mirror_path=g;kong.ctx.shared.mirror_body=f end;function b.execute(d)c(d)end;return b

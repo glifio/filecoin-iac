@@ -78,5 +78,19 @@ locals {
   enabled_plugins = compact(local.available_plugins)
   plugins_string  = join(", ", local.enabled_plugins)
 
+  limit_reqs_wo_header_count          = var.enable_limit_reqs_wo_header ? 1 : 0
+  limit_reqs_wo_header_available_name = "${var.name}-limit-reqs-wo-header"
+  limit_reqs_wo_header_enabled_name   = !var.enable_limit_reqs_wo_header ? "" : local.limit_reqs_wo_header_available_name
+
+  enabled_limit_reqs_wo_header_plugins = compact(concat(local.available_plugins, [local.limit_reqs_wo_header_enabled_name]))
+  limit_reqs_wo_header_plugins_string  = join(", ", local.enabled_limit_reqs_wo_header_plugins)
+
+  ext_token_auth_count          = var.enable_ext_token_auth ? 1 : 0
+  ext_token_auth_available_name = "${var.name}-ext-token-auth"
+  ext_token_auth_enabled_name   = !var.enable_ext_token_auth ? "" : local.ext_token_auth_available_name
+
+  enabled_ext_token_auth_plugins = compact(concat(local.available_plugins, [local.ext_token_auth_enabled_name]))
+  ext_token_auth_plugins_string  = join(", ", local.enabled_ext_token_auth_plugins)
+
   auth_token = var.enable_access_control && var.access_control_public ? jsondecode(data.aws_secretsmanager_secret_version.default[0].secret_string)[var.auth_token_attribute] : ""
 }

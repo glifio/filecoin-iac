@@ -19,6 +19,11 @@ resource "helm_release" "monitoring" {
   version     = "46.8.0"
   max_history = 2
 
+  # Make monitoring update faster!
+  skip_crds = true
+  force_update = true
+  timeout = 6000
+
   values = [
     templatefile("${path.module}/configs/prometheus/values.yaml", {
       get_short_environment        = var.environment

@@ -5,7 +5,22 @@ resource "kubernetes_config_map" "kong_plugin-http_mirror" {
   }
 
   data = {
-    for f in fileset(local.kong_plugins_locations.http_mirror, "*.lua") :
-    f => file(join("/", [local.kong_plugins_locations.http_mirror, f]))
+    "access.lua"  = "${file("./kong_plugins/http_mirror/access.min.lua")}"
+    "handler.lua" = "${file("./kong_plugins/http_mirror/handler.min.lua")}"
+    "schema.lua"  = "${file("./kong_plugins/http_mirror/schema.min.lua")}"
+    "log.lua"     = "${file("./kong_plugins/http_mirror/log.min.lua")}"
+  }
+}
+
+resource "kubernetes_config_map" "kong_plugin-external_auth" {
+  metadata {
+    name      = "kong-plugin-external-auth"
+    namespace = kubernetes_namespace_v1.kong.metadata[0].name
+  }
+
+  data = {
+    "access.lua"  = "${file("./kong_plugins/external_auth/access.min.lua")}"
+    "handler.lua" = "${file("./kong_plugins/external_auth/handler.min.lua")}"
+    "schema.lua"  = "${file("./kong_plugins/external_auth/schema.min.lua")}"
   }
 }
