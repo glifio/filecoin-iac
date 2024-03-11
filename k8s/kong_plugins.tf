@@ -19,7 +19,6 @@ resource "kubernetes_config_map" "kong_plugin-external_auth" {
   }
 
   data = {
-    "access.lua"  = "${file("./kong_plugins/external_auth/access.min.lua")}"
     "handler.lua" = "${file("./kong_plugins/external_auth/handler.min.lua")}"
     "schema.lua"  = "${file("./kong_plugins/external_auth/schema.min.lua")}"
   }

@@ -32,7 +32,7 @@ resource "helm_release" "konghq-external" {
 
   set {
     name  = "replicaCount"
-    value = 4
+    value = 6
   }
 
   set {
