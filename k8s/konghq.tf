@@ -70,6 +70,6 @@ resource "helm_release" "konghq-chainstack" {
 
   set {
     name  = "ingressController.ingressClass"
-    value = "kong-external-lb"
+    value = "kong-chainstack-lb"
   }
 }
