@@ -2,7 +2,7 @@ resource "aws_eks_cluster" "main" {
   name                      = "${module.generator.prefix}-eks"
   version                   = var.eks_cluster_version
   role_arn                  = aws_iam_role.eks_master.arn
-  enabled_cluster_log_types = ["api", "audit", "controllerManager"]
+  enabled_cluster_log_types = []
 
   vpc_config {
     endpoint_private_access = false
