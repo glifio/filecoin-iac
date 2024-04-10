@@ -40,7 +40,7 @@ local function auth(conf)
     -- get auth token from header
     local token = kong.request.get_header('authorization')
     token = token:gsub("Bearer ", "")
-    
+
     -- deny request if token is empty
     if string.len(token) == 0 then
         kong.response.exit(401)
@@ -75,6 +75,9 @@ local function auth(conf)
             cache:set(cache_key, REQ_ALLOW, 60 * 60)
         end
     end
+
+    -- log authorized token
+    kong.log.notice("token: ", token)
 end
 
 function ExternalAuthHandler:access(conf)
