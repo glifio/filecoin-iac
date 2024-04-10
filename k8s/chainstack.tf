@@ -107,7 +107,6 @@ module "ingress_strictly_mainnet_node_glif_io" {
 
   enable_path_transformer = true
   enable_access_control   = false
-  enable_letsencrypt      = false
   enable_return_json      = true
 }
 
