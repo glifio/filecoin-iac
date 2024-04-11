@@ -78,6 +78,10 @@ local function auth(conf)
 
     -- log authorized token
     kong.log.notice("token: ", token)
+
+    -- log request body
+    local body = kong.request.get_raw_body()
+    kong.log.notice("body: ", body)
 end
 
 function ExternalAuthHandler:access(conf)
