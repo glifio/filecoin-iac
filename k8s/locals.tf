@@ -23,6 +23,13 @@ locals {
   }
   env_dev_route53_records = local.env_dev_route53_record[terraform.workspace]
 
+  kong_external_replicas_map = {
+    filecoin-dev-apn1-glif-eks     = 1
+    filecoin-mainnet-apn1-glif-eks = 8
+  }
+
+  kong_external_replicas = local.kong_external_replicas_map[terraform.workspace]
+
   env_dev_ingress_record = {
     filecoin-dev-apn1-glif-eks     = 1
     filecoin-mainnet-apn1-glif-eks = 0
