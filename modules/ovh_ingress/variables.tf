@@ -113,3 +113,15 @@ variable "ext_token_auth_url" {
   default     = "http://glif-auth-app-svc.default:3000/api/auth"
   description = "URL of the external Auth service that Kong will send request data to"
 }
+
+variable "enable_redirect" {
+  type = bool
+  default = false
+  description = "Redirect requests to the specified URL"
+}
+
+variable "redirect_location" {
+  type = string
+  default = "https://api.node.glif.io"
+  description = "Location to redirect incoming requests to"
+}

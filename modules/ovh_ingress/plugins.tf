@@ -336,3 +336,21 @@ resource "kubernetes_manifest" "auth" {
     }
   }
 }
+
+resource "kubernetes_manifest" "redirect" {
+  count = local.redirect_count
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = local.redirect_available_name
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access"        = [templatefile("${path.module}/scripts/req_301_redirect.lua", {
+        location = var.redirect_location
+      })]
+    }
+    "plugin" = "pre-function"
+  }
+}
