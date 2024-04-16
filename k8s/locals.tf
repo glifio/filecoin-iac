@@ -42,12 +42,6 @@ locals {
   }
   is_dev_envs = local.is_dev_env[terraform.workspace]
 
-  monitoring_nodegroup = {
-    filecoin-dev-apn1-glif-eks     = "monitoring"
-    filecoin-mainnet-apn1-glif-eks = "calibration-archive"
-  }
-  monitoring_nodegroups = local.monitoring_nodegroup[terraform.workspace]
-
   is_prod_env = {
     filecoin-dev-apn1-glif-eks     = 0
     filecoin-mainnet-apn1-glif-eks = 1
