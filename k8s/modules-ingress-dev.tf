@@ -69,6 +69,9 @@ module "ingress_auth_dev" {
   enable_access_control   = false
   enable_return_json      = false
   enable_cors             = false
+
+  enable_redirect   = true
+  redirect_location = "https://api.dev.node.glif.io/"
 }
 
 #############################################################

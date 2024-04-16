@@ -491,6 +491,9 @@ module "ingress_auth" {
   enable_path_transformer = false
   enable_access_control   = false
   enable_return_json      = false
+
+  enable_redirect   = true
+  redirect_location = "https://api.node.glif.io/"
 }
 
 module "ingress_api_chain_love" {
