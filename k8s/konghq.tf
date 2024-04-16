@@ -32,7 +32,7 @@ resource "helm_release" "konghq-external" {
 
   set {
     name  = "replicaCount"
-    value = 4
+    value = local.kong_external_replicas
   }
 
   set {
@@ -70,6 +70,6 @@ resource "helm_release" "konghq-chainstack" {
 
   set {
     name  = "ingressController.ingressClass"
-    value = "kong-external-lb"
+    value = "kong-chainstack-lb"
   }
 }

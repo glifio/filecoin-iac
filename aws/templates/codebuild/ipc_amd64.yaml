@@ -1,0 +1,64 @@
+version: 0.2
+
+env:
+  shell: bash
+  variables:
+    DOCKER_TAG: "glif/lotus:fendermint-amd64"
+  secrets-manager:
+    DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
+    DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
+
+phases:
+  install:
+    commands:
+      - echo "Install Ubuntu packages"
+      - sudo apt install -y build-essential bzr ca-certificates clang cmake curl gcc git gnupg hwloc jq libhwloc-dev libssl-dev pkg-config protobuf-compiler wget
+
+      - echo "Install Rust"
+      - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - . $HOME/.cargo/env
+      - rustup target add wasm32-unknown-unknown
+      - rustup default stable
+      - cargo install --force cargo-make
+
+      - echo "Install Foundry"
+      - curl -L https://foundry.paradigm.xyz | bash
+      - export PATH="$PATH:/root/.foundry/bin"
+      - foundryup
+
+  pre_build:
+    commands:
+      - echo "Sign in to DockerHub"
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
+      - docker rmi -f fendermint:latest
+
+  build:
+    commands:
+      - echo "Build contracts"
+      - cd contracts
+      - make gen
+
+      - echo "Build CLI tools"
+      - cd ..
+      - cargo build --release
+
+      - echo "Build fendermint image"
+      - cd fendermint
+      - make docker-build
+  
+  post_build:
+    commands:
+      - echo "Push fendermint image"
+      - docker tag fendermint:latest $DOCKER_TAG
+      - docker push $DOCKER_TAG
+
+artifacts:
+  files:
+    - '**/target/release/ipc-cli'
+    - '**/target/release/fendermint'
+  name: ipc-cli.linux-amd64
+
+cache:
+  paths:
+    - $HOME/.cargo/registry/**/*
+    - $HOME/ipc/target/**/*

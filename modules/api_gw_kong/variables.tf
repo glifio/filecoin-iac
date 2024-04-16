@@ -78,12 +78,6 @@ variable "mirror_to" {
   description = "An array of endpoints to mirror incoming requests to"
 }
 
-variable "certificate_issuer" {
-  type        = string
-  default     = ""
-  description = "If provided, use the certificate issuer for SSL"
-}
-
 variable "affix_ingress_class" {
   type        = bool
   default     = true
@@ -117,4 +111,22 @@ variable "ext_token_auth_url" {
   type        = string
   default     = "http://glif-auth-app-svc.default:3000/api/auth"
   description = "URL of the external Auth service that Kong will send request data to"
+}
+
+variable "homepage_service" {
+  type = string
+  default = "glif-auth-app-svc"
+  description = "homepage kubernetes service name"
+}
+
+variable "homepage_port" {
+  type = number
+  default = 3000
+  description = "homepage kubernetes service port"
+}
+
+variable "homepage_namespace" {
+  type = string
+  default = "default"
+  description = "homepage kubernetes service namespace"
 }

@@ -252,7 +252,6 @@ module "ingress_space06" {
   enable_access_control   = true
   access_control_public   = true
   access_control_replace  = true
-  enable_letsencrypt      = false
   enable_return_json      = true
 }
 
@@ -276,10 +275,10 @@ module "ingress_fvm_archive" {
 
   enable_path_transformer = true
   enable_access_control   = true
-  access_control_public   = false
-  access_control_replace  = false
-  enable_letsencrypt      = false
+  access_control_public   = true
+  access_control_replace  = true
   enable_return_json      = true
+  enable_ext_token_auth   = true
 }
 
 module "ingress-kong_space07-cache-8080" {
@@ -408,7 +407,6 @@ module "ingress_coinfirm" {
   enable_access_control   = true
   access_control_public   = true
   access_control_replace  = true
-  enable_letsencrypt      = false
   enable_return_json      = true
 }
 
@@ -431,7 +429,6 @@ module "ingress_private_mainnet_fallback" {
   enable_access_control   = true
   access_control_public   = true
   access_control_replace  = true
-  enable_letsencrypt      = false
   enable_return_json      = true
 }
 
@@ -454,7 +451,6 @@ module "ingress_private_calibration_fallback" {
   enable_access_control   = true
   access_control_public   = true
   access_control_replace  = true
-  enable_letsencrypt      = false
   enable_return_json      = true
 }
 
@@ -475,7 +471,6 @@ module "ingress_space07_1234" {
   secret_name   = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
 
   enable_access_control = true
-  enable_letsencrypt    = false
 }
 
 module "ingress_auth" {
@@ -495,7 +490,6 @@ module "ingress_auth" {
 
   enable_path_transformer = false
   enable_access_control   = false
-  enable_letsencrypt      = false
   enable_return_json      = false
 }
 
@@ -522,6 +516,5 @@ module "ingress_api_chain_love" {
   enable_access_control   = true
   access_control_public   = true
   access_control_replace  = true
-  enable_letsencrypt      = false
   enable_return_json      = true
 }

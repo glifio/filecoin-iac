@@ -1,5 +1,4 @@
 resource "kubernetes_ingress_v1" "post_root" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-post-root"
     namespace = var.namespace
@@ -50,7 +49,7 @@ resource "kubernetes_ingress_v1" "post_root" {
 }
 
 resource "kubernetes_ingress_v1" "post_root_auth" {
-  count = local.basic_ingress_condition && var.enable_ext_token_auth ? 1 : 0
+  count = var.enable_ext_token_auth ? 1 : 0
   metadata {
     name      = "${local.prefix}-post-root-auth"
     namespace = var.namespace
@@ -104,7 +103,6 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
 # That's a mock endpoint required for many services
 # to work correctly. Returns 200 upon any request
 resource "kubernetes_ingress_v1" "options_root" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-options-root"
     namespace = var.namespace
@@ -130,9 +128,9 @@ resource "kubernetes_ingress_v1" "options_root" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata[0].name
+              name = local.rpc_v1_service
               port {
-                number = 80
+                number = local.rpc_v1_port
               }
             }
           }
@@ -143,20 +141,16 @@ resource "kubernetes_ingress_v1" "options_root" {
 }
 
 resource "kubernetes_ingress_v1" "get_root" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-root"
-    namespace = var.namespace
+    namespace = var.homepage_namespace
 
     annotations = {
-      # If this annotation is not present, the request
-      # will be looping over the host name infinitely
-      "konghq.com/preserve-host" = "false"
       "konghq.com/protocols"     = "http"
       "konghq.com/methods"       = "GET"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.cors.manifest.metadata.name
+        kubernetes_manifest.homepage_cors.manifest.metadata.name
       ])
     }
   }
@@ -172,11 +166,50 @@ resource "kubernetes_ingress_v1" "get_root" {
           path_type = "Prefix"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata[0].name
+              name = var.homepage_service
               port {
                 # If backend service is of type ExternalName,
                 # then ports are available only by numeric values
-                number = 80
+                number = var.homepage_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "post_api" {
+  metadata {
+    name      = "${local.prefix}-post-api"
+    namespace = var.homepage_namespace
+
+    annotations = {
+      "konghq.com/protocols"     = "http"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.homepage_cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path = "/api"
+          # Must be a prefix to handle static assets
+          path_type = "Prefix"
+          backend {
+            service {
+              name = var.homepage_service
+              port {
+                # If backend service is of type ExternalName,
+                # then ports are available only by numeric values
+                number = var.homepage_port
               }
             }
           }
@@ -187,7 +220,6 @@ resource "kubernetes_ingress_v1" "get_root" {
 }
 
 resource "kubernetes_ingress_v1" "get_diluted_supply" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-dilutedsupply"
     namespace = var.namespace
@@ -228,20 +260,17 @@ resource "kubernetes_ingress_v1" "get_diluted_supply" {
 }
 
 resource "kubernetes_ingress_v1" "get_rpc_v0" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-rpc-v0"
-    namespace = var.namespace
+    namespace = var.homepage_namespace
 
     annotations = {
       "konghq.com/protocols"     = "http"
       "konghq.com/methods"       = "GET"
-      "konghq.com/preserve-host" = "false"
-      "konghq.com/strip-path"    = "true"
 
       "konghq.com/plugins" = join(", ", [
-        kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
-        kubernetes_manifest.cors.manifest.metadata.name
+        kubernetes_manifest.homepage_cors.manifest.metadata.name,
+        kubernetes_manifest.request_transformer-to_root.manifest.metadata.name
       ])
     }
   }
@@ -256,9 +285,9 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata[0].name
+              name = var.homepage_service
               port {
-                number = 80
+                number = var.homepage_port
               }
             }
           }
@@ -269,7 +298,6 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
 }
 
 resource "kubernetes_ingress_v1" "options_rpc_v0" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-options-rpc-v0"
     namespace = var.namespace
@@ -295,9 +323,9 @@ resource "kubernetes_ingress_v1" "options_rpc_v0" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata[0].name
+              name = local.rpc_v0_service
               port {
-                number = 80
+                number = local.rpc_v0_port
               }
             }
           }
@@ -308,7 +336,6 @@ resource "kubernetes_ingress_v1" "options_rpc_v0" {
 }
 
 resource "kubernetes_ingress_v1" "post_rpc_v0" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-post-rpc-v0"
     namespace = var.namespace
@@ -350,7 +377,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v0" {
 }
 
 resource "kubernetes_ingress_v1" "post_rpc_v0_auth" {
-  count = local.basic_ingress_condition && var.enable_ext_token_auth ? 1 : 0
+  count = var.enable_ext_token_auth ? 1 : 0
   metadata {
     name      = "${local.prefix}-post-rpc-v0-auth"
     namespace = var.namespace
@@ -394,20 +421,17 @@ resource "kubernetes_ingress_v1" "post_rpc_v0_auth" {
 }
 
 resource "kubernetes_ingress_v1" "get_rpc_v1" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-rpc-v1"
-    namespace = var.namespace
+    namespace = var.homepage_namespace
 
     annotations = {
       "konghq.com/protocols"     = "http"
       "konghq.com/methods"       = "GET"
-      "konghq.com/preserve-host" = "false"
-      "konghq.com/strip-path"    = "true"
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
-        kubernetes_manifest.cors.manifest.metadata.name
+        kubernetes_manifest.homepage_cors.manifest.metadata.name
       ])
     }
   }
@@ -422,9 +446,9 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata[0].name
+              name = var.homepage_service
               port {
-                number = 80
+                number = var.homepage_port
               }
             }
           }
@@ -435,7 +459,6 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
 }
 
 resource "kubernetes_ingress_v1" "options_rpc_v1" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-options-rpc-v1"
     namespace = var.namespace
@@ -461,9 +484,9 @@ resource "kubernetes_ingress_v1" "options_rpc_v1" {
           path_type = "Exact"
           backend {
             service {
-              name = kubernetes_service.homepage.metadata[0].name
+              name = local.rpc_v1_service
               port {
-                number = 80
+                number = local.rpc_v1_port
               }
             }
           }
@@ -474,7 +497,6 @@ resource "kubernetes_ingress_v1" "options_rpc_v1" {
 }
 
 resource "kubernetes_ingress_v1" "post_rpc_v1" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-post-rpc-v1"
     namespace = var.namespace
@@ -516,7 +538,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v1" {
 }
 
 resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
-  count = local.basic_ingress_condition && var.enable_ext_token_auth ? 1 : 0
+  count = var.enable_ext_token_auth ? 1 : 0
   metadata {
     name      = "${local.prefix}-post-rpc-v1-auth"
     namespace = var.namespace
@@ -560,7 +582,6 @@ resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
 }
 
 resource "kubernetes_ingress_v1" "get_circulating_supply" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-circulating-supply"
     namespace = var.namespace
@@ -602,7 +623,6 @@ resource "kubernetes_ingress_v1" "get_circulating_supply" {
 }
 
 resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-circulating-supply-fil"
     namespace = var.namespace
@@ -642,7 +662,6 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil" {
 }
 
 resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-circulating-supply-fil-v2"
     namespace = var.namespace
@@ -682,7 +701,6 @@ resource "kubernetes_ingress_v1" "get_circulating_supply_fil_v2" {
 }
 
 resource "kubernetes_ingress_v1" "get_vm_circulating_supply" {
-  count = local.basic_ingress_count
   metadata {
     name      = "${local.prefix}-get-vm-circulating-supply"
     namespace = var.namespace

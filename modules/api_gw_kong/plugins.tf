@@ -55,14 +55,14 @@ resource "kubernetes_manifest" "request_transformer-to_root" {
     "kind"       = "KongPlugin"
     "metadata" = {
       "name"      = "${local.prefix}-request-transformer-to-root"
-      "namespace" = var.namespace
+      "namespace" = var.homepage_namespace
     }
     "config" = {
-      "replace" = {
-        "uri" = "/"
-      }
+      "access"        = [templatefile("${path.module}/scripts/req_301_redirect_to_root.lua", {
+        domain_name = var.domain_name
+      })]
     }
-    "plugin" = "request-transformer"
+    "plugin" = "pre-function"
   }
 }
 
@@ -213,6 +213,39 @@ resource "kubernetes_manifest" "cors" {
     "metadata" = {
       "name"      = "${local.prefix}-cors"
       "namespace" = var.namespace
+    }
+    "config" = {
+      "origins" = [
+        "*"
+      ]
+      "headers" = [
+        "Authorization",
+        "Accept",
+        "Origin",
+        "DNT",
+        "X-CustomHeader",
+        "Keep-Alive",
+        "User-Agent",
+        "X-Requested-With",
+        "If-Modified-Since",
+        "Cache-Control",
+        "Content-Type",
+        "Content-Length",
+        "Content-Range",
+        "Range"
+      ]
+    }
+    "plugin" = "cors"
+  }
+}
+
+resource "kubernetes_manifest" "homepage_cors" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-homepage-cors"
+      "namespace" = var.homepage_namespace
     }
     "config" = {
       "origins" = [

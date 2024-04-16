@@ -43,7 +43,6 @@ module "ingress_api_read_dev" {
   enable_access_control       = true
   access_control_public       = true
   access_control_replace      = true
-  enable_letsencrypt          = false
   enable_return_json          = true
   enable_limit_reqs_wo_header = true
   enable_ext_token_auth       = true
@@ -68,7 +67,6 @@ module "ingress_auth_dev" {
 
   enable_path_transformer = false
   enable_access_control   = false
-  enable_letsencrypt      = false
   enable_return_json      = false
   enable_cors             = false
 }

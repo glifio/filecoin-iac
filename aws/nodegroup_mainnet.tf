@@ -97,7 +97,7 @@ module "eks_nodegroup_ondemand_group19" {
   source = "../modules/eks_nodegroup"
 
   name          = "space07"
-  instance_type = "r6g.8xlarge"
+  instance_type = "r6g.12xlarge"
   ami_type      = "AL2_ARM_64"
   is_critical   = true
 

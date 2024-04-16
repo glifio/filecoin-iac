@@ -23,6 +23,13 @@ locals {
   }
   env_dev_route53_records = local.env_dev_route53_record[terraform.workspace]
 
+  kong_external_replicas_map = {
+    filecoin-dev-apn1-glif-eks     = 1
+    filecoin-mainnet-apn1-glif-eks = 8
+  }
+
+  kong_external_replicas = local.kong_external_replicas_map[terraform.workspace]
+
   env_dev_ingress_record = {
     filecoin-dev-apn1-glif-eks     = 1
     filecoin-mainnet-apn1-glif-eks = 0
@@ -34,12 +41,6 @@ locals {
     filecoin-mainnet-apn1-glif-eks = 0
   }
   is_dev_envs = local.is_dev_env[terraform.workspace]
-
-  monitoring_nodegroup = {
-    filecoin-dev-apn1-glif-eks     = "monitoring"
-    filecoin-mainnet-apn1-glif-eks = "calibration-archive"
-  }
-  monitoring_nodegroups = local.monitoring_nodegroup[terraform.workspace]
 
   is_prod_env = {
     filecoin-dev-apn1-glif-eks     = 0
