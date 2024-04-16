@@ -39,9 +39,4 @@ locals {
   mirror_plugin = var.enable_mirroring ? kubernetes_manifest.http_mirror-rpc[0].manifest.metadata.name : ""
   
   limit_reqs_wo_header_plugin = var.enable_limit_reqs_wo_header ? kubernetes_manifest.rate_limiting[0].manifest.metadata.name : ""
-
-  ssl_ingress_condition = length(var.certificate_issuer) > 0
-  basic_ingress_condition = !local.ssl_ingress_condition
-  ssl_ingress_count     = local.ssl_ingress_condition ? 1 : 0
-  basic_ingress_count   = local.basic_ingress_condition ? 1 : 0
 }
