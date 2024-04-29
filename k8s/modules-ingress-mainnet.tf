@@ -532,3 +532,53 @@ module "ingress_api_chain_love" {
   access_control_replace  = true
   enable_return_json      = true
 }
+
+module "drpc-mainnet" {
+  count = local.is_prod_envs
+
+  name   = "drpc-mainnet"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host = "drpc.node.glif.io"
+  http_path = "/rpc/v1"
+
+  service_name = "api-read-master-lotus-service"
+  service_port = 2346
+
+  incress_class = "kong-external-lb"
+
+  secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
+
+  enable_path_transformer = false
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_return_json      = true
+}
+
+module "drpc-calibnet" {
+  count = local.is_prod_envs
+
+  name   = "drpc-calibnet"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host = "drpc.calibration.node.glif.io"
+  http_path = "/rpc/v1"
+
+  service_name = "api-read-master-lotus-service"
+  service_port = 2346
+
+  incress_class = "kong-external-lb"
+
+  secret_name = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
+
+  enable_path_transformer = false
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_return_json      = true
+}
