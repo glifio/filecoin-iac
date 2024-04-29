@@ -293,18 +293,29 @@ module "ingress-kong_space07-cache-8080" {
   type_lb_scheme                   = "external"
 }
 
-
 module "ingress-kong_lotusgateway-2346" {
-  count                                   = local.is_prod_envs
-  source                                  = "../modules/k8s_ingress"
-  get_global_configuration                = local.make_global_configuration
-  get_ingress_http_path                   = "/apigw/lotus/(.*)"
-  get_ingress_backend_service_name        = "api-read-master-lotus" // the "-service" string will be added automatically
-  get_ingress_backend_service_port        = 2346
-  get_ingress_namespace                   = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                           = "wss.node.glif.io"
-  type_lb_scheme                          = "external"
-  is_kong_auth_header_block_public_access = false
+  count = local.is_prod_envs
+
+  name   = "wss-mainnet"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host = "wss.node.glif.io"
+  http_path = "/apigw/lotus/(.*)"
+
+  service_name = "api-read-master-lotus-service"
+  service_port = 2346
+
+  incress_class = "kong-external-lb"
+
+  secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
+
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_return_json      = true
 }
 
 ##########################################################
