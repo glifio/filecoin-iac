@@ -249,6 +249,8 @@ resource "aws_route53_record" "api_chain_love" {
 }
 
 resource "aws_route53_record" "drpc-mainnet" {
+  count = local.is_prod_envs
+
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "drpc.${var.route53_domain}"
   allow_overwrite = true
@@ -258,6 +260,8 @@ resource "aws_route53_record" "drpc-mainnet" {
 }
 
 resource "aws_route53_record" "drpc-calibnet" {
+  count = local.is_prod_envs
+
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "drpc.calibration.${var.route53_domain}"
   allow_overwrite = true
