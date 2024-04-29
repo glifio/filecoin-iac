@@ -126,3 +126,14 @@ resource "aws_secretsmanager_secret" "coinfirm" {
     module.generator.common_tags
   )
 }
+
+resource "aws_secretsmanager_secret" "drpc" {
+  count = local.is_prod_envs
+
+  name = "${module.generator.prefix}-drpc"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-drpc" },
+    module.generator.common_tags
+  )
+}
