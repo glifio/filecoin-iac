@@ -582,3 +582,26 @@ module "drpc-calibnet" {
   access_control_replace  = true
   enable_return_json      = true
 }
+
+module "drpc-dshackle" {
+  count = local.is_prod_envs
+
+  name   = "drpc-dshackle"
+  source = "../modules/ovh_ingress"
+
+  namespace = "default"
+
+  http_host      = "dshackle.node.glif.io"
+  http_path      = "/"
+  http_path_type = "Prefix"
+
+  service_name = "glif-drpc-service"
+  service_port = 2449
+
+  incress_class = "kong-external-lb"
+
+  enable_path_transformer = false
+  enable_access_control   = false
+  enable_return_json      = false
+  enable_cors             = false
+}

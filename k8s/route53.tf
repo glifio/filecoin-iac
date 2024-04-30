@@ -269,3 +269,14 @@ resource "aws_route53_record" "drpc-calibnet" {
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
+
+resource "aws_route53_record" "drpc-dshackle" {
+  count = local.is_prod_envs
+
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "dshackle.${var.route53_domain}"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
