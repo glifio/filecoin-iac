@@ -125,3 +125,9 @@ variable "redirect_location" {
   default = "https://api.node.glif.io"
   description = "Location to redirect incoming requests to"
 }
+
+variable "protocols" {
+  type = string
+  default = "https, http"
+  description = "Protocols supported by the ingress"
+}

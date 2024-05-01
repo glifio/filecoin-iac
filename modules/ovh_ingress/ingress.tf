@@ -7,7 +7,7 @@ resource "kubernetes_ingress_v1" "default" {
 
     annotations = {
       "konghq.com/plugins"   = local.plugins_string
-      "konghq.com/protocols" = "https, http"
+      "konghq.com/protocols" = var.protocols
     }
   }
 
