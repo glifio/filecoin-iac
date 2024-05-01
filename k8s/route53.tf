@@ -248,35 +248,11 @@ resource "aws_route53_record" "api_chain_love" {
   }
 }
 
-resource "aws_route53_record" "drpc-mainnet" {
-  count = local.is_prod_envs
-
+resource "aws_route53_record" "drpc-dshackle" {
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "drpc.${var.route53_domain}"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
-}
-
-resource "aws_route53_record" "drpc-calibnet" {
-  count = local.is_prod_envs
-
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "drpc.calibration.${var.route53_domain}"
-  allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
-}
-
-resource "aws_route53_record" "drpc-dshackle" {
-  count = local.is_prod_envs
-
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "dshackle.${var.route53_domain}"
-  allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
+  records         = [data.aws_lb.kong_drpc.dns_name]
 }

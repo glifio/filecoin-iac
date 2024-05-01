@@ -244,7 +244,7 @@ module "ingress_space06" {
   service_name = "api-read-master-lotus-service"
   service_port = 1234
 
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
@@ -269,7 +269,7 @@ module "ingress_fvm_archive" {
   service_name = "fvm-archive-lotus-service"
   service_port = 1234
 
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.fvm_archive_lotus[0].name
 
@@ -307,7 +307,7 @@ module "ingress-kong_lotusgateway-2346" {
   service_name = "api-read-master-lotus-service"
   service_port = 2346
 
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
@@ -410,7 +410,7 @@ module "ingress_coinfirm" {
   service_name = "fvm-archive-lotus-service"
   service_port = 1234
 
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.fvm_archive_lotus[0].name
 
@@ -433,7 +433,7 @@ module "ingress_private_mainnet_fallback" {
 
   service_name  = "api-read-master-lotus-service"
   service_port  = 1234
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
   enable_path_transformer = true
@@ -455,7 +455,7 @@ module "ingress_private_calibration_fallback" {
 
   service_name  = "calibrationapi-0-lotus-service"
   service_port  = 1234
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.calibrationapi_0_lotus[0].name
 
   enable_path_transformer = true
@@ -478,7 +478,7 @@ module "ingress_space07_1234" {
 
   service_name  = "space07-lotus-service"
   service_port  = 1234
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
 
   enable_access_control = true
@@ -497,7 +497,7 @@ module "ingress_auth" {
 
   service_name  = "glif-auth-app-svc"
   service_port  = 3000
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   enable_path_transformer = false
   enable_access_control   = false
@@ -522,7 +522,7 @@ module "ingress_api_chain_love" {
   service_name = "api-read-master-lotus-service"
   service_port = 2346
 
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
 
@@ -531,28 +531,4 @@ module "ingress_api_chain_love" {
   access_control_public   = true
   access_control_replace  = true
   enable_return_json      = true
-}
-
-module "drpc-dshackle" {
-  count = local.is_prod_envs
-
-  name   = "drpc-dshackle"
-  source = "../modules/ovh_ingress"
-
-  namespace = "default"
-
-  http_host      = "dshackle.node.glif.io"
-  http_path      = "/"
-  http_path_type = "Prefix"
-  protocols      = "grpc"
-
-  service_name = "glif-drpc-service"
-  service_port = 2449
-
-  incress_class = "kong-external-lb"
-
-  enable_path_transformer = false
-  enable_access_control   = false
-  enable_return_json      = false
-  enable_cors             = false
 }
