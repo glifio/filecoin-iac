@@ -42,6 +42,6 @@ proxy:
     "prometheus.io/scrape": "true"
   # Bootstrap ports forwarding
   stream:
-%{ for port in bootstrap_ports ~}
+%{ for port in additional_ports ~}
   - { protocol: "TCP", servicePort: ${port}, containerPort: ${port} }
 %{ endfor ~}
