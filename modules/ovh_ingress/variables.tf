@@ -36,7 +36,7 @@ variable "namespace" {
   description = "Namespace to create the ingress in"
 }
 
-variable "incress_class" {
+variable "ingress_class" {
   type        = string
   default     = "default"
   description = "Ingress class name"

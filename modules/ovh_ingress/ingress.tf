@@ -12,7 +12,7 @@ resource "kubernetes_ingress_v1" "default" {
   }
 
   spec {
-    ingress_class_name = var.incress_class
+    ingress_class_name = var.ingress_class
 
     rule {
       host = var.http_host
@@ -48,7 +48,7 @@ resource "kubernetes_ingress_v1" "default_rate_limiting" {
   }
 
   spec {
-    ingress_class_name = var.incress_class
+    ingress_class_name = var.ingress_class
 
     rule {
       host = var.http_host
@@ -86,7 +86,7 @@ resource "kubernetes_ingress_v1" "default_auth" {
   }
 
   spec {
-    ingress_class_name = var.incress_class
+    ingress_class_name = var.ingress_class
 
     rule {
       host = var.http_host
