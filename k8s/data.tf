@@ -53,7 +53,7 @@ data "aws_lb" "kong_chainstack" {
 
 data "aws_lb" "kong_drpc" {
   tags = {
-    Name = "drpc"
+    Name = "${module.generator.prefix}-drpc"
   }
 }
 

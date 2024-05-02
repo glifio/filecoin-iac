@@ -12,7 +12,7 @@ resource "kubernetes_ingress_v1" "drpc" {
         "alb.ingress.kubernetes.io/scheme" = "internet-facing",
         "alb.ingress.kubernetes.io/target-type" = "ip",
         "alb.ingress.kubernetes.io/certificate-arn" = aws_acm_certificate.external_lb.arn,
-        "alb.ingress.kubernetes.io/tags" = "Name=drpc"
+        "alb.ingress.kubernetes.io/tags" = "Name=${module.generator.prefix}-drpc"
     }
   }
 
