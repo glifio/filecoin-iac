@@ -65,7 +65,7 @@ resource "helm_release" "konghq-chainstack" {
 
   set {
     name  = "replicaCount"
-    value = 4
+    value = 1
   }
 
   set {
