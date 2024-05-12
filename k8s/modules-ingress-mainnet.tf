@@ -241,12 +241,12 @@ module "ingress_space06" {
   http_host = "node.glif.io"
   http_path = "/space06/lotus/(.*)"
 
-  service_name = "api-read-master-lotus-service"
+  service_name = "space07-lotus-service"
   service_port = 1234
 
   ingress_class = "kong-external-lb"
 
-  secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
+  secret_name = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
 
   enable_path_transformer = true
   enable_access_control   = true
@@ -316,6 +316,9 @@ module "ingress-kong_lotusgateway-2346" {
   access_control_public   = true
   access_control_replace  = true
   enable_return_json      = true
+
+  enable_ext_token_auth       = true
+  enable_limit_reqs_wo_header = true
 }
 
 ##########################################################
