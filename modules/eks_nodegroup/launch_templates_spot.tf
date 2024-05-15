@@ -9,7 +9,7 @@ resource "aws_launch_template" "lt_spot" {
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
-      volume_size           = 80 //default spot instance size
+      volume_size           = var.root_volume_size //default spot instance size
       volume_type           = "gp3"
       throughput            = "125"
       delete_on_termination = true
