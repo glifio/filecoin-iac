@@ -89,3 +89,9 @@ variable "custom_labels" {
   default     = {}
   description = "Custom labels for the Kubernetes node"
 }
+
+variable "root_volume_size" {
+  type = number
+  default = 30
+  description = "The size of the node root volume in GiB"
+}

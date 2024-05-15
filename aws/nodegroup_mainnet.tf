@@ -204,6 +204,8 @@ module "eks_nodegroup_spot_calibnet_1" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 80
 }
 
 ##prod-api-i3-4x8x-spot-c-1-19-Node
@@ -230,6 +232,8 @@ module "eks_nodegroup_cid_checker_spot" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 80
 }
 
 ################# END BLOCK SPOT NODE-GROUP LIST #################
