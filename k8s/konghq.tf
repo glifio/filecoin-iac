@@ -11,7 +11,7 @@ resource "helm_release" "konghq-external" {
     name    = "${module.generator.prefix}-kong-external",
     crt_arn = aws_acm_certificate.external_lb.arn,
 
-    bootstrap_ports = [1235, 1236, 1237],
+    additional_ports = [1235, 1236, 1237],
 
     plugins = [
       {
@@ -54,7 +54,7 @@ resource "helm_release" "konghq-chainstack" {
   values = [templatefile("${path.module}/configs/konghq/values.tftpl", {
     name            = "${module.generator.prefix}-chainstack",
     crt_arn         = aws_acm_certificate.external_lb.arn,
-    bootstrap_ports = [],
+    additional_ports = [],
     plugins         = []
   })]
 
@@ -65,7 +65,7 @@ resource "helm_release" "konghq-chainstack" {
 
   set {
     name  = "replicaCount"
-    value = 4
+    value = 1
   }
 
   set {

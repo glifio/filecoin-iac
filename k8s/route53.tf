@@ -240,10 +240,19 @@ resource "aws_route53_record" "api_chain_love" {
   name            = "api.chain.love"
   allow_overwrite = true
   type            = "A"
-  
+
   alias {
     evaluate_target_health = false
     name                   = data.aws_lb.kong_external.dns_name
     zone_id                = data.aws_lb.kong_external.zone_id
   }
+}
+
+resource "aws_route53_record" "drpc-dshackle" {
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "drpc.${var.route53_domain}"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_drpc.dns_name]
 }

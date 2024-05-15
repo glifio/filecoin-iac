@@ -35,7 +35,7 @@ module "ingress_api_read_dev" {
   service_name = "api-read-dev-lotus-service"
   service_port = 2346
 
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.api_read_dev_lotus[0].name
 
@@ -63,12 +63,15 @@ module "ingress_auth_dev" {
   service_name = "glif-auth-app-svc"
   service_port = 3000
 
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   enable_path_transformer = false
   enable_access_control   = false
   enable_return_json      = false
   enable_cors             = false
+
+  enable_redirect   = true
+  redirect_location = "https://api.dev.node.glif.io/"
 }
 
 #############################################################

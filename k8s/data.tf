@@ -41,7 +41,7 @@ data "aws_lb" "kong_external" {
 
 data "aws_lb" "kong_chainstack" {
   count = local.is_prod_envs
-  
+
   tags = {
     Name = "${module.generator.prefix}-chainstack"
   }
@@ -49,6 +49,12 @@ data "aws_lb" "kong_chainstack" {
   depends_on = [
     helm_release.konghq-chainstack
   ]
+}
+
+data "aws_lb" "kong_drpc" {
+  tags = {
+    Name = "${module.generator.prefix}-drpc"
+  }
 }
 
 data "aws_route53_zone" "selected" {
@@ -240,7 +246,7 @@ data "aws_secretsmanager_secret_version" "monitoring_google_oauth" {
 }
 
 data "aws_secretsmanager_secret" "auth" {
-  name  = "${module.generator.prefix}-auth"
+  name = "${module.generator.prefix}-auth"
 }
 
 data "aws_secretsmanager_secret_version" "auth" {

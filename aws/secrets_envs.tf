@@ -126,3 +126,36 @@ resource "aws_secretsmanager_secret" "coinfirm" {
     module.generator.common_tags
   )
 }
+
+resource "aws_secretsmanager_secret" "drpc-external-public-key" {
+  count = local.is_prod_envs
+
+  name = "${module.generator.prefix}-drpc-external-public-key"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-drpc-external-public-key" },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_secretsmanager_secret" "drpc-provider-private-key" {
+  count = local.is_prod_envs
+
+  name = "${module.generator.prefix}-drpc-provider-private-key"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-drpc-provider-private-key" },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_secretsmanager_secret" "drpc-private-key" {
+  count = local.is_prod_envs
+
+  name = "${module.generator.prefix}-drpc-private-key"
+
+  tags = merge(
+    { "Name" = "${module.generator.prefix}-drpc-private-key" },
+    module.generator.common_tags
+  )
+}

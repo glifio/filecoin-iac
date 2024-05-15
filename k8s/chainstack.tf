@@ -103,7 +103,7 @@ module "ingress_strictly_mainnet_node_glif_io" {
 
   service_name  = "api-read-master-lotus-service"
   service_port  = 1234
-  incress_class = "kong-external-lb"
+  ingress_class = "kong-external-lb"
 
   enable_path_transformer = true
   enable_access_control   = false
