@@ -51,6 +51,8 @@ module "eks_nodegroup_ondemand_group16" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
 }
 
 module "eks_nodegroup_ondemand_api_read_slave_1" {
@@ -64,45 +66,8 @@ module "eks_nodegroup_ondemand_api_read_slave_1" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
 
-module "eks_nodegroup_ondemand_api_read_slave_10" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "api-read-slave-10"
-  instance_type = "r6gd.4xlarge"
-  ami_type      = "AL2_ARM_64"
-  user_data     = "nvme-spot.sh"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
-module "eks_nodegroup_ondemand_api_read_slave_11" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "api-read-slave-11"
-  instance_type = "r6gd.4xlarge"
-  ami_type      = "AL2_ARM_64"
-  user_data     = "nvme-spot.sh"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
-module "eks_nodegroup_ondemand_api_read_slave_12" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "api-read-slave-12"
-  instance_type = "r6gd.4xlarge"
-  ami_type      = "AL2_ARM_64"
-  user_data     = "nvme-spot.sh"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
+  root_volume_size = 150
 }
 
 module "eks_nodegroup_ondemand_api-read-cid-checker" {
@@ -116,6 +81,8 @@ module "eks_nodegroup_ondemand_api-read-cid-checker" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
 }
 
 module "eks_nodegroup_ondemand_group17" {
@@ -129,6 +96,8 @@ module "eks_nodegroup_ondemand_group17" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
 }
 
 module "eks_nodegroup_ondemand_group18" {
@@ -142,6 +111,8 @@ module "eks_nodegroup_ondemand_group18" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
 }
 
 module "eks_nodegroup_ondemand_group19" {
@@ -220,6 +191,8 @@ module "eks_nodegroup_mainnet_spot_group9" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
 }
 
 module "eks_nodegroup_cid_checker_spot" {
