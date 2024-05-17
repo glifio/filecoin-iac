@@ -1,5 +1,6 @@
 resource "kubernetes_ingress_v1" "drpc" {
-
+  count = local.is_prod_envs
+  
   metadata {
     name      = "drpc-dshackle-ingress"
     namespace = "default"
