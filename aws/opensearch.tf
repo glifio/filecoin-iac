@@ -1,6 +1,6 @@
 resource "aws_opensearch_domain" "main" {
   domain_name    = "${module.generator.prefix_region}-os"
-  engine_version = "OpenSearch_1.2"
+  engine_version = "OpenSearch_1.3"
 
   access_policies = templatefile("${path.module}/templates/policies/opensearch_policy.pol.tpl", {
     aws_account_id = data.aws_caller_identity.current.account_id
