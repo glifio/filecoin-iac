@@ -137,7 +137,22 @@ resource "kubernetes_manifest" "serverless_function-root" {
     "config" = {
       "access" = [file("${path.module}/scripts/req_root.lua")]
     }
-    "plugin" = "post-function"
+    "plugin" = "pre-function"
+  }
+}
+
+resource "kubernetes_manifest" "serverless_function-rpc" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-rpc"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "access" = [file("${path.module}/scripts/req_rpc.lua")]
+    }
+    "plugin" = "pre-function"
   }
 }
 
@@ -340,5 +355,30 @@ resource "kubernetes_manifest" "auth" {
     config = {
       auth_endpoint = "${var.ext_token_auth_url}"
     }
+  }
+}
+
+resource "kubernetes_manifest" "file_log" {
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-file-log"
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "path" = "/dev/stdout",
+      "custom_fields_by_lua" = {
+        "route" = "return nil",
+        "service" = "return nil",
+        "latencies" = "return nil",
+        "tries" = "return nil",
+        "workspace" = "return nil",
+        "workspace_name" = "return nil",
+        "authenticated_entity" = "return nil",
+        "consumer" = "return nil"
+      }
+    }
+    "plugin" = "file-log"
   }
 }

@@ -68,6 +68,7 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
 
 
       "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.file_log.manifest.metadata.name,
         kubernetes_manifest.serverless_function-root.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
@@ -389,6 +390,8 @@ resource "kubernetes_ingress_v1" "post_rpc_v0_auth" {
       "konghq.com/headers.Authorization" = "~*"
 
       "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.file_log.manifest.metadata.name,
+        kubernetes_manifest.serverless_function-rpc.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
         kubernetes_manifest.cors.manifest.metadata.name,
@@ -550,6 +553,8 @@ resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
       "konghq.com/headers.Authorization" = "~*"
 
       "konghq.com/plugins" = join(", ", compact([
+        kubernetes_manifest.file_log.manifest.metadata.name,
+        kubernetes_manifest.serverless_function-rpc.manifest.metadata.name,
         kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
         kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
         kubernetes_manifest.cors.manifest.metadata.name,
