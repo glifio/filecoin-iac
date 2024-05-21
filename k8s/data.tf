@@ -52,6 +52,8 @@ data "aws_lb" "kong_chainstack" {
 }
 
 data "aws_lb" "kong_drpc" {
+  count = local.is_prod_envs
+  
   tags = {
     Name = "${module.generator.prefix}-drpc"
   }
