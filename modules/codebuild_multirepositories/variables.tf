@@ -2,12 +2,12 @@ variable "git_repository_name" {}
 variable "get_global_configuration" {}
 
 variable "create_build_webhook" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "create_deploy_webhook" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -17,7 +17,7 @@ variable "is_build_only" {
 }
 
 variable "repo_docker_branch" {
-  type = string
+  type    = string
   default = "master"
 }
 
@@ -91,7 +91,7 @@ variable "buildspec_logic" {
 }
 
 variable "environment_type" {
-  type = string
+  type    = string
   default = "ARM_CONTAINER"
 }
 

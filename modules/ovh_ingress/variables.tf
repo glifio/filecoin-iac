@@ -115,19 +115,19 @@ variable "ext_token_auth_url" {
 }
 
 variable "enable_redirect" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "Redirect requests to the specified URL"
 }
 
 variable "redirect_location" {
-  type = string
-  default = "https://api.node.glif.io"
+  type        = string
+  default     = "https://api.node.glif.io"
   description = "Location to redirect incoming requests to"
 }
 
 variable "protocols" {
-  type = string
-  default = "https, http"
+  type        = string
+  default     = "https, http"
   description = "Protocols supported by the ingress"
 }

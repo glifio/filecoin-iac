@@ -61,9 +61,9 @@ locals {
   return_json_available_name = "${var.name}-return-json"
   return_json_enabled_name   = !var.enable_return_json ? "" : local.return_json_available_name
 
-  redirect_count = var.enable_redirect ? 1 : 0
+  redirect_count          = var.enable_redirect ? 1 : 0
   redirect_available_name = "${var.name}-redirect"
-  redirect_enabled_name = !var.enable_redirect ? "" : local.redirect_available_name
+  redirect_enabled_name   = !var.enable_redirect ? "" : local.redirect_available_name
 
   available_plugins = [
     local.path_transformer_enabled_name,

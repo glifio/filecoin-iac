@@ -146,8 +146,8 @@ resource "kubernetes_ingress_v1" "get_root" {
     namespace = var.homepage_namespace
 
     annotations = {
-      "konghq.com/protocols"     = "http"
-      "konghq.com/methods"       = "GET"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.homepage_cors.manifest.metadata.name
@@ -186,7 +186,7 @@ resource "kubernetes_ingress_v1" "post_api" {
     namespace = var.homepage_namespace
 
     annotations = {
-      "konghq.com/protocols"     = "http"
+      "konghq.com/protocols" = "http"
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.homepage_cors.manifest.metadata.name
@@ -265,8 +265,8 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
     namespace = var.homepage_namespace
 
     annotations = {
-      "konghq.com/protocols"     = "http"
-      "konghq.com/methods"       = "GET"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.homepage_cors.manifest.metadata.name,
@@ -426,8 +426,8 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
     namespace = var.homepage_namespace
 
     annotations = {
-      "konghq.com/protocols"     = "http"
-      "konghq.com/methods"       = "GET"
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
 
       "konghq.com/plugins" = join(", ", [
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,

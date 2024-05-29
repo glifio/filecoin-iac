@@ -91,13 +91,13 @@ variable "affix_upstream_service" {
 }
 
 variable "preserve_host" {
-  type = bool
+  type    = bool
   default = true
 }
 
 variable "enable_limit_reqs_wo_header" {
-  type = bool
-  default = false
+  type        = bool
+  default     = false
   description = "If enabled, requests without Authorization header will be rate-limited."
 }
 
@@ -114,19 +114,19 @@ variable "ext_token_auth_url" {
 }
 
 variable "homepage_service" {
-  type = string
-  default = "glif-auth-app-svc"
+  type        = string
+  default     = "glif-auth-app-svc"
   description = "homepage kubernetes service name"
 }
 
 variable "homepage_port" {
-  type = number
-  default = 3000
+  type        = number
+  default     = 3000
   description = "homepage kubernetes service port"
 }
 
 variable "homepage_namespace" {
-  type = string
-  default = "default"
+  type        = string
+  default     = "default"
   description = "homepage kubernetes service namespace"
 }

@@ -58,7 +58,7 @@ resource "kubernetes_manifest" "request_transformer-to_root" {
       "namespace" = var.homepage_namespace
     }
     "config" = {
-      "access"        = [templatefile("${path.module}/scripts/req_301_redirect_to_root.lua", {
+      "access" = [templatefile("${path.module}/scripts/req_301_redirect_to_root.lua", {
         domain_name = var.domain_name
       })]
     }

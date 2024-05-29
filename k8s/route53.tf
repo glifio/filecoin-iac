@@ -249,10 +249,12 @@ resource "aws_route53_record" "api_chain_love" {
 }
 
 resource "aws_route53_record" "drpc-dshackle" {
+  count = local.is_prod_envs
+
   zone_id         = data.aws_route53_zone.selected.zone_id
   name            = "drpc.${var.route53_domain}"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
-  records         = [data.aws_lb.kong_drpc.dns_name]
+  records         = [data.aws_lb.kong_drpc[0].dns_name]
 }

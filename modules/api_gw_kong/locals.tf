@@ -4,7 +4,7 @@ locals {
   env     = lookup(var.global_config, "environment", "")
   sub_env = lookup(var.global_config, "sub_environment", "")
 
-  prefix = "${var.stage_name}"
+  prefix = var.stage_name
 
   upstream_name    = var.affix_upstream_service ? "${var.upstream_service}-lotus" : var.upstream_service
   upstream_service = "${local.upstream_name}-service"
@@ -37,6 +37,6 @@ locals {
   daemon_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.daemon.secret_string), "jwt_token_kong_rw")
 
   mirror_plugin = var.enable_mirroring ? kubernetes_manifest.http_mirror-rpc[0].manifest.metadata.name : ""
-  
+
   limit_reqs_wo_header_plugin = var.enable_limit_reqs_wo_header ? kubernetes_manifest.rate_limiting[0].manifest.metadata.name : ""
 }

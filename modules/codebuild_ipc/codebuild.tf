@@ -9,15 +9,15 @@ resource "aws_codebuild_project" "codebuild" {
 
 
   artifacts {
-    type = "S3"
-    location = "${var.s3_bucket}"
+    type      = "S3"
+    location  = var.s3_bucket
     packaging = "ZIP"
-    name = "${var.artifact_name}"
+    name      = var.artifact_name
   }
 
   cache {
-    type = "LOCAL"
-    modes = [ "LOCAL_SOURCE_CACHE", "LOCAL_CUSTOM_CACHE" ]
+    type  = "LOCAL"
+    modes = ["LOCAL_SOURCE_CACHE", "LOCAL_CUSTOM_CACHE"]
   }
 
   environment {

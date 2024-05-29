@@ -13,7 +13,7 @@ resource "aws_launch_template" "lt_ondemand" {
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
-      volume_size           = 30
+      volume_size           = var.root_volume_size
       volume_type           = "gp3"
       throughput            = "125"
       delete_on_termination = true

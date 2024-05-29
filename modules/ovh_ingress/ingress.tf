@@ -1,5 +1,5 @@
 resource "kubernetes_ingress_v1" "default" {
-  count = !var.enable_limit_reqs_wo_header && !var.enable_ext_token_auth? 1 : 0
+  count = !var.enable_limit_reqs_wo_header && !var.enable_ext_token_auth ? 1 : 0
 
   metadata {
     name      = var.name
