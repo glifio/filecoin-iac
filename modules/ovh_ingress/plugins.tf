@@ -347,7 +347,7 @@ resource "kubernetes_manifest" "redirect" {
       "namespace" = var.namespace
     }
     "config" = {
-      "access"        = [templatefile("${path.module}/scripts/req_301_redirect.lua", {
+      "access" = [templatefile("${path.module}/scripts/req_301_redirect.lua", {
         location = var.redirect_location
       })]
     }

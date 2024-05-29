@@ -23,14 +23,14 @@ locals {
 
   git_config = [
     for project in local.get_git_configuration :
-      project.config if contains(values(lookup(project, "config", [])), var.project_name)
+    project.config if contains(values(lookup(project, "config", [])), var.project_name)
   ]
 
   get_codebuildspec_file  = var.is_build_only ? "buildspec.ci.yaml" : "buildspec.yaml"
   get_codebuildspec_logic = var.buildspec_logic != null ? var.buildspec_logic : local.get_codebuildspec_file
   is_build_only           = var.is_build_only ? 1 : 0
   is_deploy_only          = !var.is_build_only ? 1 : 0
-  create_build_webhook    = var.create_build_webhook  ? 1 : 0
+  create_build_webhook    = var.create_build_webhook ? 1 : 0
   create_deploy_webhook   = var.create_deploy_webhook ? 1 : 0
 
   codebuild_name              = "${module.generator.prefix}-${local.git_config[0].project_name}-codebuild"

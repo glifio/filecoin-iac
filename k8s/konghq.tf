@@ -52,10 +52,10 @@ resource "helm_release" "konghq-chainstack" {
   version    = "2.13.0"
 
   values = [templatefile("${path.module}/configs/konghq/values.tftpl", {
-    name            = "${module.generator.prefix}-chainstack",
-    crt_arn         = aws_acm_certificate.external_lb.arn,
+    name             = "${module.generator.prefix}-chainstack",
+    crt_arn          = aws_acm_certificate.external_lb.arn,
     additional_ports = [],
-    plugins         = []
+    plugins          = []
   })]
 
   set {

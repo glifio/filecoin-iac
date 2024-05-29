@@ -91,7 +91,7 @@ variable "custom_labels" {
 }
 
 variable "root_volume_size" {
-  type = number
-  default = 30
+  type        = number
+  default     = 30
   description = "The size of the node root volume in GiB"
 }
