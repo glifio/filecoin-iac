@@ -87,13 +87,13 @@ variable "buildspec" {
 }
 
 variable "s3_bucket" {
-  type = string
-  default = "glif-ipc"
+  type        = string
+  default     = "glif-ipc"
   description = "S3 bucket to store CodeBuild artifacts in"
 }
 
 variable "artifact_name" {
-  type = string
-  default = "ipc-cli.linux-amd64"
+  type        = string
+  default     = "ipc-cli.linux-amd64"
   description = "CodeBuild artifact name"
 }

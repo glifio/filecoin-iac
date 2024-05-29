@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "nodegroup_ebs_management_policy" {
       "arn:aws:ec2:*:*:instance/*"
     ]
   }
-  
+
   statement {
     sid = "DescribeVolumes"
 

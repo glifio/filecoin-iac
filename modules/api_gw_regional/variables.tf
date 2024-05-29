@@ -1,9 +1,0 @@
-variable "get_global_configuration" {}
-variable "get_zone_id" {}
-variable "get_acm_subject_alternative_names" {}
-variable "http_endpoint_uri" {}
-variable "uri_service_endpoint_rpc_v0" {}
-variable "uri_service_endpoint_rpc_v1" {}
-variable "api_gateway_domain_name" {}
-variable "get_vpc_link_arns" {}
-variable "get_stage_name" {}
