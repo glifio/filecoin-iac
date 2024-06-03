@@ -74,8 +74,10 @@ locals {
   external_lb_certificates = local.external_lb_certificate[terraform.workspace]
 
   auth = {
-    username = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["username"]
-    password = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["password"]
-    db_name  = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["dbName"]
+    username           = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["username"]
+    password           = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["password"]
+    db_name            = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["dbName"]
+    stripe_public_key  = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["stripePublicKey"]
+    stripe_private_key = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["stripePrivateKey"]
   }
 }
