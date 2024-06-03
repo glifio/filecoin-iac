@@ -266,9 +266,11 @@ resource "kubernetes_secret_v1" "auth" {
     namespace = "default"
   }
   data = {
-    username = local.auth.username
-    password = local.auth.password
-    dbName   = local.auth.db_name
-    connstr  = "postgres://${local.auth.username}:${local.auth.password}@glif-auth-db-svc.default:5432/${local.auth.db_name}?schema=public"
+    username         = local.auth.username
+    password         = local.auth.password
+    dbName           = local.auth.db_name
+    connstr          = "postgres://${local.auth.username}:${local.auth.password}@glif-auth-db-svc.default:5432/${local.auth.db_name}?schema=public"
+    stripePublicKey  = local.auth.stripe_public_key
+    stripePrivateKey = local.auth.stripe_private_key
   }
 }
