@@ -169,7 +169,8 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
     "config" = {
       "add" = {
         "headers" = [
-          "Authorization: Bearer ${local.auth_token}"
+          "Authorization: Bearer ${local.auth_token}",
+          "Content-Type: application/json"
         ]
       }
       "replace" = {
