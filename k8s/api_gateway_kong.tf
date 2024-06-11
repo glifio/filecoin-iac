@@ -27,6 +27,7 @@ module "api_gateway_kong_mainnet" {
   ingress_class    = "external"
   namespace        = "network"
   upstream_service = "api-read-master-lotus"
+  upstream_port    = 8545 # remove this line to roll back to lotus gateway
 
   enable_ext_token_auth       = true
   enable_limit_reqs_wo_header = true
@@ -44,6 +45,7 @@ module "api_gateway_kong_calibration" {
   ingress_class    = "external"
   namespace        = "network"
   upstream_service = "calibrationapi-0-lotus"
+  upstream_port    = 8545 # remove this line to roll back to lotus gateway
 
   enable_ext_token_auth       = true
   enable_limit_reqs_wo_header = true
