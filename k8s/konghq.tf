@@ -40,36 +40,3 @@ resource "helm_release" "konghq-external" {
     value = "kong-external-lb"
   }
 }
-
-
-resource "helm_release" "konghq-chainstack" {
-  count = local.is_prod_envs
-
-  name       = "${module.generator.prefix}-chainstack"
-  repository = "https://charts.konghq.com"
-  chart      = "kong"
-  namespace  = kubernetes_namespace_v1.kong.metadata[0].name
-  version    = "2.13.0"
-
-  values = [templatefile("${path.module}/configs/konghq/values.tftpl", {
-    name             = "${module.generator.prefix}-chainstack",
-    crt_arn          = aws_acm_certificate.external_lb.arn,
-    additional_ports = [],
-    plugins          = []
-  })]
-
-  set {
-    name  = "ingressController.image.tag"
-    value = "2.8"
-  }
-
-  set {
-    name  = "replicaCount"
-    value = 1
-  }
-
-  set {
-    name  = "ingressController.ingressClass"
-    value = "kong-chainstack-lb"
-  }
-}
