@@ -36,21 +36,6 @@ data "aws_lb" "kong_external" {
   ]
 }
 
-
-# data chainstack load balancer
-
-data "aws_lb" "kong_chainstack" {
-  count = local.is_prod_envs
-
-  tags = {
-    Name = "${module.generator.prefix}-chainstack"
-  }
-
-  depends_on = [
-    helm_release.konghq-chainstack
-  ]
-}
-
 data "aws_lb" "kong_drpc" {
   count = local.is_prod_envs
 
