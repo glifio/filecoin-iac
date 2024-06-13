@@ -89,3 +89,77 @@ resource "aws_dlm_lifecycle_policy" "fvm-archive" {
     }
   }
 }
+
+resource "aws_dlm_lifecycle_policy" "calibration_archive" {
+  count = local.is_prod_envs
+
+  description        = "Make snapshots of calibration-archive PVC volume"
+  execution_role_arn = aws_iam_role.dlm.arn
+  state              = "ENABLED"
+
+  policy_details {
+    resource_types = ["VOLUME"]
+
+    schedule {
+      name = "3 days of daily snapshots"
+
+      create_rule {
+        interval      = 24
+        interval_unit = "HOURS"
+        times         = ["02:00"]
+      }
+
+      retain_rule {
+        count = 3
+      }
+
+      tags_to_add = {
+        SnapshotCreator = "DLM",
+        CreatedFor      = "vol-lotus-calibrationapi-archive-node-lotus-0"
+      }
+
+      copy_tags = false
+    }
+
+    target_tags = {
+      "kubernetes.io/created-for/pvc/name" = "vol-lotus-calibrationapi-archive-node-lotus-0"
+    }
+  }
+}
+
+resource "aws_dlm_lifecycle_policy" "auth_db" {
+  count = local.is_prod_envs
+
+  description        = "Make snapshots of auth db PVC volume"
+  execution_role_arn = aws_iam_role.dlm.arn
+  state              = "ENABLED"
+
+  policy_details {
+    resource_types = ["VOLUME"]
+
+    schedule {
+      name = "3 days of daily snapshots"
+
+      create_rule {
+        interval      = 24
+        interval_unit = "HOURS"
+        times         = ["02:00"]
+      }
+
+      retain_rule {
+        count = 3
+      }
+
+      tags_to_add = {
+        SnapshotCreator = "DLM",
+        CreatedFor      = "glif-auth-db-vol-glif-auth-db-0"
+      }
+
+      copy_tags = false
+    }
+
+    target_tags = {
+      "kubernetes.io/created-for/pvc/name" = "glif-auth-db-vol-glif-auth-db-0"
+    }
+  }
+}
