@@ -29,6 +29,8 @@ module "api_gateway_kong_mainnet" {
   upstream_service = "api-read-master-lotus"
   upstream_port    = 8545 # remove this line to roll back to lotus gateway
 
+  override_rpc_v0_port = 8546 # direct all rpc/v0 traffic to dedicated cache
+
   enable_ext_token_auth       = true
   enable_limit_reqs_wo_header = true
 }
@@ -46,6 +48,8 @@ module "api_gateway_kong_calibration" {
   namespace        = "network"
   upstream_service = "calibrationapi-0-lotus"
   upstream_port    = 8545 # remove this line to roll back to lotus gateway
+
+  override_rpc_v0_port = 8546 # direct all rpc/v0 traffic to dedicated cache
 
   enable_ext_token_auth       = true
   enable_limit_reqs_wo_header = true
