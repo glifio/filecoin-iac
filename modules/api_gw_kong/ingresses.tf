@@ -36,9 +36,9 @@ resource "kubernetes_ingress_v1" "post_root" {
           path_type = "Exact"
           backend {
             service {
-              name = local.rpc_v0_service
+              name = local.rpc_v1_service
               port {
-                number = local.rpc_v0_port
+                number = local.rpc_v1_port
               }
             }
           }
@@ -88,9 +88,9 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
           path_type = "Exact"
           backend {
             service {
-              name = local.rpc_v0_service
+              name = local.rpc_v1_service
               port {
-                number = local.rpc_v0_port
+                number = local.rpc_v1_port
               }
             }
           }
