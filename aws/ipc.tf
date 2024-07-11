@@ -21,12 +21,14 @@ module "codebuild_ipc_amd64" {
 
 
 resource "aws_s3_bucket" "glif_ipc" {
+  count  = local.is_prod_envs
   bucket = "glif-ipc"
 }
 
 
 resource "aws_s3_bucket_public_access_block" "glif_ipc" {
-  bucket = aws_s3_bucket.glif_ipc.id
+  count  = local.is_prod_envs
+  bucket = aws_s3_bucket.glif_ipc[0].id
 
   block_public_acls   = false
   block_public_policy = false
