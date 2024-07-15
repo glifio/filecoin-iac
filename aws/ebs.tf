@@ -83,7 +83,7 @@ resource "aws_ebs_volume" "fvm_archive_1" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 3584
+  size       = 3840
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -105,7 +105,7 @@ resource "aws_ebs_volume" "fvm_archive_2" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 3584
+  size       = 3840
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -127,7 +127,7 @@ resource "aws_ebs_volume" "fvm_archive_3" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 3584
+  size       = 3840
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -149,7 +149,7 @@ resource "aws_ebs_volume" "fvm_archive_4" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 3584
+  size       = 3840
   type       = "gp3"
   iops       = 3000
   throughput = 125
