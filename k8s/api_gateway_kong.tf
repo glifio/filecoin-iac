@@ -15,6 +15,26 @@ module "api_gateway_kong_dev" {
   enable_limit_reqs_wo_header = true
 }
 
+module "api_gateway_kong_dev_mirror" {
+  count = local.is_dev_envs
+
+  source        = "../modules/api_gw_kong"
+  global_config = local.make_global_configuration
+
+  stage_name  = "mirror"
+  domain_name = "api.dev.node.glif.io"
+
+  ingress_class    = "mirror"
+  namespace        = "network"
+  upstream_service = "api-read-dev-lotus"
+
+  enable_ext_token_auth       = true
+  enable_limit_reqs_wo_header = true
+
+  enable_mirroring = true
+  mirror_to        = ["http://mirror-calibration-sender-svc.default:5000"]
+}
+
 module "api_gateway_kong_mainnet" {
   count = local.is_prod_envs
 
