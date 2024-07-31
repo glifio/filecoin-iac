@@ -10,9 +10,6 @@ module "api_gateway_kong_dev" {
   ingress_class    = "external"
   namespace        = "network"
   upstream_service = "api-read-dev-lotus"
-
-  enable_ext_token_auth       = true
-  enable_limit_reqs_wo_header = true
 }
 
 module "api_gateway_kong_dev_mirror" {
