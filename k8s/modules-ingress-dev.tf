@@ -32,20 +32,15 @@ module "ingress_api_read_dev" {
   http_path      = "/"
   http_path_type = "Prefix"
 
-  service_name = "api-read-dev-lotus-service"
-  service_port = 2346
+  service_name = "public-mainnet-forest-svc"
+  service_port = 2345
 
   ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.api_read_dev_lotus[0].name
 
-  enable_path_transformer     = false
-  enable_access_control       = true
-  access_control_public       = true
-  access_control_replace      = true
-  enable_return_json          = true
-  enable_limit_reqs_wo_header = true
-  enable_ext_token_auth       = true
+  enable_path_transformer = false
+  enable_return_json      = true
 }
 
 module "ingress_auth_dev" {
