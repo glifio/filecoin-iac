@@ -36,6 +36,16 @@ data "aws_lb" "kong_external" {
   ]
 }
 
+data "aws_lb" "kong_mirror" {
+  tags = {
+    Name = "${module.generator.prefix}-kong-mirror"
+  }
+
+  depends_on = [
+    helm_release.konghq-mirror
+  ]
+}
+
 data "aws_lb" "kong_drpc" {
   count = local.is_prod_envs
 
