@@ -359,7 +359,7 @@ module "ingress_wss_calibnet" {
   http_path = "/apigw/lotus/(.*)"
 
   service_name = "calibrationapi-0-lotus-service"
-  service_port = 8545
+  service_port = 2346
 
   ingress_class = "kong-external-lb"
 
