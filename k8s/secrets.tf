@@ -274,3 +274,12 @@ resource "kubernetes_secret_v1" "auth" {
     stripePrivateKey = local.auth.stripe_private_key
   }
 }
+
+module "the_graph" {
+  count = local.is_prod_envs
+
+  source = "../modules/secrets_generator"
+
+  name = "thegraph-lotus"
+  generator_config = local.make_global_configuration
+}
