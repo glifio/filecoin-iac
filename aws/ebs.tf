@@ -165,3 +165,91 @@ resource "aws_ebs_volume" "fvm_archive_4" {
     module.generator.common_tags
   )
 }
+
+resource "aws_ebs_volume" "thegraph_1" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  size       = 3840
+  type       = "gp3"
+  iops       = 3000
+  throughput = 125
+
+  snapshot_id = "snap-054ed7a7c722f6e8d"
+
+  tags = merge(
+    {
+      "Name"       = "${module.generator.prefix}-thegraph-1",
+      "Tenant"     = "thegraph",
+      "PartNumber" = 1
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_ebs_volume" "thegraph_2" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  size       = 3840
+  type       = "gp3"
+  iops       = 3000
+  throughput = 125
+
+  snapshot_id = "snap-07511020d2bb9f77a"
+
+  tags = merge(
+    {
+      "Name"       = "${module.generator.prefix}-thegraph-2",
+      "Tenant"     = "thegraph",
+      "PartNumber" = 2
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_ebs_volume" "thegraph_3" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  size       = 3840
+  type       = "gp3"
+  iops       = 3000
+  throughput = 125
+
+  snapshot_id = "snap-0dbb77e03853ce875"
+
+  tags = merge(
+    {
+      "Name"       = "${module.generator.prefix}-thegraph-3",
+      "Tenant"     = "thegraph",
+      "PartNumber" = 3
+    },
+    module.generator.common_tags
+  )
+}
+
+resource "aws_ebs_volume" "thegraph_4" {
+  count = local.is_prod_envs
+
+  availability_zone = join("", [var.region, "a"])
+
+  size       = 3840
+  type       = "gp3"
+  iops       = 3000
+  throughput = 125
+
+  snapshot_id = "snap-0980c8953bf11f3b2"
+
+  tags = merge(
+    {
+      "Name"       = "${module.generator.prefix}-thegraph-4",
+      "Tenant"     = "thegraph",
+      "PartNumber" = 4
+    },
+    module.generator.common_tags
+  )
+}
