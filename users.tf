@@ -41,26 +41,6 @@ locals {
       },
     },
     {
-      username = "aliaksandr.nosau@protofire.io",
-      aws_account = [
-        "developers"
-      ],
-      eks_access = {
-        "${local.eks_cluster_mainnet}" = "${local.developers_role.eks_group}",
-        "${local.eks_cluster_testnet}" = "${local.developers_role.eks_group}",
-      },
-    },
-    {
-      username = "vitaliy.chernov@protofire.io",
-      aws_account = [
-        "developers"
-      ],
-      eks_access = {
-        "${local.eks_cluster_mainnet}" = "${local.developers_role.eks_group}",
-        "${local.eks_cluster_testnet}" = "${local.developers_role.eks_group}",
-      },
-    },
-    {
       username = "dzmitry.kliapkou@protofire.io",
       aws_account = [
         "devops"
@@ -71,16 +51,17 @@ locals {
       },
     },
     {
-      username = "codebuild_wallaby_user",
+      username = "ilya.velinsky@protofire.io",
       aws_account = [
-        "developers"
+        "devops"
       ],
       eks_access = {
-        "${local.eks_cluster_mainnet}" = "${local.codebuild_wallaby_role.eks_group}"
+        "${local.eks_cluster_testnet}" = "${local.devops_role.eks_group}",
+        "${local.eks_cluster_mainnet}" = "${local.devops_role.eks_group}",
       },
     },
     {
-      username = "openworklabbot-atlantis",
+      username = "braian@protofire.io",
       aws_account = [
         "devops"
       ],
