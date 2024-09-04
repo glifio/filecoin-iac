@@ -161,6 +161,24 @@ module "eks_nodegroup_ondemand_calibnet_0" {
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 }
+
+module "eks_nodegroup_ondemand_thegraph" {
+  count  = local.is_prod_envs
+  source = "../modules/eks_nodegroup"
+
+  name          = "thegraph"
+  instance_type = "r6g.8xlarge"
+  ami_type      = "AL2_ARM_64"
+  is_critical   = true
+
+  use_existing_ebs = true
+  ebs_tenant       = "thegraph"
+
+  global_config    = local.make_global_configuration
+  nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
+}
 ################# END BLOCK ONDEMAND NODE-GROUP LIST #################
 
 
