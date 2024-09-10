@@ -95,3 +95,9 @@ variable "root_volume_size" {
   default     = 30
   description = "The size of the node root volume in GiB"
 }
+
+variable "kubernetes_version" {
+  type = string
+  default = null
+  description = "Kubernetes version for the node to use"
+}
