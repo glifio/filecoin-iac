@@ -1,17 +1,4 @@
 ################# START BLOCK ONDEMAND NODE-GROUP LIST #################
-
-#prod-monitoring-Node
-module "eks_nodegroup_mainnet_ondemand_group1" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "group1"
-  instance_type = "t3.large"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
 #prod-api-i3-4x-ondemand-a-1-19-Node
 module "eks_nodegroup_mainnet_ondemand_group6" {
   count  = local.is_prod_envs
@@ -22,6 +9,8 @@ module "eks_nodegroup_mainnet_ondemand_group6" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  kubernetes_version = "1.24"
 }
 
 
@@ -68,6 +57,8 @@ module "eks_nodegroup_ondemand_api_read_slave_1" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.24"
 }
 
 module "eks_nodegroup_ondemand_api-read-cid-checker" {
@@ -98,6 +89,8 @@ module "eks_nodegroup_ondemand_group17" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.24"
 }
 
 module "eks_nodegroup_ondemand_group18" {
@@ -160,6 +153,8 @@ module "eks_nodegroup_ondemand_calibnet_0" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  kubernetes_version = "1.24"
 }
 
 module "eks_nodegroup_ondemand_thegraph" {
@@ -197,6 +192,8 @@ module "eks_nodegroup_spot_calibnet_1" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 80
+
+  kubernetes_version = "1.24"
 }
 
 ##prod-api-i3-4x8x-spot-c-1-19-Node
@@ -213,6 +210,8 @@ module "eks_nodegroup_mainnet_spot_group9" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.24"
 }
 
 module "eks_nodegroup_cid_checker_spot" {
@@ -227,6 +226,8 @@ module "eks_nodegroup_cid_checker_spot" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 80
+
+  kubernetes_version = "1.24"
 }
 
 ################# END BLOCK SPOT NODE-GROUP LIST #################
