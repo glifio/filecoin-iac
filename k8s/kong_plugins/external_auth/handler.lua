@@ -44,6 +44,9 @@ local function auth(conf)
         token = token:gsub("Bearer ", "")
     elseif conf.token_location == "token_param" then
         token = kong.request.get_query_arg('token')
+        if token == nil or token == true then
+            token = ""
+        end
     end
 
     -- deny request if token is empty
