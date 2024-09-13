@@ -309,6 +309,34 @@ module "ingress_thegraph" {
   enable_ext_token_auth   = true
 }
 
+module "ingress_fvm_archive_pl" {
+  count = local.is_prod_envs
+
+  name   = "fvm-archive-pl-forwarding"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host = "node.glif.io"
+  http_path = "/fvm-archive-pl/lotus/(.*)"
+
+  service_name = "fvm-archive-pl-lotus-service"
+  service_port = 1234
+
+  ingress_class = "kong-external-lb"
+
+  secret_name = module.secret_fvm_archive_pl[0].aws_secret_name
+
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_return_json      = true
+  enable_ext_token_auth   = true
+
+  enable_optional_query_param_auth = true
+}
+
 module "ingress-kong_space07-cache-8080" {
   count                            = local.is_prod_envs
   source                           = "../modules/k8s_ingress"
