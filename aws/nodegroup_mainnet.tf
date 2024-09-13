@@ -1,17 +1,5 @@
 ################# START BLOCK ONDEMAND NODE-GROUP LIST #################
 
-#prod-monitoring-Node
-module "eks_nodegroup_mainnet_ondemand_group1" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "group1"
-  instance_type = "t3.large"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-}
-
 #prod-api-i3-4x-ondemand-a-1-19-Node
 module "eks_nodegroup_mainnet_ondemand_group6" {
   count  = local.is_prod_envs

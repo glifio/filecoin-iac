@@ -207,15 +207,6 @@ data "aws_secretsmanager_secret_version" "github_ssh_gist_updater" {
   secret_id = data.aws_secretsmanager_secret.github_ssh_gist_updater[0].id
 }
 
-
-data "aws_secretsmanager_secret" "atlantis" {
-  name = "${module.generator.prefix}/credentials-atlantis"
-}
-
-data "aws_secretsmanager_secret_version" "atlantis" {
-  secret_id = data.aws_secretsmanager_secret.atlantis.id
-}
-
 data "aws_secretsmanager_secret" "credentials-grafana-users" {
   name = "${module.generator.prefix}/credentials-grafana-users"
 }

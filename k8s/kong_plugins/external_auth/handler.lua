@@ -37,9 +37,17 @@ local function authorize(conf, url, token)
 end
 
 local function auth(conf)
-    -- get auth token from header
-    local token = kong.request.get_header('authorization')
-    token = token:gsub("Bearer ", "")
+    local token = ""
+    if conf.token_location == "authorization_header" then
+        -- get auth token from header
+        token = kong.request.get_header('authorization')
+        token = token:gsub("Bearer ", "")
+    elseif conf.token_location == "token_param" then
+        token = kong.request.get_query_arg('token')
+        if token == nil or token == true then
+            token = ""
+        end
+    end
 
     -- deny request if token is empty
     if string.len(token) == 0 then

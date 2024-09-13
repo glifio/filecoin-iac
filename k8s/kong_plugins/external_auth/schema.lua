@@ -15,6 +15,17 @@ return {
                             type = "string",
                             required = true
                         }
+                    },
+                    {
+                        token_location = {
+                            type = "string",
+                            required = false,
+                            one_of = {
+                                "authorization_header",
+                                "token_param"
+                            },
+                            default = "authorization_header"
+                        }
                     }
                 }
             }
