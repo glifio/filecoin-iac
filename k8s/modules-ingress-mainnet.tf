@@ -279,6 +279,8 @@ module "ingress_fvm_archive" {
   access_control_replace  = true
   enable_return_json      = true
   enable_ext_token_auth   = true
+
+  enable_optional_query_param_auth = true
 }
 
 module "ingress_thegraph" {
