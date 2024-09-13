@@ -283,3 +283,12 @@ module "the_graph" {
   name = "thegraph-lotus"
   generator_config = local.make_global_configuration
 }
+
+module "secret_fvm_archive_pl" {
+  count = local.is_prod_envs
+
+  source = "../modules/secrets_generator"
+
+  name = "fvm-archive-pl-lotus"
+  generator_config = local.make_global_configuration
+}
