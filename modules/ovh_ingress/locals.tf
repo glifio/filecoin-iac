@@ -94,8 +94,15 @@ locals {
   ext_token_auth_available_name = "${var.name}-ext-token-auth"
   ext_token_auth_enabled_name   = !var.enable_ext_token_auth ? "" : local.ext_token_auth_available_name
 
+  optional_query_param_auth_count          = var.enable_ext_token_auth && var.enable_optional_query_param_auth ? 1 : 0
+  optional_query_param_auth_available_name = "${var.name}-query-param-auth"
+  optional_query_param_auth_enabled_name   = !var.enable_optional_query_param_auth ? "" : local.optional_query_param_auth_available_name
+
   enabled_ext_token_auth_plugins = compact(concat(local.available_plugins, [local.ext_token_auth_enabled_name]))
   ext_token_auth_plugins_string  = join(", ", local.enabled_ext_token_auth_plugins)
+
+  enabled_query_param_auth_plugins = compact(concat(local.available_plugins, [local.optional_query_param_auth_enabled_name]))
+  query_param_auth_plugins_string  = join(", ", local.enabled_query_param_auth_plugins)
 
   auth_token = var.enable_access_control && var.access_control_public ? jsondecode(data.aws_secretsmanager_secret_version.default[0].secret_string)[var.auth_token_attribute] : ""
 }
