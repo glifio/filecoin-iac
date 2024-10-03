@@ -79,5 +79,6 @@ locals {
     db_name            = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["dbName"]
     stripe_public_key  = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["stripePublicKey"]
     stripe_private_key = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["stripePrivateKey"]
+    jwt_secret_key     = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["jwtSecretKey"]
   }
 }

@@ -516,7 +516,14 @@ module "ingress_space07_1234" {
   ingress_class = "kong-external-lb"
   secret_name   = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
 
-  enable_access_control = true
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_return_json      = true
+  enable_ext_token_auth   = true
+
+  enable_optional_query_param_auth = true
 }
 
 module "ingress_auth" {

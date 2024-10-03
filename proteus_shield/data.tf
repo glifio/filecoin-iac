@@ -1,0 +1,7 @@
+data "aws_eks_cluster" "k8s_cluster" {
+  name = local.kubernetes_cluster_name
+}
+
+data "aws_eks_cluster_auth" "k8s_cluster_auth" {
+  name = local.kubernetes_cluster_name
+}

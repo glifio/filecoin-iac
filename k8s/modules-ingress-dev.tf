@@ -26,14 +26,14 @@ module "ingress_api_read_dev" {
   name   = "wss-read-dev"
   source = "../modules/ovh_ingress"
 
-  namespace = "network"
+  namespace = "proteus-shield"
 
   http_host      = "wss.dev.node.glif.io"
   http_path      = "/"
   http_path_type = "Prefix"
 
-  service_name = "public-mainnet-forest-svc"
-  service_port = 2345
+  service_name = "proteus-shield-proxy-svc"
+  service_port = 8080
 
   ingress_class = "kong-external-lb"
 
@@ -41,6 +41,7 @@ module "ingress_api_read_dev" {
 
   enable_path_transformer = false
   enable_return_json      = true
+  enable_access_control   = false
 }
 
 module "ingress_auth_dev" {
