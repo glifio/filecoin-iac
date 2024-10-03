@@ -42,3 +42,28 @@ variable "rds_allocated_storage" {
   type    = number
   default = 50
 }
+
+variable "kubernetes_cluster_name" {
+  type    = string
+  default = "filecoin-mainnet-apn1-glif-eks"
+}
+
+variable "kubernetes_namespace" {
+  type    = string
+  default = "thegraph-prod"
+}
+
+variable "ingress_class" {
+  type    = string
+  default = "kong-external-lb"
+}
+
+variable "elb_name_tag" {
+  type    = string
+  default = "filecoin-mainnet-apn1-glif-kong-external"
+}
+
+variable "domain_zone" {
+  type = string
+  default = "node.glif.io"
+}
