@@ -219,6 +219,45 @@ resource "kubernetes_ingress_v1" "post_api" {
   }
 }
 
+resource "kubernetes_ingress_v1" "post_subgraph" {
+  metadata {
+    name      = "${local.prefix}-post-subgraph"
+    namespace = var.homepage_namespace
+
+    annotations = {
+      "konghq.com/protocols" = "http"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.homepage_cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path = "/subgraph"
+          # Must be a prefix to handle static assets
+          path_type = "Prefix"
+          backend {
+            service {
+              name = var.homepage_service
+              port {
+                # If backend service is of type ExternalName,
+                # then ports are available only by numeric values
+                number = var.homepage_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_ingress_v1" "get_diluted_supply" {
   metadata {
     name      = "${local.prefix}-get-dilutedsupply"
