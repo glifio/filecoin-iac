@@ -52,7 +52,7 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
   count = var.enable_ext_token_auth ? 1 : 0
   metadata {
     name      = "${local.prefix}-post-root-auth"
-    namespace = var.namespace
+    namespace = var.override_auth_ingress_namespace == null ? var.namespace : var.override_auth_ingress_namespace
 
     annotations = {
       # Due to network load balancer (NLB) decrypting SSL traffic
@@ -63,17 +63,17 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
       # unless NLB stops decrypting traffic
       "konghq.com/protocols"             = "http"
       "konghq.com/methods"               = "POST"
-      "konghq.com/preserve-host"         = "false"
+      "konghq.com/preserve-host"         = "true"
       "konghq.com/headers.Authorization" = "~*"
 
 
       "konghq.com/plugins" = join(", ", compact([
-        kubernetes_manifest.serverless_function-root.manifest.metadata.name,
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
-        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
-        kubernetes_manifest.cors.manifest.metadata.name,
+        local.serverless_function_root_plugin,
+        local.token_replacement_plugin,
+        local.response_transformer_content_type_plugin,
+        local.cors_plugin,
         local.mirror_plugin,
-        kubernetes_manifest.auth[0].manifest.metadata.name
+        local.ext_token_auth_plugin
       ]))
     }
   }
@@ -88,9 +88,9 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
           path_type = "Exact"
           backend {
             service {
-              name = local.rpc_v1_service
+              name = var.override_auth_ingress_service == null ? local.rpc_v1_service : var.override_auth_ingress_service
               port {
-                number = local.rpc_v1_port
+                number = var.override_auth_ingress_port == null ? local.rpc_v1_port : var.override_auth_ingress_port
               }
             }
           }
@@ -201,6 +201,45 @@ resource "kubernetes_ingress_v1" "post_api" {
       http {
         path {
           path = "/api"
+          # Must be a prefix to handle static assets
+          path_type = "Prefix"
+          backend {
+            service {
+              name = var.homepage_service
+              port {
+                # If backend service is of type ExternalName,
+                # then ports are available only by numeric values
+                number = var.homepage_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "post_subgraph" {
+  metadata {
+    name      = "${local.prefix}-post-subgraph"
+    namespace = var.homepage_namespace
+
+    annotations = {
+      "konghq.com/protocols" = "http"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.homepage_cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path = "/subgraph"
           # Must be a prefix to handle static assets
           path_type = "Prefix"
           backend {
@@ -380,7 +419,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v0_auth" {
   count = var.enable_ext_token_auth ? 1 : 0
   metadata {
     name      = "${local.prefix}-post-rpc-v0-auth"
-    namespace = var.namespace
+    namespace = var.override_auth_ingress_namespace == null ? var.namespace : var.override_auth_ingress_namespace
 
     annotations = {
       "konghq.com/protocols"             = "http"
@@ -389,11 +428,11 @@ resource "kubernetes_ingress_v1" "post_rpc_v0_auth" {
       "konghq.com/headers.Authorization" = "~*"
 
       "konghq.com/plugins" = join(", ", compact([
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
-        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
-        kubernetes_manifest.cors.manifest.metadata.name,
+        local.token_replacement_plugin,
+        local.response_transformer_content_type_plugin,
+        local.cors_plugin,
         local.mirror_plugin,
-        kubernetes_manifest.auth[0].manifest.metadata.name
+        local.ext_token_auth_plugin
       ]))
     }
   }
@@ -408,9 +447,9 @@ resource "kubernetes_ingress_v1" "post_rpc_v0_auth" {
           path_type = "Exact"
           backend {
             service {
-              name = local.rpc_v0_service
+              name = var.override_auth_ingress_service == null ? local.rpc_v0_service : var.override_auth_ingress_service
               port {
-                number = local.rpc_v0_port
+                number = var.override_auth_ingress_port == null ? local.rpc_v0_port : var.override_auth_ingress_port
               }
             }
           }
@@ -541,7 +580,7 @@ resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
   count = var.enable_ext_token_auth ? 1 : 0
   metadata {
     name      = "${local.prefix}-post-rpc-v1-auth"
-    namespace = var.namespace
+    namespace = var.override_auth_ingress_namespace == null ? var.namespace : var.override_auth_ingress_namespace
 
     annotations = {
       "konghq.com/protocols"             = "http"
@@ -550,11 +589,11 @@ resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
       "konghq.com/headers.Authorization" = "~*"
 
       "konghq.com/plugins" = join(", ", compact([
-        kubernetes_manifest.request_transformer-public_access.manifest.metadata.name,
-        kubernetes_manifest.response_transformer-content_type.manifest.metadata.name,
-        kubernetes_manifest.cors.manifest.metadata.name,
+        local.token_replacement_plugin,
+        local.response_transformer_content_type_plugin,
+        local.cors_plugin,
         local.mirror_plugin,
-        kubernetes_manifest.auth[0].manifest.metadata.name
+        local.ext_token_auth_plugin
       ]))
     }
   }
@@ -569,9 +608,9 @@ resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
           path_type = "Exact"
           backend {
             service {
-              name = local.rpc_v1_service
+              name = var.override_auth_ingress_service == null ? local.rpc_v1_service : var.override_auth_ingress_service
               port {
-                number = local.rpc_v1_port
+                number = var.override_auth_ingress_port == null ? local.rpc_v1_port : var.override_auth_ingress_port
               }
             }
           }

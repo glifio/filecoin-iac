@@ -28,7 +28,7 @@ module "ingress_index" {
   http_path_type = "Prefix"
 
   service_name = "graph-node-index"
-  service_port = 8000
+  service_port = 8020
 
   ingress_class = var.ingress_class
 

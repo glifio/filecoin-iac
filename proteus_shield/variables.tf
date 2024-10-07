@@ -22,3 +22,8 @@ variable "kubernetes_namespace" {
   type    = string
   default = "proteus-shield"
 }
+
+variable "ingress_class" {
+  type    = string
+  default = "kong-external-lb"
+}

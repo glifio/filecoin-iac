@@ -10,6 +10,15 @@ module "api_gateway_kong_dev" {
   ingress_class    = "external"
   namespace        = "network"
   upstream_service = "api-read-dev-lotus"
+
+  enable_ext_token_auth       = true
+  enable_limit_reqs_wo_header = true
+
+  enable_token_replacement        = false
+  use_ext_token_auth_plugin       = false
+  override_auth_ingress_namespace = "proteus-shield"
+  override_auth_ingress_service   = "proteus-shield-proxy-svc"
+  override_auth_ingress_port      = 8080
 }
 
 module "api_gateway_kong_dev_mirror" {
@@ -70,6 +79,12 @@ module "api_gateway_kong_calibration" {
 
   enable_ext_token_auth       = true
   enable_limit_reqs_wo_header = true
+
+  enable_token_replacement        = false
+  use_ext_token_auth_plugin       = false
+  override_auth_ingress_namespace = "proteus-shield"
+  override_auth_ingress_service   = "proteus-shield-proxy-svc"
+  override_auth_ingress_port      = 8080
 }
 
 module "api_gateway_kong_calibration_mirror" {
