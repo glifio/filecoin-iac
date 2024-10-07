@@ -68,8 +68,8 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
 
 
       "konghq.com/plugins" = join(", ", compact([
-        local.token_replacement_plugin,
         local.serverless_function_root_plugin,
+        local.token_replacement_plugin,
         local.response_transformer_content_type_plugin,
         local.cors_plugin,
         local.mirror_plugin,
