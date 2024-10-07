@@ -108,6 +108,31 @@ resource "kubernetes_manifest" "response_transformer-content_type" {
   }
 }
 
+resource "kubernetes_manifest" "response_transformer-content_type_auth" {
+  count = var.override_auth_ingress_namespace == null ? 0 : 1
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-response-transformer-content-type"
+      "namespace" = var.override_auth_ingress_namespace
+    }
+    "config" = {
+      "add" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
+      }
+      "replace" = {
+        "headers" = [
+          "Content-Type:application/json"
+        ]
+      }
+    }
+    "plugin" = "response-transformer"
+  }
+}
+
 
 resource "kubernetes_manifest" "serverless_function-statecirculatingsupply" {
   manifest = {
@@ -133,6 +158,22 @@ resource "kubernetes_manifest" "serverless_function-root" {
     "metadata" = {
       "name"      = "${local.prefix}-serverless-function-root"
       "namespace" = var.namespace
+    }
+    "config" = {
+      "access" = [file("${path.module}/scripts/req_root.lua")]
+    }
+    "plugin" = "post-function"
+  }
+}
+
+resource "kubernetes_manifest" "serverless_function-root_auth" {
+  count = var.override_auth_ingress_namespace == null ? 0 : 1
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-serverless-function-root"
+      "namespace" =var.override_auth_ingress_namespace
     }
     "config" = {
       "access" = [file("${path.module}/scripts/req_root.lua")]
@@ -184,6 +225,33 @@ resource "kubernetes_manifest" "request_transformer-public_access" {
   }
 }
 
+resource "kubernetes_manifest" "request_transformer-public_access_auth" {
+  count = var.enable_token_replacement && var.override_auth_ingress_namespace != null ? 1 : 0
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-request-transformer-public-access"
+      "namespace" = var.override_auth_ingress_namespace
+    }
+    "config" = {
+      "add" = {
+        "headers" = [
+          "Authorization: Bearer ${local.auth_token}",
+          "Content-Type: application/json"
+        ]
+      }
+      "replace" = {
+        "headers" = [
+          "Authorization: Bearer ${local.auth_token}",
+          "Content-Type: application/json"
+        ]
+      }
+    }
+    "plugin" = "request-transformer"
+  }
+}
+
 resource "kubernetes_manifest" "request_transformer-daemon_access" {
   manifest = {
     "apiVersion" = "configuration.konghq.com/v1"
@@ -215,6 +283,40 @@ resource "kubernetes_manifest" "cors" {
     "metadata" = {
       "name"      = "${local.prefix}-cors"
       "namespace" = var.namespace
+    }
+    "config" = {
+      "origins" = [
+        "*"
+      ]
+      "headers" = [
+        "Authorization",
+        "Accept",
+        "Origin",
+        "DNT",
+        "X-CustomHeader",
+        "Keep-Alive",
+        "User-Agent",
+        "X-Requested-With",
+        "If-Modified-Since",
+        "Cache-Control",
+        "Content-Type",
+        "Content-Length",
+        "Content-Range",
+        "Range"
+      ]
+    }
+    "plugin" = "cors"
+  }
+}
+
+resource "kubernetes_manifest" "cors_auth" {
+  count = var.override_auth_ingress_namespace == null ? 0 : 1
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-cors"
+      "namespace" = var.override_auth_ingress_namespace
     }
     "config" = {
       "origins" = [
@@ -327,7 +429,7 @@ resource "kubernetes_manifest" "rate_limiting" {
 }
 
 resource "kubernetes_manifest" "auth" {
-  count = var.enable_ext_token_auth ? 1 : 0
+  count = var.enable_ext_token_auth && var.use_ext_token_auth_plugin ? 1 : 0
 
   manifest = {
     apiVersion = "configuration.konghq.com/v1"
