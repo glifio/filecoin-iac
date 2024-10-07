@@ -281,6 +281,6 @@ module "the_graph" {
 
   source = "../modules/secrets_generator"
 
-  name = "thegraph-lotus"
+  name             = "thegraph-lotus"
   generator_config = local.make_global_configuration
 }

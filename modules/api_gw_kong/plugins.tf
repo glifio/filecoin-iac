@@ -173,7 +173,7 @@ resource "kubernetes_manifest" "serverless_function-root_auth" {
     "kind"       = "KongPlugin"
     "metadata" = {
       "name"      = "${local.prefix}-serverless-function-root"
-      "namespace" =var.override_auth_ingress_namespace
+      "namespace" = var.override_auth_ingress_namespace
     }
     "config" = {
       "access" = [file("${path.module}/scripts/req_root.lua")]

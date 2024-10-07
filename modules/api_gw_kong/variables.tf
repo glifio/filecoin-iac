@@ -108,8 +108,8 @@ variable "enable_ext_token_auth" {
 }
 
 variable "use_ext_token_auth_plugin" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "Create Kong authorization plugin"
 }
 
@@ -138,25 +138,25 @@ variable "homepage_namespace" {
 }
 
 variable "override_auth_ingress_service" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Use this service for auth-enabled ingresses"
 }
 
 variable "override_auth_ingress_port" {
-  type = number
-  default = null
+  type        = number
+  default     = null
   description = "Use this port for auth-enabled ingresses"
 }
 
 variable "override_auth_ingress_namespace" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Use this namespace for auth-enabled ingresses"
 }
 
 variable "enable_token_replacement" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "Replace user token with node token if true"
 }
