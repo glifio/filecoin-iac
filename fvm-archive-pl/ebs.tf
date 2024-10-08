@@ -1,7 +1,7 @@
 resource "aws_ebs_volume" "fvm_archive_pl_1" {
   availability_zone = local.az
 
-  size       = 3840
+  size       = 4096
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -20,7 +20,7 @@ resource "aws_ebs_volume" "fvm_archive_pl_1" {
 resource "aws_ebs_volume" "fvm_archive_pl_2" {
   availability_zone = local.az
 
-  size       = 3840
+  size       = 4096
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -39,7 +39,7 @@ resource "aws_ebs_volume" "fvm_archive_pl_2" {
 resource "aws_ebs_volume" "fvm_archive_pl_3" {
   availability_zone = local.az
 
-  size       = 3840
+  size       = 4096
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -58,7 +58,7 @@ resource "aws_ebs_volume" "fvm_archive_pl_3" {
 resource "aws_ebs_volume" "fvm_archive_pl_4" {
   availability_zone = local.az
 
-  size       = 3840
+  size       = 4096
   type       = "gp3"
   iops       = 3000
   throughput = 125
