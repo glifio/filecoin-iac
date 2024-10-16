@@ -40,7 +40,7 @@ variable "rds_instance_class" {
 
 variable "rds_allocated_storage" {
   type    = number
-  default = 50
+  default = 100
 }
 
 variable "kubernetes_cluster_name" {
