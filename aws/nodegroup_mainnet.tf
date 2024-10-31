@@ -19,7 +19,7 @@ module "eks_nodegroup_ondemand_group13" {
   source = "../modules/eks_nodegroup"
 
   name          = "calibration-archive"
-  instance_type = "r6gd.xlarge"
+  instance_type = "r6gd.2xlarge"
   ami_type      = "AL2_ARM_64"
   user_data     = "nvme-spot.sh"
 
