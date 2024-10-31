@@ -13,20 +13,20 @@ resource "aws_route53_record" "api_dev_node_glif_io" {
   }
 }
 
-resource "aws_route53_record" "api_dev_node_glif_io_mirror" {
-  count           = local.is_dev_envs
-  name            = "api.dev.node.glif.io"
-  allow_overwrite = true
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_mirror.dns_name]
-
-  set_identifier = "mirror"
-  weighted_routing_policy {
-    weight = 0
-  }
-}
+#resource "aws_route53_record" "api_dev_node_glif_io_mirror" {
+#  count           = local.is_dev_envs
+#  name            = "api.dev.node.glif.io"
+#  allow_overwrite = true
+#  zone_id         = data.aws_route53_zone.selected.zone_id
+#  type            = "CNAME"
+#  ttl             = "60"
+#  records         = [data.aws_lb.kong_mirror.dns_name]
+#
+#  set_identifier = "mirror"
+#  weighted_routing_policy {
+#    weight = 0
+#  }
+#}
 
 resource "aws_route53_record" "wss_dev_node_glif_io" {
   count           = local.is_dev_envs
@@ -121,20 +121,20 @@ resource "aws_route53_record" "api_calibration_node_glif_io" {
   }
 }
 
-resource "aws_route53_record" "api_calibration_node_glif_io_mirror" {
-  count           = local.is_prod_envs
-  name            = "api.calibration.node.glif.io"
-  allow_overwrite = true
-  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_mirror.dns_name]
-
-  set_identifier = "mirror"
-  weighted_routing_policy {
-    weight = 0
-  }
-}
+#resource "aws_route53_record" "api_calibration_node_glif_io_mirror" {
+#  count           = local.is_prod_envs
+#  name            = "api.calibration.node.glif.io"
+#  allow_overwrite = true
+#  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
+#  type            = "CNAME"
+#  ttl             = "60"
+#  records         = [data.aws_lb.kong_mirror.dns_name]
+#
+#  set_identifier = "mirror"
+#  weighted_routing_policy {
+#    weight = 0
+#  }
+#}
 
 resource "aws_route53_record" "monitoring" {
   count           = local.is_dev_envs
