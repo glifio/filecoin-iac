@@ -5,6 +5,7 @@ sub_environment = "glif"
 route53_domain  = "node.glif.io"
 branch          = "main"
 
+eks_cluster_version = "1.25"
 
 git_configuration = [
   {
