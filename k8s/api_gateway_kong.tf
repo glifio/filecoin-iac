@@ -1,25 +1,59 @@
-module "api_gateway_kong_dev" {
+resource "kubernetes_ingress_v1" "api_dev_node_glif_io" {
   count = local.is_dev_envs
 
-  source        = "../modules/api_gw_kong"
-  global_config = local.make_global_configuration
+  metadata {
+    name      = "api.dev.node.glif.io"
+    namespace = "proteus-shield"
+    annotations = {
+      "konghq.com/preserve-host": "true"
+    }
+  }
 
-  stage_name  = "dev"
-  domain_name = "api.dev.node.glif.io"
+  spec {
+    ingress_class_name = "kong-external-lb"
 
-  ingress_class    = "external"
-  namespace        = "network"
-  upstream_service = "api-read-dev-lotus"
-
-  enable_ext_token_auth       = true
-  enable_limit_reqs_wo_header = true
-
-  enable_token_replacement        = false
-  use_ext_token_auth_plugin       = false
-  override_auth_ingress_namespace = "proteus-shield"
-  override_auth_ingress_service   = "proteus-shield-proxy-svc"
-  override_auth_ingress_port      = 8080
+    rule {
+      host = "api.dev.node.glif.io"
+      http {
+        path {
+          path = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "proteus-shield-proxy-svc"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
+#module "api_gateway_kong_dev" {
+#  count = local.is_dev_envs
+#
+#  source        = "../modules/api_gw_kong"
+#  global_config = local.make_global_configuration
+#
+#  stage_name  = "dev"
+#  domain_name = "api.dev.node.glif.io"
+#
+#  ingress_class    = "external"
+#  namespace        = "network"
+#  upstream_service = "api-read-dev-lotus"
+#
+#  enable_ext_token_auth       = true
+#  enable_limit_reqs_wo_header = true
+#
+#  enable_token_replacement        = false
+#  use_ext_token_auth_plugin       = false
+#  override_auth_ingress_namespace = "proteus-shield"
+#  override_auth_ingress_service   = "proteus-shield-proxy-svc"
+#  override_auth_ingress_port      = 8080
+#}
 
 #module "api_gateway_kong_dev_mirror" {
 #  count = local.is_dev_envs
