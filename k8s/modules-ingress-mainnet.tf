@@ -506,22 +506,19 @@ module "ingress_space07_1234" {
   namespace = "network"
 
   http_host      = "node.glif.io"
-  http_path      = "/space07/lotus/(.*)"
-  http_path_type = "Exact"
+  http_path      = "/space07/lotus"
+  http_path_type = "Prefix"
 
-  service_name  = "space07-lotus-service"
-  service_port  = 1234
+  service_name = "proteus-shield-proxy-svc"
+  service_port = 8080
+
   ingress_class = "kong-external-lb"
+
   secret_name   = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
 
-  enable_path_transformer = true
-  enable_access_control   = true
-  access_control_public   = true
-  access_control_replace  = true
+  enable_path_transformer = false
   enable_return_json      = true
-  enable_ext_token_auth   = true
-
-  enable_optional_query_param_auth = true
+  enable_access_control   = false
 }
 
 module "ingress_auth" {
