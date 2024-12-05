@@ -503,7 +503,7 @@ module "ingress_space07_1234" {
   name   = "ingress-space07-1234"
   source = "../modules/ovh_ingress"
 
-  namespace = "network"
+  namespace = "proteus-shield"
 
   http_host      = "node.glif.io"
   http_path      = "/space07/lotus"
