@@ -407,26 +407,22 @@ module "ingress-kong_calibrationapi-node-archive" {
   name   = "calibration-archive-forwarding"
   source = "../modules/ovh_ingress"
 
-  namespace = "network"
+  namespace = "proteus-shield"
 
   http_host = "calibration.node.glif.io"
-  http_path = "/archive/lotus/(.*)"
+  http_path = "/archive/lotus"
+  http_path_type = "Prefix"
 
-  service_name = "calibrationapi-archive-node-lotus-service"
-  service_port = 1234
+  service_name = "proteus-shield-proxy-svc"
+  service_port = 8080
 
   ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.calibrationapi_archive_node_lotus[0].name
 
-  enable_path_transformer = true
-  enable_access_control   = true
-  access_control_public   = true
-  access_control_replace  = true
+  enable_path_transformer = false
   enable_return_json      = true
-  enable_ext_token_auth   = true
-
-  enable_optional_query_param_auth = true
+  enable_access_control   = false
 }
 
 module "ingress_coinfirm" {
