@@ -9,7 +9,7 @@ module "ingress-kong_cid-checker-calibration" {
   get_ingress_backend_service_name   = "cid-checker-calibration-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
-  get_rule_host                      = "calibration.filecoin.tools"
+  get_rule_host                      = "calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -23,7 +23,7 @@ module "ingress-kong_cid-checker-calibration-api" {
   get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "calibration.filecoin.tools"
+  get_rule_host                      = "calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -37,7 +37,7 @@ module "ingress-kong_cid-checker-calibration-docs" {
   get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "calibration.filecoin.tools"
+  get_rule_host                      = "calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -51,7 +51,7 @@ module "ingress-kong_cid-checker-calibration-docs-subresources" {
   get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "calibration.filecoin.tools"
+  get_rule_host                      = "calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -66,7 +66,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration" {
   get_ingress_backend_service_name   = "cid-checker-calibration-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.calibration.filecoin.tools"
+  get_rule_host                      = "cid.calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -80,7 +80,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-api" {
   get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.calibration.filecoin.tools"
+  get_rule_host                      = "cid.calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -94,7 +94,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs" {
   get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.calibration.filecoin.tools"
+  get_rule_host                      = "cid.calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -108,7 +108,7 @@ module "ingress-kong_cid-checker-alternative-domain-calibration-docs-subresource
   get_ingress_backend_service_name   = "cid-checker-calibration-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.calibration.filecoin.tools"
+  get_rule_host                      = "cid.calibration.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -124,7 +124,7 @@ module "ingress-kong_cid-checker-mainnet" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
-  get_rule_host                      = "filecoin.tools"
+  get_rule_host                      = "old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -138,7 +138,7 @@ module "ingress-kong_cid-checker-mainnet-api" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "filecoin.tools"
+  get_rule_host                      = "old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -152,7 +152,7 @@ module "ingress-kong_cid-checker-mainnet-docs" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "filecoin.tools"
+  get_rule_host                      = "old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -166,7 +166,7 @@ module "ingress-kong_cid-checker-mainnet-docs-subresources" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "filecoin.tools"
+  get_rule_host                      = "old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -181,7 +181,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-frontend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 80
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.filecoin.tools"
+  get_rule_host                      = "cid.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -195,7 +195,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-api" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.filecoin.tools"
+  get_rule_host                      = "cid.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -209,7 +209,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-docs" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.filecoin.tools"
+  get_rule_host                      = "cid.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false
@@ -223,7 +223,7 @@ module "ingress-kong_cid-checker-alternative-domain-mainnet-docs-subresources" {
   get_ingress_backend_service_name   = "cid-checker-mainnet-backend" // the "-service" string will be added automatically
   get_ingress_backend_service_port   = 3000
   get_ingress_namespace              = "default"
-  get_rule_host                      = "cid.filecoin.tools"
+  get_rule_host                      = "cid.old.filecoin.tools"
   type_lb_scheme                     = "external"
   is_kong_auth_header_enabled        = false
   is_kong_transformer_header_enabled = false

@@ -42,7 +42,7 @@ resource "aws_route53_record" "wss_dev_node_glif_io" {
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "calibration.filecoin.tools"
+  name            = "calibration.old.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
@@ -52,7 +52,7 @@ resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" 
 resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_calibration" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "cid.calibration.filecoin.tools"
+  name            = "cid.calibration.old.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
@@ -63,7 +63,7 @@ resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_calibrati
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_mainnet" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "filecoin.tools"
+  name            = "old.filecoin.tools"
   allow_overwrite = true
   type            = "A"
 
@@ -77,7 +77,7 @@ resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_mainnet" {
 resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_mainnet" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "cid.filecoin.tools"
+  name            = "cid.old.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"

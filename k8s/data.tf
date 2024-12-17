@@ -70,7 +70,7 @@ data "aws_route53_zone" "dev_node_glif_io" {
 }
 
 data "aws_route53_zone" "filecoin_tools" {
-  name         = "filecoin.tools"
+  name         = "old.filecoin.tools"
   private_zone = false
 }
 
