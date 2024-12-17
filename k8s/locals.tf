@@ -65,9 +65,9 @@ locals {
       "*.${var.route53_domain}",
       "*.calibration.node.glif.io",
       "*.dev.node.glif.io",
-      "filecoin.tools",
-      "*.filecoin.tools",
-      "*.calibration.filecoin.tools",
+      "old.filecoin.tools",
+      "*.old.filecoin.tools",
+      "*.calibration.old.filecoin.tools",
       "api.chain.love",
     ]
   }
