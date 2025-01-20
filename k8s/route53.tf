@@ -253,3 +253,31 @@ resource "aws_route53_record" "slayer_mainnet" {
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
+
+resource "aws_route53_record" "filecoin_chain_love" {
+  count = local.is_prod_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "filecoin.chain.love"
+  type    = "A"
+  
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
+
+resource "aws_route53_record" "calibration_filecoin_chain_love" {
+  count = local.is_prod_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "calibration.filecoin.chain.love"
+  type    = "A"
+  
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}

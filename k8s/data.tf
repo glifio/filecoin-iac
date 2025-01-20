@@ -79,6 +79,11 @@ data "aws_route53_zone" "api_chain_love" {
   private_zone = false
 }
 
+data "aws_route53_zone" "filecoin_chain_love" {
+  name         = "filecoin.chain.love"
+  private_zone = false
+}
+
 data "aws_secretsmanager_secret" "calibrationapi_archive_node_lotus" {
   count = local.is_prod_envs
   name  = "${module.generator.prefix}-calibrationapi-archive-node-lotus"
