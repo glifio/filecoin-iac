@@ -137,3 +137,15 @@ variable "protocols" {
   default     = "https, http"
   description = "Protocols supported by the ingress"
 }
+
+variable "enable_ip_whitelist" {
+  type = bool
+  default = false
+  description = "Enable IP whitelist"
+}
+
+variable "ip_whitelist" {
+  type = list(string)
+  default = []
+  description = "List of IP addresses to whitelist"
+}

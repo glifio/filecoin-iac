@@ -374,3 +374,19 @@ resource "kubernetes_manifest" "redirect" {
     "plugin" = "pre-function"
   }
 }
+
+resource "kubernetes_manifest" "ip_whitelist" {
+  count = local.ip_whitelist_count
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = local.ip_whitelist_available_name
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "allow" = var.ip_whitelist
+    }
+    "plugin" = "ip-restriction"
+  }
+}

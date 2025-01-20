@@ -65,6 +65,10 @@ locals {
   redirect_available_name = "${var.name}-redirect"
   redirect_enabled_name   = !var.enable_redirect ? "" : local.redirect_available_name
 
+  ip_whitelist_count = var.enable_ip_whitelist ? 1 : 0
+  ip_whitelist_available_name = "${var.name}-ip-whitelist"
+  ip_whitelist_enabled_name = !var.enable_ip_whitelist ? "" : local.ip_whitelist_available_name
+
   available_plugins = [
     local.path_transformer_enabled_name,
     local.public_access_add_enabled_name,
@@ -77,7 +81,8 @@ locals {
     local.path_transformer_private_access_replace_enabled_name,
     local.cors_enabled_name,
     local.return_json_enabled_name,
-    local.redirect_enabled_name
+    local.redirect_enabled_name,
+    local.ip_whitelist_enabled_name
   ]
 
   enabled_plugins = compact(local.available_plugins)
