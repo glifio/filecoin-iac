@@ -450,6 +450,37 @@ module "ingress_coinfirm" {
   enable_return_json      = true
 }
 
+module "ingress_lava" {
+  count = local.is_prod_envs
+
+  name   = "lava"
+  source = "../modules/ovh_ingress"
+
+  namespace = "network"
+
+  http_host = "node.glif.io"
+  http_path = "/lava/lotus/(.*)"
+
+  service_name = "space07-lotus-service"
+  service_port = 1234
+
+  ingress_class = "kong-external-lb"
+
+  secret_name = data.aws_secretsmanager_secret.space07_mainnet_lotus[0].name
+
+  enable_path_transformer = true
+  enable_access_control   = true
+  access_control_public   = true
+  access_control_replace  = true
+  enable_return_json      = true
+
+  # enable_ip_whitelist = true
+  # ip_whitelist = [
+  #   "212.106.124.243",
+  # ]
+}
+
+
 module "ingress_private_mainnet_fallback" {
   count  = local.is_prod_envs
   name   = "private-mainnet-fallback"
