@@ -239,7 +239,7 @@ resource "kubernetes_ingress_v1" "post_subgraph" {
       host = var.domain_name
       http {
         path {
-          path = "/subgraph"
+          path = "/subgraphs"
           # Must be a prefix to handle static assets
           path_type = "Prefix"
           backend {
