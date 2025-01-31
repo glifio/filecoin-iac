@@ -69,6 +69,8 @@ locals {
       "*.old.filecoin.tools",
       "*.calibration.old.filecoin.tools",
       "api.chain.love",
+      "filecoin.chain.love",
+      "*.filecoin.chain.love"
     ]
   }
   external_lb_certificates = local.external_lb_certificate[terraform.workspace]
