@@ -1,3 +1,34 @@
+resource "kubernetes_ingress_v1" "dev_filecoin_chain_love" {
+  count = local.is_dev_envs
+
+  metadata {
+    name      = "dev-filecoin-chain-love"
+    namespace = "proteus-shield"
+  }
+
+  spec {
+    ingress_class_name = "kong-external-lb"
+
+    rule {
+      host = "dev.filecoin.chain.love"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "proteus-shield-proxy-svc"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_ingress_v1" "filecoin_chain_love" {
   count = local.is_prod_envs
 

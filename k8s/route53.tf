@@ -281,3 +281,17 @@ resource "aws_route53_record" "calibration_filecoin_chain_love" {
     zone_id                = data.aws_lb.kong_external.zone_id
   }
 }
+
+resource "aws_route53_record" "dev_filecoin_chain_love" {
+  count = local.is_dev_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "dev.filecoin.chain.love"
+  type    = "A"
+  
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
