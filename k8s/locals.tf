@@ -25,7 +25,7 @@ locals {
 
   kong_external_replicas_map = {
     filecoin-dev-apn1-glif-eks     = 1
-    filecoin-mainnet-apn1-glif-eks = 8
+    filecoin-mainnet-apn1-glif-eks = 12
   }
 
   kong_external_replicas = local.kong_external_replicas_map[terraform.workspace]

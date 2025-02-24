@@ -8,8 +8,11 @@ resource "helm_release" "konghq-external" {
   version    = "2.13.0"
 
   values = [templatefile("${path.module}/configs/konghq/values.tftpl", {
-    name    = "${module.generator.prefix}-kong-external",
+    name    = "${module.generator.prefix}-kong-external-kong",
     crt_arn = aws_acm_certificate.external_lb.arn,
+    
+    # Increment this version when you make any changes to the release
+    helm_release_version = "0.0.2"
 
     additional_ports = [1235, 1236, 1237],
 
