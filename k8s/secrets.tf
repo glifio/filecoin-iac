@@ -276,11 +276,14 @@ resource "kubernetes_secret_v1" "auth" {
   }
 }
 
-module "the_graph" {
+resource "kubernetes_secret_v1" "thegraph_lotus_secret" {
   count = local.is_prod_envs
-
-  source = "../modules/secrets_generator"
-
-  name             = "thegraph-lotus"
-  generator_config = local.make_global_configuration
+  metadata {
+    name      = "thegraph-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.fvm_archive_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.fvm_archive_lotus[0].secret_string), "jwt_token", null)
+  }
 }
