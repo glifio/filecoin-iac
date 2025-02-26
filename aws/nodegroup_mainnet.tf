@@ -26,6 +26,7 @@ module "eks_nodegroup_ondemand_group13" {
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
+  root_volume_size = 150
 }
 
 module "eks_nodegroup_ondemand_group16" {
