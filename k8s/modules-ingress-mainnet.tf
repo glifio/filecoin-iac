@@ -295,7 +295,7 @@ module "ingress_thegraph" {
 
   ingress_class = "kong-external-lb"
 
-  secret_name = module.the_graph[0].aws_secret_name
+  secret_name = data.aws_secretsmanager_secret.fvm_archive_lotus[0].name
 
   enable_path_transformer = true
   enable_access_control   = true
