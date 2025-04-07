@@ -3,7 +3,7 @@ resource "aws_ebs_volume" "space07_1" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 13312
+  size       = 13568
   type       = "gp3"
   iops       = 3000
   throughput = 167
@@ -23,7 +23,7 @@ resource "aws_ebs_volume" "space07_2" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 13312
+  size       = 13568
   type       = "gp3"
   iops       = 3000
   throughput = 167
@@ -43,7 +43,7 @@ resource "aws_ebs_volume" "space07_3" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 13312
+  size       = 13568
   type       = "gp3"
   iops       = 3000
   throughput = 167
@@ -63,7 +63,7 @@ resource "aws_ebs_volume" "space07_4" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 13312
+  size       = 13568
   type       = "gp3"
   iops       = 3000
   throughput = 167
@@ -83,7 +83,7 @@ resource "aws_ebs_volume" "fvm_archive_1" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -105,7 +105,7 @@ resource "aws_ebs_volume" "fvm_archive_2" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -127,7 +127,7 @@ resource "aws_ebs_volume" "fvm_archive_3" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -149,7 +149,7 @@ resource "aws_ebs_volume" "fvm_archive_4" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -171,7 +171,7 @@ resource "aws_ebs_volume" "thegraph_1" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -193,7 +193,7 @@ resource "aws_ebs_volume" "thegraph_2" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -215,7 +215,7 @@ resource "aws_ebs_volume" "thegraph_3" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
@@ -237,7 +237,7 @@ resource "aws_ebs_volume" "thegraph_4" {
 
   availability_zone = join("", [var.region, "a"])
 
-  size       = 4352
+  size       = 4608
   type       = "gp3"
   iops       = 3000
   throughput = 125
