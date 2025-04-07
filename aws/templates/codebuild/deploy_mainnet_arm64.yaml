@@ -5,32 +5,22 @@ env:
   variables:
     IMAGE_NAME: 'mainnet'
     IMAGE_NETWORK: 'lotus'
-    SOURCE_BRANCH: 'v1.30.0-gw'
-    PROJECT: 'filecoin'
-    ENVIRONMENT: 'mainnet'
-    SUB_ENV: 'glif'
-    SHORT_REGION: 'apn1'
-    AWS_ACCOUNT_ID: '499623857295'
+    SOURCE_BRANCH: 'v1.31.1-gw'
     DOCKERUHUB_ORGANIZATION: 'glif'
-    KUBECTL_VERSION: 1.24.7
     ARCH: arm64
     DOCKERFILE: Dockerfile
     REPO: protofire/lotus
   secrets-manager:
     DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
     DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
-    AWS_ACCESS_KEY_ID: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_ACCESS_KEY_ID"
-    AWS_SECRET_ACCESS_KEY: "filecoin-mainnet-apn1-glif-codebuild-wallaby-user:AWS_SECRET_ACCESS_KEY"
 
 phases:
   pre_build:
     commands:
-      - echo Build STARTED
       - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
 
   build:
     commands:
-      - echo Image built
       - cd ../../glifio/filecoin-docker/
       - docker build --network host --build-arg NETWORK=$IMAGE_NETWORK --build-arg REPOSITORY=$REPO --build-arg BRANCH=$SOURCE_BRANCH -t $DOCKERUHUB_ORGANIZATION/lotus:${SOURCE_BRANCH}-${IMAGE_NAME}-${ARCH} -f ${DOCKERFILE} .
       - docker push $DOCKERUHUB_ORGANIZATION/lotus:${SOURCE_BRANCH}-${IMAGE_NAME}-${ARCH}
