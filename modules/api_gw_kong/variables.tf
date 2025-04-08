@@ -121,7 +121,7 @@ variable "ext_token_auth_url" {
 
 variable "homepage_service" {
   type        = string
-  default     = "glif-auth-app-svc"
+  default     = "proteus-shield-ui-svc"
   description = "homepage kubernetes service name"
 }
 
@@ -133,7 +133,7 @@ variable "homepage_port" {
 
 variable "homepage_namespace" {
   type        = string
-  default     = "default"
+  default     = "proteus-shield"
   description = "homepage kubernetes service namespace"
 }
 
