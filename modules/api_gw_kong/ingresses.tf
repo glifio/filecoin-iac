@@ -12,7 +12,7 @@ resource "kubernetes_ingress_v1" "post_root" {
       # unless NLB stops decrypting traffic
       "konghq.com/protocols"     = "http"
       "konghq.com/methods"       = "POST"
-      "konghq.com/preserve-host" = "false"
+      "konghq.com/preserve-host" = var.preserve_host
 
 
       "konghq.com/plugins" = join(", ", compact([
@@ -63,7 +63,7 @@ resource "kubernetes_ingress_v1" "post_root_auth" {
       # unless NLB stops decrypting traffic
       "konghq.com/protocols"             = "http"
       "konghq.com/methods"               = "POST"
-      "konghq.com/preserve-host"         = "true"
+      "konghq.com/preserve-host"         = var.preserve_host
       "konghq.com/headers.Authorization" = "~*"
 
 
