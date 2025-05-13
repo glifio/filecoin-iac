@@ -12,7 +12,7 @@ module "api_gateway_kong_dev" {
   upstream_service = "api-read-dev-lotus"
 
   enable_ext_token_auth       = true
-  enable_limit_reqs_wo_header = true
+  enable_limit_reqs_wo_header = false
 
   enable_token_replacement        = false
   use_ext_token_auth_plugin       = false
@@ -57,8 +57,8 @@ module "api_gateway_kong_mainnet" {
 
   override_rpc_v0_port = 8546 # direct all rpc/v0 traffic to dedicated cache
 
-  enable_ext_token_auth       = true
-  enable_limit_reqs_wo_header = true
+  enable_ext_token_auth       = false
+  enable_limit_reqs_wo_header = false
 
   # Remove the lines below to roll back to kong
   enable_token_replacement        = false
@@ -84,8 +84,8 @@ module "api_gateway_kong_calibration" {
 
   override_rpc_v0_port = 8546 # direct all rpc/v0 traffic to dedicated cache
 
-  enable_ext_token_auth       = true
-  enable_limit_reqs_wo_header = true
+  enable_ext_token_auth       = false
+  enable_limit_reqs_wo_header = false
 
   enable_token_replacement        = false
   use_ext_token_auth_plugin       = false

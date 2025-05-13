@@ -307,18 +307,6 @@ module "ingress_thegraph" {
   enable_optional_query_param_auth = true
 }
 
-module "ingress-kong_space07-cache-8080" {
-  count                            = local.is_prod_envs
-  source                           = "../modules/k8s_ingress"
-  get_global_configuration         = local.make_global_configuration
-  get_ingress_http_path            = "/space07/cache/(.*)"
-  get_ingress_backend_service_name = "space07-cache" // the "-service" string will be added automatically
-  get_ingress_backend_service_port = 8080
-  get_ingress_namespace            = kubernetes_namespace_v1.network.metadata[0].name
-  get_rule_host                    = "node.glif.io"
-  type_lb_scheme                   = "external"
-}
-
 module "ingress-kong_lotusgateway-2346" {
   count = local.is_prod_envs
 
@@ -553,14 +541,14 @@ module "ingress_auth" {
   name   = "ingress-auth"
   source = "../modules/ovh_ingress"
 
-  namespace = "default"
+  namespace = "proteus-shield"
 
   http_host      = "auth.node.glif.io"
   http_path      = "/"
   http_path_type = "Prefix"
 
-  service_name  = "glif-auth-app-svc"
-  service_port  = 3000
+  service_name  = "proteus-shield-proxy-svc"
+  service_port  = 8080
   ingress_class = "kong-external-lb"
 
   enable_path_transformer = false
