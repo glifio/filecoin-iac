@@ -115,6 +115,8 @@ module "eks_nodegroup_ondemand_group19" {
 
   use_existing_ebs = true
   ebs_tenant       = "space07"
+  
+  custom_ebs_user_data = "ebs-udp.sh"
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration

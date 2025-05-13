@@ -29,4 +29,17 @@ locals {
     },
     var.custom_labels
   )
+
+  # If user_data is provided, then use it.
+  # Otherwise, if use_existing_ebs is true, then use custom_ebs_user_data or ebs-external.sh.
+  # Use nvme.sh in all other cases.
+  user_data = length(var.user_data) > 0 ? filebase64("${path.module}/bootstrap/early-customizations/${var.user_data}") : (
+    var.use_existing_ebs
+    ? (
+      length(var.custom_ebs_user_data) > 0
+      ? base64encode(templatefile("${path.module}/bootstrap/early-customizations/${var.custom_ebs_user_data}", { tpl_tenant = var.ebs_tenant }))
+      : base64encode(templatefile("${path.module}/bootstrap/early-customizations/ebs-external.sh", { tpl_tenant = var.ebs_tenant }))
+    )
+    : filebase64("${path.module}/bootstrap/early-customizations/nvme.sh")
+  )
 }

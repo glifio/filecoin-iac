@@ -68,7 +68,7 @@ variable "ami_type" {
 
 variable "user_data" {
   type        = string
-  default     = "nvme.sh"
+  default     = ""
   description = "Runs the scripts for creates a RAID on the volumes."
 }
 
@@ -100,4 +100,10 @@ variable "kubernetes_version" {
   type = string
   default = null
   description = "Kubernetes version for the node to use"
+}
+
+variable "custom_ebs_user_data" {
+  type        = string
+  default     = ""
+  description = "Script to run on the instance at launch."
 }
