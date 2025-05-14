@@ -54,6 +54,14 @@ data "aws_lb" "kong_drpc" {
   }
 }
 
+data "aws_lb" "bootstrap_mainnet" {
+  count = local.is_prod_envs
+
+  tags = {
+    Name = "space07-lotus-p2p-service"
+  }
+}
+
 data "aws_route53_zone" "selected" {
   name         = var.route53_domain
   private_zone = false
