@@ -62,6 +62,14 @@ data "aws_lb" "bootstrap_mainnet" {
   }
 }
 
+data "aws_lb" "bootstrap_calibnet" {
+  count = local.is_prod_envs
+
+  tags = {
+    Name = "calibrationapi-archive-node-lotus-p2p-service"
+  }
+}
+
 data "aws_route53_zone" "selected" {
   name         = var.route53_domain
   private_zone = false

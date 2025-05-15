@@ -309,3 +309,17 @@ resource "aws_route53_record" "bootstrap_filecoin_chain_love" {
     zone_id = data.aws_lb.bootstrap_mainnet[0].zone_id
   }
 }
+
+resource "aws_route53_record" "bootstrap_calibration_filecoin_chain_love" {
+  count = local.is_prod_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name = "bootstrap.calibration.filecoin.chain.love"
+  type = "A"
+
+  alias {
+    evaluate_target_health = false
+    name = data.aws_lb.bootstrap_calibnet[0].dns_name
+    zone_id = data.aws_lb.bootstrap_calibnet[0].zone_id
+  }
+}
