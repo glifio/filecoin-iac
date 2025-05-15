@@ -10,6 +10,8 @@ module "eks_nodegroup_mainnet_ondemand_group6" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  kubernetes_version = "1.27"
 }
 
 
@@ -27,6 +29,8 @@ module "eks_nodegroup_ondemand_group13" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.26"
 }
 
 module "eks_nodegroup_ondemand_group16" {
@@ -42,6 +46,8 @@ module "eks_nodegroup_ondemand_group16" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_ondemand_api_read_slave_1" {
@@ -57,6 +63,8 @@ module "eks_nodegroup_ondemand_api_read_slave_1" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_ondemand_api-read-cid-checker" {
@@ -72,6 +80,8 @@ module "eks_nodegroup_ondemand_api-read-cid-checker" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.26"
 }
 
 #module "eks_nodegroup_ondemand_group17" {
@@ -102,6 +112,8 @@ module "eks_nodegroup_ondemand_group18" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.26"
 }
 
 module "eks_nodegroup_ondemand_group19" {
@@ -120,6 +132,10 @@ module "eks_nodegroup_ondemand_group19" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
+
+  kubernetes_version = "1.26"
 }
 
 module "eks_nodegroup_ondemand_fvm_archive" {
@@ -138,6 +154,8 @@ module "eks_nodegroup_ondemand_fvm_archive" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.26"
 }
 
 module "eks_nodegroup_ondemand_calibnet_0" {
@@ -151,6 +169,8 @@ module "eks_nodegroup_ondemand_calibnet_0" {
 
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  kubernetes_version = "1.26"
 }
 
 module "eks_nodegroup_ondemand_thegraph" {
@@ -169,6 +189,8 @@ module "eks_nodegroup_ondemand_thegraph" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.26"
 }
 
 ################# END BLOCK ONDEMAND NODE-GROUP LIST #################
@@ -189,6 +211,8 @@ module "eks_nodegroup_spot_calibnet_1" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 80
+
+  kubernetes_version = "1.27"
 }
 
 ##prod-api-i3-4x8x-spot-c-1-19-Node
@@ -205,6 +229,8 @@ module "eks_nodegroup_mainnet_spot_group9" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 150
+
+  kubernetes_version = "1.26"
 }
 
 module "eks_nodegroup_cid_checker_spot" {
@@ -219,6 +245,8 @@ module "eks_nodegroup_cid_checker_spot" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 80
+
+  kubernetes_version = "1.26"
 }
 
 module "eks_nodegroup_amd64_1" {
@@ -232,6 +260,8 @@ module "eks_nodegroup_amd64_1" {
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
   root_volume_size = 256
+
+  kubernetes_version = "1.26"
 }
 
 ################# END BLOCK SPOT NODE-GROUP LIST #################
