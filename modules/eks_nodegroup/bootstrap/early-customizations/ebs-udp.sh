@@ -146,6 +146,11 @@ attach_ebs() {
 
     instance_id=$(get_instance_id);
     instance_region=$(get_instance_region);
+    instance_az=$(aws ec2 describe-instances \
+        --instance-ids "$instance_id" \
+        --region "$instance_region" \
+        --query "Reservations[0].Instances[0].Placement.AvailabilityZone" \
+        --output text);
 
     volumes=$(aws ec2 describe-volumes \
     --filter "Name=tag:Tenant,Values=$ebs_tenant" \
@@ -156,47 +161,57 @@ attach_ebs() {
     
     # Convert space separated string to array
     read -ra volumes_arr -d '' <<< "$volumes";
-    for i in "$${!volumes_arr[@]}"; do
-        device_index=$(int_to_char "$i");
 
+    for i in "$${!volumes_arr[@]}"; do
+        volume_id="$${volumes_arr[$i]}"
+        device_index=$(int_to_char "$i");
         device_name="/dev/sd$device_index";
 
+        echo "Preparing to attach volume $volume_id to $device_name";
 
-        echo "Mounting $${volumes_arr[$i]} as $device_name";
+        # Check volume AZ
+        volume_az=$(aws ec2 describe-volumes \
+            --volume-ids "$volume_id" \
+            --region "$instance_region" \
+            --query "Volumes[0].AvailabilityZone" \
+            --output text);
         
-        # Wait until the volume is in detached state
-        error=true;
-        until [ "$error" = false ]; do
-            echo "Trying to attach volume $${volumes_arr[$i]} to $device_name";
-            attachment_status=$(aws ec2 attach-volume \
+        if [ "$volume_az" != "$instance_az" ]; then
+            echo "ERROR: Volume $volume_id is in AZ $volume_az, but instance is in AZ $instance_az"
+            continue
+        fi
+
+        # Detach volume if still attached
+        echo "Detaching volume $volume_id if needed..."
+        aws ec2 detach-volume --volume-id "$volume_id" --region "$instance_region" || true;
+
+        # Wait until volume is available
+        echo "Waiting for volume $volume_id to be available..."
+        aws ec2 wait volume-available --volume-ids "$volume_id" --region "$instance_region";
+
+        # Attach volume
+        echo "Attaching volume $volume_id to $instance_id on $device_name"
+        aws ec2 attach-volume \
             --device "$device_name" \
             --instance-id "$instance_id" \
-            --volume-id "$${volumes_arr[$i]}" \
-            --region "$instance_region");
-
-            if [[  $attachment_status != *"VolumeInUse"* ]]; then
-                echo "Volume $${volumes_arr[$i]} attached to $device_name";
-                error=false;
-            fi
-
-            sleep 60;
-        done
+            --volume-id "$volume_id" \
+            --region "$instance_region";
         
-
-        # Wait until the volume is attached
-        volume_state="unknown";
-        until [ "$volume_state" == "attached" ]; do
+        # Wait for attachment to complete
+        echo "Waiting for volume $volume_id to attach..."
+        volume_state="attaching"
+        while [ "$volume_state" != "attached" ]; do
             volume_state=$(aws ec2 describe-volumes \
-            --filters \
-                "Name=attachment.instance-id,Values=$instance_id" \
-                "Name=attachment.device,Values=$device_name" \
-            --query Volumes[].Attachments[].State \
-            --output text);
+                --volume-ids "$volume_id" \
+                --region "$instance_region" \
+                --query "Volumes[0].Attachments[0].State" \
+                --output text)
 
-            echo "Waiting for $${volumes_arr[$i]} to be attached to $device_name: $volume_state";
-            sleep 5;
+            echo "Volume $volume_id state: $volume_state"
+            sleep 5
         done
 
+        echo "Volume $volume_id successfully attached to $device_name"
     done
 }
 
