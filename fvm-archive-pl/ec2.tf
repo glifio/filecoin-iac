@@ -16,7 +16,7 @@ resource "aws_instance" "default" {
   }
 
   tags = merge(var.common_tags, {
-    Name = "${var.resource_prefix}-default"
+    Name = "${var.resource_prefix}-fvm-archive-pl"
   })
 }
 
