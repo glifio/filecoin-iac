@@ -1,5 +1,5 @@
 resource "aws_instance" "default" {
-  ami                    = data.aws_ami.arm64.id
+  ami                    = "ami-0d90380c7d491eff6"
   instance_type          = var.instance_type
   ebs_optimized          = true
   key_name               = aws_key_pair.default.key_name
