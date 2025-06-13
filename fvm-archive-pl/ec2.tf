@@ -20,6 +20,11 @@ resource "aws_instance" "default" {
   })
 }
 
+resource "aws_eip" "default" {
+  vpc = true
+  instance = aws_instance.default.id
+}
+
 resource "aws_key_pair" "default" {
   key_name   = "${var.resource_prefix}-default-keypair"
   public_key = var.public_key
