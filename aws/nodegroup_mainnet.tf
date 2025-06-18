@@ -30,7 +30,7 @@ module "eks_nodegroup_ondemand_group13" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_ondemand_group16" {
@@ -81,7 +81,7 @@ module "eks_nodegroup_ondemand_api-read-cid-checker" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 #module "eks_nodegroup_ondemand_group17" {
@@ -113,7 +113,7 @@ module "eks_nodegroup_ondemand_group18" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_ondemand_group19" {
@@ -121,7 +121,7 @@ module "eks_nodegroup_ondemand_group19" {
   source = "../modules/eks_nodegroup"
 
   name          = "space07"
-  instance_type = "r6g.12xlarge"
+  instance_type = "r6g.16xlarge"
   ami_type      = "AL2_ARM_64"
   is_critical   = true
 
@@ -135,7 +135,7 @@ module "eks_nodegroup_ondemand_group19" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_ondemand_fvm_archive" {
@@ -155,7 +155,9 @@ module "eks_nodegroup_ondemand_fvm_archive" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.26"
+  custom_ebs_user_data = "ebs-udp.sh"
+
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_ondemand_calibnet_0" {
@@ -170,7 +172,7 @@ module "eks_nodegroup_ondemand_calibnet_0" {
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_ondemand_thegraph" {
@@ -190,7 +192,9 @@ module "eks_nodegroup_ondemand_thegraph" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.26"
+  custom_ebs_user_data = "ebs-udp.sh"
+
+  kubernetes_version = "1.27"
 }
 
 ################# END BLOCK ONDEMAND NODE-GROUP LIST #################
@@ -230,7 +234,7 @@ module "eks_nodegroup_mainnet_spot_group9" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_cid_checker_spot" {
@@ -246,7 +250,7 @@ module "eks_nodegroup_cid_checker_spot" {
 
   root_volume_size = 80
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 module "eks_nodegroup_amd64_1" {
@@ -261,7 +265,7 @@ module "eks_nodegroup_amd64_1" {
 
   root_volume_size = 256
 
-  kubernetes_version = "1.26"
+  kubernetes_version = "1.27"
 }
 
 ################# END BLOCK SPOT NODE-GROUP LIST #################
