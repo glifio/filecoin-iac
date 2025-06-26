@@ -369,7 +369,8 @@ resource "kubernetes_manifest" "homepage_cors" {
         "Content-Type",
         "Content-Length",
         "Content-Range",
-        "Range"
+        "Range",
+        "X-JSONRPC-Playground-Origin"
       ]
     }
     "plugin" = "cors"

@@ -263,7 +263,8 @@ resource "kubernetes_manifest" "cors" {
         "Content-Type",
         "Content-Length",
         "Content-Range",
-        "Range"
+        "Range",
+        "X-JSONRPC-Playground-Origin"
       ]
     }
   }
