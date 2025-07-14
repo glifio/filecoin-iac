@@ -53,9 +53,6 @@ module "api_gateway_kong_mainnet" {
   ingress_class    = "external"
   namespace        = "network"
   upstream_service = "api-read-master-lotus"
-  upstream_port    = 8545 # remove this line to roll back to lotus gateway
-
-  override_rpc_v0_port = 8546 # direct all rpc/v0 traffic to dedicated cache
 
   enable_ext_token_auth       = false
   enable_limit_reqs_wo_header = false
@@ -80,9 +77,6 @@ module "api_gateway_kong_calibration" {
   ingress_class    = "external"
   namespace        = "network"
   upstream_service = "calibrationapi-0-lotus"
-  upstream_port    = 8545 # remove this line to roll back to lotus gateway
-
-  override_rpc_v0_port = 8546 # direct all rpc/v0 traffic to dedicated cache
 
   enable_ext_token_auth       = false
   enable_limit_reqs_wo_header = false
@@ -94,25 +88,3 @@ module "api_gateway_kong_calibration" {
   override_auth_ingress_port      = 8080
 }
 
-#module "api_gateway_kong_calibration_mirror" {
-#  count = local.is_prod_envs
-#
-#  source        = "../modules/api_gw_kong"
-#  global_config = local.make_global_configuration
-#
-#  stage_name  = "calib-mirror"
-#  domain_name = "api.calibration.node.glif.io"
-#
-#  ingress_class    = "mirror"
-#  namespace        = "network"
-#  upstream_service = "calibrationapi-0-lotus"
-#  upstream_port    = 8545 # remove this line to roll back to lotus gateway
-#
-#  override_rpc_v0_port = 8546 # direct all rpc/v0 traffic to dedicated cache
-#
-#  enable_ext_token_auth       = true
-#  enable_limit_reqs_wo_header = true
-#
-#  enable_mirroring = true
-#  mirror_to        = ["http://mirror-calibration-sender-svc.default:5000"]
-#}
