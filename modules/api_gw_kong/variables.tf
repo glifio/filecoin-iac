@@ -55,6 +55,18 @@ variable "override_rpc_v1_port" {
   description = "Override the upstream port for the /rpc/v1 path"
 }
 
+variable "override_rpc_v2_service" {
+  type        = string
+  default     = null
+  description = "Override the upstream service for the /rpc/v2 path"
+}
+
+variable "override_rpc_v2_port" {
+  type        = number
+  default     = null
+  description = "Override the upstream port for the /rpc/v2 path"
+}
+
 variable "override_daemon_service" {
   type        = string
   default     = null

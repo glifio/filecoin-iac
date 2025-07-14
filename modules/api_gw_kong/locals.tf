@@ -10,9 +10,11 @@ locals {
   upstream_service = "${local.upstream_name}-service"
   rpc_v0_service   = var.override_rpc_v0_service == null ? local.upstream_service : "${var.override_rpc_v0_service}-service"
   rpc_v1_service   = var.override_rpc_v1_service == null ? local.upstream_service : "${var.override_rpc_v1_service}-service"
+  rpc_v2_service   = var.override_rpc_v2_service == null ? local.upstream_service : "${var.override_rpc_v2_service}-service"
 
   rpc_v0_port = var.override_rpc_v0_port == null ? var.upstream_port : var.override_rpc_v0_port
   rpc_v1_port = var.override_rpc_v1_port == null ? var.upstream_port : var.override_rpc_v1_port
+  rpc_v2_port = var.override_rpc_v2_port == null ? var.upstream_port : var.override_rpc_v2_port
 
   domain_names = {
     homepage                   = "glif-static-website.s3-website-ap-northeast-1.amazonaws.com"

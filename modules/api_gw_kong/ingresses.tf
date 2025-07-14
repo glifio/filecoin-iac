@@ -620,6 +620,167 @@ resource "kubernetes_ingress_v1" "post_rpc_v1_auth" {
   }
 }
 
+resource "kubernetes_ingress_v1" "get_rpc_v2" {
+  metadata {
+    name      = "${local.prefix}-get-rpc-v2"
+    namespace = var.homepage_namespace
+
+    annotations = {
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "GET"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
+        kubernetes_manifest.homepage_cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v2"
+          path_type = "Exact"
+          backend {
+            service {
+              name = var.homepage_service
+              port {
+                number = var.homepage_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "options_rpc_v2" {
+  metadata {
+    name      = "${local.prefix}-options-rpc-v2"
+    namespace = var.namespace
+
+    annotations = {
+      "konghq.com/protocols" = "http"
+      "konghq.com/methods"   = "OPTIONS"
+
+      "konghq.com/plugins" = join(", ", [
+        kubernetes_manifest.serverless_function-mock.manifest.metadata.name,
+        kubernetes_manifest.cors.manifest.metadata.name
+      ])
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v2"
+          path_type = "Exact"
+          backend {
+            service {
+              name = local.rpc_v1_service
+              port {
+                number = local.rpc_v1_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "post_rpc_v2" {
+  metadata {
+    name      = "${local.prefix}-post-rpc-v2"
+    namespace = var.override_auth_ingress_namespace == null ? var.namespace : var.override_auth_ingress_namespace
+
+    annotations = {
+      "konghq.com/protocols"     = "http"
+      "konghq.com/methods"       = "POST"
+      "konghq.com/preserve-host" = var.preserve_host
+      "konghq.com/plugins" = join(", ", compact([
+        local.token_replacement_plugin,
+        local.response_transformer_content_type_plugin,
+        local.cors_plugin,
+        local.mirror_plugin,
+        local.limit_reqs_wo_header_plugin
+      ]))
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v2"
+          path_type = "Exact"
+          backend {
+            service {
+              name = var.override_auth_ingress_service == null ? local.rpc_v2_service : var.override_auth_ingress_service
+              port {
+                number = var.override_auth_ingress_port == null ? local.rpc_v2_port : var.override_auth_ingress_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_ingress_v1" "post_rpc_v2_auth" {
+  count = var.enable_ext_token_auth ? 1 : 0
+  metadata {
+    name      = "${local.prefix}-post-rpc-v2-auth"
+    namespace = var.override_auth_ingress_namespace == null ? var.namespace : var.override_auth_ingress_namespace
+
+    annotations = {
+      "konghq.com/protocols"             = "http"
+      "konghq.com/methods"               = "POST"
+      "konghq.com/preserve-host"         = var.preserve_host
+      "konghq.com/headers.Authorization" = "~*"
+
+      "konghq.com/plugins" = join(", ", compact([
+        local.token_replacement_plugin,
+        local.response_transformer_content_type_plugin,
+        local.cors_plugin,
+        local.mirror_plugin,
+        local.ext_token_auth_plugin
+      ]))
+    }
+  }
+
+  spec {
+    ingress_class_name = local.ingress_class
+    rule {
+      host = var.domain_name
+      http {
+        path {
+          path      = "/rpc/v2"
+          path_type = "Exact"
+          backend {
+            service {
+              name = var.override_auth_ingress_service == null ? local.rpc_v2_service : var.override_auth_ingress_service
+              port {
+                number = var.override_auth_ingress_port == null ? local.rpc_v2_port : var.override_auth_ingress_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 resource "kubernetes_ingress_v1" "get_circulating_supply" {
   metadata {
     name      = "${local.prefix}-get-circulating-supply"
