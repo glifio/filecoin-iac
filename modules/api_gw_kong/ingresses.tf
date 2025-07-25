@@ -149,9 +149,10 @@ resource "kubernetes_ingress_v1" "get_root" {
       "konghq.com/protocols" = "http"
       "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", [
+      "konghq.com/plugins" = join(", ", compact([
+        local.homepage_redirect_plugin,
         kubernetes_manifest.homepage_cors.manifest.metadata.name
-      ])
+      ]))
     }
   }
 
@@ -307,10 +308,11 @@ resource "kubernetes_ingress_v1" "get_rpc_v0" {
       "konghq.com/protocols" = "http"
       "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", [
+      "konghq.com/plugins" = join(", ", compact([
+        local.homepage_redirect_plugin,
         kubernetes_manifest.homepage_cors.manifest.metadata.name,
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name
-      ])
+      ]))
     }
   }
 
@@ -468,10 +470,11 @@ resource "kubernetes_ingress_v1" "get_rpc_v1" {
       "konghq.com/protocols" = "http"
       "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", [
+      "konghq.com/plugins" = join(", ", compact([
+        local.homepage_redirect_plugin,
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
         kubernetes_manifest.homepage_cors.manifest.metadata.name
-      ])
+      ]))
     }
   }
 
@@ -629,10 +632,11 @@ resource "kubernetes_ingress_v1" "get_rpc_v2" {
       "konghq.com/protocols" = "http"
       "konghq.com/methods"   = "GET"
 
-      "konghq.com/plugins" = join(", ", [
+      "konghq.com/plugins" = join(", ", compact([
+        local.homepage_redirect_plugin,
         kubernetes_manifest.request_transformer-to_root.manifest.metadata.name,
         kubernetes_manifest.homepage_cors.manifest.metadata.name
-      ])
+      ]))
     }
   }
 

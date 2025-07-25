@@ -63,6 +63,9 @@ module "api_gateway_kong_mainnet" {
   override_auth_ingress_namespace = "proteus-shield"
   override_auth_ingress_service   = "proteus-shield-proxy-svc"
   override_auth_ingress_port      = 8080
+
+  enable_homepage_redirect = true
+  homepage_redirect_url = "https://filecoin.chain.love"
 }
 
 module "api_gateway_kong_calibration" {

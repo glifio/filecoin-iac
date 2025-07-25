@@ -66,6 +66,23 @@ resource "kubernetes_manifest" "request_transformer-to_root" {
   }
 }
 
+resource "kubernetes_manifest" "homepage_redirect" {
+  count = var.enable_homepage_redirect ? 1 : 0
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = "${local.prefix}-homepage-redirect"
+      "namespace" = var.homepage_namespace
+    }
+    "config" = {
+      "access" = [
+        "return kong.response.exit(301, 'Page moved, redirecting...', { ['Location'] = '${var.homepage_redirect_url}' })"
+      ]
+    }
+    "plugin" = "pre-function"
+  }
+}
 
 resource "kubernetes_manifest" "request_transformer-to_index" {
   manifest = {

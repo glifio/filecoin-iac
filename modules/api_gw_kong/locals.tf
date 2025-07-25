@@ -39,6 +39,7 @@ locals {
   daemon_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.daemon.secret_string), "jwt_token_kong_rw")
 
   mirror_plugin = var.enable_mirroring ? kubernetes_manifest.http_mirror-rpc[0].manifest.metadata.name : ""
+  homepage_redirect_plugin = var.enable_homepage_redirect ? kubernetes_manifest.homepage_redirect[0].manifest.metadata.name : ""
 
   limit_reqs_wo_header_plugin              = var.enable_limit_reqs_wo_header ? kubernetes_manifest.rate_limiting[0].manifest.metadata.name : ""
   ext_token_auth_plugin                    = var.enable_ext_token_auth && var.use_ext_token_auth_plugin ? kubernetes_manifest.auth[0].manifest.metadata.name : ""

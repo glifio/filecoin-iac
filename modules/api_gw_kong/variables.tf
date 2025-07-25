@@ -172,3 +172,15 @@ variable "enable_token_replacement" {
   default     = true
   description = "Replace user token with node token if true"
 }
+
+variable "enable_homepage_redirect" {
+  type        = bool
+  default     = false
+  description = "Redirect to homepage_redirect_url if true"
+  
+}
+
+variable "homepage_redirect_url" {
+  type = string
+  default = ""
+}
