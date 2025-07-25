@@ -260,7 +260,7 @@ resource "aws_route53_record" "filecoin_chain_love" {
   zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
   name    = "filecoin.chain.love"
   type    = "A"
-  
+
   alias {
     evaluate_target_health = false
     name                   = data.aws_lb.kong_external.dns_name
@@ -274,7 +274,7 @@ resource "aws_route53_record" "calibration_filecoin_chain_love" {
   zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
   name    = "calibration.filecoin.chain.love"
   type    = "A"
-  
+
   alias {
     evaluate_target_health = false
     name                   = data.aws_lb.kong_external.dns_name
@@ -288,7 +288,7 @@ resource "aws_route53_record" "dev_filecoin_chain_love" {
   zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
   name    = "dev.filecoin.chain.love"
   type    = "A"
-  
+
   alias {
     evaluate_target_health = false
     name                   = data.aws_lb.kong_external.dns_name
@@ -300,13 +300,13 @@ resource "aws_route53_record" "bootstrap_filecoin_chain_love" {
   count = local.is_prod_envs
 
   zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
-  name = "bootstrap.filecoin.chain.love"
-  type = "A"
+  name    = "bootstrap.filecoin.chain.love"
+  type    = "A"
 
   alias {
     evaluate_target_health = false
-    name = data.aws_lb.bootstrap_mainnet[0].dns_name
-    zone_id = data.aws_lb.bootstrap_mainnet[0].zone_id
+    name                   = data.aws_lb.bootstrap_mainnet[0].dns_name
+    zone_id                = data.aws_lb.bootstrap_mainnet[0].zone_id
   }
 }
 
@@ -314,12 +314,22 @@ resource "aws_route53_record" "bootstrap_calibration_filecoin_chain_love" {
   count = local.is_prod_envs
 
   zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
-  name = "bootstrap.calibration.filecoin.chain.love"
-  type = "A"
+  name    = "bootstrap.calibration.filecoin.chain.love"
+  type    = "A"
 
   alias {
     evaluate_target_health = false
-    name = data.aws_lb.bootstrap_calibnet[0].dns_name
-    zone_id = data.aws_lb.bootstrap_calibnet[0].zone_id
+    name                   = data.aws_lb.bootstrap_calibnet[0].dns_name
+    zone_id                = data.aws_lb.bootstrap_calibnet[0].zone_id
   }
+}
+
+resource "aws_route53_record" "proofstore_dev" {
+  count           = local.is_dev_envs
+  name            = "proofstore.dev.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
 }

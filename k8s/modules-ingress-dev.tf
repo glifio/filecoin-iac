@@ -70,4 +70,35 @@ module "ingress_auth_dev" {
   redirect_location = "https://api.dev.node.glif.io/"
 }
 
+resource "kubernetes_ingress_v1" "proofstore_dev" {
+  count = local.is_dev_envs
+
+  metadata {
+    name      = "proofstore-dev"
+    namespace = "proteus-shield"
+  }
+
+  spec {
+    ingress_class_name = "kong-external-lb"
+
+    rule {
+      host = "proofstore.dev.node.glif.io"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "proteus-shield-proxy-svc"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 #############################################################
