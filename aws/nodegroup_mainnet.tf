@@ -67,23 +67,6 @@ module "eks_nodegroup_ondemand_api_read_slave_1" {
   kubernetes_version = "1.27"
 }
 
-module "eks_nodegroup_ondemand_api-read-cid-checker" {
-  count  = local.is_prod_envs
-  source = "../modules/eks_nodegroup"
-
-  name          = "api-read-cid-checker"
-  instance_type = "r6gd.8xlarge"
-  ami_type      = "AL2_ARM_64"
-  user_data     = "nvme-spot.sh"
-
-  global_config    = local.make_global_configuration
-  nodegroup_config = local.make_eks_nodegroups_global_configuration
-
-  root_volume_size = 150
-
-  kubernetes_version = "1.28"
-}
-
 #module "eks_nodegroup_ondemand_group17" {
 #  count  = local.is_prod_envs
 #  source = "../modules/eks_nodegroup"
