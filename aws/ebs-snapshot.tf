@@ -132,7 +132,7 @@ resource "aws_dlm_lifecycle_policy" "auth_db" {
 
   description        = "Make snapshots of auth db PVC volume"
   execution_role_arn = aws_iam_role.dlm.arn
-  state              = "ENABLED"
+  state              = "DISABLED"
 
   policy_details {
     resource_types = ["VOLUME"]
