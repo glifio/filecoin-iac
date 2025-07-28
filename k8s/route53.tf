@@ -333,3 +333,16 @@ resource "aws_route53_record" "proofstore_dev" {
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
 }
+
+resource "aws_route53_record" "prometheus_production" {
+  count = local.is_prod_envs
+  name = "prometheus.node.glif.io"
+  type = "A"
+  zone_id = data.aws_route53_zone.node_glif_io.zone_id
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}

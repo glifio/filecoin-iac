@@ -584,3 +584,29 @@ module "ingress_api_chain_love" {
   access_control_replace  = true
   enable_return_json      = true
 }
+
+module "ingress_prometheus_production" {
+  count = local.is_prod_envs
+
+  name   = "prometheus-production"
+  source = "../modules/ovh_ingress"
+  
+  namespace = "monitoring"
+
+  http_host      = "prometheus.node.glif.io"
+  http_path      = "/"
+  http_path_type = "Prefix"
+
+  service_name = "monitoring-kube-prometheus-prometheus"
+  service_port = 9090
+
+  ingress_class = "kong-external-lb"
+
+  enable_path_transformer = false
+  enable_return_json      = false
+
+  enable_ip_whitelist = true
+  ip_whitelist = [
+    "13.49.83.28/32"
+  ]
+}
