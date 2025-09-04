@@ -35,6 +35,10 @@ resource "kubernetes_ingress_v1" "filecoin_chain_love" {
   metadata {
     name      = "filecoin-chain-love"
     namespace = "proteus-shield"
+
+    annotations = {
+      "konghq.com/preserve-host" = "true"
+    }
   }
 
   spec {
@@ -60,6 +64,42 @@ resource "kubernetes_ingress_v1" "filecoin_chain_love" {
 
     rule {
       host = "calibration.filecoin.chain.love"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "proteus-shield-proxy-svc"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+
+    rule {
+      host = "mainnet.filecoin.chain.love"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "proteus-shield-proxy-svc"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+
+    rule {
+      host = "calibnet.filecoin.chain.love"
       http {
         path {
           path      = "/"

@@ -76,7 +76,7 @@ resource "helm_release" "aws_load_balancer_controller" {
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
-  version    = "1.6.2"
+  version    = "1.13.4"
 
   set {
     name  = "vpcId"
@@ -91,11 +91,6 @@ resource "helm_release" "aws_load_balancer_controller" {
   set {
     name  = "image.repository"
     value = "${local.get_registry_based_on_regions}/amazon/aws-load-balancer-controller"
-  }
-
-  set {
-    name  = "image.tag"
-    value = "v2.5.1"
   }
 
   set {
