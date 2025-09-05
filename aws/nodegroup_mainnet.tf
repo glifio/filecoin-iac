@@ -102,6 +102,23 @@ module "eks_nodegroup_ondemand_calibnet_1_al2023" {
   kubernetes_version = "1.30"
 }
 
+module "eks_nodegroup_ondemand_calibnet_2_al2023" {
+  count  = local.is_prod_envs
+  source = "../modules/eks_nodegroup"
+
+  name             = "calibnet-2-al2023"
+  instance_type    = "r6gd.2xlarge"
+  ami_type         = "AL2023_ARM_64_STANDARD"
+  is_spot_instance = true
+
+  global_config    = local.make_global_configuration
+  nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 80
+
+  kubernetes_version = "1.31"
+}
+
 ################## Mainnet Archive Nodegroups ##################
 
 module "eks_nodegroup_ondemand_group19" {
