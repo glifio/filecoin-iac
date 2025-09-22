@@ -6,7 +6,7 @@ resource "aws_ebs_volume" "space07_1" {
   size       = 13824
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 259
 
   tags = merge(
     {
@@ -26,7 +26,7 @@ resource "aws_ebs_volume" "space07_2" {
   size       = 13824
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 259
 
   tags = merge(
     {
@@ -46,7 +46,7 @@ resource "aws_ebs_volume" "space07_3" {
   size       = 13824
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 259
 
   tags = merge(
     {
@@ -66,7 +66,7 @@ resource "aws_ebs_volume" "space07_4" {
   size       = 13824
   type       = "gp3"
   iops       = 3000
-  throughput = 167
+  throughput = 259
 
   tags = merge(
     {
