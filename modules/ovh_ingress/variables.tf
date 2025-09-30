@@ -108,6 +108,12 @@ variable "enable_ext_token_auth" {
   description = "Enable external token authorization for requests with Authorization header"
 }
 
+variable "enable_optional_query_param_auth" {
+  type        = bool
+  default     = false
+  description = "If enabled, creates additional ingress for authorization based on query params"
+}
+
 variable "ext_token_auth_url" {
   type        = string
   default     = "http://glif-auth-app-svc.default:3000/api/auth"
@@ -130,4 +136,16 @@ variable "protocols" {
   type        = string
   default     = "https, http"
   description = "Protocols supported by the ingress"
+}
+
+variable "enable_ip_whitelist" {
+  type = bool
+  default = false
+  description = "Enable IP whitelist"
+}
+
+variable "ip_whitelist" {
+  type = list(string)
+  default = []
+  description = "List of IP addresses to whitelist"
 }

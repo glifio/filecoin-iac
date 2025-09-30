@@ -1,1 +1,0 @@
-local a=require"socket.http"local b={}local function c(d)local e=kong.ctx.shared.mirror_path;local f=kong.ctx.shared.mirror_body;if d.mirror_to and string.len(f)>0 then for g,h in ipairs(d.mirror_to)do a.request(h..e,f)collectgarbage("collect")end end end;function b.execute(d)c(d)end;return b

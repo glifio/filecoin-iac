@@ -35,6 +35,18 @@ resource "kubernetes_secret_v1" "calibrationapi_1_lotus_secret" {
   }
 }
 
+resource "kubernetes_secret_v1" "calibrationapi_2_lotus_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "calibrationapi-2-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.calibrationapi_0_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.calibrationapi_0_lotus[0].secret_string), "jwt_token", null)
+  }
+}
+
 resource "kubernetes_secret_v1" "api_read_dev_lotus_secret" {
   count = local.is_dev_envs
   metadata {
@@ -266,9 +278,24 @@ resource "kubernetes_secret_v1" "auth" {
     namespace = "default"
   }
   data = {
-    username = local.auth.username
-    password = local.auth.password
-    dbName   = local.auth.db_name
-    connstr  = "postgres://${local.auth.username}:${local.auth.password}@glif-auth-db-svc.default:5432/${local.auth.db_name}?schema=public"
+    username         = local.auth.username
+    password         = local.auth.password
+    dbName           = local.auth.db_name
+    connstr          = "postgres://${local.auth.username}:${local.auth.password}@glif-auth-db-svc.default:5432/${local.auth.db_name}?schema=public"
+    stripePublicKey  = local.auth.stripe_public_key
+    stripePrivateKey = local.auth.stripe_private_key
+    jwtSecretKey     = local.auth.jwt_secret_key
+  }
+}
+
+resource "kubernetes_secret_v1" "thegraph_lotus_secret" {
+  count = local.is_prod_envs
+  metadata {
+    name      = "thegraph-lotus-secret"
+    namespace = kubernetes_namespace_v1.network.metadata[0].name
+  }
+  data = {
+    privatekey = lookup(jsondecode(data.aws_secretsmanager_secret_version.fvm_archive_lotus[0].secret_string), "private_key", null)
+    token      = lookup(jsondecode(data.aws_secretsmanager_secret_version.fvm_archive_lotus[0].secret_string), "jwt_token", null)
   }
 }

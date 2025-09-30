@@ -8,7 +8,6 @@ resource "kubernetes_config_map" "kong_plugin-http_mirror" {
     "access.lua"  = "${file("./kong_plugins/http_mirror/access.min.lua")}"
     "handler.lua" = "${file("./kong_plugins/http_mirror/handler.min.lua")}"
     "schema.lua"  = "${file("./kong_plugins/http_mirror/schema.min.lua")}"
-    "log.lua"     = "${file("./kong_plugins/http_mirror/log.min.lua")}"
   }
 }
 

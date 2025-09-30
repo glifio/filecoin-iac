@@ -25,7 +25,7 @@ locals {
 
   kong_external_replicas_map = {
     filecoin-dev-apn1-glif-eks     = 1
-    filecoin-mainnet-apn1-glif-eks = 8
+    filecoin-mainnet-apn1-glif-eks = 12
   }
 
   kong_external_replicas = local.kong_external_replicas_map[terraform.workspace]
@@ -52,30 +52,29 @@ locals {
   external_lb_certificate = {
     filecoin-dev-apn1-glif-eks = [
       "*.${var.route53_domain}",
-      "calibration.node.glif.io",
-      "*.calibration.node.glif.io",
-      "calibration.filecoin.tools",
-      "*.calibration.filecoin.tools",
-      "wallaby.filecoin.tools",
-      "*.wallaby.filecoin.tools",
-      "wss.wallaby.node.glif.io",
-      "*.wss.wallaby.node.glif.io"
+      "dev.filecoin.chain.love",
+      "*.dev.filecoin.chain.love"
     ]
     filecoin-mainnet-apn1-glif-eks = [
       "*.${var.route53_domain}",
       "*.calibration.node.glif.io",
       "*.dev.node.glif.io",
-      "filecoin.tools",
-      "*.filecoin.tools",
-      "*.calibration.filecoin.tools",
+      "old.filecoin.tools",
+      "*.old.filecoin.tools",
+      "*.calibration.old.filecoin.tools",
       "api.chain.love",
+      "filecoin.chain.love",
+      "*.filecoin.chain.love"
     ]
   }
   external_lb_certificates = local.external_lb_certificate[terraform.workspace]
 
   auth = {
-    username = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["username"]
-    password = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["password"]
-    db_name  = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["dbName"]
+    username           = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["username"]
+    password           = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["password"]
+    db_name            = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["dbName"]
+    stripe_public_key  = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["stripePublicKey"]
+    stripe_private_key = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["stripePrivateKey"]
+    jwt_secret_key     = jsondecode(data.aws_secretsmanager_secret_version.auth.secret_string)["jwtSecretKey"]
   }
 }

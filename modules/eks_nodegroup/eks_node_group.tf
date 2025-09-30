@@ -7,6 +7,7 @@ resource "aws_eks_node_group" "nodegroup" {
   instance_types       = split(",", var.instance_type)
   capacity_type        = var.is_spot_instance ? "SPOT" : null
   force_update_version = true
+  version              = var.kubernetes_version
 
   launch_template {
     id      = local.launch_template

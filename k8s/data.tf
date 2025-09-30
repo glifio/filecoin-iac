@@ -36,26 +36,37 @@ data "aws_lb" "kong_external" {
   ]
 }
 
-
-# data chainstack load balancer
-
-data "aws_lb" "kong_chainstack" {
-  count = local.is_prod_envs
-
-  tags = {
-    Name = "${module.generator.prefix}-chainstack"
-  }
-
-  depends_on = [
-    helm_release.konghq-chainstack
-  ]
-}
+#data "aws_lb" "kong_mirror" {
+#  tags = {
+#    Name = "${module.generator.prefix}-kong-mirror"
+#  }
+#
+#  depends_on = [
+#    helm_release.konghq-mirror
+#  ]
+#}
 
 data "aws_lb" "kong_drpc" {
   count = local.is_prod_envs
 
   tags = {
     Name = "${module.generator.prefix}-drpc"
+  }
+}
+
+data "aws_lb" "bootstrap_mainnet" {
+  count = local.is_prod_envs
+
+  tags = {
+    Name = "space07-lotus-p2p-service"
+  }
+}
+
+data "aws_lb" "bootstrap_calibnet" {
+  count = local.is_prod_envs
+
+  tags = {
+    Name = "calibrationapi-archive-node-lotus-p2p-service"
   }
 }
 
@@ -75,12 +86,17 @@ data "aws_route53_zone" "dev_node_glif_io" {
 }
 
 data "aws_route53_zone" "filecoin_tools" {
-  name         = "filecoin.tools"
+  name         = "old.filecoin.tools"
   private_zone = false
 }
 
 data "aws_route53_zone" "api_chain_love" {
   name         = "api.chain.love"
+  private_zone = false
+}
+
+data "aws_route53_zone" "filecoin_chain_love" {
+  name         = "filecoin.chain.love"
   private_zone = false
 }
 
@@ -210,15 +226,6 @@ data "aws_secretsmanager_secret" "github_ssh_gist_updater" {
 data "aws_secretsmanager_secret_version" "github_ssh_gist_updater" {
   count     = local.is_prod_envs
   secret_id = data.aws_secretsmanager_secret.github_ssh_gist_updater[0].id
-}
-
-
-data "aws_secretsmanager_secret" "atlantis" {
-  name = "${module.generator.prefix}/credentials-atlantis"
-}
-
-data "aws_secretsmanager_secret_version" "atlantis" {
-  secret_id = data.aws_secretsmanager_secret.atlantis.id
 }
 
 data "aws_secretsmanager_secret" "credentials-grafana-users" {

@@ -6,7 +6,27 @@ resource "aws_route53_record" "api_dev_node_glif_io" {
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
+
+  set_identifier = "primary"
+  weighted_routing_policy {
+    weight = 10
+  }
 }
+
+#resource "aws_route53_record" "api_dev_node_glif_io_mirror" {
+#  count           = local.is_dev_envs
+#  name            = "api.dev.node.glif.io"
+#  allow_overwrite = true
+#  zone_id         = data.aws_route53_zone.selected.zone_id
+#  type            = "CNAME"
+#  ttl             = "60"
+#  records         = [data.aws_lb.kong_mirror.dns_name]
+#
+#  set_identifier = "mirror"
+#  weighted_routing_policy {
+#    weight = 0
+#  }
+#}
 
 resource "aws_route53_record" "wss_dev_node_glif_io" {
   count           = local.is_dev_envs
@@ -22,7 +42,7 @@ resource "aws_route53_record" "wss_dev_node_glif_io" {
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "calibration.filecoin.tools"
+  name            = "calibration.old.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
@@ -32,7 +52,7 @@ resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_calibration" 
 resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_calibration" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "cid.calibration.filecoin.tools"
+  name            = "cid.calibration.old.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
@@ -43,7 +63,7 @@ resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_calibrati
 resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_mainnet" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "filecoin.tools"
+  name            = "old.filecoin.tools"
   allow_overwrite = true
   type            = "A"
 
@@ -57,7 +77,7 @@ resource "aws_route53_record" "filecoin_tools_nlb_ingress_external_mainnet" {
 resource "aws_route53_record" "cid_filecoin_tools_nlb_ingress_external_mainnet" {
   count           = local.is_prod_envs
   zone_id         = data.aws_route53_zone.filecoin_tools.zone_id
-  name            = "cid.filecoin.tools"
+  name            = "cid.old.filecoin.tools"
   allow_overwrite = true
   type            = "CNAME"
   ttl             = "60"
@@ -94,7 +114,27 @@ resource "aws_route53_record" "api_calibration_node_glif_io" {
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_external.dns_name]
+
+  set_identifier = "primary"
+  weighted_routing_policy {
+    weight = 10
+  }
 }
+
+#resource "aws_route53_record" "api_calibration_node_glif_io_mirror" {
+#  count           = local.is_prod_envs
+#  name            = "api.calibration.node.glif.io"
+#  allow_overwrite = true
+#  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
+#  type            = "CNAME"
+#  ttl             = "60"
+#  records         = [data.aws_lb.kong_mirror.dns_name]
+#
+#  set_identifier = "mirror"
+#  weighted_routing_policy {
+#    weight = 0
+#  }
+#}
 
 resource "aws_route53_record" "monitoring" {
   count           = local.is_dev_envs
@@ -130,33 +170,6 @@ resource "aws_route53_record" "api-internal_node_glif_io" {
     name                   = data.aws_lb.kong_external.dns_name
     zone_id                = data.aws_lb.kong_external.zone_id
   }
-
-  set_identifier = "mainnet-main"
-  weighted_routing_policy {
-    weight = 2
-  }
-  health_check_id = aws_route53_health_check.health_check_healthy_mainnet[0].id
-}
-
-# fallback traffic to chainstack #
-
-resource "aws_route53_record" "api-internal_node_glif_io_secondary" {
-  count           = local.is_prod_envs
-  name            = "api.node.glif.io"
-  allow_overwrite = true
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  type            = "A"
-
-  alias {
-    evaluate_target_health = false
-    name                   = data.aws_lb.kong_chainstack[0].dns_name
-    zone_id                = data.aws_lb.kong_chainstack[0].zone_id
-  }
-
-  weighted_routing_policy {
-    weight = 0
-  }
-  set_identifier = "secondary"
 }
 
 
@@ -195,35 +208,6 @@ resource "aws_route53_record" "wss_mainnet" {
   records         = [data.aws_lb.kong_external.dns_name]
 }
 
-# Route53 record from atlantis to external nlb
-
-resource "aws_route53_record" "atlantis" {
-  count           = local.is_prod_envs
-  zone_id         = data.aws_route53_zone.selected.zone_id
-  name            = "atlantis.${var.route53_domain}"
-  allow_overwrite = true
-  type            = "CNAME"
-  ttl             = "60"
-  records         = [data.aws_lb.kong_external.dns_name]
-}
-
-
-# for checking pulse api-read-master #
-
-resource "aws_route53_record" "strictly_mainnet_node_glif_io" {
-  count           = local.is_prod_envs
-  name            = "strictly"
-  type            = "A"
-  allow_overwrite = true
-  zone_id         = data.aws_route53_zone.node_glif_io.zone_id
-
-
-  alias {
-    evaluate_target_health = true
-    name                   = data.aws_lb.kong_external.dns_name
-    zone_id                = data.aws_lb.kong_external.zone_id
-  }
-}
 
 resource "aws_route53_record" "auth" {
   zone_id         = data.aws_route53_zone.selected.zone_id
@@ -257,4 +241,134 @@ resource "aws_route53_record" "drpc-dshackle" {
   type            = "CNAME"
   ttl             = "60"
   records         = [data.aws_lb.kong_drpc[0].dns_name]
+}
+
+resource "aws_route53_record" "slayer_mainnet" {
+  count = local.is_prod_envs
+
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  name            = "slayer.${var.route53_domain}"
+  allow_overwrite = true
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+resource "aws_route53_record" "filecoin_chain_love" {
+  count = local.is_prod_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "filecoin.chain.love"
+  type    = "A"
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
+
+resource "aws_route53_record" "calibration_filecoin_chain_love" {
+  count = local.is_prod_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "calibration.filecoin.chain.love"
+  type    = "A"
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
+
+resource "aws_route53_record" "dev_filecoin_chain_love" {
+  count = local.is_dev_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "dev.filecoin.chain.love"
+  type    = "A"
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
+
+resource "aws_route53_record" "bootstrap_filecoin_chain_love" {
+  count = local.is_prod_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "bootstrap.filecoin.chain.love"
+  type    = "A"
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.bootstrap_mainnet[0].dns_name
+    zone_id                = data.aws_lb.bootstrap_mainnet[0].zone_id
+  }
+}
+
+resource "aws_route53_record" "bootstrap_calibration_filecoin_chain_love" {
+  count = local.is_prod_envs
+
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+  name    = "bootstrap.calibration.filecoin.chain.love"
+  type    = "A"
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.bootstrap_calibnet[0].dns_name
+    zone_id                = data.aws_lb.bootstrap_calibnet[0].zone_id
+  }
+}
+
+resource "aws_route53_record" "proofstore_dev" {
+  count           = local.is_dev_envs
+  name            = "proofstore.dev.node.glif.io"
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.selected.zone_id
+  type            = "CNAME"
+  ttl             = "60"
+  records         = [data.aws_lb.kong_external.dns_name]
+}
+
+resource "aws_route53_record" "prometheus_production" {
+  count = local.is_prod_envs
+  name = "prometheus.node.glif.io"
+  type = "A"
+  zone_id = data.aws_route53_zone.node_glif_io.zone_id
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
+
+resource "aws_route53_record" "mainnet_filecoin_chain_love" {
+
+  name = "mainnet.filecoin.chain.love"
+  type = "A"
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}
+
+resource "aws_route53_record" "calibnet_filecoin_chain_love" {
+
+  name = "calibnet.filecoin.chain.love"
+  type = "A"
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
 }

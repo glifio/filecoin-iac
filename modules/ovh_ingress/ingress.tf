@@ -107,3 +107,39 @@ resource "kubernetes_ingress_v1" "default_auth" {
     }
   }
 }
+
+resource "kubernetes_ingress_v1" "query_param_auth" {
+  count = var.enable_ext_token_auth && var.enable_optional_query_param_auth ? 1 : 0
+
+  metadata {
+    name      = "${var.name}-query-param-auth"
+    namespace = var.namespace
+
+    annotations = {
+      "konghq.com/plugins"   = local.query_param_auth_plugins_string
+      "konghq.com/protocols" = "https, http"
+    }
+  }
+
+  spec {
+    ingress_class_name = var.ingress_class
+
+    rule {
+      host = var.http_host
+      http {
+        path {
+          path      = var.http_path
+          path_type = var.http_path_type
+          backend {
+            service {
+              name = var.service_name
+              port {
+                number = var.service_port
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

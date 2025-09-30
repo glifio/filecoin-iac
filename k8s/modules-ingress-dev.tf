@@ -26,26 +26,22 @@ module "ingress_api_read_dev" {
   name   = "wss-read-dev"
   source = "../modules/ovh_ingress"
 
-  namespace = "network"
+  namespace = "proteus-shield"
 
   http_host      = "wss.dev.node.glif.io"
   http_path      = "/"
   http_path_type = "Prefix"
 
-  service_name = "api-read-dev-lotus-service"
-  service_port = 2346
+  service_name = "proteus-shield-proxy-svc"
+  service_port = 8080
 
   ingress_class = "kong-external-lb"
 
   secret_name = data.aws_secretsmanager_secret.api_read_dev_lotus[0].name
 
-  enable_path_transformer     = false
-  enable_access_control       = true
-  access_control_public       = true
-  access_control_replace      = true
-  enable_return_json          = true
-  enable_limit_reqs_wo_header = true
-  enable_ext_token_auth       = true
+  enable_path_transformer = false
+  enable_return_json      = true
+  enable_access_control   = false
 }
 
 module "ingress_auth_dev" {
@@ -72,6 +68,37 @@ module "ingress_auth_dev" {
 
   enable_redirect   = true
   redirect_location = "https://api.dev.node.glif.io/"
+}
+
+resource "kubernetes_ingress_v1" "proofstore_dev" {
+  count = local.is_dev_envs
+
+  metadata {
+    name      = "proofstore-dev"
+    namespace = "proteus-shield"
+  }
+
+  spec {
+    ingress_class_name = "kong-external-lb"
+
+    rule {
+      host = "proofstore.dev.node.glif.io"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "proteus-shield-proxy-svc"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 #############################################################

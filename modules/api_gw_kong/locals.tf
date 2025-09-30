@@ -10,9 +10,11 @@ locals {
   upstream_service = "${local.upstream_name}-service"
   rpc_v0_service   = var.override_rpc_v0_service == null ? local.upstream_service : "${var.override_rpc_v0_service}-service"
   rpc_v1_service   = var.override_rpc_v1_service == null ? local.upstream_service : "${var.override_rpc_v1_service}-service"
+  rpc_v2_service   = var.override_rpc_v2_service == null ? local.upstream_service : "${var.override_rpc_v2_service}-service"
 
   rpc_v0_port = var.override_rpc_v0_port == null ? var.upstream_port : var.override_rpc_v0_port
   rpc_v1_port = var.override_rpc_v1_port == null ? var.upstream_port : var.override_rpc_v1_port
+  rpc_v2_port = var.override_rpc_v2_port == null ? var.upstream_port : var.override_rpc_v2_port
 
   domain_names = {
     homepage                   = "glif-static-website.s3-website-ap-northeast-1.amazonaws.com"
@@ -37,6 +39,12 @@ locals {
   daemon_token = lookup(jsondecode(data.aws_secretsmanager_secret_version.daemon.secret_string), "jwt_token_kong_rw")
 
   mirror_plugin = var.enable_mirroring ? kubernetes_manifest.http_mirror-rpc[0].manifest.metadata.name : ""
+  homepage_redirect_plugin = var.enable_homepage_redirect ? kubernetes_manifest.homepage_redirect[0].manifest.metadata.name : ""
 
-  limit_reqs_wo_header_plugin = var.enable_limit_reqs_wo_header ? kubernetes_manifest.rate_limiting[0].manifest.metadata.name : ""
+  limit_reqs_wo_header_plugin              = var.enable_limit_reqs_wo_header ? kubernetes_manifest.rate_limiting[0].manifest.metadata.name : ""
+  ext_token_auth_plugin                    = var.enable_ext_token_auth && var.use_ext_token_auth_plugin ? kubernetes_manifest.auth[0].manifest.metadata.name : ""
+  token_replacement_plugin                 = (var.override_auth_ingress_namespace != null && var.enable_token_replacement) ? kubernetes_manifest.request_transformer-public_access_auth[0].manifest.metadata.name : (var.enable_token_replacement ? kubernetes_manifest.request_transformer-public_access.manifest.metadata.name : "")
+  serverless_function_root_plugin          = var.override_auth_ingress_namespace == null ? kubernetes_manifest.serverless_function-root.manifest.metadata.name : kubernetes_manifest.serverless_function-root_auth[0].manifest.metadata.name
+  response_transformer_content_type_plugin = var.override_auth_ingress_namespace == null ? kubernetes_manifest.response_transformer-content_type.manifest.metadata.name : kubernetes_manifest.response_transformer-content_type_auth[0].manifest.metadata.name
+  cors_plugin                              = var.override_auth_ingress_namespace == null ? kubernetes_manifest.cors.manifest.metadata.name : kubernetes_manifest.cors_auth[0].manifest.metadata.name
 }

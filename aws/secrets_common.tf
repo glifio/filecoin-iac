@@ -60,14 +60,6 @@ resource "aws_secretsmanager_secret" "github_ssh_gist_updater" {
   module.generator.common_tags)
 }
 
-resource "aws_secretsmanager_secret" "credentials_atlantis" {
-  name                    = "${module.generator.prefix}/credentials-atlantis"
-  recovery_window_in_days = 30
-
-  tags = merge({ "Name" = "${module.generator.prefix}-credentials-atlantis" },
-  module.generator.common_tags)
-}
-
 resource "aws_secretsmanager_secret" "credentials_grafana_users" {
   name                    = "${module.generator.prefix}/credentials-grafana-users"
   recovery_window_in_days = 30

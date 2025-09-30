@@ -12,9 +12,19 @@ affinity:
           operator: In
           values:
           - "${name}"
-      topologyKey: topology.kubernetes.io/zone
+      topologyKey: kubernetes.io/hostname
+    - labelSelector:
+        matchExpressions:
+        - key: helm-release-version
+          operator: In
+          values:
+          - "${helm_release_version}"
+      topologyKey: kubernetes.io/hostname
 nodeSelector:
-  assign_to_space00_07_nodes: allow_any_pods
+  eks.amazonaws.com/capacityType: ON_DEMAND
+
+extraLabels:
+  helm-release-version: "${helm_release_version}"
 
 plugins:
   configMaps:

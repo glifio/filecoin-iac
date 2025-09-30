@@ -55,6 +55,18 @@ variable "override_rpc_v1_port" {
   description = "Override the upstream port for the /rpc/v1 path"
 }
 
+variable "override_rpc_v2_service" {
+  type        = string
+  default     = null
+  description = "Override the upstream service for the /rpc/v2 path"
+}
+
+variable "override_rpc_v2_port" {
+  type        = number
+  default     = null
+  description = "Override the upstream port for the /rpc/v2 path"
+}
+
 variable "override_daemon_service" {
   type        = string
   default     = null
@@ -107,6 +119,12 @@ variable "enable_ext_token_auth" {
   description = "Enable external token authorization for requests with Authorization header"
 }
 
+variable "use_ext_token_auth_plugin" {
+  type        = bool
+  default     = true
+  description = "Create Kong authorization plugin"
+}
+
 variable "ext_token_auth_url" {
   type        = string
   default     = "http://glif-auth-app-svc.default:3000/api/auth"
@@ -115,7 +133,7 @@ variable "ext_token_auth_url" {
 
 variable "homepage_service" {
   type        = string
-  default     = "glif-auth-app-svc"
+  default     = "proteus-shield-ui-svc"
   description = "homepage kubernetes service name"
 }
 
@@ -127,6 +145,42 @@ variable "homepage_port" {
 
 variable "homepage_namespace" {
   type        = string
-  default     = "default"
+  default     = "proteus-shield"
   description = "homepage kubernetes service namespace"
+}
+
+variable "override_auth_ingress_service" {
+  type        = string
+  default     = null
+  description = "Use this service for auth-enabled ingresses"
+}
+
+variable "override_auth_ingress_port" {
+  type        = number
+  default     = null
+  description = "Use this port for auth-enabled ingresses"
+}
+
+variable "override_auth_ingress_namespace" {
+  type        = string
+  default     = null
+  description = "Use this namespace for auth-enabled ingresses"
+}
+
+variable "enable_token_replacement" {
+  type        = bool
+  default     = true
+  description = "Replace user token with node token if true"
+}
+
+variable "enable_homepage_redirect" {
+  type        = bool
+  default     = false
+  description = "Redirect to homepage_redirect_url if true"
+  
+}
+
+variable "homepage_redirect_url" {
+  type = string
+  default = ""
 }

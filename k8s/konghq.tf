@@ -8,8 +8,11 @@ resource "helm_release" "konghq-external" {
   version    = "2.13.0"
 
   values = [templatefile("${path.module}/configs/konghq/values.tftpl", {
-    name    = "${module.generator.prefix}-kong-external",
+    name    = "${module.generator.prefix}-kong-external-kong",
     crt_arn = aws_acm_certificate.external_lb.arn,
+    
+    # Increment this version when you make any changes to the release
+    helm_release_version = "0.0.2"
 
     additional_ports = [1235, 1236, 1237],
 
@@ -41,35 +44,43 @@ resource "helm_release" "konghq-external" {
   }
 }
 
-
-resource "helm_release" "konghq-chainstack" {
-  count = local.is_prod_envs
-
-  name       = "${module.generator.prefix}-chainstack"
-  repository = "https://charts.konghq.com"
-  chart      = "kong"
-  namespace  = kubernetes_namespace_v1.kong.metadata[0].name
-  version    = "2.13.0"
-
-  values = [templatefile("${path.module}/configs/konghq/values.tftpl", {
-    name             = "${module.generator.prefix}-chainstack",
-    crt_arn          = aws_acm_certificate.external_lb.arn,
-    additional_ports = [],
-    plugins          = []
-  })]
-
-  set {
-    name  = "ingressController.image.tag"
-    value = "2.8"
-  }
-
-  set {
-    name  = "replicaCount"
-    value = 1
-  }
-
-  set {
-    name  = "ingressController.ingressClass"
-    value = "kong-chainstack-lb"
-  }
-}
+#resource "helm_release" "konghq-mirror" {
+#  name       = "${module.generator.prefix}-kong-mirror"
+#  repository = "https://charts.konghq.com"
+#  chart      = "kong"
+#  namespace  = kubernetes_namespace_v1.kong.metadata[0].name
+#  version    = "2.13.0"
+#
+#  values = [templatefile("${path.module}/configs/konghq/values.tftpl", {
+#    name    = "${module.generator.prefix}-kong-mirror",
+#    crt_arn = aws_acm_certificate.external_lb.arn,
+#
+#    additional_ports = []
+#
+#    plugins = [
+#      {
+#        name    = "http-mirror",
+#        cm_name = kubernetes_config_map.kong_plugin-http_mirror.metadata[0].name
+#      },
+#      {
+#        name    = "external-auth",
+#        cm_name = kubernetes_config_map.kong_plugin-external_auth.metadata[0].name
+#      }
+#    ]
+#  })]
+#
+#  set {
+#    name  = "ingressController.image.tag"
+#    value = "2.8"
+#  }
+#
+#  set {
+#    name  = "replicaCount"
+#    value = local.kong_external_replicas
+#  }
+#
+#  set {
+#    name  = "ingressController.ingressClass"
+#    value = "kong-mirror-lb"
+#  }
+#}

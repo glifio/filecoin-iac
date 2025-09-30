@@ -263,7 +263,8 @@ resource "kubernetes_manifest" "cors" {
         "Content-Type",
         "Content-Length",
         "Content-Range",
-        "Range"
+        "Range",
+        "X-JSONRPC-Playground-Origin"
       ]
     }
   }
@@ -337,6 +338,26 @@ resource "kubernetes_manifest" "auth" {
   }
 }
 
+resource "kubernetes_manifest" "query_param_auth" {
+  count = local.optional_query_param_auth_count
+
+  manifest = {
+    apiVersion = "configuration.konghq.com/v1"
+    kind       = "KongPlugin"
+    metadata = {
+      name      = local.optional_query_param_auth_available_name
+      namespace = var.namespace
+    }
+
+    plugin = "external-auth"
+
+    config = {
+      auth_endpoint  = "${var.ext_token_auth_url}"
+      token_location = "token_param"
+    }
+  }
+}
+
 resource "kubernetes_manifest" "redirect" {
   count = local.redirect_count
   manifest = {
@@ -352,5 +373,21 @@ resource "kubernetes_manifest" "redirect" {
       })]
     }
     "plugin" = "pre-function"
+  }
+}
+
+resource "kubernetes_manifest" "ip_whitelist" {
+  count = local.ip_whitelist_count
+  manifest = {
+    "apiVersion" = "configuration.konghq.com/v1"
+    "kind"       = "KongPlugin"
+    "metadata" = {
+      "name"      = local.ip_whitelist_available_name
+      "namespace" = var.namespace
+    }
+    "config" = {
+      "allow" = var.ip_whitelist
+    }
+    "plugin" = "ip-restriction"
   }
 }

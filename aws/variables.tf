@@ -35,7 +35,7 @@ variable "azs_count" {
 
 variable "eks_cluster_version" {
   type    = string
-  default = "1.23"
+  default = "1.24"
 }
 
 variable "route53_domain" {
