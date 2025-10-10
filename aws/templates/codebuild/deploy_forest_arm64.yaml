@@ -1,0 +1,32 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buildspec file.
+version: 0.2
+
+env:
+  variables:
+    IMAGE_NAME: 'mainnet'
+    SOURCE_BRANCH: 'v0.30.1'
+    DOCKERUHUB_ORGANIZATION: 'glif'
+    ARCH: arm64
+    DOCKERFILE: Dockerfile
+    REPO: ChainSafe/forest
+    DOCKER_BUILDX_VERSION: "v0.10.4"
+  secrets-manager:
+    DOCKERHUB_USERNAME: "filecoin-mainnet-apn1-glif-dockerhub-glifio:username"
+    DOCKERHUB_PASS: "filecoin-mainnet-apn1-glif-dockerhub-glifio:password"
+
+phases:
+  install:
+    commands:
+      - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
+      - curl -JLO https://github.com/docker/buildx/releases/download/${DOCKER_BUILDX_VERSION}/buildx-${DOCKER_BUILDX_VERSION}.linux-arm64
+      - mkdir -p ~/.docker/cli-plugins
+      - mv buildx-${DOCKER_BUILDX_VERSION}.linux-arm64 ~/.docker/cli-plugins/docker-buildx
+      - chmod a+rx ~/.docker/cli-plugins/docker-buildx
+      - docker run --privileged --rm tonistiigi/binfmt --install all
+      - docker buildx create --use --name forest
+      - docker buildx inspect --bootstrap
+
+  build:
+    commands:
+      - git switch --detach $SOURCE_BRANCH
+      - docker buildx build  -t $DOCKERUHUB_ORGANIZATION/lotus:forest-${SOURCE_BRANCH}-${IMAGE_NAME}-${ARCH} --target slim-image -f ${DOCKERFILE} . --push
