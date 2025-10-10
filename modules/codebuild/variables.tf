@@ -59,3 +59,18 @@ variable "specific_envs" {
   type    = map(any)
   default = {}
 }
+
+variable "buildspec_logic" {
+  type = string
+  default = ""
+}
+
+variable "environment_type" {
+  type    = string
+  default = "LINUX_CONTAINER"
+}
+
+variable "enable_webhook" {
+  type = bool
+  default = false
+}

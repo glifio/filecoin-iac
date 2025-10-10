@@ -1,6 +1,6 @@
 resource "aws_codebuild_webhook" "webhook_codebuild_build" {
   build_type   = "BUILD"
-  count        = local.is_build_only
+  count        = var.enable_webhook && var.is_build_only ? 1 : 0
   project_name = aws_codebuild_project.codebuild.name
 
   filter_group {
@@ -18,7 +18,7 @@ resource "aws_codebuild_webhook" "webhook_codebuild_build" {
 
 resource "aws_codebuild_webhook" "webhook_codebuild_deploy" {
   build_type   = "BUILD"
-  count        = local.is_deploy_only
+  count        = var.enable_webhook && !var.is_build_only ? 1 : 0
   project_name = aws_codebuild_project.codebuild.name
 
   filter_group {

@@ -68,6 +68,40 @@ module "eks_nodegroup_ondemand_api_read_slave_2_al2023" {
   kubernetes_version = "1.30"
 }
 
+module "eks_nodegroup_ondemand_forest_mainnet_0" {
+  count  = local.is_prod_envs
+  source = "../modules/eks_nodegroup"
+
+  name          = "forest-mainnet-0"
+  instance_type = "r6gd.4xlarge"
+  ami_type      = "AL2023_ARM_64_STANDARD"
+  user_data     = "nvme-spot.sh"
+
+  global_config    = local.make_global_configuration
+  nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
+
+  kubernetes_version = "1.31"
+}
+
+module "eks_nodegroup_ondemand_forest_mainnet_1" {
+  count  = local.is_prod_envs
+  source = "../modules/eks_nodegroup"
+
+  name          = "forest-mainnet-1"
+  instance_type = "r6gd.4xlarge"
+  ami_type      = "AL2023_ARM_64_STANDARD"
+  user_data     = "nvme-spot.sh"
+
+  global_config    = local.make_global_configuration
+  nodegroup_config = local.make_eks_nodegroups_global_configuration
+
+  root_volume_size = 150
+
+  kubernetes_version = "1.31"
+}
+
 ################## Public Calibnet Nodegroups ##################
 
 module "eks_nodegroup_ondemand_calibnet_0_al2023" {

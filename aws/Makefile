@@ -18,3 +18,6 @@ plan:
 
 apply:
 	terraform apply tfplan
+
+migrate:
+	terraform init -backend-config=../filecoin-glif-$(ENVIRONMENT)-apn1.hcl -migrate-state

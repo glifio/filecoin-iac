@@ -52,5 +52,14 @@ git_configuration = [
       description       = "CI/CD pipeline for a filecoin spacenet amd64 application",
       repo_name         = "lotus",
     }
-  }
+  },
+  {
+    config = {
+      project_name      = "forest",
+      name              = "forest"
+      organization_name = "ChainSafe",
+      description       = "CI/CD pipeline for forest",
+      repo_name         = "forest",
+    }
+  },
 ]

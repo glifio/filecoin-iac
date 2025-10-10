@@ -16,68 +16,6 @@ module "codebuild_cd-filecoin-fluent-bit" {
   ]
 }
 
-module "codebuild_ci_cid-checker_mainnet" {
-  count                    = local.is_prod_envs
-  source                   = "../modules/codebuild"
-  git_repository_name      = "cid-checker"
-  get_global_configuration = local.make_codebuild_global_configuration
-  is_build_only            = true
-  privileged_mode          = true
-  is_build_concurrent      = false
-  specific_branch          = "main"
-  specific_envs            = { "NETWORK" : "mainnet" }
-
-  depends_on = [
-    aws_secretsmanager_secret.github_cd_token_secret
-  ]
-}
-
-module "codebuild_ci_cid-checker_calibration" {
-  count                    = local.is_prod_envs
-  source                   = "../modules/codebuild"
-  git_repository_name      = "cid-checker"
-  get_global_configuration = local.make_codebuild_global_configuration
-  is_build_only            = true
-  privileged_mode          = true
-  is_build_concurrent      = false
-  specific_branch          = "calibration"
-  specific_envs            = { "NETWORK" : "calibration" }
-
-  depends_on = [
-    aws_secretsmanager_secret.github_cd_token_secret
-  ]
-}
-
-module "codebuild_cd_cid-checker_mainnet" {
-  count                    = local.is_prod_envs
-  source                   = "../modules/codebuild"
-  git_repository_name      = "cid-checker"
-  get_global_configuration = local.make_codebuild_global_configuration
-  privileged_mode          = true
-  is_build_concurrent      = false
-  specific_branch          = "main"
-  specific_envs            = { "NETWORK" : "mainnet" }
-
-  depends_on = [
-    aws_secretsmanager_secret.github_cd_token_secret
-  ]
-}
-
-module "codebuild_cd_cid-checker_calibration" {
-  count                    = local.is_prod_envs
-  source                   = "../modules/codebuild"
-  git_repository_name      = "cid-checker"
-  get_global_configuration = local.make_codebuild_global_configuration
-  privileged_mode          = true
-  is_build_concurrent      = false
-  specific_branch          = "calibration"
-  specific_envs            = { "NETWORK" : "calibration" }
-
-  depends_on = [
-    aws_secretsmanager_secret.github_cd_token_secret
-  ]
-}
-
 module "codebuild_multirepository_cd_mainnet_amd64" {
   count                    = local.is_prod_envs
   source                   = "../modules/codebuild_multirepositories"
@@ -120,23 +58,20 @@ module "codebuild_multirepository_cd_mainnet_arm64" {
   ]
 }
 
-module "codebuild_spacenet" {
-  count                    = local.is_prod_envs
-  source                   = "../modules/codebuild_multirepositories"
-  git_repository_name      = "lotus"
-  buildspec_logic          = file("${path.module}/templates/codebuild/deploy_spacenet_amd64.yaml")
+module "codebuild_forest" {
+  source                   = "../modules/codebuild"
+  git_repository_name      = "forest"
   get_global_configuration = local.make_codebuild_global_configuration
+  enable_notifications     = false
+
   privileged_mode          = true
   is_build_concurrent      = false
-  github_cd_token_secret   = "github_cd_rersonal_token_secret"
-  specific_branch          = "spacenet"
-  create_build_webhook     = false
-  create_deploy_webhook    = false
+  specific_branch          = "main"
   environment_compute_type = "BUILD_GENERAL1_LARGE"
-  environment_type         = "LINUX_CONTAINER"
-  codebuild_image          = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
-  project_name             = "spacenet-amd64"
-  repo_docker_branch       = "ntwk/spacenet"
+  codebuild_image          = "aws/codebuild/amazonlinux2-aarch64-standard:2.0"
+
+  buildspec_logic  = file("${path.module}/templates/codebuild/deploy_forest_arm64.yaml")
+  environment_type = "ARM_CONTAINER"
 
   depends_on = [
     aws_secretsmanager_secret.github_cd_token_secret

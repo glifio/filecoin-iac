@@ -1,4 +1,4 @@
-ENVIRONMENT=dev
+ENVIRONMENT=mainnet
 # ENVIRONMENT=dev
 
 lint:
