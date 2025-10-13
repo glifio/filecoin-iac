@@ -290,23 +290,19 @@ module "ingress_api_chain_love" {
   name   = "api-chain-love"
   source = "../modules/ovh_ingress"
 
-  namespace = "network"
+  namespace = "proteus-shield"
 
   http_host      = "api.chain.love"
   http_path      = "/"
   http_path_type = "Prefix"
 
-  service_name = "api-read-master-lotus-service"
-  service_port = 2346
+  service_name = "proteus-shield-proxy-svc"
+  service_port = 8080
 
   ingress_class = "kong-external-lb"
 
-  secret_name = data.aws_secretsmanager_secret.api_read_master_mainnet_lotus[0].name
-
   enable_path_transformer = false
-  enable_access_control   = true
-  access_control_public   = true
-  access_control_replace  = true
+  enable_access_control   = false
   enable_return_json      = true
 }
 
