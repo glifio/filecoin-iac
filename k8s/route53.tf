@@ -372,3 +372,16 @@ resource "aws_route53_record" "calibnet_filecoin_chain_love" {
     zone_id                = data.aws_lb.kong_external.zone_id
   }
 }
+
+resource "aws_route53_record" "proxy_filecoin_chain_love" {
+
+  name = "proxy.filecoin.chain.love"
+  type = "A"
+  zone_id = data.aws_route53_zone.filecoin_chain_love.zone_id
+
+  alias {
+    evaluate_target_health = false
+    name                   = data.aws_lb.kong_external.dns_name
+    zone_id                = data.aws_lb.kong_external.zone_id
+  }
+}

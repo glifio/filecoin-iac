@@ -115,5 +115,23 @@ resource "kubernetes_ingress_v1" "filecoin_chain_love" {
         }
       }
     }
+
+    rule {
+      host = "proxy.filecoin.chain.love"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "proteus-shield-proxy-svc"
+              port {
+                number = 8080
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
