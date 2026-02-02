@@ -14,7 +14,7 @@ module "eks_nodegroup_ondemand_api_read_master_al2023" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_api_read_slave_0_al2023" {
@@ -31,7 +31,7 @@ module "eks_nodegroup_ondemand_api_read_slave_0_al2023" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_api_read_slave_1_al2023" {
@@ -48,7 +48,7 @@ module "eks_nodegroup_ondemand_api_read_slave_1_al2023" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_api_read_slave_2_al2023" {
@@ -65,7 +65,7 @@ module "eks_nodegroup_ondemand_api_read_slave_2_al2023" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 ################## Dedicated Sushi Nodegroups #################
@@ -84,7 +84,7 @@ module "eks_nodegroup_ondemand_forest_mainnet_0" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.31"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_forest_mainnet_1" {
@@ -101,7 +101,7 @@ module "eks_nodegroup_ondemand_forest_mainnet_1" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.31"
+  kubernetes_version = "1.33"
 }
 
 ################## Dedicated Goldsky Nodegroups #################
@@ -120,7 +120,7 @@ module "eks_nodegroup_ondemand_goldsky_forest_mainnet_0" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.31"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_goldsky_forest_mainnet_1" {
@@ -137,7 +137,7 @@ module "eks_nodegroup_ondemand_goldsky_forest_mainnet_1" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.31"
+  kubernetes_version = "1.33"
 }
 
 
@@ -155,7 +155,7 @@ module "eks_nodegroup_ondemand_calibnet_0_al2023" {
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_calibnet_1_al2023" {
@@ -172,7 +172,7 @@ module "eks_nodegroup_ondemand_calibnet_1_al2023" {
 
   root_volume_size = 80
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_calibnet_2_al2023" {
@@ -189,7 +189,7 @@ module "eks_nodegroup_ondemand_calibnet_2_al2023" {
 
   root_volume_size = 80
 
-  kubernetes_version = "1.31"
+  kubernetes_version = "1.33"
 }
 
 ################## Mainnet Archive Nodegroups ##################
@@ -213,7 +213,7 @@ module "eks_nodegroup_ondemand_group19" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_fvm_archive" {
@@ -235,7 +235,7 @@ module "eks_nodegroup_ondemand_fvm_archive" {
 
   custom_ebs_user_data = "ebs-udp.sh"
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_ondemand_thegraph" {
@@ -257,7 +257,7 @@ module "eks_nodegroup_ondemand_thegraph" {
 
   custom_ebs_user_data = "ebs-udp.sh"
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 ################## Calibnet Archive Nodegroups ##################
@@ -276,7 +276,7 @@ module "eks_nodegroup_ondemand_group13" {
 
   root_volume_size = 150
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 ################## Less Important Nodegroups ##################
@@ -292,7 +292,7 @@ module "eks_nodegroup_mainnet_ondemand_group6_al2023" {
   global_config    = local.make_global_configuration
   nodegroup_config = local.make_eks_nodegroups_global_configuration
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_cid_checker_spot_al2023" {
@@ -309,7 +309,7 @@ module "eks_nodegroup_cid_checker_spot_al2023" {
 
   root_volume_size = 80
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }
 
 module "eks_nodegroup_amd64_1_al2023" {
@@ -325,5 +325,5 @@ module "eks_nodegroup_amd64_1_al2023" {
 
   root_volume_size = 256
 
-  kubernetes_version = "1.30"
+  kubernetes_version = "1.33"
 }

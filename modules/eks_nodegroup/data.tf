@@ -14,19 +14,14 @@ data "aws_iam_policy_document" "nodegroup_assume_role_policy" {
 
 data "aws_iam_policy_document" "nodegroup_ebs_management_policy" {
   statement {
-    sid = "AttachVolumes"
+    sid = "ManageEbsVolumes"
 
-    actions = ["ec2:AttachVolume"]
-    resources = [
-      "arn:aws:ec2:*:*:volume/*",
-      "arn:aws:ec2:*:*:instance/*"
+    actions = [
+      "ec2:AttachVolume",
+      "ec2:DetachVolume",
+      "ec2:DescribeInstances",
+      "ec2:DescribeVolumes"
     ]
-  }
-
-  statement {
-    sid = "DescribeVolumes"
-
-    actions   = ["ec2:DescribeVolumes"]
     resources = ["*"]
   }
 }
