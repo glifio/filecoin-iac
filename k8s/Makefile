@@ -1,4 +1,4 @@
-ENVIRONMENT=mainnet
+ENVIRONMENT=dev
 # ENVIRONMENT=dev
 
 init:

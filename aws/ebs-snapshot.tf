@@ -23,7 +23,7 @@ resource "aws_dlm_lifecycle_policy" "space07" {
 
   description        = "Make snapshots of space07 LVM volumes"
   execution_role_arn = aws_iam_role.dlm.arn
-  state              = "ENABLED"
+  state              = "DISABLED"
 
   policy_details {
     resource_types = ["VOLUME"]
@@ -130,20 +130,57 @@ resource "aws_dlm_lifecycle_policy" "calibration_archive" {
 resource "aws_dlm_lifecycle_policy" "auth_db" {
   count = local.is_prod_envs
 
-  description        = "Make snapshots of auth db PVC volume"
+  description        = "Backup of ChainLove database"
   execution_role_arn = aws_iam_role.dlm.arn
-  state              = "DISABLED"
+  state              = "ENABLED"
 
   policy_details {
     resource_types = ["VOLUME"]
 
     schedule {
-      name = "3 days of daily snapshots"
+      name = "30 days of daily snapshots"
 
       create_rule {
         interval      = 24
         interval_unit = "HOURS"
-        times         = ["02:00"]
+        times         = ["09:00"]
+      }
+
+      retain_rule {
+        count = 30
+      }
+
+      tags_to_add = {
+        SnapshotCreator = "DLM",
+        CreatedFor      = "proteus-shield-db-vol-proteus-shield-db-0"
+      }
+
+      copy_tags = false
+    }
+
+    target_tags = {
+      "kubernetes.io/created-for/pvc/name" = "proteus-shield-db-vol-proteus-shield-db-0"
+    }
+  }
+}
+
+resource "aws_dlm_lifecycle_policy" "chainlove_influxdb" {
+  count = local.is_prod_envs
+
+  description        = "Backup of ChainLove InfluxDB database"
+  execution_role_arn = aws_iam_role.dlm.arn
+  state              = "ENABLED"
+
+  policy_details {
+    resource_types = ["VOLUME"]
+
+    schedule {
+      name = "3 daily snapshots"
+
+      create_rule {
+        interval      = 24
+        interval_unit = "HOURS"
+        times         = ["09:00"]
       }
 
       retain_rule {
@@ -152,14 +189,14 @@ resource "aws_dlm_lifecycle_policy" "auth_db" {
 
       tags_to_add = {
         SnapshotCreator = "DLM",
-        CreatedFor      = "glif-auth-db-vol-glif-auth-db-0"
+        CreatedFor      = "proteus-shield-influx-vol-proteus-shield-influx-0"
       }
 
       copy_tags = false
     }
 
     target_tags = {
-      "kubernetes.io/created-for/pvc/name" = "glif-auth-db-vol-glif-auth-db-0"
+      "kubernetes.io/created-for/pvc/name" = "proteus-shield-influx-vol-proteus-shield-influx-0"
     }
   }
 }
